@@ -37,7 +37,7 @@ Verdicts follow the assignment. The decision order that makes the labels reprodu
 3. **UNSUPPORTED** — the sources are silent about the claim or about one of its parts, and nothing
    conflicts. Silence stays UNSUPPORTED even when the claim is true in the real world
    (`redis-aof-02`, `nginx-upstream-12`), and it does not become CONTRADICTED just because the claim
-   sounds wrong (`dns-ttl-13`, `replica-lag-18`).
+   sounds wrong (`dns-ttl-13`, `replica-lag-18` (test)).
 
 **Gold claims are atomic, and so is the claim contract.** "A topic's partition count can be
 increased and can also be decreased" is two claims in the reference, because the decomposition
@@ -47,12 +47,12 @@ asks, and the two halves can carry different verdicts.
 
 Edge cases that are labelled explicitly:
 
-* **Empty context** (`empty-context-16`, `empty-context-19`): nothing can be grounded, so every claim
+* **Empty context** (`empty-context-16`, `empty-context-19` (test)): nothing can be grounded, so every claim
   is UNSUPPORTED and carries no evidence. These cases check that the service does not crash or call
   the model to verify anything.
 * **No factual claims** (`no-claims-17`): a conversational answer; the correct output is an empty
   claims list, not a fabricated claim.
-* **Multi-sentence evidence** (`kafka-partitions-10`, `k8s-probes-03`, `k8s-limits-28`): one claim
+* **Multi-sentence evidence** (`kafka-partitions-10`, `k8s-probes-03` (test), `k8s-limits-28`): one claim
   may need several sentences, sometimes from different passages.
 
 ## Difficulty calibration
@@ -72,22 +72,24 @@ modes that actually distinguish systems:
 
 ## Coverage
 
+Case ids are from the `dev` split unless marked `(test)`.
+
 | Bucket (tag) | Cases | Examples |
 |---|---|---|
-| `supported` (whole answer grounded) | 37 | `pg-btree-05`, `sql-join-09` |
-| `paraphrase` | 4 | `sqlite-wal-01`, `raft-election-14` |
-| `number_off` | 6 | `redis-aof-02`, `docker-exit-05`, `pg-checkpoint-20` |
-| `unit_change` | 3 | `systemd-restart-11`, `cache-s-maxage-10` |
-| `negation_flip` | 10 | `python-gil-08`, `http-cache-07`, `redis-aof-rewrite-27` |
-| `condition_swap` | 6 | `pg-autovacuum-03`, `jwt-claims-14`, `prometheus-counter-17` |
-| `quantifier_shift` | 5 | `redis-maxmemory-04`, `pg-mvcc-22`, `kafka-autocommit-26` |
-| `comparison_flip` | 9 | `tcp-slowstart-06`, `http2-multiplex-16`, `numpy-views-15` |
+| `supported` (whole answer grounded) | 37 | `pg-btree-05` (test), `sql-join-09` (test) |
+| `paraphrase` | 4 | `sqlite-wal-01`, `raft-election-14` (test) |
+| `number_off` | 6 | `redis-aof-02`, `docker-exit-05`, `pg-checkpoint-20` (test) |
+| `unit_change` | 3 | `systemd-restart-11`, `cache-s-maxage-10` (test) |
+| `negation_flip` | 10 | `python-gil-08` (test), `http-cache-07`, `redis-aof-rewrite-27` |
+| `condition_swap` | 6 | `pg-autovacuum-03`, `jwt-claims-14`, `prometheus-counter-17` (test) |
+| `quantifier_shift` | 5 | `redis-maxmemory-04` (test), `pg-mvcc-22` (test), `kafka-autocommit-26` |
+| `comparison_flip` | 9 | `tcp-slowstart-06` (test), `http2-multiplex-16` (test), `numpy-views-15` |
 | `entity_swap` | 3 | `k8s-probes-06`, `docker-signals-24`, `k8s-limits-28` |
-| `temporal_version` | 3 | `tls-0rtt-08`, `pandas-cow-15` |
-| `extrinsic` (plausible, unstated) | 8 | `dns-ttl-13`, `replica-lag-18`, `redis-cluster-long-31` |
+| `temporal_version` | 3 | `tls-0rtt-08`, `pandas-cow-15` (test) |
+| `extrinsic` (plausible, unstated) | 8 | `dns-ttl-13`, `replica-lag-18` (test), `redis-cluster-long-31` |
 | `extrinsic_true_world` (true outside the context) | 2 | `redis-aof-02`, `nginx-upstream-12` |
-| `multi_passage` (evidence spans passages) | 11 | `kafka-partitions-10`, `k8s-probes-03`, `k8s-limits-28` |
-| `empty_context` | 2 | `empty-context-16`, `empty-context-19` |
+| `multi_passage` (evidence spans passages) | 11 | `kafka-partitions-10`, `k8s-probes-03` (test), `k8s-limits-28` |
+| `empty_context` | 2 | `empty-context-16`, `empty-context-19` (test) |
 | `no_claims` | 1 | `no-claims-17` |
 | `mixed` | 3 | `sqlite-wal-01`, `py-asyncio-04`, `redis-cluster-long-31` |
 
@@ -119,10 +121,10 @@ a model or a threshold.
   confidence without establishing inter-annotator agreement (docs/ITERATIONS.md).
 * Three items were corrected because the eval showed them to be bad benchmark items rather than model
   errors: `kafka-partitions-10` (a label that contradicted the sources, found because both verifiers
-  rejected it), `kafka-retention-11` (answer wording that conflated "eligible for deletion" with
-  "deleted") and `http-retry-21` (a universal claim the sources arguably implied false). Each is
+  rejected it), `kafka-retention-11` (test) (answer wording that conflated "eligible for deletion" with
+  "deleted") and `http-retry-21` (test) (a universal claim the sources arguably implied false). Each is
   recorded in the case's `notes` and in docs/ITERATIONS.md, including the pre- and post-audit numbers.
-  A fourth contested label, `prometheus-counter-17`, was deliberately kept against the model.
+  A fourth contested label, `prometheus-counter-17` (test), was deliberately kept against the model.
 * 150 claims is enough to rank three methods on this domain, not to publish a number. Differences
   below ~5 points on a single split should be treated as noise; the final test report therefore shows
   mean ± std over 3 runs.
