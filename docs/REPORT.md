@@ -29,7 +29,7 @@ is the mean of 3 runs; the baseline is deterministic and ran once.
 | Citation precision (right passage) | 1.000 | 0.988 ± 0.000 | 0.956 ± 0.008 | 0.966 | 0.957 ± 0.008 | 0.957 ± 0.008 |
 | Citation recall (right passage) | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 |
 | Raw citation invalid rate | 0.000 | 0.008 ± 0.005 | 0.003 ± 0.005 | 0.000 | 0.000 ± 0.000 | 0.010 ± 0.000 |
-| Latency p50 / p95 (ms) | 0 / 0 | 3645 / 5353 | 4814 / 5858 | 5154 / 7295 | 4657 / 6003 | 5749 / 7541 |
+| Latency p50 / p95 (ms) | 0.14 / 0.30 | 3645 / 5353 | 4814 / 5858 | 5154 / 7295 | 4657 / 6003 | 5749 / 7541 |
 | Input / output tokens per case | 0 / 0 | 681 / 372 | 4034 / 690 | 4794 / 671 | 4022 / 669 | 4095 / 823 |
 | LLM calls / case | 0.00 | 1.00 ± 0.00 | 4.68 ± 0.08 | 4.58 | 4.53 ± 0.02 | 4.50 ± 0.00 |
 | Cost / case (USD) | 0.0000 | 0.0024 ± 0.0000 | 0.0081 ± 0.0002 | 0.0090 | 0.0080 ± 0.0000 | 0.0087 ± 0.0000 |
@@ -70,7 +70,7 @@ Two rows are easy to misread:
 | Citation precision (right passage) | 1.000 | 0.965 | 0.946 |
 | Citation recall (right passage) | 1.000 | 1.000 | 1.000 |
 | Raw citation invalid rate | 0.000 | 0.000 | 0.011 |
-| Latency p50 / p95 (ms) | 0 / 0 | 3966 / 6176 | 2747 / 3807 |
+| Latency p50 / p95 (ms) | 0.19 / 0.48 | 3966 / 6176 | 2747 / 3807 |
 | Input / output tokens per case | 0 / 0 | 701 / 373 | 3162 / 558 |
 | LLM calls / case | 0.00 | 1.00 | 3.35 |
 | Cost / case (USD) | 0.0000 | 0.0024 | 0.0064 |
@@ -96,7 +96,7 @@ Two rows are easy to misread:
 | Citation precision (right passage) | 1.000 | 0.994 ± 0.009 | 1.000 ± 0.000 |
 | Citation recall (right passage) | 1.000 | 0.982 ± 0.000 | 0.982 ± 0.000 |
 | Raw citation invalid rate | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
-| Latency p50 / p95 (ms) | 0 / 0 | 3443 / 4418 | 2769 / 4716 |
+| Latency p50 / p95 (ms) | 0.15 / 0.20 | 3443 / 4418 | 2769 / 4716 |
 | Input / output tokens per case | 0 / 0 | 666 / 326 | 2555 / 466 |
 | LLM calls / case | 0.00 | 1.00 ± 0.00 | 2.95 ± 0.00 |
 | Cost / case (USD) | 0.0000 | 0.0022 ± 0.0000 | 0.0052 ± 0.0000 |
@@ -140,7 +140,7 @@ Run once with the frozen configuration; the label audit that preceded it is docu
 | Citation precision (right passage) | 0.968 | 1.000 ± 0.000 | 0.983 ± 0.000 |
 | Citation recall (right passage) | 0.968 | 0.982 ± 0.000 | 0.982 ± 0.000 |
 | Raw citation invalid rate | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
-| Latency p50 / p95 (ms) | 0 / 0 | 3521 / 4649 | 4791 / 7956 |
+| Latency p50 / p95 (ms) | 0.15 / 0.19 | 3521 / 4649 | 4791 / 7956 |
 | Input / output tokens per case | 0 / 0 | 647 / 332 | 3894 / 661 |
 | LLM calls / case | 0.00 | 1.00 ± 0.00 | 4.70 ± 0.00 |
 | Cost / case (USD) | 0.0000 | 0.0022 ± 0.0000 | 0.0078 ± 0.0000 |

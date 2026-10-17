@@ -134,13 +134,13 @@ while being wrong claim by claim. That is why the report leads with claim accura
 | Decomposition recall | 0.775 | 1.000 ± 0.000 | 0.989 ± 0.000 | 0.989 | 0.989 ± 0.000 | 0.989 ± 0.000 |
 | Decomposition precision | 0.972 | 0.934 ± 0.009 | 0.901 ± 0.019 | 0.926 | 0.940 ± 0.005 | 0.946 ± 0.000 |
 | Answer sentence coverage | 1.000 | 0.981 ± 0.007 | 0.972 ± 0.000 | 0.972 | 0.972 ± 0.000 | 0.986 ± 0.000 |
-| Fused claims (claim spans >1 sentence) | 0.113 | 0.115 ± 0.001 | 0.096 ± 0.003 | 0.095 | 0.096 ± 0.000 | 0.108 ± 0.000 |
+| Fused claims (claim spans >1 sentence) | 0.000 | 0.000 ± 0.000 | 0.041 ± 0.001 | 0.042 | 0.043 ± 0.000 | 0.022 ± 0.000 |
 | Citation precision | 0.885 | 0.976 ± 0.010 | 0.882 ± 0.016 | 0.898 | 0.870 ± 0.008 | 0.867 ± 0.009 |
 | Citation recall | 0.885 | 0.996 ± 0.006 | 0.966 ± 0.006 | 0.962 | 0.963 ± 0.000 | 0.963 ± 0.000 |
 | Citation precision (right passage) | 1.000 | 0.988 ± 0.000 | 0.956 ± 0.008 | 0.966 | 0.957 ± 0.008 | 0.957 ± 0.008 |
 | Citation recall (right passage) | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 |
 | Raw citation invalid rate (before repair) | 0.000 | 0.008 ± 0.005 | 0.003 ± 0.005 | 0.000 | 0.000 ± 0.000 | 0.010 ± 0.000 |
-| Latency p50 / p95 (ms) | 0 / 0 | 3645 / 5353 | 4814 / 5858 | 5154 / 7295 | 4657 / 6003 | 5749 / 7541 |
+| Latency p50 / p95 (ms) | 0.14 / 0.30 | 3645 / 5353 | 4814 / 5858 | 5154 / 7295 | 4657 / 6003 | 5749 / 7541 |
 | Input / output tokens per case | 0 / 0 | 681 / 372 | 4034 / 690 | 4794 / 671 | 4022 / 669 | 4095 / 823 |
 | LLM calls / case | 0.00 | 1.00 ± 0.00 | 4.68 ± 0.08 | 4.58 | 4.53 ± 0.02 | 4.50 ± 0.00 |
 | Cost / case (USD) | 0.0000 | 0.0024 ± 0.0000 | 0.0081 ± 0.0002 | 0.0090 | 0.0080 ± 0.0000 | 0.0087 ± 0.0000 |
@@ -379,11 +379,11 @@ After the two label corrections (`kafka-retention-11`, `http-retry-21`) and the 
 | F1 SUPPORTED / CONTRADICTED / UNSUPPORTED | 0.778 / 0.353 / 0.455 | 0.988 / 0.960 / 1.000 | 0.988 / 1.000 / 0.923 |
 | Decomposition recall / precision | 0.820 / 0.980 | 1.000 / 0.884 | 1.000 / 0.803 |
 | Citation precision / recall (right passage) | 0.968 / 0.968 | 1.000 / 0.982 | 0.983 / 0.982 |
-| Latency p50 / p95 (ms) | 0.2 / 0.2 | 3521 / 4649 | 4791 / 7956 |
-| Input / output tokens per case | 0 / 0 | 647 / 332 | 3895 / 658 |
+| Latency p50 / p95 (ms) | 0.15 / 0.19 | 3521 / 4649 | 4791 / 7956 |
+| Input / output tokens per case | 0 / 0 | 647 / 332 | 3894 / 661 |
 | Cost / case (USD, prices below) | 0.000000 | 0.002168 | 0.007745 |
-| LLM calls / case | 0.00 | 1.00 | 4.70 |
-| Errored cases | 0 | 0 | 0 |
+| LLM calls / case | 0.00 | 1.00 ± 0.00 | 4.70 ± 0.00 |
+| Errored cases | 0 | 0 ± 0 | 0 ± 0 |
 
 Oracle, after the corrections:
 
@@ -391,10 +391,10 @@ Oracle, after the corrections:
 |---|---|---|---|
 | Claim accuracy (all gold claims) | 0.705 | 0.978 ± 0.008 | **1.000 ± 0.000** |
 | Macro-F1 (3 verdicts) | 0.569 | 0.969 ± 0.020 | **1.000 ± 0.000** |
-| Citation precision (right passage) | 1.000 | 0.994 | **1.000** |
+| Citation precision (right passage) | 1.000 | 0.994 ± 0.009 | **1.000 ± 0.000** |
 | Latency p50 (ms) | 0.1 | 3541 | **3001** |
 | Input tokens per case | 0 | 666 | 2555 |
-| LLM calls / case | 0.00 | 1.00 | 2.95 |
+| LLM calls / case | 0.00 | 1.00 ± 0.00 | 2.95 ± 0.00 |
 
 Decisions recorded from the final run:
 

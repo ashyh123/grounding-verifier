@@ -55,6 +55,14 @@ disagree, the JSON is right.
    rather than deleted, because a reader deciding what to try next needs them more than another success
    story.
 
+## Revision note (same day)
+
+A metric change was applied to `results/` and to REPORT.md but not to the copy of the dev table in
+ITERATIONS.md, and that stale row reached the public repository before a reader caught it. The response
+is structural: every quoted metric row in every document is now checked against the summaries it came
+from, and `DOCS_REFRESH=1 pytest tests/test_docs.py -k quoted` rewrites those rows in place, so a metric
+change is never copied into prose by hand again.
+
 ## Conventions
 
 * Numbers are given with the split and the number of runs (`dev`, 3 runs, mean ± std) and are never
