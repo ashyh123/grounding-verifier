@@ -256,8 +256,8 @@ restarts" exception as SUPPORTED, which is the case's whole point.
   rate** (share of claims matching two or more answer sentences).
 - **Command:** `uv run python -m eval.run --methods optimized --split dev --runs 3 --prompt-version v4 --out results/dev-v4-x3`
 - **Result:** claim accuracy 0.989 ± 0.000 and macro-F1 0.997 ± 0.000 — level with v3 — but
-  answer-level F1 **0.980 ± 0.000 against v3's 1.000 ± 0.000**, latency p50 5749 ms against 4657 ms
-  (+23 %), cost $0.0090 against $0.0080 per case (+12 %), raw citation invalid rate 0.010 against 0.000.
+  answer-level F1 **0.980 ± 0.000 against v3's 1.000 ± 0.000**, latency p50 5749 ms against v3's
+  4657 ms, cost $0.0087 against $0.0080 per case, raw citation invalid rate 0.010 against 0.000.
 - **Did the hypothesis hold?** Yes on both instruments it was aimed at: sentence coverage rose as
   intended (0.972 → 0.986), and the fused-claim rate **halved** (0.043 → 0.022) once the metric was
   corrected. The original reading of this run ("fusion got worse, 0.096 → 0.108") was an artifact of a
@@ -270,7 +270,8 @@ restarts" exception as SUPPORTED, which is the case's whole point.
 - **Failures fixed:** none; `jwt-claims-14` still loses the clock-skew clause.
 - **Decision: reverted**, on evidence that does not depend on the corrected metric: `no-claims-17`
   went from the correct empty output to one fabricated UNSUPPORTED claim (answer-level F1 1.000 → 0.980),
-  latency +23 %, cost +12 %, and the fusion improvement did not offset that regression. v4 stays in the
+  latency p50 4657 → 5749 ms and cost $0.0080 → $0.0087 per case, and the fusion improvement did not
+  offset that regression. v4 stays in the
   repository (prompt set and schema) for reproducibility, and `DEFAULT_PROMPT_VERSION` remains `v3`, so
   the held-out final run did not need repeating. Its motivating example came from the test split; see the
   protocol note above.
