@@ -35,7 +35,7 @@ a minimal single-call LLM verifier, and an optimized multi-step pipeline.
 places — the single call loses on the verdict boundary, the pipeline loses on decomposition wording.
 With gold claims fed in (oracle mode), both LLM methods score 1.000 on dev; on the held-out test split
 the per-claim pipeline stays at 1.000 while the single call drops to 0.978. That is the pipeline's real
-selling point, and it costs ~4.7× the calls and ~3.5× the input tokens. Development-split tables, full
+selling point, and it costs ~4.7× the calls and ~3.6× the cost per case. Development-split tables, full
 failure analysis and threats to validity: [docs/REPORT.md](docs/REPORT.md).
 
 ## Quickstart

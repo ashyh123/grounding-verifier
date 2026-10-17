@@ -184,7 +184,7 @@ defect and failed (see below).
 what it promised: coverage rose (0.972 → 0.986) and the corrected fused-claim rate halved (0.043 →
 0.022). It was nevertheless reverted, on evidence that does not depend on that metric: its "do not skip a
 sentence" rule made the model invent a claim for the greeting in `no-claims-17` (answer-level F1 1.000 →
-0.980), latency rose 23 % and cost 12 %, and the fusion gain did not offset the edge-case regression.
+0.980), latency p50 rose 4657 → 5749 ms and cost $0.0080 → $0.0087 per case, and the fusion gain did not offset the edge-case regression.
 The first version of this conclusion said fusion had got *worse* — that came from a metric with an ~11 %
 false-positive floor (the baseline, unable to fuse, scored 0.113); the metric now decides on distinctive
 content words and the baseline scores 0.000. The v5 successor is v4 plus one explicit exception, with the
