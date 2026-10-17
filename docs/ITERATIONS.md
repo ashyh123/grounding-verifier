@@ -242,7 +242,7 @@ restarts" exception as SUPPORTED, which is the case's whole point.
 
 - **Hypothesis (written down before the run, in the v3 section of the previous revision):** the
   pipeline's residual defect is decomposition *wording* — specifically fusion, where one claim is
-  built from clauses of two sentences (`pg-checkpoint-20`: "writes a checkpoint record" +
+  built from clauses of two sentences (`pg-checkpoint-20`, a test case: "writes a checkpoint record" +
   "Checkpoints shorten crash recovery" → "A checkpoint **record** shortens crash recovery"). Fix: make
   the decomposition account for every answer sentence, so a dropped or fused sentence becomes visible
   instead of silent.
@@ -404,7 +404,7 @@ Decisions recorded from the final run:
   "never decrease" entailed; `http-retry-21`: calls an over-claim CONTRADICTED while its own reasoning
   says the passage is silent). End-to-end the two tie at 0.984.
 * **The pipeline's remaining defect is decomposition wording.** Its only end-to-end failure on the
-  held-out split is `pg-checkpoint-20`, where decomposition fused "writes a checkpoint record" with
+  held-out (test) split is `pg-checkpoint-20`, where decomposition fused "writes a checkpoint record" with
   "Checkpoints shorten crash recovery" into "A checkpoint *record* shortens crash recovery" and then
   correctly rejected its own fusion. Same defect family as v3's target, one level subtler: v3 preserves
   clauses verbatim, but the fusion happened *across* two sentences of one passage.
