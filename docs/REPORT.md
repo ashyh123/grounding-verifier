@@ -23,7 +23,7 @@ is the mean of 3 runs; the baseline is deterministic and ran once.
 | Decomposition recall | 0.775 | 1.000 ± 0.000 | 0.989 ± 0.000 | 0.989 | 0.989 ± 0.000 | 0.989 ± 0.000 |
 | Decomposition precision | 0.972 | 0.934 ± 0.009 | 0.901 ± 0.019 | 0.926 | 0.940 ± 0.005 | 0.946 ± 0.000 |
 | Answer sentence coverage | 1.000 | 0.981 ± 0.007 | 0.972 ± 0.000 | 0.972 | 0.972 ± 0.000 | 0.986 ± 0.000 |
-| Fused claims | 0.000 | 0.000 ± 0.000 | 0.041 ± 0.001 | 0.042 | 0.043 ± 0.000 | 0.022 ± 0.000 |
+| Fused claims (claim carries distinctive words from ≥2 sentences) | 0.000 | 0.000 ± 0.000 | 0.041 ± 0.001 | 0.042 | 0.043 ± 0.000 | 0.022 ± 0.000 |
 | Citation precision | 0.885 | 0.976 ± 0.010 | 0.882 ± 0.016 | 0.898 | 0.870 ± 0.008 | 0.867 ± 0.009 |
 | Citation recall | 0.885 | 0.996 ± 0.006 | 0.966 ± 0.006 | 0.962 | 0.963 ± 0.000 | 0.963 ± 0.000 |
 | Citation precision (right passage) | 1.000 | 0.988 ± 0.000 | 0.956 ± 0.008 | 0.966 | 0.957 ± 0.008 | 0.957 ± 0.008 |
@@ -64,7 +64,7 @@ Two rows are easy to misread:
 | Decomposition recall | 1.000 | 1.000 | 1.000 |
 | Decomposition precision | 1.000 | 1.000 | 1.000 |
 | Answer sentence coverage | 0.972 | 0.972 | 0.972 |
-| Fused claims | 0.045 | 0.045 | 0.045 |
+| Fused claims (claim carries distinctive words from ≥2 sentences) | 0.045 | 0.045 | 0.045 |
 | Citation precision | 0.943 | 0.953 | 0.871 |
 | Citation recall | 0.943 | 1.000 | 0.975 |
 | Citation precision (right passage) | 1.000 | 0.965 | 0.946 |
@@ -90,7 +90,7 @@ Two rows are easy to misread:
 | Decomposition recall | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 |
 | Decomposition precision | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 |
 | Answer sentence coverage | 0.980 | 0.980 ± 0.000 | 0.980 ± 0.000 |
-| Fused claims | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| Fused claims (claim carries distinctive words from ≥2 sentences) | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
 | Citation precision | 1.000 | 0.994 ± 0.009 | 0.932 ± 0.000 |
 | Citation recall | 1.000 | 0.982 ± 0.000 | 0.982 ± 0.000 |
 | Citation precision (right passage) | 1.000 | 0.994 ± 0.009 | 1.000 ± 0.000 |
@@ -134,7 +134,7 @@ Run once with the frozen configuration; the label audit that preceded it is docu
 | Decomposition recall | 0.820 | 1.000 ± 0.000 | 1.000 ± 0.000 |
 | Decomposition precision | 0.980 | 0.884 ± 0.000 | 0.803 ± 0.000 |
 | Answer sentence coverage | 1.000 | 1.000 ± 0.000 | 1.000 ± 0.000 |
-| Fused claims | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
+| Fused claims (claim carries distinctive words from ≥2 sentences) | 0.000 | 0.000 ± 0.000 | 0.000 ± 0.000 |
 | Citation precision | 0.968 | 0.944 ± 0.000 | 0.908 ± 0.008 |
 | Citation recall | 0.968 | 0.927 ± 0.000 | 0.958 ± 0.009 |
 | Citation precision (right passage) | 0.968 | 1.000 ± 0.000 | 0.983 ± 0.000 |

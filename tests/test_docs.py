@@ -146,6 +146,8 @@ QUOTED_ROWS: dict[str, tuple] = {
     "Answer sentence coverage": (lambda m: m["sentence_coverage"], 3),
     "Fused claims": (lambda m: m["fused_claim_rate"], 3),
     "Fused claims (claim spans >1 sentence)": (lambda m: m["fused_claim_rate"], 3),
+    "Fused claims (claim carries distinctive words from ≥2 sentences)":
+        (lambda m: m["fused_claim_rate"], 3),
     "Citation precision": (lambda m: m["citation_precision"], 3),
     "Citation recall": (lambda m: m["citation_recall"], 3),
     "Citation precision (right passage)": (lambda m: m["citation_passage_precision"], 3),
@@ -296,6 +298,9 @@ def test_quoted_metric_rows_match_the_summaries():
                     continue
                 expected = _expected_cells(cells[0], cols)
                 if expected is None:
+                    # a renamed metric row must not silently drop out of this check
+                    assert not cells[0].lower().startswith("fused claim"), \
+                        f"{doc.name}: fused-claim row {cells[0]!r} is not mapped in QUOTED_ROWS"
                     continue
                 checked += 1
                 if cells[1:] != expected:
