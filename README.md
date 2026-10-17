@@ -38,10 +38,29 @@ the per-claim pipeline stays at 1.000 while the single call drops to 0.978. That
 selling point, and it costs ~4.7× the calls and ~3.6× the cost per case. Development-split tables, full
 failure analysis and threats to validity: [docs/REPORT.md](docs/REPORT.md).
 
+## How it got here: eval-driven iteration
+
+Every change was measured on the dev split (26 cases / 89 claims, 3 runs) before it was kept; the test split was run once, with v3 frozen. Full log: docs/ITERATIONS.md.
+
+- **minimal** (control, never edited): one call does decomposition and verification. Dev claim accuracy 0.989, macro-F1 0.983.
+- **v1 — kept as the architecture.** Decompose, then verify each claim in its own call against numbered source sentences, with retry on invalid citations. Macro-F1 rose to 0.991 and answer-level F1 to 1.000, but claim accuracy dipped to 0.981: the decomposition step was rewording claims.
+- **v2 — reverted.** Changed the decomposition *and* verification prompts at once; macro-F1 fell to 0.954 (UNSUPPORTED F1 0.900) and the regression could not be attributed to either change. Lesson: one change per iteration.
+- **v3 — kept, frozen for the test run.** Decomposition only: copy every qualifier and trailing clause verbatim. It fixed `redis-cluster-long-31`, where a unit error had been trimmed away before verification. Dev 0.989 / macro-F1 0.997 with zero run-to-run variance.
+- **v4 — reverted.** A sentence-coverage pass halved fused claims (0.043 → 0.022), but it made the model invent a claim on the no-claims case `no-claims-17` (answer-level F1 1.000 → 0.980) and raised cost from $0.0080 to $0.0087 per case and p50 latency from 4657 to 5749 ms. Its motivating example came from the test split, which is disclosed in the log.
+- **A metric bug found on the way:** the fused-claim metric gave the sentence-splitting baseline, which cannot fuse, 0.113. It was rewritten to use distinctive content words (baseline now 0.000) before any decision relied on it.
+
+## Key failure cases (held-out test split)
+
+- **Baseline under-commits.** Lexical overlap cannot tell a paraphrase from a distortion, so distortions come back UNSUPPORTED instead of CONTRADICTED (CONTRADICTED F1 0.353).
+- **Minimal loses on the verdict boundary.** `prometheus-counter-17`: the source says a counter only goes up *except when the process restarts*; minimal still calls "can only increase, never decrease" SUPPORTED. `http-retry-21`: it labels an over-claim CONTRADICTED while its own reasoning says the source is silent. The pipeline gets both right (CONTRADICTED F1 1.000 vs 0.960; oracle claim accuracy 1.000 vs 0.978).
+- **The pipeline loses on decomposition.** `pg-checkpoint-20`: it fused two answer sentences into a claim the answer never made, then correctly rejected its own conflation. It also emits more claims than the reference (decomposition precision 0.803 vs 0.884), which costs it UNSUPPORTED F1 (0.923 vs 1.000).
+- **Still open:** `jwt-claims-14` (dev) loses a subordinate clock-skew clause in every version. Decomposition, not verification, is the binding constraint.
+
 ## Quickstart
 
 ```bash
-uv sync                      # or: python -m venv .venv && pip install -e .
+uv sync                      # or, without uv: python -m venv .venv && . .venv/bin/activate &&
+                             #   pip install fastapi "uvicorn[standard]" pydantic anthropic httpx python-dotenv rapidfuzz rank-bm25 numpy scipy pytest
 cp .env.example .env         # fill in your key; the service loads this file itself
 make test                    # whole suite (unit, eval harness, doc checks); no key needed
 make serve                   # uvicorn verifier.api:app on :8000

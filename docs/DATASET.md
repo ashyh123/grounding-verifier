@@ -136,6 +136,11 @@ a model or a threshold.
 * Technical documentation in English only; no multi-hop arithmetic, no tables, no non-English text.
 * The empty-context cases are solved by construction (no passages ⇒ UNSUPPORTED), so they inflate
   UNSUPPORTED recall for every method that follows the contract. They test robustness, not discrimination.
+* UNSUPPORTED is 16 of 150 gold claims (10.7 %), so per-label F1 for it rests on few examples, and part of
+  it comes from the empty-context cases above.
+* 11 cases are tagged `multi_passage` because their evidence is spread across passages, but only 3
+  individual gold claims need evidence from two or more passages. Cross-passage synthesis at the claim
+  level is under-tested.
 * `UNSUPPORTED` is the thinnest class (16 claims), so its F1 is the noisiest column of the report.
 * Answers are written to be verifiable from the passages, i.e. claim decomposition is never
   adversarial here; a claim that cannot be checked without world knowledge is not in the set.
