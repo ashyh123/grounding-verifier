@@ -1,0 +1,86 @@
+{
+  "split": "dev",
+  "oracle": false,
+  "n_cases": 26,
+  "prompt_version": "v2",
+  "methods": {
+    "optimized": [
+      {
+        "n_cases": 26,
+        "errors": 0,
+        "answer_level": {
+          "p": 1.0,
+          "r": 1.0,
+          "f1": 1.0,
+          "acc": 1.0
+        },
+        "decomposition": {
+          "recall": 0.9887640449438202,
+          "precision": 0.9263157894736842
+        },
+        "sentence_coverage": 0.971830985915493,
+        "fused_claim_rate": 0.042105263157894736,
+        "claim_accuracy_matched": 0.9772727272727273,
+        "claim_accuracy_all_gold": 0.9662921348314607,
+        "macro_f1": 0.9542577413479053,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 1.0,
+            "r": 0.9591836734693877,
+            "f1": 0.9791666666666666
+          },
+          "CONTRADICTED": {
+            "p": 0.967741935483871,
+            "r": 1.0,
+            "f1": 0.9836065573770492
+          },
+          "UNSUPPORTED": {
+            "p": 0.9,
+            "r": 0.9,
+            "f1": 0.9
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 47,
+            "UNSUPPORTED": 1,
+            "MISSED": 1
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 30
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 9,
+            "CONTRADICTED": 1
+          }
+        },
+        "per_tag_accuracy": {
+          "comparison_flip": 1,
+          "condition_swap": 1,
+          "empty_context": 1,
+          "entity_swap": 1,
+          "extrinsic": 0.833,
+          "extrinsic_true_world": 1,
+          "multi_passage": 0.833,
+          "negation_flip": 1,
+          "number_off": 1,
+          "paraphrase": 0.977,
+          "quantifier_shift": 1,
+          "temporal_version": 1,
+          "unit_change": 1
+        },
+        "citation_precision": 0.8977272727272727,
+        "citation_recall": 0.9620253164556962,
+        "citation_passage_precision": 0.9659090909090909,
+        "citation_passage_recall": 1.0,
+        "raw_citation_invalid_rate": 0.0,
+        "latency_ms_p50": 5154.057875013677,
+        "latency_ms_p95": 7294.659000006504,
+        "avg_llm_calls": 4.576923076923077,
+        "avg_input_tokens": 4793.615384615385,
+        "avg_output_tokens": 671.4615384615385,
+        "avg_cost_usd": 0.00898656
+      }
+    ]
+  }
+}

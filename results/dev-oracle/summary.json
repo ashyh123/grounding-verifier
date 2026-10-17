@@ -1,0 +1,238 @@
+{
+  "split": "dev",
+  "oracle": true,
+  "n_cases": 26,
+  "prompt_version": "v3",
+  "methods": {
+    "baseline": [
+      {
+        "n_cases": 26,
+        "errors": 0,
+        "answer_level": {
+          "p": 1.0,
+          "r": 0.96,
+          "f1": 0.9795918367346939,
+          "acc": 0.9615384615384616
+        },
+        "decomposition": {
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "sentence_coverage": 0.971830985915493,
+        "fused_claim_rate": 0.0449438202247191,
+        "claim_accuracy_matched": 0.4943820224719101,
+        "claim_accuracy_all_gold": 0.4943820224719101,
+        "macro_f1": 0.4538975698286929,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 0.8484848484848485,
+            "r": 0.5714285714285714,
+            "f1": 0.6829268292682927
+          },
+          "CONTRADICTED": {
+            "p": 0.875,
+            "r": 0.23333333333333334,
+            "f1": 0.3684210526315789
+          },
+          "UNSUPPORTED": {
+            "p": 0.1875,
+            "r": 0.9,
+            "f1": 0.31034482758620696
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "UNSUPPORTED": 20,
+            "SUPPORTED": 28,
+            "CONTRADICTED": 1
+          },
+          "CONTRADICTED": {
+            "UNSUPPORTED": 19,
+            "CONTRADICTED": 7,
+            "SUPPORTED": 4
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 9,
+            "SUPPORTED": 1
+          }
+        },
+        "per_tag_accuracy": {
+          "comparison_flip": 0.333,
+          "condition_swap": 0.167,
+          "empty_context": 1,
+          "entity_swap": 0.25,
+          "extrinsic": 0.833,
+          "extrinsic_true_world": 1,
+          "multi_passage": 0.167,
+          "negation_flip": 0.125,
+          "number_off": 0.5,
+          "paraphrase": 0.628,
+          "quantifier_shift": 0,
+          "temporal_version": 0.5,
+          "unit_change": 0
+        },
+        "citation_precision": 0.9428571428571428,
+        "citation_recall": 0.9428571428571428,
+        "citation_passage_precision": 1.0,
+        "citation_passage_recall": 1.0,
+        "raw_citation_invalid_rate": 0.0,
+        "latency_ms_p50": 0.1866249949671328,
+        "latency_ms_p95": 0.4787079815287143,
+        "avg_llm_calls": 0,
+        "avg_input_tokens": 0,
+        "avg_output_tokens": 0,
+        "avg_cost_usd": 0.0
+      }
+    ],
+    "minimal": [
+      {
+        "n_cases": 26,
+        "errors": 0,
+        "answer_level": {
+          "p": 1.0,
+          "r": 1.0,
+          "f1": 1.0,
+          "acc": 1.0
+        },
+        "decomposition": {
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "sentence_coverage": 0.971830985915493,
+        "fused_claim_rate": 0.0449438202247191,
+        "claim_accuracy_matched": 1.0,
+        "claim_accuracy_all_gold": 1.0,
+        "macro_f1": 1.0,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 1.0,
+            "r": 1.0,
+            "f1": 1.0
+          },
+          "CONTRADICTED": {
+            "p": 1.0,
+            "r": 1.0,
+            "f1": 1.0
+          },
+          "UNSUPPORTED": {
+            "p": 1.0,
+            "r": 1.0,
+            "f1": 1.0
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 49
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 30
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 10
+          }
+        },
+        "per_tag_accuracy": {
+          "comparison_flip": 1,
+          "condition_swap": 1,
+          "empty_context": 1,
+          "entity_swap": 1,
+          "extrinsic": 1,
+          "extrinsic_true_world": 1,
+          "multi_passage": 1,
+          "negation_flip": 1,
+          "number_off": 1,
+          "paraphrase": 1,
+          "quantifier_shift": 1,
+          "temporal_version": 1,
+          "unit_change": 1
+        },
+        "citation_precision": 0.9529411764705882,
+        "citation_recall": 1.0,
+        "citation_passage_precision": 0.9647058823529412,
+        "citation_passage_recall": 1.0,
+        "raw_citation_invalid_rate": 0.0,
+        "latency_ms_p50": 3966.138999996474,
+        "latency_ms_p95": 6175.954582984559,
+        "avg_llm_calls": 1,
+        "avg_input_tokens": 700.7307692307693,
+        "avg_output_tokens": 373.34615384615387,
+        "avg_cost_usd": 0.002403415384615385
+      }
+    ],
+    "optimized": [
+      {
+        "n_cases": 26,
+        "errors": 0,
+        "answer_level": {
+          "p": 1.0,
+          "r": 1.0,
+          "f1": 1.0,
+          "acc": 1.0
+        },
+        "decomposition": {
+          "recall": 1.0,
+          "precision": 1.0
+        },
+        "sentence_coverage": 0.971830985915493,
+        "fused_claim_rate": 0.0449438202247191,
+        "claim_accuracy_matched": 1.0,
+        "claim_accuracy_all_gold": 1.0,
+        "macro_f1": 1.0,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 1.0,
+            "r": 1.0,
+            "f1": 1.0
+          },
+          "CONTRADICTED": {
+            "p": 1.0,
+            "r": 1.0,
+            "f1": 1.0
+          },
+          "UNSUPPORTED": {
+            "p": 1.0,
+            "r": 1.0,
+            "f1": 1.0
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 49
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 30
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 10
+          }
+        },
+        "per_tag_accuracy": {
+          "comparison_flip": 1,
+          "condition_swap": 1,
+          "empty_context": 1,
+          "entity_swap": 1,
+          "extrinsic": 1,
+          "extrinsic_true_world": 1,
+          "multi_passage": 1,
+          "negation_flip": 1,
+          "number_off": 1,
+          "paraphrase": 1,
+          "quantifier_shift": 1,
+          "temporal_version": 1,
+          "unit_change": 1
+        },
+        "citation_precision": 0.8709677419354839,
+        "citation_recall": 0.9753086419753086,
+        "citation_passage_precision": 0.946236559139785,
+        "citation_passage_recall": 1.0,
+        "raw_citation_invalid_rate": 0.010752688172043012,
+        "latency_ms_p50": 2746.881500002928,
+        "latency_ms_p95": 3806.651791994227,
+        "avg_llm_calls": 3.3461538461538463,
+        "avg_input_tokens": 3161.6923076923076,
+        "avg_output_tokens": 558.1538461538462,
+        "avg_cost_usd": 0.006383723076923077
+      }
+    ]
+  }
+}
