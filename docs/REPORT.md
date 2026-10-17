@@ -238,10 +238,11 @@ what that case tests. A whole-dataset read-back audit now agrees with 149/150 la
 
 ## Next steps
 
-1. **v5 decomposition**, falsifiable target: keep the sentence-coverage mapping but state the exception
-   explicitly ("a sentence with no factual content produces no claim"), and require the **fused-claim
-   rate** to fall below 0.096 on dev before keeping it. The rule that failed once is not to be rewritten
-   without a new failure target.
+1. **v5 decomposition**, falsifiable target: keep the sentence-coverage mapping (which measurably worked:
+   coverage 0.972 → 0.986, fusion 0.043 → 0.022) but state the exception explicitly ("a sentence with no
+   factual content produces no claim"), and keep it only if `no-claims-17` returns an empty list again
+   and the corrected fused-claim rate stays at or below v4's 0.022. Its motivating example came from the
+   test split; see the protocol note in the log.
 2. **A second human annotator** on a 30 % sample, to replace the model-based audit with real
    inter-annotator agreement, and a second provider for the comparison.
 3. **A cheaper batched mode**: the pipeline's cost is dominated by one call per claim; batching small

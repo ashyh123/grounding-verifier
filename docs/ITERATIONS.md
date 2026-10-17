@@ -272,7 +272,8 @@ restarts" exception as SUPPORTED, which is the case's whole point.
   went from the correct empty output to one fabricated UNSUPPORTED claim (answer-level F1 1.000 → 0.980),
   latency +23 %, cost +12 %, and the fusion improvement did not offset that regression. v4 stays in the
   repository (prompt set and schema) for reproducibility, and `DEFAULT_PROMPT_VERSION` remains `v3`, so
-  the held-out final run did not need repeating.
+  the held-out final run did not need repeating. Its motivating example came from the test split; see the
+  protocol note above.
 - **Next candidate (v5):** v4's coverage instrument worked (coverage up, fusion halved) and only its
   priming of the no-claims case failed, so the successor is v4 plus one explicit exception — *a sentence
   with no factual content maps to an empty claim list and must not produce a claim*. Keep condition,
