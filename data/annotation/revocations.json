@@ -1,0 +1,97 @@
+{
+  "date": "2026-10-19",
+  "design_version": "2.3",
+  "files": [
+    {
+      "original": "decisions_round1.jsonl",
+      "archive": "decisions_round1.revoked-model-batch.jsonl",
+      "sha256": "15e840926476200f9cd6ceeea643e2d48672d7da127983342e46218147dfd483"
+    },
+    {
+      "original": "prereview.json",
+      "archive": "prereview.revoked-deepseek.json",
+      "sha256": "0d7057d0715a47b66d20a451de61e0ba74a1eaf9360f0fba2c896ae3e953ad8d"
+    },
+    {
+      "original": "zh_cache.json",
+      "archive": "zh_cache.revoked-deepseek.json",
+      "sha256": "3a5dbb05824bb40505c8ce5061c18e7e2c99ed6dc385e5bc3444917c39861634"
+    },
+    {
+      "original": "drafts.jsonl",
+      "archive": "drafts.revoked-pilot.jsonl",
+      "sha256": "72316db4dab50ce12c4ff3b2eb6067749f391351f04af7d4c975a2ec09b084ea"
+    },
+    {
+      "original": "candidates.jsonl",
+      "archive": "candidates.revoked-v2.1.jsonl",
+      "sha256": "9e815130d0cd1c4874cfdbc672f3be9bbd7de7b0783def176889a0f8edb35aec"
+    },
+    {
+      "original": "selection.json",
+      "archive": "selection.revoked-v2.1.json",
+      "sha256": "3da9769d5dbcbb3195f2d1aa2ada6a3645a723d46b3ee5d9539374ff3747ed86"
+    },
+    {
+      "original": "triage.json",
+      "archive": "triage.revoked-v2.1.json",
+      "sha256": "b92b47a3bd34ce4d7600d36d5666dc67a15686b1d55cc1fc76babf17fe143171"
+    },
+    {
+      "original": "decisions_round1.jsonl",
+      "archive": "decisions_round1.revoked-mimo-review.jsonl",
+      "sha256": "40c49c61914d4e90aff21d53b722c9be6d86d8fce964552880c447aa13415f9f",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.146060+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    },
+    {
+      "original": "pilot5_review_20261020.jsonl",
+      "archive": "pilot5_review_20261020.revoked-mimo-review.jsonl",
+      "sha256": "ce567b342fa8be578d9ea664ab0ab91f2c7ede5f56392f74c7c7827faeccb57f",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.146475+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    },
+    {
+      "original": "human_confirmations.jsonl",
+      "archive": "human_confirmations.revoked-mimo-review.jsonl",
+      "sha256": "57faf37737c056e1ca78a035bf17e347f326ad49920497d57d1ee4555b0b731c",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.146559+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    },
+    {
+      "original": "disagreements.jsonl",
+      "archive": "disagreements.revoked-mimo-review.jsonl",
+      "sha256": "d599dede1f31012700cdba66d9ee40f5b1d2ce250754cbe676b71bc5e4f722b5",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.146700+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    },
+    {
+      "original": "adjudication_notes.jsonl",
+      "archive": "adjudication_notes.revoked-mimo-review.jsonl",
+      "sha256": "0e8ab51ef3865796b9b3b87ab553987912ce0efb7fc4c05b3474f6433bde1a77",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.146773+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    },
+    {
+      "original": "adjudication_suggestions.jsonl",
+      "archive": "adjudication_suggestions.revoked-mimo-review.jsonl",
+      "sha256": "25a38b6a911acaa9739d9e9584621faf8c71ad13fbc47328fb9cc8c8eb625078",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.146938+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    },
+    {
+      "original": "adjudication_zh.json",
+      "archive": "adjudication_zh.revoked-mimo-review.json",
+      "sha256": "95ebdc708ac1896ab184903aa03478bfe09c33b44d3c589f2a0b5af053078fb4",
+      "design_version": "2.3",
+      "revoked_at": "2026-10-19T16:48:25.147092+00:00",
+      "reason": "mimo-v2.6-pro review reused the drafting model and saw upstream labels; bulk confirmation is not an independent human judgment"
+    }
+  ]
+}

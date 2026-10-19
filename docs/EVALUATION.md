@@ -1,5 +1,9 @@
 # Evaluation method
 
+**2026-10-19 v2.2 scoring correction:** the alignment guards and grouped metrics below are
+implemented on `eval-v2`. Published summaries and historical numbers remain unchanged until the
+rescore comparison is reviewed. No hard-test evaluation is authorised by this change.
+
 How the three verifiers are measured, what every number means, and which of them can be trusted for
 what. Dataset contents and labelling rules live in [DATASET.md](DATASET.md); the measured results are in
 [REPORT.md](REPORT.md); the version-by-version history in [ITERATIONS.md](ITERATIONS.md).
@@ -30,7 +34,9 @@ make eval-test    # held-out split, 3 runs end-to-end + 3 runs oracle → result
 uv run python -m eval.run --methods minimal optimized --split dev --runs 3 --prompt-version v3 --out results/dev-v3-x3
 uv run python -m eval.report results/dev-v3-x3                  # comparison table
 uv run python -m eval.report results/dev-v3-x3 --failures optimized   # per-case error listing
-uv run python -m eval.run --rescore results/dev-v3-x3           # recompute metrics from saved predictions
+# Recompute only in an independent copy until changed historical numbers have been reviewed:
+cp -R results/dev-v3-x3 /tmp/dev-v3-x3-rescore
+uv run python -m eval.run --rescore /tmp/dev-v3-x3-rescore
 ```
 
 `eval/run.py` writes one JSONL per run (one line per case: `id`, `claims`, `meta`, or `error`) plus
@@ -44,15 +50,90 @@ dataset change, and scoring it would produce numbers that were never measured.
 
 ## Alignment: how a predicted claim meets a gold claim
 
-Predicted claims are matched to gold claims with `rapidfuzz.token_set_ratio` in a Hungarian assignment
-(`scipy.optimize.linear_sum_assignment`, threshold 60, `verifier/align.py`). Consequences:
+Predicted claims use `rapidfuzz.token_set_ratio` with threshold 60. Before the Hungarian
+assignment, a candidate pair is excluded when its numeric sets or explicit negation presence differ.
+Only admissible edges enter the assignment: it maximises matched cardinality first, then total
+similarity. This prevents a blocked or sub-threshold edge from stealing a valid match.
 
-* a verifier is not punished for splitting one gold claim into two, or for rewording one — the sibling
-  claim aligns as long as it is recognisably the same fact;
-* gold claims nobody matched are counted as **`MISSED`** in the confusion matrix; they lower recall
-  rather than being silently dropped;
-* `oracle=True` mode skips alignment entirely: gold claims are fed in order, so pair *i* is compared with
-  pair *i*.
+- Numbers retain standalone signs and dotted versions; thousands separators are removed (`1,000`
+  and `1000` agree). Hyphens in identifiers such as AES-256 and date separators are not negative signs.
+  Number words, unit conversion and implicit quantities are not normalised.
+- Explicit English negation includes not/no/never/cannot/without/neither/nor and n't contractions,
+  including curly apostrophes. Presence is compared; negation scope and double negation are not parsed.
+- `guard_rejected_pairs` counts **all threshold-passing candidate edges rejected by the guards**,
+  not just selected assignment edges. Multiple rejected edges can involve the same claim, so this
+  count need not equal omissions or extra predictions.
+- Unmatched gold is `MISSED`; unmatched predictions are counted as extra outputs. An unmatched
+  prediction with an admissible edge is a *lexical duplicate candidate*; the remaining unmatched
+  outputs are counted as added predictions. These labels do not prove semantic duplication/novelty.
+- `oracle=True` still compares gold-fed claims by position, skips alignment, and records zero guard
+  rejections. Oracle results remain a label-classification diagnostic.
+
+The tests include changed and missing numbers, negation flips, condition deletion that removes a
+negator, partial compound coverage that drops a number, duplicate outputs and new outputs. **The
+last two guarded omissions do not establish a general solution for dropped conditions or partial
+claims.** If number sets and negation presence remain unchanged, token-set similarity can still
+accept a non-equivalent statement. Automatic alignment remains approximate and requires the planned
+human semantic audit. The guard can also reject valid paraphrases (e.g. a number word vs a digit).
+
+## User-approved scoring units (2026-10-19)
+
+`data/eval.jsonl` remains byte-identical. Its sibling `data/eval.scoring_units.jsonl` is a separate,
+append-only approval registry. Evidence additions are appended as complete revisions linked to the
+preceding approval line by `supersedes_sha256`; earlier approvals are never overwritten. A revision
+may update evidence, but cannot silently change approved unit texts or verdicts. The latest active
+units must each have nonempty evidence that is an exact substring of the indexed context. The user
+has approved two SUPPORTED units for the compound parent
+in `kafka-retention-11`: the default retention-check interval is 300000 milliseconds, and deletion
+is not immediate. This is a scoring decomposition, not a replacement of the original gold record.
+
+The loader checks the full dataset SHA256, case ID, exact parent text/verdict, explicit user approval,
+unique nonempty unit texts, and SUPPORTED labels for parent and units. It refuses stale/duplicate
+registrations and non-SUPPORTED units; this first implementation does not infer sublabels for C/U
+parents. Unregistered gold claims keep their original scoring units. Registration metadata lives
+outside dataset JSON and is not silently imported from model-produced case fields.
+
+Scoring first preserves strict one-to-one matches to complete original parents. For still-unmatched,
+registered parents only, it matches unused predictions to the approved units using **the same numeric,
+negation and similarity checks**. Every prediction is used once across both stages. A parent is
+covered only if all its units match; all matched child labels must be SUPPORTED for it to be correct.
+A wrong child label makes that parent wrong (C takes precedence over U); a missing child makes it
+MISSED. Correctly aligned parts of an incomplete parent still count as used predictions, but earn
+no complete-parent coverage or accuracy credit. No matching objective uses predicted verdict labels.
+
+- Gold count, all-gold accuracy, confusion and grouped metrics stay at the original **parent** level.
+- Decomposition recall = fully covered parents / original gold parents. `matched_pairs` now counts
+  fully covered parents, including approved combinations, rather than individual child matches.
+- Decomposition precision = **used predictions / all predictions**. `used_predictions` exposes this
+  separate numerator; used child outputs are not penalised as extra predictions. Remaining extra,
+  duplicate-candidate and added-candidate counts exclude all used outputs.
+- Guard counts include rejected high-similarity edges in both the direct and child stages. They remain
+  diagnostic candidate-edge counts, not rejected-parent or semantic-error counts.
+- A split prediction's citations are compared **only with its matched unit's evidence**; an exact
+  quotation from the other unit is not automatically accepted. Whole-parent and oracle predictions
+  use the union of the parent's approved unit evidence; ordinary unregistered parents retain their
+  original gold evidence. The base dataset is not rewritten.
+- A predicted quotation must exactly equal its declared context slice before it can earn strict or
+  passage credit. Invalid/missing quote text, bad offsets and wrong indices stay in the prediction
+  denominator but get zero credit. There is no normalised/fuzzy repair in citation scoring.
+- Citation precision counts distinct citations per predicted claim, retaining their attribution.
+  Recall deduplicates reference spans within each parent and requires a >=50% overlap from a valid
+  citation assigned to that reference's unit (or the full parent). Cross-unit swapping cannot gain
+  credit just because the two quotes occur in the same passage. Removing a citation reduces recall.
+- `citation_counts` exposes predicted/hit, gold/gold_hit and invalid-final-citation counts. The invalid
+  count is separate from `raw_citation_invalid_rate`, which still comes from the original run metadata.
+- Oracle keeps original parent order, labels and decomposition; no lexical guard or child expansion
+  is applied. Its citation metrics can change when the approved reference evidence is completed,
+  just like end-to-end metrics. Reports disclose the full registry SHA256; freeze the append-only
+  registry alongside the scoring code.
+
+For Kafka, the split outputs match the number unit and negation unit separately, cover one parent,
+and earn one parent point. `600000` cannot match the number unit; `Deletion is immediate` cannot
+match the negated unit. Keeping the original complete sentence also remains a valid direct match.
+The first unit's reference is `log.retention.check.interval.ms defaults to 300000 milliseconds`;
+the second is `segments are not deleted the moment a limit is exceeded`. Both are exact substrings
+of passage 1. This completes this parent's scoring evidence without changing its labels, answer or
+context. There is no branch for the Kafka case ID or a particular model in the scoring implementation.
 
 ## Metrics
 
@@ -63,14 +144,37 @@ Predicted claims are matched to gold claims with `rapidfuzz.token_set_ratio` in 
 | Claim accuracy (matched only) | correct verdicts ÷ matched pairs | verdict quality without decomposition loss |
 | Macro-F1 (3 verdicts) | unweighted mean of per-label F1 | the number that exposes a method collapsing on one class |
 | F1 SUPPORTED / CONTRADICTED / UNSUPPORTED | per-label P/R/F1 over the confusion matrix | which boundary the method gets wrong |
-| Decomposition recall / precision | matched pairs ÷ gold claims, and ÷ predicted claims | recall = claims missed; precision < 1 ≈ over-splitting |
+| Decomposition recall / precision | fully covered parents ÷ gold parents; used predictions ÷ all predictions | incomplete parents lower recall; unused output lowers precision |
+| Guard-rejected candidate pairs | threshold-passing candidate edges rejected by numeric / negation checks across direct and child stages | a diagnostic edge count, not a count of semantic errors |
+| Missed / extra / duplicate / added counts | unmatched gold; unmatched predictions; extra predictions with an admissible edge; remaining extra predictions | all counts are approximate lexical diagnostics |
 | **Answer sentence coverage** | share of the answer's sentences matched by some predicted claim (≥60 token-set) | did every sentence of the answer reach the verifier — measured against the answer, no labels needed |
 | **Fused claim rate** | share of predicted claims that carry ≥2 distinctive content words from each of two different answer sentences | did a claim swallow two sentences into one, hiding the one it swallowed. A claim that *is* an answer sentence scores zero by construction; the earlier similarity-based version had an ~11 % false-positive floor (the baseline scored 0.113 while being unable to fuse) |
-| Citation precision / recall | predicted spans overlapping any gold evidence span; recall additionally needs ≥50 % coverage of the gold span | whether the citation points at the evidence — **annotator-strict**: a different sentence of the right passage counts as a miss |
+| Citation precision / recall | exact valid predicted quotes overlapping their assigned unit/parent evidence; recall additionally needs ≥50 % gold-span coverage | evidence-region matching, not a general proof of semantic sufficiency |
 | Citation precision / recall (right passage) | same question, credit if the cited passage is one of the annotated evidence passages | the annotation-taste-free version of the previous row |
 | Raw citation invalid rate | invalid citations ÷ raw citations **before** repair | how sloppy the model is on its own — the repair must not hide this |
 | Latency p50 / p95 | per-case wall clock at `--concurrency 4` | not a throughput measurement |
 | Input / output tokens per case, calls per case, cost per case | from `meta`, summed over retries separately | cost proxy; cost = tokens × the `.env` prices |
+
+## Grouped claim metrics
+
+`summary.json` now carries `groups` and the markdown report renders each dimension with explicit
+case and gold-claim denominators, matched count, all-gold/matched accuracy, recall, per-label P/R/F1,
+macro-F1 and confusion counts. Every group uses the **same full-case parent outcome** as the main table;
+there is no second alignment on a filtered gold subset. Failed/missing predictions count as missed
+gold within each applicable group. Groups contain cases with at least one gold claim; a case can
+appear in both claim-level multi-passage groups.
+
+| Dimension | Rule |
+|---|---|
+| task | ragtruth_summary → Summary, ragtruth_qa → QA, ragtruth_data2txt → Data2txt; otherwise unknown |
+| difficulty | case-level tags + difficulty_tags; subtle takes priority over evident for mixed cases; otherwise clean / unknown |
+| context_length_words | whitespace word count of final passages: 0–399 / 400–799 / 800+ |
+| multi_passage | true only for an explicit gold-claim multi_passage tag; case tags or multiple evidence passages alone do not establish complementary evidence |
+
+Group precision over *predicted* claims is not reported: unmatched outputs have no reliable
+claim-level group assignment. Historical synthetic cases without RAGTruth metadata stay unknown;
+this scoring change does not invent task or evident/subtle labels. Preserved summaries without new
+metrics render N/A in those rows until approved rescoring replaces them.
 
 ## Oracle mode: separating "judged wrongly" from "checked the wrong text"
 
@@ -93,7 +197,8 @@ run exists.
 
 1. add the counter to `eval/metrics.compute` (pure function, no I/O);
 2. add a row to `eval/report.ROWS`;
-3. `uv run python -m eval.run --rescore <dir>` for every historical run — no provider calls.
+3. copy every historical run to a separate directory, run `--rescore` there, compare existing numeric
+   fields, and stop for user review if published numbers change — no provider calls or overwrite.
 
 That is how answer sentence coverage and the fused-claim rate were added when prompt v4 needed them
 measured, and how the cost column was filled in after real prices replaced the placeholder zeros.
@@ -116,3 +221,13 @@ measured, and how the cost column was filled in after real prices replaced the p
   sentence coverage, calls and cost — not on claim accuracy alone.
 * **The empty-context cases are solved by construction** (no passages ⇒ UNSUPPORTED), so they inflate
   UNSUPPORTED recall for every method and test robustness, not discrimination.
+
+## RAGTruth v2.3 references without located evidence
+
+`GoldClaim.label_source=ragtruth_human` requires explicit `evidence_status=exact|none`.
+`none` requires empty evidence and permits S/C labels without a reference quote. These claims
+remain in verdict accuracy, decomposition and confusion denominators, but both their gold evidence
+and their aligned predictions' citations are excluded from citation precision/recall (strict and
+passage variants). `exact` requires nonempty verbatim evidence. Historical references keep their
+existing evidence requirement. The aggregate raw-provider citation-invalid diagnostic is unchanged.
+No historical result directory is rescored or overwritten by this change.

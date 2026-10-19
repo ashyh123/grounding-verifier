@@ -1,0 +1,488 @@
+{
+ "seed": 20261019,
+ "audit_rate": 0.1,
+ "min_confidence": 0.6,
+ "counts": {
+  "auto_candidate": 27,
+  "must_review": 10,
+  "audit": 3
+ },
+ "total": 40,
+ "reasons": {
+  "models_disagree": 10
+ },
+ "human_minutes": 11,
+ "coverage": {
+  "human_read": 13,
+  "model_accepted": 27,
+  "human_share": 0.325
+ },
+ "claims": [
+  {
+   "claim_id": "ragtruth-1698-c1",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.72,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-1698-c2",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-1698-c3",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "CONTRADICTED",
+   "confidence": 0.78,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->CONTRADICTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-1698-c4",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-1698-c5",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.93,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-1698-c6",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.9,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-1698-c7",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-1698-c8",
+   "case_id": "ragtruth-1698",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.9,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-4298-c1",
+   "case_id": "ragtruth-4298",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.93,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-4298-c2",
+   "case_id": "ragtruth-4298",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-4298-c3",
+   "case_id": "ragtruth-4298",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-4298-c4",
+   "case_id": "ragtruth-4298",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.72,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-4298-c5",
+   "case_id": "ragtruth-4298",
+   "source": "ragtruth_summary",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.93,
+   "bucket": "audit",
+   "reasons": [
+    "random_audit_sample"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-13363-c1",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.6,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-13363-c2",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.93,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c3",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.97,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c4",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.9,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c5",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.97,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c6",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.93,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c7",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c8",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.85,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-13363-c9",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.8,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-13363-c10",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-13363-c11",
+   "case_id": "ragtruth-13363",
+   "source": "ragtruth_qa",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.85,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-7141-c1",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "audit",
+   "reasons": [
+    "random_audit_sample"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-7141-c2",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.93,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c3",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c4",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.9,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c5",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c6",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "audit",
+   "reasons": [
+    "random_audit_sample"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-7141-c7",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.9,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c8",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.95,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c9",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.85,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c10",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.8,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "ragtruth-7141-c11",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.8,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "ragtruth-7141-c12",
+   "case_id": "ragtruth-7141",
+   "source": "ragtruth_data2txt",
+   "split": "test",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.9,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "halueval-8027-c1",
+   "case_id": "halueval-8027",
+   "source": "halueval_summary",
+   "split": "dev",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "SUPPORTED",
+   "confidence": 0.72,
+   "bucket": "auto_candidate",
+   "reasons": []
+  },
+  {
+   "claim_id": "halueval-8027-c2",
+   "case_id": "halueval-8027",
+   "source": "halueval_summary",
+   "split": "dev",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.9,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "halueval-8027-c3",
+   "case_id": "halueval-8027",
+   "source": "halueval_summary",
+   "split": "dev",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.7,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  },
+  {
+   "claim_id": "halueval-8027-c4",
+   "case_id": "halueval-8027",
+   "source": "halueval_summary",
+   "split": "dev",
+   "draft_verdict": "SUPPORTED",
+   "suggestion_verdict": "UNSUPPORTED",
+   "confidence": 0.9,
+   "bucket": "must_review",
+   "reasons": [
+    "models_disagree(SUPPORTED->UNSUPPORTED)"
+   ]
+  }
+ ]
+}

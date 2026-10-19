@@ -1,0 +1,7 @@
+{
+  "completed_records": 8,
+  "completed_protocol_failures": 1,
+  "in_flight_requests_on_cancel": "at most 2; final responses and usage were not captured by the prior cancellation path",
+  "billing_totals": "reported totals sum observed provider usage and may omit interrupted requests",
+  "fix": "Non-structured completed evidence responses yield no reference and retain human labels; new provider failures drain in-flight calls before stopping."
+}

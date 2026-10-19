@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ragtruth-13105",
+    "retained_claims": 14,
+    "exact": 8,
+    "evidence_eligible": 9,
+    "exact_ratio": 0.8888888888888888,
+    "model_doubts": 4
+  },
+  {
+    "id": "ragtruth-15677",
+    "retained_claims": 6,
+    "exact": 4,
+    "evidence_eligible": 5,
+    "exact_ratio": 0.8,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-2426",
+    "retained_claims": 9,
+    "exact": 7,
+    "evidence_eligible": 8,
+    "exact_ratio": 0.875,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-66",
+    "retained_claims": 11,
+    "exact": 11,
+    "evidence_eligible": 11,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-9775",
+    "retained_claims": 20,
+    "exact": 2,
+    "evidence_eligible": 20,
+    "exact_ratio": 0.1,
+    "model_doubts": 1
+  }
+]

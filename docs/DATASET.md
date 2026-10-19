@@ -144,3 +144,41 @@ a model or a threshold.
 * `UNSUPPORTED` is the thinnest class (16 claims), so its F1 is the noisiest column of the report.
 * Answers are written to be verifiable from the passages, i.e. claim decomposition is never
   adversarial here; a claim that cannot be checked without world knowledge is not in the set.
+
+## RAGTruth v2.3 human-label pipeline
+
+The new hard dataset uses labels mapped directly from upstream RAGTruth human annotations,
+without a second human review: Conflict overlap → CONTRADICTED, Baseless overlap → UNSUPPORTED,
+no overlap → SUPPORTED, with Conflict taking precedence. Every retained reference will carry
+`label_source: ragtruth_human`. Models only decompose answers and locate evidence; they cannot
+assign or modify these labels. Upstream omissions and mistakes therefore remain possible.
+
+A partially overlapping claim is excluded if more than 20 answer-span characters lie outside the
+union of upstream fragments. A case is excluded if more than 30% of its claims are excluded.
+An upstream hallucination fragment overlapping no drafted claim requires one fresh decomposition
+by the same drafting model, without upstream labels in its prompt; if still uncovered, exclude the
+whole case as `source_label_uncovered`. No replacement cases are sampled. These exclusions may
+bias the retained dataset toward easier examples; reports must disclose the removed counts.
+
+For S/C claims, source evidence must be an exact substring, with offsets computed by the script.
+If no exact evidence is found, keep the human label with `evidence_status: none`; score its verdict
+accuracy but exclude it from citation precision and recall. An `exact` match establishes textual
+presence, not semantic sufficiency. Model doubts are logged, never converted into label changes.
+The original synthetic dataset retains its existing validation and scoring rules.
+
+The user approved expansion after the five-dev-case pilot. `data/eval_hard.jsonl` now contains
+all 30 selected cases and 368 retained claims (332 S / 6 C / 30 U), after excluding 10 partial-overlap
+claims; no whole cases were excluded or replaced. Dev: cases=10, claims=118 (102 S / 2 C / 14 U);
+test: cases=20, claims=250 (230 S / 4 C / 16 U). Test negative-label counts fall below the earlier
+30-per-class expectation; this is not evidence of a sufficiently hard or balanced benchmark.
+All ten exclusions removed C/U claims, demonstrating the bias risk described above.
+
+Exact references were located for 240/338 S/C claims (71.0%); the remaining 98 S/C references have
+no located evidence. The 35 doubt-log records comprise 31 model doubts/not-found reports and four
+unusable-output diagnostics; the latter are explicitly separate from semantic label doubts.
+Upstream-clean answers number 2 dev / 5 test; all-retained-S answers number 4 / 8 and may still
+contain excluded hallucinated assertions. Multi-passage evidence counts are 22 / 42; these do not
+establish that multi-passage reasoning is necessary. Audit and freeze metadata live under
+`data/annotation/`. See the [final statistics](../data/annotation/full-v2.3/report.md).
+No hard-test verifier has been run as part of this annotation/freeze workflow.
+See [annotation workflow](../annotation/README.md).

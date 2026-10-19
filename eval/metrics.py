@@ -170,7 +170,7 @@ def compute(cases: list[EvalCase], preds: dict[str, dict], oracle: bool = False)
                     "case_ids": set(), "confusion": {lab: Counter() for lab in LABELS}})
                 group["case_ids"].add(case.id)
                 group["confusion"][g.verdict.value][predicted_label] += 1
-            if ok:
+            if ok and g.evidence_status != 'none':
                 # Keep attribution: a split output may cite only its own unit's reference spans.
                 # Whole-parent/oracle outputs are compared with all approved evidence for that parent.
                 units = case._scoring_units.get(gi)

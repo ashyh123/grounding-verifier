@@ -1,308 +1,245 @@
-"""T7 — merge the two review rounds into `data/eval_hard.jsonl`, validate, and freeze.
+"""Merge v2.3 human-mapped runs, rechecking source labels and exact evidence offline.
 
-    uv run python -m annotation.merge                 # refuses while anything is unreviewed
-    uv run python -m annotation.merge --allow-partial # dev only, for the 5-case pilot
-
-Round 2 wins where it exists, round 1 otherwise. Refuses to write while any claim of a case it is
-about to emit has no decision, and lists the missing `claim_id`s instead of guessing. Also writes
-`data/annotation/disagreements.jsonl` (final label vs upstream annotation) and
-`data/annotation/audit.json` (how often round 2 overturned round 1 in the random sample).
-
-Freezing records the sha256 of the output in `data/annotation/freeze.json`. Nothing here runs a
-verifier: the hard test set is not shown to any method before the user freezes it.
+Failure modes: missing/extra/duplicate cases, altered originals, altered labels, uncompleted
+mapping, altered exclusions, missing/extra/error checkpoints, inexact quotes, output overwrite.
+Legacy review merging is archived in merge_review.py and is not part of this pipeline.
 """
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
-from collections import Counter
-from datetime import datetime, timezone
+from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any
+from statistics import mean, median
 
+from eval.dataset import EvalCase, validate
 from . import sources as S
-
-DRAFTS = S.ANNOTATION_DIR / "drafts.jsonl"
-ROUND1 = S.ANNOTATION_DIR / "decisions_round1.jsonl"
-ROUND2 = S.ANNOTATION_DIR / "decisions_round2.jsonl"
-ROUND2_QUEUE = S.ANNOTATION_DIR / "round2_queue.jsonl"
-OUT = S.ROOT / "data" / "eval_hard.jsonl"
-DISAGREEMENTS = S.ANNOTATION_DIR / "disagreements.jsonl"
-AUDIT = S.ANNOTATION_DIR / "audit.json"
-FREEZE = S.ANNOTATION_DIR / "freeze.json"
-
-VERDICTS = set(S.VERDICTS)
-# A case is only emitted when its split is fully reviewed; --allow-partial exists for the pilot.
-MIN_CASES_PER_SPLIT = 1
+from .find_evidence import EvidenceOutput, locate, request
+from .map_labels import map_case, read_jsonl, write_new
 
 
-def load_decisions(path: Path) -> dict[str, dict[str, Any]]:
-    out: dict[str, dict[str, Any]] = {}
-    if path.is_file():
-        for line in path.read_text(encoding="utf-8").splitlines():
-            if line.strip():
-                record = json.loads(line)
-                out[record["claim_id"]] = record
-    return out
+def digest(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def effective_decision(claim_id: str, r1: dict[str, dict], r2: dict[str, dict]) -> dict | None:
-    return r2.get(claim_id) or r1.get(claim_id)
+def unique(rows: list[dict], key: str) -> dict:
+    result = {r[key]: r for r in rows}
+    if len(result) != len(rows):
+        raise ValueError(f'duplicate {key}')
+    return result
 
 
-def case_claims(case: dict[str, Any], decisions: dict[str, dict[str, Any]]) -> tuple[list[dict], list[str]]:
-    """(gold claims, unreviewed claim ids) for one case, with splits/merges/deletes applied."""
-    gold: list[dict[str, Any]] = []
-    unreviewed: list[str] = []
-    for claim in case.get("claims") or []:
-        decision = decisions.get(claim["claim_id"])
-        if decision is None:
-            unreviewed.append(claim["claim_id"])
+def distribution(values: list[int]) -> dict:
+    return {'n': len(values), 'min': min(values) if values else None,
+            'median': median(values) if values else None,
+            'mean': mean(values) if values else None, 'max': max(values) if values else None}
+
+
+def verify_run(directory: Path, draft_files: list[Path], candidates: dict) -> tuple[list[dict], list[dict], list[dict], list[Path]]:
+    report = json.loads((directory / 'mapping-report.json').read_text())
+    matched = [p for p in draft_files if digest(p) == report['drafts_sha256']]
+    if len(matched) != 1:
+        raise ValueError('mapping must match exactly one original draft file SHA256')
+    source = unique(read_jsonl(matched[0]), 'id')
+    mapped = read_jsonl(directory / 'mapped.jsonl')
+    evidenced = read_jsonl(directory / 'evidenced.jsonl')
+    if set(source) != set(unique(mapped, 'id')) or set(source) != set(unique(evidenced, 'id')):
+        raise ValueError('run must account for every draft, including excluded cases')
+    redrafts_path = directory / 'redrafts.jsonl'
+    redrafts = unique(read_jsonl(redrafts_path), 'id') if redrafts_path.exists() else {}
+    if set(redrafts) - set(source):
+        raise ValueError('redraft outside source cases')
+    expected, exclusions = [], []
+    protected = ('source', 'split', 'context_passages', 'generated_answer', 'source_labels', 'source_group_id')
+    for cid, original in source.items():
+        candidate = candidates.get(cid)
+        if candidate is None or any(original[k] != candidate[k] for k in protected):
+            raise ValueError(f'{cid}: original candidate fields changed')
+        active = redrafts.get(cid, original)
+        if cid in redrafts:
+            before, _ = map_case(original)
+            if (before['label_mapping']['status'] != 'needs_redraft' or active.get('redraft_error')
+                    or any(active[k] != candidate[k] for k in protected)
+                    or active['provenance']['annotation_model'] != original['provenance']['annotation_model']):
+                raise ValueError(f'{cid}: invalid single redraft')
+        row, removed = map_case(active, redrafted=cid in redrafts)
+        expected.append(row)
+        exclusions.extend(removed)
+    if expected != mapped or exclusions != read_jsonl(directory / 'excluded.jsonl'):
+        raise ValueError('mapping/exclusions differ from recomputed upstream rules')
+    expected_by_id = unique(expected, 'id')
+    calls = read_jsonl(directory / 'evidence_calls.jsonl')
+    records = {}
+    for row in calls:
+        key = (row['case_id'], row['claim_id'])
+        if key in records or row.get('error'):
+            raise ValueError('duplicate or failed evidence checkpoint')
+        records[key] = row
+    wanted = set()
+    for case in evidenced:
+        baseline = copy.deepcopy(expected_by_id[case['id']])
+        if baseline['label_mapping']['status'] == 'needs_redraft':
+            raise ValueError('uncovered upstream label requires one redraft')
+        if baseline['label_mapping']['status'] == 'ready':
+            for claim in baseline['claims']:
+                key = (case['id'], claim['claim_id'])
+                wanted.add(key)
+                if key not in records:
+                    raise ValueError('missing evidence checkpoint')
+                record = records[key]
+                _, prompt_hash = request(baseline, claim)
+                if (record['verdict'] != claim['verdict'] or record['label_source'] != 'ragtruth_human'
+                        or record['provenance']['prompt_sha256'] != prompt_hash):
+                    raise ValueError('evidence checkpoint changed fixed label or prompt')
+                S.require_annotation_model(record['provenance']['model'], 'evidence model')
+                exact = []
+                if claim['verdict'] != 'UNSUPPORTED' and not record.get('protocol_error'):
+                    S.require_annotation_model(record['provenance']['response_model'], 'response model')
+                    data = EvidenceOutput.model_validate(record['raw_evidence']).model_dump()
+                    exact, rejected = locate(case['context_passages'], data['evidence'])
+                    if rejected != record['rejected_quotes']:
+                        raise ValueError('rejected quotes changed')
+                status = 'exact' if exact else 'none'
+                if record['evidence'] != exact or record['evidence_status'] != status:
+                    raise ValueError('evidence must be exactly re-derived from original quotes')
+                claim.update(evidence=exact, evidence_status=status,
+                             evidence_provenance=record['provenance'])
+        if baseline != case:
+            raise ValueError(f"{case['id']}: evidenced record changed source, mapping or claim fields")
+    if wanted != set(records):
+        raise ValueError('extra evidence checkpoint outside retained claims')
+    if read_jsonl(directory / 'model_doubts.jsonl') != [r for r in calls if r['doubt']]:
+        raise ValueError('doubts must match evidence journal')
+    inputs = [matched[0], *(directory / name for name in (
+        'mapped.jsonl', 'mapping-report.json', 'excluded.jsonl', 'evidenced.jsonl',
+        'evidence_calls.jsonl', 'model_doubts.jsonl'))]
+    if redrafts_path.exists():
+        inputs.append(redrafts_path)
+    return evidenced, exclusions, calls, inputs
+
+
+def build_case(case: dict) -> dict:
+    return {k: copy.deepcopy(case[k]) for k in (
+        'id', 'source', 'split', 'context_passages', 'generated_answer', 'generator_model',
+        'source_labels', 'context_words', 'difficulty_tags')}
+    # The caller attaches gold and provenance to avoid implicit review metadata.
+
+
+def assemble(candidates: list[dict], runs: list[Path], drafts: list[Path]) -> tuple[list[dict], dict]:
+    candidate_by_id = unique(candidates, 'id')
+    active, excluded, calls, inputs = [], [], [], []
+    for run in runs:
+        cases, removed, journal, files = verify_run(run, drafts, candidate_by_id)
+        active.extend(cases); excluded.extend(removed); calls.extend(journal); inputs.extend(files)
+    if set(unique(active, 'id')) != set(candidate_by_id):
+        raise ValueError('runs must cover exactly the selected candidate IDs; no replacement sampling')
+    result, dispositions = [], []
+    by_task, by_split, by_label = defaultdict(Counter), defaultdict(Counter), defaultdict(Counter)
+    joint = defaultdict(Counter)
+    for case in sorted(active, key=lambda c: c['id']):
+        keep = case['label_mapping']['status'] == 'ready'
+        reason = case['label_mapping']['exclusion_reason']
+        # Every active draft claim has exactly one disposition, including whole-case removal.
+        partial = [r['claim'] for r in excluded if r['case_id'] == case['id'] and r.get('claim')]
+        for claim in partial + case['claims']:
+            removed = claim in partial or not keep
+            why = 'partial_overlap' if claim in partial else reason
+            outcome = 'excluded' if removed else 'retained'
+            task, split, label = case['source'], case['split'], claim['verdict']
+            by_task[task][outcome] += 1; by_split[split][outcome] += 1; by_label[label][outcome] += 1
+            joint[(task, split, label)][outcome] += 1
+            if removed:
+                dispositions.append({'case_id': case['id'], 'claim_id': claim['claim_id'],
+                                     'source': task, 'split': split, 'verdict': label, 'reason': why})
+        if not keep:
             continue
-        if decision["action"] == "delete":
-            continue
-        text = (decision.get("claim_text") or claim["claim_text"]).strip()
-        verdict = S.normalize_verdict(decision.get("verdict"))
-        if verdict not in VERDICTS:
-            unreviewed.append(claim["claim_id"])
-            continue
-        evidence = [{"index": e["index"], "quote": e["quote"]}
-                    for e in decision.get("evidence") or []]
-        if verdict == "UNSUPPORTED":
-            evidence = []
-        if verdict != "UNSUPPORTED" and not evidence:
-            unreviewed.append(claim["claim_id"])
-            continue
-        entry: dict[str, Any] = {"claim_text": text, "verdict": verdict, "evidence": evidence}
-        if verdict != "UNSUPPORTED" and len({e["index"] for e in evidence}) >= 2:
-            entry["tags"] = ["multi_passage"]
-        gold.append(entry)
-        for extra in decision.get("extra_claims") or []:
-            if extra.strip():
-                # a split creates a claim the reviewer typed; it inherits the verdict and the
-                # evidence until the reviewer gives it its own decision
-                gold.append({"claim_text": extra.strip(), "verdict": verdict,
-                             "evidence": evidence,
-                             **({"tags": ["multi_passage"]}
-                                if verdict != "UNSUPPORTED"
-                                and len({e["index"] for e in evidence}) >= 2 else {})})
-    return gold, unreviewed
-
-
-def build_case(case: dict[str, Any], gold: list[dict[str, Any]],
-               rounds: dict[str, int]) -> dict[str, Any]:
-    tags = sorted(set(case.get("difficulty_tags") or []) |
-                  {t for g in gold for t in g.get("tags", [])})
-    if "multi_passage" in tags and not any(g.get("tags") == ["multi_passage"] for g in gold):
-        tags.remove("multi_passage")
-    return {
-        "id": case["id"],
-        "split": case["split"],
-        "tags": tags,
-        "context_passages": case["context_passages"],
-        "generated_answer": case["generated_answer"],
-        "gold_claims": gold,
-        "notes": (f"{case['source']}: {case['generator_model']}; "
-                  f"review rounds: {rounds.get(case['id'], 0)}; "
-                  f"upstream annotation kept in source_labels"),
-        "source": case["source"],
-        "source_labels": case["source_labels"],
-        "generator_model": case["generator_model"],
-        "context_words": case["context_words"],
-        "difficulty_tags": sorted(set(case.get("difficulty_tags") or [])),
-        "provenance": {
-            **case["provenance"],
-            "source_group": case["source_group_id"],
-            "annotation_origin": "human_reviewed",
-            "review_rounds": rounds.get(case["id"], 0),
-            "review_decisions": "data/annotation/decisions_round1.jsonl"
-                                + (", data/annotation/decisions_round2.jsonl" if rounds.get(case["id"], 0) > 1 else ""),
-        },
-    }
-
-
-def upstream_verdict(claim: dict[str, Any]) -> str | None:
-    if claim.get("upstream_label") in ("S", "NS"):
-        return {"S": "SUPPORTED", "NS": "UNSUPPORTED"}[claim["upstream_label"]]
-    overlaps = claim.get("overlapping_source_labels") or []
-    if any("Conflict" in lab["label_type"] for lab in overlaps):
-        return "CONTRADICTED"
-    if any("Baseless" in lab["label_type"] for lab in overlaps):
-        return "UNSUPPORTED"
-    if claim.get("needs_full_review"):
-        return None
-    return "SUPPORTED"
-
-
-def disagreements(cases: list[dict[str, Any]], drafts: dict[str, dict]) -> list[dict[str, Any]]:
-    """Final labels that differ from the original dataset's annotation."""
-    out: list[dict[str, Any]] = []
-    for case in cases:
-        draft = drafts.get(case["id"])
-        if not draft:
-            continue
-        by_text = {c["claim_text"].strip(): c for c in draft.get("claims") or []}
-        for gold in case["gold_claims"]:
-            source_claim = by_text.get(gold["claim_text"].strip())
-            if not source_claim:
-                continue
-            upstream = upstream_verdict(source_claim)
-            if upstream and upstream != gold["verdict"]:
-                out.append({"case_id": case["id"], "claim_text": gold["claim_text"],
-                            "upstream": upstream, "final": gold["verdict"],
-                            "upstream_detail": source_claim.get("overlapping_source_labels")
-                                               or source_claim.get("upstream_label")})
-    return out
-
-
-def audit_report(r2_queue: list[dict[str, Any]], r2: dict[str, dict]) -> dict[str, Any]:
-    sampled = [q for q in r2_queue if "random_10pct" in q.get("reasons", [])]
-    overturned = 0
-    checked = 0
-    for item in sampled:
-        decision = r2.get(item["claim_id"])
-        if decision is None:
-            continue
-        checked += 1
-        if decision.get("action") != "agree" or (
-                decision.get("verdict") and decision["verdict"] != item.get("round1_verdict")):
-            overturned += 1
-    rate = overturned / checked if checked else None
-    return {
-        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "random_sample_size": len(sampled),
-        "random_sample_reviewed": checked,
-        "overturned_in_sample": overturned,
-        "overturn_rate": rate,
-        "note": ("Share of the randomly re-checked round-1 agreements that round 2 changed. "
-                 "This is an estimate of round-1 label error, for docs/DATASET.md."),
-    }
-
-
-def target_report(cases: list[dict[str, Any]]) -> list[str]:
-    """Compare the result with the design doc §1 targets. Report, never adjust the data."""
-    import statistics
-    test = [c for c in cases if c["split"] == "test"]
-    claims = [g for c in test for g in c["gold_claims"]]
-    verdicts = Counter(g["verdict"] for g in claims)
-    multi = sum(1 for g in claims if len({e["index"] for e in g["evidence"]}) >= 2)
-    words = [c["context_words"] for c in test]
-    per_case = [len(c["gold_claims"]) for c in test]
-    lines = []
-    checks = [
-        ("test cases", len(test), "24"),
-        ("median context words", f"{statistics.median(words):.0f}" if words else "0", ">= 400"),
-        ("cases with >= 800 context words",
-         sum(1 for w in words if w >= 800), ">= 8 (one third of 24)"),
-        ("median gold claims per answer",
-         f"{statistics.median(per_case):.0f}" if per_case else "0", ">= 7"),
-        ("test CONTRADICTED", verdicts.get("CONTRADICTED", 0), ">= 30"),
-        ("test UNSUPPORTED", verdicts.get("UNSUPPORTED", 0), ">= 30"),
-        ("test claims needing >= 2 passages", multi, ">= 20"),
-    ]
-    for name, got, want in checks:
-        lines.append(f"  {name:<38}got {str(got):<8}target {want}")
-    return lines
-
-
-def main() -> None:
-    ap = argparse.ArgumentParser(description="T7: merge review decisions into the hard dataset")
-    ap.add_argument("--allow-partial", action="store_true",
-                    help="write with unreviewed claims (pilot only; default refuses)")
-    ap.add_argument("--no-freeze", action="store_true", help="do not write freeze.json")
-    args = ap.parse_args()
-
-    if not DRAFTS.is_file():
-        raise SystemExit(f"STOP: {S.rel(DRAFTS)} not found.")
-    drafts = {c["id"]: c for c in
-              (json.loads(line) for line in DRAFTS.read_text(encoding="utf-8").splitlines()
-               if line.strip())}
-    r1 = load_decisions(ROUND1)
-    r2 = load_decisions(ROUND2)
-    if not r1:
-        raise SystemExit(f"STOP: no round-1 decisions at {S.rel(ROUND1)}; "
-                         f"run the review page first.")
-
-    cases: list[dict[str, Any]] = []
-    rounds: dict[str, int] = {}
-    blocked: dict[str, list[str]] = {}
-    for case_id, case in drafts.items():
-        decisions = {}
-        used_rounds = 1
-        for claim in case.get("claims") or []:
-            decision = effective_decision(claim["claim_id"], r1, r2)
-            if decision:
-                decisions[claim["claim_id"]] = decision
-                if claim["claim_id"] in r2:
-                    used_rounds = 2
-        gold, unreviewed = case_claims(case, decisions)
-        if unreviewed:
-            blocked[case_id] = unreviewed
-            if not args.allow_partial:
-                continue
-        rounds[case_id] = used_rounds
-        cases.append(build_case(case, gold, rounds))
-
-    if blocked and not args.allow_partial:
-        print("STOP: refusing to build the dataset while claims are unreviewed.")
-        for case_id, ids in blocked.items():
-            print(f"  {case_id}: {len(ids)} unreviewed -> {ids[:6]}"
-                  f"{' ...' if len(ids) > 6 else ''}")
-        print(f"\nReview them (uv run python -m annotation.review_app --round 1), then re-run.\n"
-              f"For the 5-case pilot only, pass --allow-partial.")
-        raise SystemExit(4)
-
-    # the dataset must validate before anything is written
-    from eval.dataset import hard_summary, validate
-    from eval.dataset import EvalCase
-    validated = [EvalCase.model_validate(c) for c in cases]
-    errors = validate(validated)
+        row = build_case(case)
+        row.update(tags=list(case['difficulty_tags']), gold_claims=[
+            {k: copy.deepcopy(c[k]) for k in ('claim_id', 'claim_text', 'answer_spans', 'verdict',
+                'label_source', 'evidence_status', 'evidence', 'evidence_provenance')}
+            | ({'derived_from': c['derived_from']} if 'derived_from' in c else {}) for c in case['claims']],
+            notes='Labels mapped from RAGTruth human spans; no second human review.',
+            provenance={**case['provenance'], 'annotation_origin': 'ragtruth_human',
+                        'source_group': case['source_group_id'], 'design_version': '2.3',
+                        'secondary_human_review': False})
+        result.append(row)
+    errors = validate([EvalCase.model_validate(c) for c in result])
     if errors:
-        print("STOP: merged dataset is invalid:")
-        for e in errors[:20]:
-            print(f"  - {e}")
-        raise SystemExit(5)
+        raise ValueError('invalid merged dataset: ' + '; '.join(errors))
+    stats = {}
+    for split in ('dev', 'test'):
+        part = [c for c in result if c['split'] == split]
+        claims = [g for c in part for g in c['gold_claims']]
+        context = [c['context_words'] for c in part]
+        stats[split] = {'cases': len(part), 'claims': len(claims),
+            'labels': {lab: sum(g['verdict'] == lab for g in claims) for lab in S.VERDICTS},
+            'multi_passage_evidence_claims': sum(len({e['index'] for e in g['evidence']}) > 1 for g in claims),
+            'all_retained_labels_supported': sum(all(g['verdict'] == 'SUPPORTED' for g in c['gold_claims']) for c in part),
+            'upstream_clean_answers': sum(not c['source_labels']['labels'] for c in part),
+            'context_words': distribution(context),
+            'context_length_buckets': {name: sum(lo <= n < hi for n in context) for name, lo, hi in (
+                ('0-399', 0, 400), ('400-799', 400, 800), ('800+', 800, float('inf')))},
+            'answer_words': distribution([len(c['generated_answer'].split()) for c in part]),
+            'claims_per_case': distribution([len(c['gold_claims']) for c in part])}
+    gold = [g for c in result for g in c['gold_claims']]
+    eligible = sum(g['verdict'] != 'UNSUPPORTED' for g in gold)
+    exact = sum(g['evidence_status'] == 'exact' for g in gold)
+    audit = {'design_version': '2.3', 'label_source': 'ragtruth_human', 'secondary_human_review': False,
+             'selected_cases': len(candidates), 'retained_cases': len(result),
+             'retained_claims': len(gold), 'excluded_claims': len(dispositions),
+             'by_task': dict(by_task), 'by_split': dict(by_split), 'by_label': dict(by_label),
+             'by_task_split_label': [{'source': t, 'split': s, 'verdict': l, **counts}
+                                    for (t,s,l), counts in sorted(joint.items())],
+             'excluded_claim_details': dispositions,
+             'claim_exclusion_reasons': dict(Counter(r['reason'] for r in dispositions)),
+             'case_exclusion_reasons': dict(Counter(c['label_mapping']['exclusion_reason'] for c in active
+                                                    if c['label_mapping']['status'] == 'excluded')),
+             'excluded_cases': [{'id': c['id'], 'source': c['source'], 'split': c['split'],
+                                 'reason': c['label_mapping']['exclusion_reason']} for c in active
+                                if c['label_mapping']['status'] == 'excluded'],
+             'redrafted_cases': [c['id'] for c in active if c['label_mapping']['redraft_attempted']],
+             'evidence': {'exact_claims': exact, 'eligible_sc_claims': eligible,
+                          'sc_coverage': exact / eligible if eligible else None,
+                          'all_claim_coverage': exact / len(gold) if gold else None,
+                          'rejected_quotes': sum(len(r['rejected_quotes']) for r in calls)},
+             'model_doubts': sum(bool(r['doubt']) for r in calls),
+             'model_label_doubts_or_not_found': sum(bool(r['doubt']) and not r.get('protocol_error') for r in calls),
+             'unusable_model_outputs': sum(bool(r.get('protocol_error')) for r in calls),
+             'usage': {k: sum(r['provenance'][k] for r in calls)
+                       for k in ('calls', 'input_tokens', 'output_tokens')},
+             'splits': stats,
+             'input_files': {S.rel(p.resolve()): digest(p) for p in sorted(set(inputs))},
+             'limitations': ['Unreviewed upstream human labels can contain omissions or mistakes.',
+                            'Exclusions may bias retained cases toward easier examples.',
+                            'Exact quotation establishes presence, not semantic sufficiency.',
+                            'Multi-passage evidence does not establish necessary multi-passage reasoning.',
+                            'All-retained-S answers may still contain excluded hallucinated claims.']}
+    return result, audit
 
-    S.write_jsonl(OUT, cases)
-    dis = disagreements(cases, drafts)
-    S.write_jsonl(DISAGREEMENTS, dis)
-    r2_queue = [json.loads(line) for line in ROUND2_QUEUE.read_text(encoding="utf-8").splitlines()
-                if line.strip()] if ROUND2_QUEUE.is_file() else []
-    audit = audit_report(r2_queue, r2)
-    AUDIT.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-    print(f"dataset -> {S.rel(OUT)}: {len(cases)} case(s), "
-          f"{sum(len(c['gold_claims']) for c in cases)} gold claim(s)")
-    print(hard_summary(validated))
-    print("\nDesign-doc targets (reported, not tuned for):")
-    for line in target_report(cases):
-        print(line)
-    print(f"\ndisagreements with the upstream annotation: {len(dis)} -> "
-          f"{S.rel(DISAGREEMENTS)}")
-    print(f"round-2 audit: {audit['overturned_in_sample']}/{audit['random_sample_reviewed']} "
-          f"overturned ({audit['overturn_rate']}) -> {S.rel(AUDIT)}")
-
-    if not args.no_freeze:
-        sha = hashlib.sha256(OUT.read_bytes()).hexdigest()
-        freeze = {
-            "frozen_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "file": str(S.rel(OUT)),
-            "sha256": sha,
-            "cases": len(cases),
-            "claims": sum(len(c["gold_claims"]) for c in cases),
-            "splits": dict(Counter(c["split"] for c in cases)),
-            "decisions_round1_sha256": hashlib.sha256(ROUND1.read_bytes()).hexdigest()
-                                        if ROUND1.is_file() else None,
-            "decisions_round2_sha256": hashlib.sha256(ROUND2.read_bytes()).hexdigest()
-                                        if ROUND2.is_file() else None,
-            "note": "No verifier has been run on the test split as of this hash. Any change to "
-                    "the dataset after this point needs a new hash and a note in docs/ITERATIONS.md.",
-        }
-        FREEZE.write_text(json.dumps(freeze, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-        print(f"frozen: sha256 {sha[:16]} -> {S.rel(FREEZE)}")
-    print("\nNext: python -m eval.dataset data/eval_hard.jsonl")
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--runs', nargs='+', type=Path, required=True)
+    ap.add_argument('--drafts', nargs='+', type=Path, required=True)
+    ap.add_argument('--candidates', type=Path, default=S.ANNOTATION_DIR / 'candidates.jsonl')
+    ap.add_argument('--out', type=Path, default=S.ROOT / 'data/eval_hard.jsonl')
+    ap.add_argument('--audit', type=Path, default=S.ANNOTATION_DIR / 'audit.json')
+    args = ap.parse_args()
+    if args.out.exists() or args.audit.exists():
+        raise SystemExit('STOP: archive existing dataset/audit before creating a new version')
+    cases, audit = assemble(read_jsonl(args.candidates), args.runs, args.drafts)
+    audit['input_files'][S.rel(args.candidates.resolve())] = digest(args.candidates)
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.audit.parent.mkdir(parents=True, exist_ok=True)
+    write_new(args.out, cases)
+    audit['dataset_sha256'] = digest(args.out)
+    with args.audit.open('x', encoding='utf-8') as stream:
+        json.dump(audit, stream, ensure_ascii=False, indent=2); stream.write('\n')
+    print(json.dumps({k: audit[k] for k in ('selected_cases', 'retained_cases', 'retained_claims',
+          'excluded_claims', 'excluded_cases', 'evidence', 'model_doubts', 'splits')}, ensure_ascii=False, indent=2))
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

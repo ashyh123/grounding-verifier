@@ -1,0 +1,502 @@
+ragtruth-13363 ragtruth-13363-c5: SUPPORTED exact
+ragtruth-13363 ragtruth-13363-c6: SUPPORTED none
+ragtruth-13363 ragtruth-13363-c7: SUPPORTED exact
+ragtruth-13363 ragtruth-13363-c8: SUPPORTED exact
+ragtruth-13340 ragtruth-13340-c5: SUPPORTED none
+ragtruth-13363 ragtruth-13363-c9: SUPPORTED exact
+ragtruth-13363 ragtruth-13363-c10: UNSUPPORTED none
+ragtruth-1340 ragtruth-1340-c1: SUPPORTED exact
+ragtruth-13340 ragtruth-13340-c6: SUPPORTED exact
+ragtruth-14293 ragtruth-14293-c1: SUPPORTED exact
+ragtruth-14293 ragtruth-14293-c3: UNSUPPORTED none
+ragtruth-14293 ragtruth-14293-c4: UNSUPPORTED none
+ragtruth-1340 ragtruth-1340-c2: SUPPORTED exact
+ragtruth-14293 ragtruth-14293-c5: SUPPORTED exact
+ragtruth-14293 ragtruth-14293-c6: SUPPORTED exact
+ragtruth-14323 ragtruth-14323-c1: SUPPORTED exact
+ragtruth-14323 ragtruth-14323-c2: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c3: SUPPORTED exact
+ragtruth-14323 ragtruth-14323-c3: SUPPORTED exact
+ragtruth-13340 ragtruth-13340-c7: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c4: SUPPORTED exact
+ragtruth-14323 ragtruth-14323-c4: SUPPORTED exact
+ragtruth-13340 ragtruth-13340-c8: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c5: SUPPORTED exact
+ragtruth-13340 ragtruth-13340-c9: SUPPORTED exact
+ragtruth-13340 ragtruth-13340-c10: UNSUPPORTED none
+ragtruth-13340 ragtruth-13340-c11: UNSUPPORTED none
+ragtruth-13340 ragtruth-13340-c12: UNSUPPORTED none
+ragtruth-14323 ragtruth-14323-c5: CONTRADICTED none
+ragtruth-1340 ragtruth-1340-c6: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c1: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c7: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c2: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c3: SUPPORTED exact
+ragtruth-14323 ragtruth-14323-c6: CONTRADICTED exact
+ragtruth-1453 ragtruth-1453-c4: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c8: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c5: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c1: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c6: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c2: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c7: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c3: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c9: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c10: UNSUPPORTED none
+ragtruth-1453 ragtruth-1453-c8: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c9: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c4: SUPPORTED exact
+ragtruth-1340 ragtruth-1340-c11: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c10: SUPPORTED none
+ragtruth-1513 ragtruth-1513-c5: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c11: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c6: SUPPORTED none
+ragtruth-1513 ragtruth-1513-c7: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c12: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c8: SUPPORTED none
+ragtruth-1453 ragtruth-1453-c13: SUPPORTED none
+ragtruth-1513 ragtruth-1513-c9: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c14: SUPPORTED none
+ragtruth-1513 ragtruth-1513-c10: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c12: UNSUPPORTED none
+ragtruth-1340 ragtruth-1340-c12: SUPPORTED none
+ragtruth-1453 ragtruth-1453-c15: SUPPORTED none
+ragtruth-1513 ragtruth-1513-c13: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c16: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c14: SUPPORTED none
+ragtruth-1453 ragtruth-1453-c17: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c15: SUPPORTED exact
+ragtruth-1513 ragtruth-1513-c16: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c18: SUPPORTED exact
+ragtruth-16121 ragtruth-16121-c1: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c19: SUPPORTED none
+ragtruth-16121 ragtruth-16121-c2: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c20: SUPPORTED none
+ragtruth-15713 ragtruth-15713-c1: SUPPORTED exact
+ragtruth-16121 ragtruth-16121-c3: SUPPORTED exact
+ragtruth-16121 ragtruth-16121-c4: UNSUPPORTED none
+ragtruth-16121 ragtruth-16121-c5: UNSUPPORTED none
+ragtruth-16121 ragtruth-16121-c6: UNSUPPORTED none
+ragtruth-15713 ragtruth-15713-c3: SUPPORTED exact
+ragtruth-1453 ragtruth-1453-c21: SUPPORTED exact
+ragtruth-15713 ragtruth-15713-c4: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c1: SUPPORTED exact
+ragtruth-180 ragtruth-180-c1: SUPPORTED exact
+ragtruth-15713 ragtruth-15713-c5: SUPPORTED exact
+ragtruth-180 ragtruth-180-c3: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c4: SUPPORTED exact
+ragtruth-15713 ragtruth-15713-c6: SUPPORTED exact
+ragtruth-180 ragtruth-180-c4: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c5: SUPPORTED exact
+ragtruth-15713 ragtruth-15713-c7: SUPPORTED exact
+ragtruth-180 ragtruth-180-c5: SUPPORTED exact
+ragtruth-180 ragtruth-180-c6: SUPPORTED exact
+ragtruth-211 ragtruth-211-c1: SUPPORTED exact
+ragtruth-211 ragtruth-211-c2: SUPPORTED exact
+ragtruth-180 ragtruth-180-c7: SUPPORTED exact
+ragtruth-211 ragtruth-211-c3: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c6: SUPPORTED none
+ragtruth-180 ragtruth-180-c8: SUPPORTED none
+ragtruth-1698 ragtruth-1698-c7: SUPPORTED exact
+ragtruth-180 ragtruth-180-c9: SUPPORTED exact
+ragtruth-211 ragtruth-211-c4: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c8: SUPPORTED exact
+ragtruth-180 ragtruth-180-c10: SUPPORTED exact
+ragtruth-211 ragtruth-211-c5: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c9: SUPPORTED exact
+ragtruth-180 ragtruth-180-c11: SUPPORTED exact
+ragtruth-211 ragtruth-211-c6: SUPPORTED exact
+ragtruth-180 ragtruth-180-c12: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c10: SUPPORTED exact
+ragtruth-211 ragtruth-211-c7: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c11: SUPPORTED exact
+ragtruth-211 ragtruth-211-c8: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c1: SUPPORTED exact
+ragtruth-1698 ragtruth-1698-c12: SUPPORTED exact
+ragtruth-211 ragtruth-211-c9: SUPPORTED none
+ragtruth-1698 ragtruth-1698-c13: SUPPORTED exact
+ragtruth-211 ragtruth-211-c10: SUPPORTED none
+ragtruth-1698 ragtruth-1698-c14: SUPPORTED exact
+ragtruth-211 ragtruth-211-c11: SUPPORTED none
+ragtruth-211 ragtruth-211-c12: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c1: SUPPORTED exact
+ragtruth-348 ragtruth-348-c1: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c2: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c2: SUPPORTED exact
+ragtruth-348 ragtruth-348-c2: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c3: SUPPORTED exact
+ragtruth-348 ragtruth-348-c3: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c4: SUPPORTED exact
+ragtruth-348 ragtruth-348-c4: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c5: SUPPORTED exact
+ragtruth-348 ragtruth-348-c5: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c3: SUPPORTED none
+ragtruth-348 ragtruth-348-c6: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c6: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c4: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c7: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c5: SUPPORTED exact
+ragtruth-348 ragtruth-348-c7: CONTRADICTED exact
+ragtruth-2672 ragtruth-2672-c6: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c8: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c9: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c10: SUPPORTED exact
+ragtruth-3247 ragtruth-3247-c11: SUPPORTED none
+ragtruth-3247 ragtruth-3247-c12: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c7: SUPPORTED none
+ragtruth-3638 ragtruth-3638-c1: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c8: SUPPORTED exact
+ragtruth-2672 ragtruth-2672-c9: UNSUPPORTED none
+ragtruth-2672 ragtruth-2672-c10: UNSUPPORTED none
+ragtruth-348 ragtruth-348-c8: SUPPORTED none
+ragtruth-4026 ragtruth-4026-c1: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c2: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c3: SUPPORTED exact
+ragtruth-4026 ragtruth-4026-c2: SUPPORTED exact
+ragtruth-4026 ragtruth-4026-c3: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c4: SUPPORTED exact
+ragtruth-4026 ragtruth-4026-c4: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c5: SUPPORTED exact
+ragtruth-4026 ragtruth-4026-c5: SUPPORTED none
+ragtruth-3638 ragtruth-3638-c6: SUPPORTED exact
+ragtruth-4026 ragtruth-4026-c6: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c7: SUPPORTED exact
+ragtruth-4298 ragtruth-4298-c1: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c8: SUPPORTED none
+ragtruth-4298 ragtruth-4298-c2: SUPPORTED exact
+ragtruth-348 ragtruth-348-c9: SUPPORTED none
+ragtruth-3638 ragtruth-3638-c9: SUPPORTED exact
+ragtruth-4298 ragtruth-4298-c3: SUPPORTED exact
+ragtruth-4298 ragtruth-4298-c4: UNSUPPORTED none
+ragtruth-348 ragtruth-348-c10: SUPPORTED exact
+ragtruth-4298 ragtruth-4298-c5: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c10: SUPPORTED exact
+ragtruth-4298 ragtruth-4298-c6: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c11: SUPPORTED exact
+ragtruth-3638 ragtruth-3638-c12: UNSUPPORTED none
+ragtruth-3638 ragtruth-3638-c13: UNSUPPORTED none
+ragtruth-348 ragtruth-348-c11: SUPPORTED exact
+ragtruth-4298 ragtruth-4298-c7: SUPPORTED exact
+ragtruth-444 ragtruth-444-c1: SUPPORTED exact
+ragtruth-54 ragtruth-54-c1: SUPPORTED exact
+ragtruth-619 ragtruth-619-c1: SUPPORTED exact
+ragtruth-444 ragtruth-444-c2: SUPPORTED exact
+ragtruth-54 ragtruth-54-c2: SUPPORTED exact
+ragtruth-444 ragtruth-444-c3: SUPPORTED exact
+ragtruth-619 ragtruth-619-c2: SUPPORTED exact
+ragtruth-54 ragtruth-54-c3: SUPPORTED exact
+ragtruth-444 ragtruth-444-c4: SUPPORTED exact
+ragtruth-619 ragtruth-619-c3: SUPPORTED exact
+ragtruth-54 ragtruth-54-c4: SUPPORTED exact
+ragtruth-444 ragtruth-444-c5: SUPPORTED exact
+ragtruth-54 ragtruth-54-c5: SUPPORTED exact
+ragtruth-619 ragtruth-619-c4: SUPPORTED exact
+ragtruth-444 ragtruth-444-c6: SUPPORTED exact
+ragtruth-54 ragtruth-54-c6: SUPPORTED exact
+ragtruth-619 ragtruth-619-c5: SUPPORTED exact
+ragtruth-444 ragtruth-444-c7: SUPPORTED exact
+ragtruth-444 ragtruth-444-c8: SUPPORTED exact
+ragtruth-54 ragtruth-54-c7: SUPPORTED exact
+ragtruth-619 ragtruth-619-c6: SUPPORTED exact
+ragtruth-54 ragtruth-54-c8: SUPPORTED none
+ragtruth-619 ragtruth-619-c7: SUPPORTED exact
+ragtruth-444 ragtruth-444-c9: SUPPORTED exact
+ragtruth-619 ragtruth-619-c8: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c1: SUPPORTED exact
+ragtruth-444 ragtruth-444-c10: SUPPORTED exact
+ragtruth-619 ragtruth-619-c9: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c2: SUPPORTED exact
+ragtruth-444 ragtruth-444-c11: SUPPORTED none
+ragtruth-619 ragtruth-619-c10: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c3: SUPPORTED exact
+ragtruth-444 ragtruth-444-c12: SUPPORTED exact
+ragtruth-619 ragtruth-619-c11: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c4: SUPPORTED exact
+ragtruth-619 ragtruth-619-c12: SUPPORTED exact
+ragtruth-444 ragtruth-444-c13: SUPPORTED exact
+ragtruth-619 ragtruth-619-c13: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c5: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c1: SUPPORTED exact
+ragtruth-444 ragtruth-444-c14: CONTRADICTED exact
+ragtruth-7051 ragtruth-7051-c6: SUPPORTED none
+ragtruth-444 ragtruth-444-c15: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c7: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c2: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c8: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c3: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c9: CONTRADICTED none
+ragtruth-7159 ragtruth-7159-c1: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c10: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c4: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c2: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c11: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c5: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c12: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c3: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c6: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c13: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c7: SUPPORTED exact
+ragtruth-7098 ragtruth-7098-c8: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c4: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c9: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c10: UNSUPPORTED none
+ragtruth-7098 ragtruth-7098-c11: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c5: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c12: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c6: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c7: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c13: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c14: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c8: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c15: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c16: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c17: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c18: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c19: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c20: SUPPORTED none
+ragtruth-7098 ragtruth-7098-c21: SUPPORTED none
+ragtruth-906 ragtruth-906-c1: SUPPORTED exact
+ragtruth-906 ragtruth-906-c2: SUPPORTED exact
+ragtruth-906 ragtruth-906-c3: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c14: CONTRADICTED none
+ragtruth-906 ragtruth-906-c4: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c15: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c9: SUPPORTED none
+ragtruth-906 ragtruth-906-c5: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c10: SUPPORTED none
+ragtruth-906 ragtruth-906-c6: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c11: SUPPORTED none
+ragtruth-906 ragtruth-906-c7: SUPPORTED exact
+ragtruth-906 ragtruth-906-c8: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c12: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c16: SUPPORTED none
+ragtruth-906 ragtruth-906-c9: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c13: SUPPORTED none
+ragtruth-906 ragtruth-906-c10: SUPPORTED exact
+ragtruth-906 ragtruth-906-c11: UNSUPPORTED none
+ragtruth-906 ragtruth-906-c12: UNSUPPORTED none
+ragtruth-906 ragtruth-906-c13: UNSUPPORTED none
+ragtruth-906 ragtruth-906-c14: UNSUPPORTED none
+ragtruth-906 ragtruth-906-c15: UNSUPPORTED none
+ragtruth-7051 ragtruth-7051-c17: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c14: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c18: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c15: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c19: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c20: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c21: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c22: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c23: UNSUPPORTED none
+ragtruth-7051 ragtruth-7051-c24: SUPPORTED exact
+ragtruth-7051 ragtruth-7051-c25: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c16: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c17: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c26: SUPPORTED exact
+ragtruth-7159 ragtruth-7159-c18: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c19: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c27: SUPPORTED none
+ragtruth-7159 ragtruth-7159-c21: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c28: SUPPORTED none
+ragtruth-7051 ragtruth-7051-c29: SUPPORTED none
+[
+  {
+    "id": "ragtruth-13340",
+    "retained_claims": 12,
+    "exact": 7,
+    "evidence_eligible": 9,
+    "exact_ratio": 0.7777777777777778,
+    "model_doubts": 3
+  },
+  {
+    "id": "ragtruth-13363",
+    "retained_claims": 10,
+    "exact": 8,
+    "evidence_eligible": 9,
+    "exact_ratio": 0.8888888888888888,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-1340",
+    "retained_claims": 12,
+    "exact": 10,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.9090909090909091,
+    "model_doubts": 3
+  },
+  {
+    "id": "ragtruth-14293",
+    "retained_claims": 5,
+    "exact": 3,
+    "evidence_eligible": 3,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-14323",
+    "retained_claims": 6,
+    "exact": 5,
+    "evidence_eligible": 6,
+    "exact_ratio": 0.8333333333333334,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-1453",
+    "retained_claims": 21,
+    "exact": 15,
+    "evidence_eligible": 21,
+    "exact_ratio": 0.7142857142857143,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-1513",
+    "retained_claims": 15,
+    "exact": 11,
+    "evidence_eligible": 14,
+    "exact_ratio": 0.7857142857142857,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-15713",
+    "retained_claims": 6,
+    "exact": 6,
+    "evidence_eligible": 6,
+    "exact_ratio": 1.0,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-16121",
+    "retained_claims": 6,
+    "exact": 3,
+    "evidence_eligible": 3,
+    "exact_ratio": 1.0,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-1698",
+    "retained_claims": 12,
+    "exact": 11,
+    "evidence_eligible": 12,
+    "exact_ratio": 0.9166666666666666,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-180",
+    "retained_claims": 11,
+    "exact": 10,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.9090909090909091,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-211",
+    "retained_claims": 12,
+    "exact": 9,
+    "evidence_eligible": 12,
+    "exact_ratio": 0.75,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-2672",
+    "retained_claims": 10,
+    "exact": 6,
+    "evidence_eligible": 8,
+    "exact_ratio": 0.75,
+    "model_doubts": 3
+  },
+  {
+    "id": "ragtruth-3247",
+    "retained_claims": 12,
+    "exact": 11,
+    "evidence_eligible": 12,
+    "exact_ratio": 0.9166666666666666,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-348",
+    "retained_claims": 11,
+    "exact": 9,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.8181818181818182,
+    "model_doubts": 4
+  },
+  {
+    "id": "ragtruth-3638",
+    "retained_claims": 13,
+    "exact": 10,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.9090909090909091,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-4026",
+    "retained_claims": 6,
+    "exact": 5,
+    "evidence_eligible": 6,
+    "exact_ratio": 0.8333333333333334,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-4298",
+    "retained_claims": 7,
+    "exact": 6,
+    "evidence_eligible": 6,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-444",
+    "retained_claims": 15,
+    "exact": 13,
+    "evidence_eligible": 15,
+    "exact_ratio": 0.8666666666666667,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-54",
+    "retained_claims": 8,
+    "exact": 7,
+    "evidence_eligible": 8,
+    "exact_ratio": 0.875,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-619",
+    "retained_claims": 13,
+    "exact": 13,
+    "evidence_eligible": 13,
+    "exact_ratio": 1.0,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-7051",
+    "retained_claims": 29,
+    "exact": 11,
+    "evidence_eligible": 28,
+    "exact_ratio": 0.39285714285714285,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-7098",
+    "retained_claims": 21,
+    "exact": 7,
+    "evidence_eligible": 20,
+    "exact_ratio": 0.35,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-7159",
+    "retained_claims": 20,
+    "exact": 2,
+    "evidence_eligible": 20,
+    "exact_ratio": 0.1,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-906",
+    "retained_claims": 15,
+    "exact": 10,
+    "evidence_eligible": 10,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  }
+]

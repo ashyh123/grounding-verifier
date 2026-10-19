@@ -1,0 +1,859 @@
+{
+ "halueval-8027-c1": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "halueval-8027",
+  "claim_id": "halueval-8027-c1",
+  "confidence": 0.72,
+  "evidence": [
+   {
+    "end_char": 255,
+    "index": 0,
+    "quote": "Footage emerged today which appears to show the Liverpool and England winger breathing in the gas nitrous oxide",
+    "start_char": 144
+   },
+   {
+    "end_char": 525,
+    "index": 9,
+    "quote": "Nitrous oxide has led to 16 deaths in the last five years as users can asphyxiate as they inhale the drug.",
+    "start_char": 419
+   },
+   {
+    "end_char": 590,
+    "index": 7,
+    "quote": "It is not illegal to be in possession of the substance, sometimes also known as 'hippy crack', although it is prohibited from being sold in England and Wales to under-18s if there is a risk they will inhale it.",
+    "start_char": 380
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "文章称斯特林被拍到疑似吸入一氧化二氮，并指出该气体与死亡案例有关（如16起死亡、Joseph Benett死亡），且属可合法持有、易获得的\"合法兴奋剂\"。因此该主张整体得到支持。",
+  "reviewed_at": "2026-10-19T07:10:57Z",
+  "verdict": "SUPPORTED"
+ },
+ "halueval-8027-c2": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "halueval-8027",
+  "claim_id": "halueval-8027-c2",
+  "confidence": 0.9,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "原文只描述了一次被拍到的吸入笑气事件，没有任何关于他长期使用或通过人脉定期获取该药物的信息，属于推测，故为 UNSUPPORTED。",
+  "reviewed_at": "2026-10-19T07:10:57Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "halueval-8027-c3": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "halueval-8027",
+  "claim_id": "halueval-8027-c3",
+  "confidence": 0.7,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "文章只描述了一次被拍到的吸入笑气视频（另有一次水烟），并未说明他多次被公开拍到使用笑气；\"more than one occasion\" 缺乏依据，但也不与原文矛盾，故为 UNSUPPORTED。",
+  "reviewed_at": "2026-10-19T07:10:57Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "halueval-8027-c4": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "halueval-8027",
+  "claim_id": "halueval-8027-c4",
+  "confidence": 0.9,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "原文只提到有关他\"在利物浦不安心\"的传闻以及他拒绝了周薪10万英镑的合同，并未说明他因吸食笑气而考虑离队转会；该因果关系在文中无任何依据，也无相反陈述。",
+  "reviewed_at": "2026-10-19T07:10:57Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-13363-c1": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c1",
+  "confidence": 0.6,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "该claim只是\"To wash wine glasses properly, follow these steps: 1.\"这一残缺片段，没有可核验的具体内容；段落虽涉及洗酒杯，但并未陈述这一断言本身，故判为UNSUPPORTED。",
+  "reviewed_at": "2026-10-19T07:10:45Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-13363-c10": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c10",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 217,
+    "index": 1,
+    "quote": "dry the wine glasses with a smooth lint-free cloth, such as a microfiber or flour sack towel",
+    "start_char": 125
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落1第4条明确写道用光滑无绒布（如超细纤维或面粉袋毛巾）擦干酒杯，与主张逐字一致。",
+  "reviewed_at": "2026-10-19T07:10:49Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c11": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c11",
+  "confidence": 0.85,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "三处原文只提到用无绒布擦干酒杯、红葡萄酒过夜会留渍，以及避免水渍和斑点，但没有任何一句说\"要彻底擦干以避免污渍或斑点\"，因此该说法在原文中无依据。",
+  "reviewed_at": "2026-10-19T07:10:50Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-13363-c2": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c2",
+  "confidence": 0.93,
+  "evidence": [
+   {
+    "end_char": 209,
+    "index": 2,
+    "quote": "1. Lay a towel in the sink before filling with hot water.",
+    "start_char": 152
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落2明确写道\"Lay a towel in the sink before filling with hot water\"，与主张一致，无冲突。",
+  "reviewed_at": "2026-10-19T07:10:46Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c3": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c3",
+  "confidence": 0.97,
+  "evidence": [
+   {
+    "end_char": 256,
+    "index": 2,
+    "quote": "Wash one wine glass at a time to avoid damage.",
+    "start_char": 210
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落2原文明确写道\"Wash one wine glass at a time to avoid damage.\"，与待审主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:46Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c4": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c4",
+  "confidence": 0.9,
+  "evidence": [
+   {
+    "end_char": 428,
+    "index": 2,
+    "quote": "2. To keep soap from flavoring your next glass of wine, use a small amount of detergent and use it only where it's needed -- in the bottom of the glass and around the rim.",
+    "start_char": 257
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落2明确说明使用少量洗涤剂且只用在杯底和杯口周围，与主张一致（\"mild\"一词虽未出现，但\"small amount of detergent\"直接对应，无冲突）。",
+  "reviewed_at": "2026-10-19T07:10:47Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c5": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c5",
+  "confidence": 0.97,
+  "evidence": [
+   {
+    "end_char": 80,
+    "index": 1,
+    "quote": "3. To clean the inside of a glass, use a stemware brush with soft-foam bristles.",
+    "start_char": 0
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落1第3条明确写道用带软泡沫刷毛的酒杯刷清洁杯子内部，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:47Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c6": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c6",
+  "confidence": 0.93,
+  "evidence": [
+   {
+    "end_char": 175,
+    "index": 1,
+    "quote": "After rinsing thoroughly with hot water, dry the wine glasses with a smooth lint-free cloth",
+    "start_char": 84
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第1段第4条明确写到用热水彻底冲洗酒杯，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:47Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c7": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c7",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 215,
+    "index": 0,
+    "quote": "Dissolve a small amount of soda with hot water and let it stand in the glass for a few minutes.",
+    "start_char": 120
+   },
+   {
+    "end_char": 115,
+    "index": 0,
+    "quote": "use baking soda to remove any stubborn wine residue",
+    "start_char": 64
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0明确说明可用小苏打加热水溶解并静置数分钟以去除顽固酒渍，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:48Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-13363-c8": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c8",
+  "confidence": 0.85,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "各段落只提到用软泡沫刷清洗杯子内部、用热水冲洗、用无绒布擦干，以及用苏打水浸泡去除残留，但没有任何一处提到在苏打浸泡后再次用刷子擦洗，因此该步骤在原文中无依据。",
+  "reviewed_at": "2026-10-19T07:10:49Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-13363-c9": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-13363",
+  "claim_id": "ragtruth-13363-c9",
+  "confidence": 0.8,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落只提到用热水彻底冲洗一次（passage 1 第4步），以及用苏打水浸泡后倒掉，并未提到在苏打处理后再次用热水冲洗，因此该步骤在原文中无依据，也不矛盾。",
+  "reviewed_at": "2026-10-19T07:10:49Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-1698-c1": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c1",
+  "confidence": 0.72,
+  "evidence": [
+   {
+    "end_char": 75,
+    "index": 0,
+    "quote": "Mountaineers have returned to Mount Everest for this year's climbing season",
+    "start_char": 0
+   },
+   {
+    "end_char": 331,
+    "index": 0,
+    "quote": "In 2014, the Nepal climbing season ended after a piece of glacial ice fell, unleashing an avalanche that killed 16 Nepalis who had just finished their morning prayers.",
+    "start_char": 164
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0明确说登山者已返回珠峰、2014年冰川冰崩引发雪崩致16人死亡并使尼泊尔登山季结束；段落0称死者为\"16 Nepalis\"，而声称\"16 Sherpas\"，但段落4提到许多向导（夏尔巴人）埋葬了朋友，且段落0/1语境中遇难者即夏尔巴协作，故整体可视为支持，仅有轻微措辞差异。",
+  "reviewed_at": "2026-10-19T07:10:40Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-1698-c2": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c2",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 537,
+    "index": 0,
+    "quote": "The deaths launched fierce debates about the enormous risks faced by the Sherpas and the dangers of climbing Everest.",
+    "start_char": 420
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第一段明确写道，这些死亡引发了关于夏尔巴人所面临巨大风险以及攀登珠峰危险的激烈争论，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:40Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-1698-c3": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c3",
+  "confidence": 0.78,
+  "evidence": [
+   {
+    "end_char": 596,
+    "index": 2,
+    "quote": "The central route had been used in the 1990s, but was abandoned in favor of a quicker route, she said.",
+    "start_char": 494
+   },
+   {
+    "end_char": 727,
+    "index": 0,
+    "quote": "the route through Khumbu Icefall, the notoriously treacherous path where the 16 were killed, has been changed to one that takes longer but is expected to be safer.",
+    "start_char": 564
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落2说新路线比1990年代使用的中央路线更安全，但1990年代用的正是这条中央路线，且它被放弃是因为另一条路线更快；段落0只说新路线更长更安全，并未说比1990年代的路线更长。因此“比1990年代使用的路线更安全但更长”与原文不符。",
+  "reviewed_at": "2026-10-19T07:10:40Z",
+  "verdict": "CONTRADICTED"
+ },
+ "ragtruth-1698-c4": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c4",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 346,
+    "index": 3,
+    "quote": "But one company, Alpenglow Expeditions, said it would stop climbing from the Nepal side, where the climbers have to go through the icefall, in favor of the northern route from China.",
+    "start_char": 164
+   },
+   {
+    "end_char": 527,
+    "index": 3,
+    "quote": "\"We've seen it get progressively more dangerous over the last few years,\" said  Adrian Ballinger, the company's founder and CEO. \"We believe the risk is too great for our workers.\"",
+    "start_char": 347
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第3段明确写道Alpenglow Expeditions将停止从尼泊尔一侧攀登，理由是风险越来越大，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:39Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-1698-c5": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c5",
+  "confidence": 0.93,
+  "evidence": [
+   {
+    "end_char": 345,
+    "index": 3,
+    "quote": "in favor of the northern route from China",
+    "start_char": 304
+   },
+   {
+    "end_char": 125,
+    "index": 4,
+    "quote": "but it also doesn't have an icefall",
+    "start_char": 90
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落3说明Alpenglow Expeditions将改走中国一侧的北线，段落4说明北线没有冰瀑，两处合起来直接支持该主张。",
+  "reviewed_at": "2026-10-19T07:10:41Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-1698-c6": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c6",
+  "confidence": 0.9,
+  "evidence": [
+   {
+    "end_char": 698,
+    "index": 3,
+    "quote": "That's 136 more than last year.",
+    "start_char": 667
+   },
+   {
+    "end_char": 265,
+    "index": 4,
+    "quote": "The increasing popularity of the northern route has caused concern amongst Nepali companies that climbers will divert to the Chinese side.",
+    "start_char": 127
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落3指出北坡注册人数比去年多136人，段落4指出北坡日益受欢迎引起尼泊尔公司担忧登山者会转向中国一侧，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:41Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-1698-c7": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c7",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 667,
+    "index": 4,
+    "quote": "Leading expeditions is how Sherpas feed their families and send their children to school. Nepal depends heavily on tourism dollars.",
+    "start_char": 536
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第4段明确写道尼泊尔严重依赖旅游收入，且夏尔巴人靠带队探险养家，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:41Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-1698-c8": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-1698",
+  "claim_id": "ragtruth-1698-c8",
+  "confidence": 0.9,
+  "evidence": [
+   {
+    "end_char": 469,
+    "index": 5,
+    "quote": "Several mountaineers are also returning this year. One of them is Jon Reiter, who spoke to CNN last year after the tragedy.",
+    "start_char": 346
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第五段明确写道\"Several mountaineers are also returning this year\"，并以去年雪崩幸存者Jon Reiter为例，直接支持该主张。",
+  "reviewed_at": "2026-10-19T07:10:42Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-4298-c1": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-4298",
+  "claim_id": "ragtruth-4298-c1",
+  "confidence": 0.93,
+  "evidence": [
+   {
+    "end_char": 220,
+    "index": 0,
+    "quote": "In response to the escalating tensions in the Middle East, the Air Force has announced the arrival of a new squadron of F-16 Fighting Falcons.",
+    "start_char": 78
+   },
+   {
+    "end_char": 331,
+    "index": 0,
+    "quote": "This additional squadron has been deployed to the region to enhance the military's capabilities and readiness.",
+    "start_char": 221
+   },
+   {
+    "end_char": 593,
+    "index": 0,
+    "quote": "The arrival of these advanced fighter jets underscores the military's commitment to maintaining stability and security in the region.",
+    "start_char": 460
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0明确说明空军因中东紧张局势升级而部署新的F-16中队以增强能力与战备，并强调维护地区稳定与安全，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:43Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-4298-c2": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-4298",
+  "claim_id": "ragtruth-4298-c2",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 331,
+    "index": 0,
+    "quote": "This additional squadron has been deployed to the region to enhance the military's capabilities and readiness.",
+    "start_char": 221
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0明确说明新增的F-16中队部署到该地区以增强军队的能力和战备，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:43Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-4298-c3": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-4298",
+  "claim_id": "ragtruth-4298-c3",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 593,
+    "index": 0,
+    "quote": "The arrival of these advanced fighter jets underscores the military's commitment to maintaining stability and security in the region.",
+    "start_char": 460
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0原文几乎逐字包含该句，直接支持该主张。",
+  "reviewed_at": "2026-10-19T07:10:44Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-4298-c4": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-4298",
+  "claim_id": "ragtruth-4298-c4",
+  "confidence": 0.72,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落提到空军部署F-16、与盟友及联盟伙伴合作加强地区稳定，但没有任何关于\"近年来\"持续支持盟友和联军的内容，时间跨度与持续性均无依据，故为无支撑。",
+  "reviewed_at": "2026-10-19T07:10:44Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-4298-c5": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-4298",
+  "claim_id": "ragtruth-4298-c5",
+  "confidence": 0.93,
+  "evidence": [
+   {
+    "end_char": 785,
+    "index": 2,
+    "quote": "The fleet includes three squadrons of F-16 fighter jets, two squadrons of A-10 Thunderbolt II aircraft, and one squadron of F-15E Strike Eagle planes.",
+    "start_char": 635
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落2明确说明AFCENT运营包括三个F-16中队和一个F-15E打击鹰中队在内的机队，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:45Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c1": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c1",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 39,
+    "index": 0,
+    "quote": "\"name\": \"Danny's Deli Bait & Tackle\"",
+    "start_char": 3
+   },
+   {
+    "end_char": 75,
+    "index": 0,
+    "quote": "\"address\": \"4890 Carpinteria Ave\"",
+    "start_char": 42
+   },
+   {
+    "end_char": 99,
+    "index": 0,
+    "quote": "\"city\": \"Carpinteria\"",
+    "start_char": 78
+   },
+   {
+    "end_char": 115,
+    "index": 0,
+    "quote": "\"state\": \"CA\"",
+    "start_char": 102
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0明确给出名称、地址\"4890 Carpinteria Ave\"、城市\"Carpinteria\"和州\"CA\"，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:51Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c10": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c10",
+  "confidence": 0.8,
+  "evidence": [
+   {
+    "end_char": 212,
+    "index": 3,
+    "quote": "I got the Italian which was also delicious.",
+    "start_char": 169
+   },
+   {
+    "end_char": 136,
+    "index": 5,
+    "quote": "BEST no frills sandwiches prepared by great staff!",
+    "start_char": 86
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "评论中多次称赞三明治美味（\"delicious\"、\"one of the best sandwiches on the planet\"），并称赞员工（\"prepared by great staff\"），因此该说法得到支持。",
+  "reviewed_at": "2026-10-19T07:10:55Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c11": {
+  "acceptable": true,
+  "agrees_with_draft": false,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c11",
+  "confidence": 0.8,
+  "evidence": [],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落确实显示正面评价和多样的经营类别，但没有任何内容说明该店是\"locals and visitors alike\"的热门选择，这一部分在原文中无依据，故整体为 UNSUPPORTED。",
+  "reviewed_at": "2026-10-19T07:10:55Z",
+  "verdict": "UNSUPPORTED"
+ },
+ "ragtruth-7141-c12": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c12",
+  "confidence": 0.9,
+  "evidence": [
+   {
+    "end_char": 264,
+    "index": 3,
+    "quote": "Will definitely go back. Support local businesses.",
+    "start_char": 214
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "评论3明确写道\"Support local businesses.\"，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:55Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c2": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c2",
+  "confidence": 0.93,
+  "evidence": [
+   {
+    "end_char": 229,
+    "index": 0,
+    "quote": "\"categories\": \"Restaurants, Hunting & Fishing Supplies, Delis, Sporting Goods, Automotive, Car Wash, Shopping\",",
+    "start_char": 118
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0的categories字段直接列出了Restaurants, Hunting & Fishing Supplies, Delis, Sporting Goods, Automotive, Car Wash, Shopping，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:51Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c3": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c3",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 34,
+    "index": 1,
+    "quote": "\"Monday\": \"9:0-18:0\",",
+    "start_char": 13
+   },
+   {
+    "end_char": 136,
+    "index": 1,
+    "quote": "\"Friday\": \"9:0-18:0\",",
+    "start_char": 115
+   },
+   {
+    "end_char": 162,
+    "index": 1,
+    "quote": "\"Saturday\": \"8:0-18:0\",",
+    "start_char": 139
+   },
+   {
+    "end_char": 185,
+    "index": 1,
+    "quote": "\"Sunday\": \"9:0-17:0\"",
+    "start_char": 165
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落1的营业时间与声明完全一致：周一至周五9:0-18:0，周六8:0-18:0，周日9:0-17:0。",
+  "reviewed_at": "2026-10-19T07:10:51Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c4": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c4",
+  "confidence": 0.9,
+  "evidence": [
+   {
+    "end_char": 534,
+    "index": 2,
+    "quote": "\"business_stars\": 4.0,",
+    "start_char": 512
+   },
+   {
+    "end_char": 25,
+    "index": 4,
+    "quote": "\"review_stars\": 5.0,",
+    "start_char": 5
+   },
+   {
+    "end_char": 44,
+    "index": 3,
+    "quote": "\"review_stars\": 4.0,",
+    "start_char": 24
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落3-5均为4-5星好评，段落2给出business_stars为4.0，与\"顾客留下正面评价、平均评分4.0星\"一致。",
+  "reviewed_at": "2026-10-19T07:10:51Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c5": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c5",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 212,
+    "index": 3,
+    "quote": "Got two sandwiches.  Hot pastrami on a roll. Husband loved it.  I got the Italian which was also delicious.",
+    "start_char": 105
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "评论3明确提到买了两个三明治，热熏牛肉（hot pastrami）和意大利三明治，且都很好吃，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:53Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c6": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c6",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 220,
+    "index": 4,
+    "quote": "If you haven't tried the pastrami or turkey or tri tip at Danny's, you haven't had one of the best sandwiches on the planet yet",
+    "start_char": 93
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第4条评论明确写道，如果没试过Danny's的pastrami、turkey或tri tip，就等于没吃过世界上最好的三明治之一，与主张完全一致。",
+  "reviewed_at": "2026-10-19T07:10:53Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c7": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c7",
+  "confidence": 0.9,
+  "evidence": [
+   {
+    "end_char": 136,
+    "index": 5,
+    "quote": "BEST no frills sandwiches prepared by great staff!",
+    "start_char": 86
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "第5条评论明确写道\"BEST no frills sandwiches prepared by great staff\"，直接支持该说法。",
+  "reviewed_at": "2026-10-19T07:10:53Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c8": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c8",
+  "confidence": 0.95,
+  "evidence": [
+   {
+    "end_char": 249,
+    "index": 5,
+    "quote": "Italian sandwich was great BUT the tuna is INCREDIBLE! All white meat Albacore and they don't skimp on the meat!",
+    "start_char": 137
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "评论5明确写道金枪鱼三明治用全白肉长鳍金枪鱼制作且\"INCREDIBLE\"，与主张一致。",
+  "reviewed_at": "2026-10-19T07:10:53Z",
+  "verdict": "SUPPORTED"
+ },
+ "ragtruth-7141-c9": {
+  "acceptable": true,
+  "agrees_with_draft": true,
+  "case_id": "ragtruth-7141",
+  "claim_id": "ragtruth-7141-c9",
+  "confidence": 0.85,
+  "evidence": [
+   {
+    "end_char": 99,
+    "index": 0,
+    "quote": "\"city\": \"Carpinteria\"",
+    "start_char": 78
+   },
+   {
+    "end_char": 228,
+    "index": 0,
+    "quote": "\"categories\": \"Restaurants, Hunting & Fishing Supplies, Delis, Sporting Goods, Automotive, Car Wash, Shopping\"",
+    "start_char": 118
+   }
+  ],
+  "evidence_verbatim": true,
+  "model": "deepseek-flash",
+  "reasoning_zh": "段落0列出该商家位于Carpinteria, CA，且categories包含餐厅、渔猎用品、熟食店、体育用品、汽车、洗车、购物等多种类别，直接支持\"本地商家、提供多样化产品与服务\"的说法。",
+  "reviewed_at": "2026-10-19T07:10:55Z",
+  "verdict": "SUPPORTED"
+ }
+}

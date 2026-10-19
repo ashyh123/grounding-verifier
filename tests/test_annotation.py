@@ -11,7 +11,8 @@ from typing import Any
 
 import pytest
 
-from annotation import check_drafts, merge, prompts, round2_queue
+from annotation import check_drafts, prompts, round2_queue
+from annotation import merge_review as merge
 from annotation import sources as S
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -157,17 +158,18 @@ def _ragtruth_case(answer: str = "Alpha is red. Beta is blue.") -> dict[str, Any
 def test_ragtruth_verdict_comes_from_overlap():
     case = _ragtruth_case()
     claims = [
-        {"claim_text": "Alpha is red.", "answer_span": {"start": 0, "end": 13},
-         "verdict": "SUPPORTED", "evidence": [{"index": 0, "quote": "Alpha is red"}]},
-        {"claim_text": "Beta is blue.", "answer_span": {"start": 14, "end": 27},
-         "verdict": "SUPPORTED", "evidence": [{"index": 1, "quote": "Beta is blue"}]},
+        {"claim_text": "Alpha is red.", "answer_spans": [{"quote": "Alpha is red."}],
+         "reasoning": "first assertion"},
+        {"claim_text": "Beta is blue.", "answer_spans": [{"quote": "Beta is blue."}],
+         "reasoning": "second assertion"},
     ]
     drafted, notes = __import__("annotation.draft_claims", fromlist=["draft_ragtruth"]) \
         .draft_ragtruth(case, claims)
-    assert drafted[0]["draft_verdict"] == "CONTRADICTED"
-    assert drafted[0]["model_verdict"] == "SUPPORTED"
-    assert drafted[1]["draft_verdict"] == "SUPPORTED_CANDIDATE"
-    assert drafted[1]["evidence"][0]["match"] == "exact"
+    assert drafted[0]["upstream_verdict"] == "CONTRADICTED"
+    assert "model_verdict" not in drafted[0]
+    assert drafted[1]["upstream_verdict"] == "SUPPORTED"
+    assert drafted[1]["answer_spans"][0]["match"] == "exact"
+    assert drafted[1]["evidence"] == []  # evidence belongs to the separate blind review
     assert notes == []
 
 
@@ -247,7 +249,7 @@ def test_prompt_embeds_the_dataset_rules():
     assert "CONTRADICTED" in rules and "UNSUPPORTED" in rules
     assert "Labelling rules" not in rules  # heading trimmed, body kept
     case = _ragtruth_case()
-    assert rules in prompts.system_prompt(case)
+    assert rules in prompts.system_prompt({**case, "source": "factscore_chatgpt"})
     assert prompts.prompt_hash(case) != prompts.prompt_hash({**case, "generated_answer": "x"})
 
 

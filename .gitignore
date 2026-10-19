@@ -4,3 +4,7 @@ __pycache__/
 .pytest_cache/
 .zcodeignore
 .DS_Store
+
+# v2 annotation pipeline: the upstream snapshots are large and reproducible from the manifest,
+# so only the manifest and the licence copies are committed (annotation/README.md).
+data/sources/v2/raw/

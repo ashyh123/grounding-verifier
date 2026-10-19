@@ -36,7 +36,7 @@ V2_SOURCES = {
     "factscore_instructgpt", "factscore_chatgpt", "factscore_perplexityai",
     "halueval_summary",
 }
-ANNOTATION_ORIGINS = {"llm_draft", "human", "human_reviewed"}
+ANNOTATION_ORIGINS = {"llm_draft", "human", "human_reviewed", "ragtruth_human"}
 
 
 class GoldEvidence(BaseModel):
@@ -49,6 +49,8 @@ class GoldClaim(BaseModel):
     verdict: Verdict
     tags: list[str] = Field(default_factory=list)
     evidence: list[GoldEvidence] = Field(default_factory=list)
+    label_source: Literal['ragtruth_human'] | None = None
+    evidence_status: Literal['exact', 'none'] | None = None
 
 
 class ScoringRegistration(BaseModel):
@@ -164,12 +166,21 @@ def validate(cases: list[EvalCase]) -> list[str]:
         for k, g in enumerate(c.gold_claims):
             if g.verdict is Verdict.UNSUPPORTED and g.evidence:
                 errs.append(f"{c.id} claim {k}: UNSUPPORTED must have no evidence")
-            if g.verdict is not Verdict.UNSUPPORTED and not g.evidence:
+            no_reference = g.label_source == 'ragtruth_human' and g.evidence_status == 'none'
+            if g.evidence_status is not None and g.label_source != 'ragtruth_human':
+                errs.append(f"{c.id} claim {k}: evidence_status requires ragtruth_human labels")
+            if g.label_source == 'ragtruth_human' and g.evidence_status is None:
+                errs.append(f"{c.id} claim {k}: ragtruth_human requires evidence_status")
+            if no_reference and g.evidence:
+                errs.append(f"{c.id} claim {k}: evidence_status none requires empty evidence")
+            if g.evidence_status == 'exact' and not g.evidence:
+                errs.append(f"{c.id} claim {k}: evidence_status exact requires evidence")
+            if g.verdict is not Verdict.UNSUPPORTED and not g.evidence and not no_reference:
                 errs.append(f"{c.id} claim {k}: {g.verdict.value} needs evidence")
             for e in g.evidence:
                 if not 0 <= e.index < len(c.context_passages):
                     errs.append(f"{c.id} claim {k}: evidence index {e.index} out of range")
-                elif e.quote not in c.context_passages[e.index]:
+                elif not e.quote.strip() or e.quote not in c.context_passages[e.index]:
                     errs.append(f"{c.id} claim {k}: evidence quote not verbatim: {e.quote[:50]!r}")
     errs += validate_source_groups(cases)
     return errs

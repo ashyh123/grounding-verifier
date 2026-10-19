@@ -1,24 +1,10 @@
-"""T3 — draft claims for every candidate case with a model that is not the model under test.
+"""v2.2 RAGTruth drafting: context + complete answer, without upstream labels.
 
-    uv run python -m annotation.draft_claims                 # every case without a draft yet
-    uv run python -m annotation.draft_claims --only ragtruth-3638 halueval-8027
-    uv run python -m annotation.draft_claims --resume        # same as default; skips existing
+    uv run python -m annotation.draft_claims --split dev --only <five authorized ids>
 
-One call per case, forced tool call, `ANNOTATION_MODEL` from the environment (never guessed: if it
-is unset the run stops and says so). Drafts are written to data/annotation/drafts.jsonl and are
-never sent to the model under test.
-
-What the script decides itself, so the drafter cannot:
-
-* RAGTruth: the verdict comes from overlap between the claim's answer span and the upstream
-  hallucination spans — Conflict -> CONTRADICTED, Baseless -> UNSUPPORTED, otherwise
-  SUPPORTED_CANDIDATE. The model's own verdict is kept next to it as `model_verdict`.
-* FActScore: the claims are the human atomic facts (IR dropped) and their drafts are
-  SUPPORTED_CANDIDATE (S) or NOT_SUPPORTED (NS); the model only suggests which NS facts are
-  CONTRADICTED rather than merely unsupported, and supplies evidence.
-* HaluEval: every label is a model suggestion and the case is marked `needs_full_review`.
-* Evidence offsets are re-derived from the passage text with verifier.validate.find_span, and the
-  match quality is recorded, so a quote that is not verbatim is visible instead of trusted.
+The user selects model, endpoint and credentials. Answer quotes get exact offsets locally;
+upstream verdicts are mapped only after the call. Checkpoints append without replacing prior
+drafts. Legacy FActScore/HaluEval helpers remain available offline but cannot enter this round.
 """
 from __future__ import annotations
 
@@ -27,10 +13,15 @@ import asyncio
 import json
 import time
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
+from pathlib import Path
 from typing import Any
 
+import anthropic
+from pydantic import BaseModel, ConfigDict, Field
+
 from verifier import config
-from verifier.llm import AnthropicClient, LLMClient, Usage
+from verifier.llm import LLMClient, Usage
 from verifier.validate import find_span
 
 from . import prompts, sources as S
@@ -55,21 +46,83 @@ def annotation_model() -> str:
 
 def preflight() -> None:
     """Check the credentials the drafting path actually needs, before spending anything."""
-    if not config.anthropic_api_key():
+    if not config.optional_env("ANTHROPIC_API_KEY"):
         raise SystemExit(
             "STOP: ANTHROPIC_API_KEY is empty in .env, and the drafting call goes to the "
             "Anthropic client (spec T0/T3).\nWithout it there is nothing to draft with.")
     base = config.optional_env("ANTHROPIC_BASE_URL")
+    if not base:
+        raise SystemExit("STOP: drafting requires an explicit ANTHROPIC_BASE_URL.")
     if base and "deepseek" in base.lower():
         raise SystemExit("STOP: annotation cannot use a DeepSeek endpoint (design v2.2).")
-    fallback = config.optional_env("VERIFIER_BASE_URL") or ""
-    if not base and fallback:
-        raise SystemExit(
-            f"STOP: ANTHROPIC_BASE_URL is unset, so AnthropicClient would fall back to "
-            f"VERIFIER_BASE_URL={fallback!r},\nwhich is the model-under-test endpoint. Set "
-            f"ANTHROPIC_BASE_URL (or leave both unset) before drafting.")
-    if "deepseek" in fallback.lower() and not base:
-        raise SystemExit("STOP: refusing to send drafting calls to the model-under-test endpoint.")
+
+
+class AnswerQuote(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    quote: str = Field(min_length=1)
+
+
+class AtomicDraft(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    claim_text: str = Field(min_length=1)
+    answer_spans: list[AnswerQuote] = Field(min_length=1)
+    reasoning: str
+
+
+class DraftOutput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    claims: list[AtomicDraft]
+
+
+class StructuredOutputError(ValueError):
+    """Completed model response without the requested complete structured result."""
+
+    def __init__(self, response):
+        super().__init__('model response has no complete structured tool result')
+        self.response = response.model_dump(mode='json')
+
+
+class DraftClient:
+    """Drafting credentials/parameters are independent of the verifier and other annotation roles.
+
+    One request per case, with no automatic retries. A failed call is checkpointed and stops the
+    run, so an ambiguous timeout cannot silently cause another paid annotation call.
+    """
+
+    parameters = {"max_tokens": 16384, "temperature": 0,
+                  "thinking": {"type": "disabled"}, "tool_choice": {"type": "auto"}}
+
+    def __init__(self, model: str):
+        self.model = model
+        self.response_model: str | None = None
+        key = config.optional_env("ANTHROPIC_API_KEY")
+        self._client = anthropic.AsyncAnthropic(
+            api_key=key, base_url=config.optional_env("ANTHROPIC_BASE_URL"),
+            default_headers={"api-key": key} if key else {},
+            max_retries=0, timeout=180.0)
+
+    async def call_tool(self, system, messages, tool_name, tool_schema, usage):
+        usage.calls += 1
+        response = await self._client.messages.create(
+            model=self.model, system=system, messages=messages,
+            tools=[{"name": tool_name, "description": "Return the requested structured result.",
+                    "input_schema": tool_schema}],
+            max_tokens=self.parameters["max_tokens"],
+            tool_choice=self.parameters["tool_choice"],
+            extra_body={"temperature": self.parameters["temperature"],
+                        "thinking": self.parameters["thinking"]})
+        self.response_model = response.model
+        usage.input_tokens += (response.usage.input_tokens
+                               + (getattr(response.usage, "cache_read_input_tokens", 0) or 0)
+                               + (getattr(response.usage, "cache_creation_input_tokens", 0) or 0))
+        usage.output_tokens += response.usage.output_tokens
+        calls = [b for b in response.content if b.type == "tool_use"]
+        if response.stop_reason != "tool_use" or len(calls) != 1 or calls[0].name != tool_name:
+            raise StructuredOutputError(response)
+        return calls[0].input
+
+    async def close(self):
+        await self._client.close()
 
 
 # --------------------------------------------------------------------------- evidence
@@ -132,23 +185,71 @@ def draft_ragtruth(case: dict, claims: list[dict[str, Any]]) -> tuple[list[dict]
     out: list[dict[str, Any]] = []
     notes: list[str] = []
     for n, claim in enumerate(claims, start=1):
-        span, how = resolve_answer_span(answer, claim.get("claim_text", ""),
-                                        claim.get("answer_span"))
-        if how == "model_only":
-            notes.append(f"claim {n}: answer span does not match the claim text as given")
-        overlaps = overlapping_labels(labels, span)
-        evidence = resolve_evidence(case["context_passages"], claim.get("evidence"))
-        draft = ragtruth_verdict(overlaps)
-        if draft == "UNSUPPORTED":
-            evidence = []  # the upstream says the answer is unsupported here: no evidence exists
+        spans, flags = [], []
+        for requested in claim.get("answer_spans", []):
+            quote = requested.get("quote", "")
+            start = answer.find(quote) if quote else -1
+            unique = start >= 0 and answer.find(quote, start + 1) == -1
+            spans.append({"quote": quote, "start": start if unique else None,
+                          "end": start + len(quote) if unique else None,
+                          "match": "exact" if unique else "candidate_only"})
+        exact = [s for s in spans if s["match"] == "exact"]
+        if not spans or len(exact) != len(spans):
+            flags.append({"level": "red", "flag": "answer_span_not_exact",
+                          "detail": "answer quotes must occur exactly once; no fuzzy offset accepted"})
+        overlaps = [lab for lab in labels if any(
+            lab["start"] < s["end"] and s["start"] < lab["end"] for s in exact)]
+        upstream = (S.normalize_verdict(ragtruth_verdict(overlaps))
+                    if spans and len(exact) == len(spans) else None)
+        covered = {i for s in exact for i in range(s["start"], s["end"])}
+        labelled = {i for lab in overlaps for i in range(lab["start"], lab["end"])}
+        if overlaps and len(covered - labelled) > 20:
+            flags.append({"level": "red", "flag": "partial_overlap",
+                          "detail": f"{len(covered - labelled)} answer-span characters outside labelled fragments"})
         out.append({
-            "claim_id": None, "claim_text": claim.get("claim_text", ""), "answer_span": span,
-            "answer_span_match": how, "draft_verdict": draft,
-            "model_verdict": (claim.get("verdict") or "").upper() or None,
-            "evidence": evidence, "overlapping_source_labels": overlaps,
+            "claim_id": None, "claim_text": claim["claim_text"], "answer_spans": spans,
+            "upstream_verdict": upstream, "flags": flags,
+            "evidence": [], "overlapping_source_labels": overlaps,
             "reasoning": claim.get("reasoning", ""), "needs_full_review": False,
         })
+    if answer_span_gaps({**case, "claims": out}):
+        notes.append("answer_gap: more than 20 answer characters in an uncovered run")
+    if any(not any(lab["start"] < s["end"] and s["start"] < lab["end"]
+                   for c in out for s in c["answer_spans"] if s["match"] == "exact")
+           for lab in labels):
+        notes.append("source_label_uncovered: an upstream fragment overlaps no exact answer span")
     return out, notes
+
+
+def answer_span_gaps(case: dict) -> list[dict]:
+    """Report unlocated answer text; character coverage does not establish factual coverage."""
+    answer = case["generated_answer"]
+    covered = set()
+    for claim in case["claims"]:
+        for span in claim["answer_spans"]:
+            start, end = span.get("start"), span.get("end")
+            if (span.get("match") == "exact" and type(start) is int and type(end) is int
+                    and 0 <= start < end <= len(answer) and answer[start:end] == span.get("quote")):
+                covered.update(range(start, end))
+    gaps, start = [], None
+    for i in range(len(answer) + 1):
+        if i < len(answer) and i not in covered:
+            if start is None:
+                start = i
+        elif start is not None:
+            quote = answer[start:i]
+            if len(quote.strip()) > 20:
+                gaps.append({"level": "yellow", "flag": "answer_gap", "start": start,
+                             "end": i, "quote": quote,
+                             "detail": f"回答定位覆盖缺口 [{start}:{i})：{quote!r}；需核查，不能据此判定漏事实。"})
+            start = None
+    return gaps
+
+
+def case_diagnostics(case: dict, notes: list[str]) -> list[dict]:
+    return ([{"level": "red", "flag": note.split(":", 1)[0], "detail": note}
+             for note in notes if not note.startswith("answer_gap:")]
+            + answer_span_gaps(case))
 
 
 def draft_factscore(case: dict, claims: list[dict[str, Any]]) -> tuple[list[dict], list[str]]:
@@ -219,28 +320,33 @@ class CallStats:
     seconds: float = 0.0
     retries: int = 0
     errors: list[str] = field(default_factory=list)
+    started_at: str = ""
+    finished_at: str = ""
+    response_model: str | None = None
 
 
-async def draft_case(case: dict[str, Any], client: LLMClient, usage: Usage) -> tuple[list[dict], list[str]]:
+async def draft_case(case: dict[str, Any], client: LLMClient, usage: Usage) -> tuple[list[dict], list[str], dict]:
     """One drafting call for one case. Returns (claims, notes)."""
     family = prompts.family(case["source"])
     data = await client.call_tool(
         system=prompts.system_prompt(case), messages=[{"role": "user",
                                                       "content": prompts.user_prompt(case)}],
         tool_name=prompts.TOOL_NAME, tool_schema=prompts.tool_schema(case), usage=usage)
+    if family == "ragtruth":
+        data = DraftOutput.model_validate(data).model_dump()
     claims = data.get("claims")
     if not isinstance(claims, list):
-        return [], [f"drafter returned no 'claims' array: {sorted(data)}"]
+        return [], [f"drafter returned no 'claims' array: {sorted(data)}"], data
     drafted, notes = DRAFTERS[family](case, claims)
     if family == "ragtruth" and not drafted:
         notes.append("drafter returned zero claims for this answer")
     for n, claim in enumerate(drafted, start=1):
         claim["claim_id"] = f"{case['id']}-c{n}"
-    return drafted, notes
+    return drafted, notes, data
 
 
 def case_record(case: dict[str, Any], claims: list[dict[str, Any]], stats: CallStats,
-                model: str) -> dict[str, Any]:
+                model: str, raw_draft: dict | None = None) -> dict[str, Any]:
     """The draft case: the candidate plus claims plus the provenance of the drafting call."""
     return {
         "id": case["id"], "source": case["source"], "split": case["split"],
@@ -249,50 +355,62 @@ def case_record(case: dict[str, Any], claims: list[dict[str, Any]], stats: CallS
         "source_group_id": case["source_group_id"], "source_labels": case["source_labels"],
         "difficulty_tags": case["difficulty_tags"], "truncated": case["truncated"],
         "claims": claims,
+        "raw_draft": raw_draft,
+        "flags": case_diagnostics({**case, "claims": claims}, stats.errors),
         "provenance": {
             **case["provenance"],
             "annotation_origin": "llm_draft",
-            "annotation_model": model,
+            "annotation_model": stats.response_model or model,
+            "requested_annotation_model": model,
+            "annotation_endpoint": config.optional_env("ANTHROPIC_BASE_URL"),
+            "annotation_parameters": DraftClient.parameters,
             "prompt_sha256": prompts.prompt_hash(case),
             "draft_call": {
                 "calls": stats.calls, "input_tokens": stats.input_tokens,
                 "output_tokens": stats.output_tokens, "retries": stats.retries,
                 "seconds": round(stats.seconds, 2),
+                "started_at": stats.started_at, "finished_at": stats.finished_at,
             },
         },
         "selection": case["selection"],
     }
 
 
-async def run(cases: list[dict[str, Any]], model: str, concurrency: int = 4) -> list[dict[str, Any]]:
-    client = AnthropicClient(model=model)
-    semaphore = asyncio.Semaphore(concurrency)
+async def run(cases: list[dict[str, Any]], model: str, output: Path) -> list[dict[str, Any]]:
+    client = DraftClient(model=model)
     out: list[dict[str, Any]] = []
-
-    async def one(case: dict[str, Any]) -> None:
-        usage = Usage()
-        started = time.monotonic()
-        async with semaphore:
+    try:
+        for case in cases:
+            usage = Usage()
+            client.response_model = None
+            started = time.monotonic()
+            stats = CallStats(started_at=datetime.now(timezone.utc).isoformat())
+            raw = None
+            failed = None
             try:
-                claims, notes = await draft_case(case, client, usage)
-            except Exception as e:  # a failed case is reported, never silently dropped
-                print(f"  [FAIL] {case['id']}: {type(e).__name__}: {e}")
-                record = case_record(case, [], CallStats(errors=[f"{type(e).__name__}: {e}"]), model)
-                record["draft_error"] = f"{type(e).__name__}: {e}"
-                out.append(record)
-                return
-        stats = CallStats(calls=usage.calls, input_tokens=usage.input_tokens,
-                          output_tokens=usage.output_tokens, retries=usage.retries,
-                          seconds=time.monotonic() - started,
-                          errors=list(notes))
-        record = case_record(case, claims, stats, model)
-        out.append(record)
-        print(f"  [ok  ] {case['id']:<42} {len(claims):>2} claims  "
-              f"{stats.input_tokens:>5} in / {stats.output_tokens:>4} out  "
-              f"{stats.seconds:.1f}s" + (f"  notes={len(notes)}" if notes else ""))
-
-    await asyncio.gather(*(one(c) for c in cases))
-    return sorted(out, key=lambda r: [c["id"] for c in cases].index(r["id"]))
+                claims, notes, raw = await draft_case(case, client, usage)
+            except Exception as error:
+                # Do not log provider exception bodies: they may contain authentication details.
+                failed = type(error).__name__
+                claims, notes = [], [f"draft_error: {failed}"]
+            stats.calls, stats.input_tokens, stats.output_tokens = usage.calls, usage.input_tokens, usage.output_tokens
+            stats.retries, stats.seconds = usage.retries, time.monotonic() - started
+            stats.errors, stats.finished_at = notes, datetime.now(timezone.utc).isoformat()
+            stats.response_model = client.response_model
+            record = case_record(case, claims, stats, model, raw)
+            if failed:
+                record["draft_error"] = failed
+            output.parent.mkdir(parents=True, exist_ok=True)
+            with output.open("a", encoding="utf-8") as stream:
+                stream.write(json.dumps(record, ensure_ascii=False) + "\n")
+            out.append(record)
+            print(f"  [{'FAIL' if failed else 'ok  '}] {case['id']}: {len(claims)} claims; "
+                  f"{stats.input_tokens} in / {stats.output_tokens} out; {stats.seconds:.1f}s", flush=True)
+            if failed:
+                raise SystemExit(f"STOP: {case['id']} failed ({failed}); checkpoint saved, no retry.")
+    finally:
+        await client.close()
+    return out
 
 
 def main() -> None:
@@ -300,18 +418,20 @@ def main() -> None:
     ap.add_argument("--only", nargs="*", help="case ids to draft")
     ap.add_argument("--limit", type=int, help="draft at most this many cases")
     ap.add_argument("--resume", action="store_true", help="skip cases that already have a draft")
-    ap.add_argument("--concurrency", type=int, default=4)
+    ap.add_argument("--split", choices=["dev", "test"])
+    ap.add_argument("--candidates", type=Path, default=CANDIDATES)
+    ap.add_argument("--out", type=Path, default=DRAFTS)
     args = ap.parse_args()
 
-    if not CANDIDATES.is_file():
+    if not args.candidates.is_file():
         raise SystemExit(f"STOP: {S.rel(CANDIDATES)} not found; "
                          f"run annotation.select_cases first.")
-    cases = [json.loads(line) for line in CANDIDATES.read_text(encoding="utf-8").splitlines()
+    cases = [json.loads(line) for line in args.candidates.read_text(encoding="utf-8").splitlines()
              if line.strip()]
     existing: dict[str, dict] = {}
-    if DRAFTS.is_file():
+    if args.out.is_file():
         existing = {r["id"]: r for r in
-                    (json.loads(line) for line in DRAFTS.read_text(encoding="utf-8").splitlines()
+                    (json.loads(line) for line in args.out.read_text(encoding="utf-8").splitlines()
                      if line.strip())}
 
     selected = cases
@@ -321,8 +441,9 @@ def main() -> None:
         missing = wanted - {c["id"] for c in selected}
         if missing:
             raise SystemExit(f"STOP: unknown case id(s): {sorted(missing)}")
-    if args.resume or not args.only:
-        selected = [c for c in selected if c["id"] not in existing]
+    if args.split:
+        selected = [c for c in selected if c["split"] == args.split]
+    selected = [c for c in selected if c["id"] not in existing]
     if args.limit:
         selected = selected[:args.limit]
     if not selected:
@@ -331,24 +452,23 @@ def main() -> None:
 
     model = annotation_model()
     preflight()
+    if any(not c["source"].startswith("ragtruth_") for c in selected):
+        raise SystemExit("STOP: the v2.2 first round permits only RAGTruth.")
     print(f"drafting {len(selected)} case(s) with ANNOTATION_MODEL={model} "
           f"(model under test: {config.optional_env('VERIFIER_MODEL')})")
-    drafted = asyncio.run(run(selected, model, args.concurrency))
+    drafted = asyncio.run(run(selected, model, args.out))
 
     merged: dict[str, dict] = dict(existing)
     for record in drafted:
         merged[record["id"]] = record
     ordered = [merged[c["id"]] for c in cases if c["id"] in merged]
-    S.write_jsonl(DRAFTS, ordered)
 
     failed = [r["id"] for r in ordered if r.get("draft_error")]
     claims = sum(len(r["claims"]) for r in ordered)
-    print(f"\ndrafts -> {S.rel(DRAFTS)}: {len(ordered)} case(s), {claims} claim(s)")
+    print(f"\ndrafts -> {S.rel(args.out)}: {len(ordered)} case(s), {claims} claim(s)")
     if failed:
         print(f"cases that failed and are recorded as such: {failed}")
-    print("Review 5 cases first (spec T3 acceptance) before drafting the rest:")
-    print("  uv run python -m annotation.check_drafts && "
-          "uv run python -m annotation.review_app --round 1")
+    print("Drafting complete; blind-review and translation require separate user selection.")
 
 
 if __name__ == "__main__":

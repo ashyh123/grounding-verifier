@@ -1,0 +1,202 @@
+[
+  {
+    "id": "ragtruth-13340",
+    "retained_claims": 12,
+    "exact": 7,
+    "evidence_eligible": 9,
+    "exact_ratio": 0.7777777777777778,
+    "model_doubts": 3
+  },
+  {
+    "id": "ragtruth-13363",
+    "retained_claims": 10,
+    "exact": 8,
+    "evidence_eligible": 9,
+    "exact_ratio": 0.8888888888888888,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-1340",
+    "retained_claims": 12,
+    "exact": 10,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.9090909090909091,
+    "model_doubts": 3
+  },
+  {
+    "id": "ragtruth-14293",
+    "retained_claims": 5,
+    "exact": 3,
+    "evidence_eligible": 3,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-14323",
+    "retained_claims": 6,
+    "exact": 5,
+    "evidence_eligible": 6,
+    "exact_ratio": 0.8333333333333334,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-1453",
+    "retained_claims": 21,
+    "exact": 15,
+    "evidence_eligible": 21,
+    "exact_ratio": 0.7142857142857143,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-1513",
+    "retained_claims": 15,
+    "exact": 11,
+    "evidence_eligible": 14,
+    "exact_ratio": 0.7857142857142857,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-15713",
+    "retained_claims": 6,
+    "exact": 6,
+    "evidence_eligible": 6,
+    "exact_ratio": 1.0,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-16121",
+    "retained_claims": 6,
+    "exact": 3,
+    "evidence_eligible": 3,
+    "exact_ratio": 1.0,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-1698",
+    "retained_claims": 12,
+    "exact": 11,
+    "evidence_eligible": 12,
+    "exact_ratio": 0.9166666666666666,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-180",
+    "retained_claims": 11,
+    "exact": 10,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.9090909090909091,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-211",
+    "retained_claims": 12,
+    "exact": 9,
+    "evidence_eligible": 12,
+    "exact_ratio": 0.75,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-2672",
+    "retained_claims": 10,
+    "exact": 6,
+    "evidence_eligible": 8,
+    "exact_ratio": 0.75,
+    "model_doubts": 3
+  },
+  {
+    "id": "ragtruth-3247",
+    "retained_claims": 12,
+    "exact": 11,
+    "evidence_eligible": 12,
+    "exact_ratio": 0.9166666666666666,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-348",
+    "retained_claims": 11,
+    "exact": 9,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.8181818181818182,
+    "model_doubts": 4
+  },
+  {
+    "id": "ragtruth-3638",
+    "retained_claims": 13,
+    "exact": 10,
+    "evidence_eligible": 11,
+    "exact_ratio": 0.9090909090909091,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-4026",
+    "retained_claims": 6,
+    "exact": 5,
+    "evidence_eligible": 6,
+    "exact_ratio": 0.8333333333333334,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-4298",
+    "retained_claims": 7,
+    "exact": 6,
+    "evidence_eligible": 6,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-444",
+    "retained_claims": 15,
+    "exact": 13,
+    "evidence_eligible": 15,
+    "exact_ratio": 0.8666666666666667,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-54",
+    "retained_claims": 8,
+    "exact": 7,
+    "evidence_eligible": 8,
+    "exact_ratio": 0.875,
+    "model_doubts": 0
+  },
+  {
+    "id": "ragtruth-619",
+    "retained_claims": 13,
+    "exact": 13,
+    "evidence_eligible": 13,
+    "exact_ratio": 1.0,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-7051",
+    "retained_claims": 29,
+    "exact": 11,
+    "evidence_eligible": 28,
+    "exact_ratio": 0.39285714285714285,
+    "model_doubts": 2
+  },
+  {
+    "id": "ragtruth-7098",
+    "retained_claims": 21,
+    "exact": 7,
+    "evidence_eligible": 20,
+    "exact_ratio": 0.35,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-7159",
+    "retained_claims": 20,
+    "exact": 2,
+    "evidence_eligible": 20,
+    "exact_ratio": 0.1,
+    "model_doubts": 1
+  },
+  {
+    "id": "ragtruth-906",
+    "retained_claims": 15,
+    "exact": 10,
+    "evidence_eligible": 10,
+    "exact_ratio": 1.0,
+    "model_doubts": 0
+  }
+]

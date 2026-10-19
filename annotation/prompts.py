@@ -1,9 +1,7 @@
-"""Prompts for the T3 drafting call.
+"""Prompts for annotation drafting.
 
-The decomposition and verdict rules are not paraphrased here: they are read out of
-`docs/DATASET.md` at call time and embedded in the system prompt, so the drafting model is working
-from the same rules the shipped dataset documents, and the prompt hash recorded on every draft
-changes whenever that document does.
+RAGTruth v2.2 drafts only atomic claims and exact answer quotes, without labels or evidence.
+The retained legacy source prompts embed docs/DATASET.md rules; they are excluded this round.
 """
 from __future__ import annotations
 
@@ -34,29 +32,26 @@ def _rules_block() -> str:
 
 SYSTEM_RAGTRUTH = """You draft annotation candidates for a citation-grounding benchmark.
 
-The answer you are given was written by a language model from the numbered source passages, and
-the upstream dataset has already marked the spans of the answer it considers hallucinated. Your job
-is to split the answer into atomic claims and to report, for each claim, the character range of the
-answer it came from, your own best verdict, and the passage text that supports it.
+Split the complete answer into atomic factual claims. Use the context only to resolve references;
+do not correct the answer against it. Return claim_text, answer_spans and reasoning for each claim.
 
 Rules for your part:
 
-* Copy the answer's wording. Do not fix spelling, remove filler, or rephrase. A claim is a slice of
-  the answer as written.
 * One claim = one checkable proposition. Split conjunctions, comparisons and multi-part statements
   into separate claims; keep qualifiers, conditions and trailing clauses attached to the claim they
   qualify.
-* Do not invent claims that the answer does not make, and do not merge two sentences into a claim
-  the answer never stated.
-* `answer_span.start` and `answer_span.end` must be character offsets into the answer you were
-  given, such that answer[start:end] is your claim_text.
-* Give evidence only for claims you judge SUPPORTED or CONTRADICTED: `index` is the passage number
-  shown in the prompt and `quote` must be a verbatim substring of that passage. Give no evidence
-  for UNSUPPORTED claims.
-* The upstream hallucination spans are hints, not the answer key: judge every claim against the
-  passages yourself.
+* Preserve every factual assertion, including repetitions and assertions absent from the context.
+  Do not invent assertions. Do not change the meaning, numbers, negation, modality or attribution.
+* Keep the answer's wording wherever possible. You may repeat a shared subject to make split
+  claims understandable; do not add facts while doing so.
+* answer_spans contains one or more exact quotes from the ANSWER that express this claim,
+  including any shared subject and qualifiers it needs. Offsets are computed by the script.
+  Each quote must occur exactly once in the answer; extend it with adjacent answer text when
+  needed to disambiguate repeated text. Quotes are answer provenance, not source evidence.
+* reasoning explains the decomposition and how the answer spans express the claim.
+* Do not assign truth labels or select source evidence. A separate blind review does that later.
 
-""" + _rules_block()
+"""
 
 
 SYSTEM_FACTSCORE = """You help draft annotation candidates for a citation-grounding benchmark.
@@ -115,6 +110,21 @@ def system_prompt(case: dict) -> str:
 def tool_schema(case: dict) -> dict:
     """One schema for all three sources; `fact` is only meaningful for FActScore."""
     family_ = family(case["source"])
+    if family_ == "ragtruth":
+        return {
+            "type": "object", "additionalProperties": False,
+            "properties": {"claims": {"type": "array", "items": {
+                "type": "object", "additionalProperties": False,
+                "properties": {
+                    "claim_text": {"type": "string", "minLength": 1},
+                    "answer_spans": {"type": "array", "minItems": 1, "items": {
+                        "type": "object", "additionalProperties": False,
+                        "properties": {"quote": {"type": "string", "minLength": 1}},
+                        "required": ["quote"]}},
+                    "reasoning": {"type": "string"},
+                }, "required": ["claim_text", "answer_spans", "reasoning"]}}},
+            "required": ["claims"],
+        }
     claim_props: dict = {
         "claim_text": {"type": "string", "description": "the claim, copied from the answer"},
         "verdict": {"type": "string", "enum": ["SUPPORTED", "CONTRADICTED", "UNSUPPORTED"]},
@@ -156,18 +166,12 @@ def render_passages(passages: list[str]) -> str:
 
 
 def user_prompt(case: dict) -> str:
-    """Passages, the answer, and the upstream annotation, all verbatim."""
+    """RAGTruth exposes only passages and the complete answer, both verbatim."""
     family_ = family(case["source"])
     parts = [render_passages(case["context_passages"]), "---", "Answer:", case["generated_answer"]]
     labels = case.get("source_labels", {})
     if family_ == "ragtruth":
-        if labels.get("question"):
-            parts += ["---", f"Question the answer responds to: {labels['question']}"]
-        parts += [
-            "---",
-            "Upstream annotation (character offsets into the answer above):",
-            json.dumps(labels.get("labels", []), ensure_ascii=False, indent=1),
-        ]
+        return "\n".join(parts)
     elif family_ == "factscore":
         facts = labels.get("human_atomic_facts", [])
         numbered = [{"fact": i, "text": f["text"], "upstream_label": f["label"]}

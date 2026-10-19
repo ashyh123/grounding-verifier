@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "updated_at": "2026-10-19T03:38:15Z",
+  "created_at": "2026-10-19T02:59:43Z",
+  "purpose": "Snapshots for the v2 hard evaluation set (annotation pipeline T0-T7)",
+  "ragtruth_upstream_split": "test",
+  "ragtruth_upstream_split_note": "Every RAGTruth case is drawn from one upstream split only (the spec's T1 rule), so a source group can never straddle it; recorded here because the choice is part of the sampling provenance.",
+  "ragtruth_legacy_response_ids": [
+    "13500",
+    "13687",
+    "14006",
+    "14131",
+    "14785",
+    "15379",
+    "15997",
+    "16021",
+    "16049",
+    "16262",
+    "16530",
+    "16681",
+    "17502"
+  ],
+  "files": {
+    "source_info.jsonl": {
+      "sha256": "0dffc26ea9f3c1c3d7c7e8336b56ef1646e3cec876edffcca3c9c624d12d578b",
+      "bytes": 15117971,
+      "license": "MIT",
+      "fields": {
+        "keys": [
+          "prompt",
+          "source",
+          "source_id",
+          "source_info",
+          "task_type"
+        ],
+        "records_checked": 2
+      },
+      "url": "https://raw.githubusercontent.com/ParticleMedia/RAGTruth/main/dataset/source_info.jsonl"
+    },
+    "response.jsonl": {
+      "sha256": "e4c2e4ac24fff676d8984cc61c35d791612fadc58015335d97dd632375e18073",
+      "bytes": 21458735,
+      "license": "MIT",
+      "fields": {
+        "keys": [
+          "id",
+          "labels",
+          "model",
+          "quality",
+          "response",
+          "source_id",
+          "split",
+          "temperature"
+        ],
+        "records_checked": 2,
+        "label_keys": [
+          "due_to_null",
+          "end",
+          "implicit_true",
+          "label_type",
+          "meta",
+          "start",
+          "text"
+        ]
+      },
+      "url": "https://raw.githubusercontent.com/ParticleMedia/RAGTruth/main/dataset/response.jsonl"
+    },
+    "summarization_data.json": {
+      "sha256": "86d2561eeb4271eb50b6bd90c9fd38636d30eaf4e98b648045f221adb1c2c758",
+      "bytes": 46992527,
+      "license": "MIT",
+      "fields": {
+        "keys": [
+          "document",
+          "hallucinated_summary",
+          "right_summary"
+        ],
+        "records_checked": 2
+      },
+      "url": "https://raw.githubusercontent.com/RUCAIBox/HaluEval/main/data/summarization_data.json"
+    },
+    "InstructGPT.jsonl": {
+      "sha256": "4ec1fa538a9f99606130c76db63d4af7f203ca460954a3edd7c4d0e385cd2d58",
+      "bytes": 966123,
+      "license": "MIT",
+      "fields": {
+        "keys": [
+          "annotations",
+          "cat",
+          "input",
+          "output",
+          "topic"
+        ],
+        "records_checked": 2,
+        "fact_keys": [
+          "label",
+          "text"
+        ]
+      },
+      "url": "https://drive.google.com/uc?export=download&id=155exEdKs7R21gZF4G-x54-XN3qswBcPo (data.zip -> data/labeled/InstructGPT.jsonl)"
+    },
+    "ChatGPT.jsonl": {
+      "sha256": "b58fe7113acc28dee8d3e6ee7e426bfdedaa293bba270f0977f568b9319e92d4",
+      "bytes": 1128530,
+      "license": "MIT",
+      "fields": {
+        "keys": [
+          "annotations",
+          "cat",
+          "input",
+          "output",
+          "topic"
+        ],
+        "records_checked": 2,
+        "fact_keys": [
+          "label",
+          "text"
+        ]
+      },
+      "url": "https://drive.google.com/uc?export=download&id=155exEdKs7R21gZF4G-x54-XN3qswBcPo (data.zip -> data/labeled/ChatGPT.jsonl)"
+    },
+    "PerplexityAI.jsonl": {
+      "sha256": "81ada151f2de8b7c205e3c15491e54b92d89bfb37b05366dca8b7a0486f109ff",
+      "bytes": 1354199,
+      "license": "MIT",
+      "fields": {
+        "keys": [
+          "annotations",
+          "cat",
+          "input",
+          "output",
+          "topic"
+        ],
+        "records_checked": 2,
+        "fact_keys": [
+          "label",
+          "text"
+        ]
+      },
+      "url": "https://drive.google.com/uc?export=download&id=155exEdKs7R21gZF4G-x54-XN3qswBcPo (data.zip -> data/labeled/PerplexityAI.jsonl)"
+    },
+    "factscore_data.zip": {
+      "sha256": "404482c9a7d588d581a2f7a78d609fe6bfec4ddc0f729c8560a61b1743dbffab",
+      "bytes": 2197467,
+      "license": "MIT",
+      "fields": {},
+      "url": "https://drive.google.com/uc?export=download&id=155exEdKs7R21gZF4G-x54-XN3qswBcPo"
+    }
+  },
+  "licenses": {
+    "RAGTruth-LICENSE.txt": {
+      "url": "https://raw.githubusercontent.com/ParticleMedia/RAGTruth/main/LICENSE",
+      "sha256": "b7fd7d6bdfe0cbba63c63a310914beb4a4acb8bf08da73849219f45385f5b244",
+      "spdx": "MIT"
+    },
+    "FActScore-LICENSE.txt": {
+      "url": "https://raw.githubusercontent.com/shmsw25/FActScore/main/LICENSE",
+      "sha256": "fd147c8f9043573a6bc6be2261a7ee2fac513b8f2996c9088b01ba52f81d35a9",
+      "spdx": "MIT"
+    },
+    "HaluEval-LICENSE.txt": {
+      "url": "https://raw.githubusercontent.com/RUCAIBox/HaluEval/main/LICENSE",
+      "sha256": "2c33dad5fede86236b54db22e0be64e72095d151f324bcadd354ab88f40c52fe",
+      "spdx": "MIT"
+    }
+  },
+  "wikipedia": {
+    "api": "https://en.wikipedia.org/w/api.php (action=query prop=revisions, action=parse)",
+    "as_of": "2023-04-01",
+    "license": "CC BY-SA 4.0 - article text is used with attribution and revision id",
+    "entities": {
+      "Canelo Álvarez": {
+        "revid": 1147285628,
+        "timestamp": "2023-03-29T23:28:14Z",
+        "title": "Canelo Álvarez",
+        "verified": true
+      },
+      "Daniel Carvalho": {
+        "revid": 1139730991,
+        "timestamp": "2023-02-16T16:40:07Z",
+        "title": "Daniel Carvalho",
+        "verified": true
+      },
+      "Emmett Skilton": {
+        "revid": 1131278393,
+        "timestamp": "2023-01-03T11:39:40Z",
+        "title": "Emmett Skilton",
+        "verified": true
+      },
+      "Gerardo Fernández Fe": {
+        "revid": 1122589243,
+        "timestamp": "2022-11-18T10:52:46Z",
+        "title": "Gerardo Fernández Fe",
+        "verified": true
+      },
+      "Katsunosuke Hori": {
+        "revid": 1144072199,
+        "timestamp": "2023-03-11T17:38:50Z",
+        "title": "Katsunosuke Hori",
+        "verified": true
+      },
+      "Lina Medina": {
+        "revid": 1144104946,
+        "timestamp": "2023-03-11T21:26:24Z",
+        "title": "Lina Medina",
+        "verified": true
+      },
+      "Luis N. Rivera-Pagán": {
+        "revid": 1143577596,
+        "timestamp": "2023-03-08T16:23:47Z",
+        "title": "Luis N. Rivera-Pagán",
+        "verified": true
+      },
+      "Thomas Houghton (rugby league)": {
+        "revid": 970277675,
+        "timestamp": "2020-07-30T10:36:01Z",
+        "title": "Thomas Houghton (rugby league)",
+        "verified": true
+      }
+    }
+  },
+  "notes": [
+    "Raw upstream files live in data/sources/v2/raw/ and are git-ignored; only this manifest and the licence copies are committed.",
+    "HaluEval's summarization_data.json is JSONL (one JSON object per line).",
+    "FActScore human annotations: data/labeled/{InstructGPT,ChatGPT,PerplexityAI}.jsonl inside the paper's data.zip release."
+  ]
+}
