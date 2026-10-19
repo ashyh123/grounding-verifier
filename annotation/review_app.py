@@ -27,6 +27,7 @@ from fastapi.responses import HTMLResponse
 from pydantic import BaseModel, Field
 
 from . import sources as S
+from .triage import active_flags
 
 DRAFTS = S.ANNOTATION_DIR / "drafts.jsonl"
 ROUND2_QUEUE = S.ANNOTATION_DIR / "round2_queue.jsonl"
@@ -119,7 +120,7 @@ class Store:
         total = done = 0
         for case in self.queue():
             for claim in self.claims(case):
-                if only_flagged and not (claim.get("flags") or case.get("flags")):
+                if only_flagged and not active_flags([*(claim.get("flags") or []), *(case.get("flags") or [])]):
                     continue
                 total += 1
                 if claim["claim_id"] in self.current:
@@ -253,7 +254,7 @@ def render_case(store: Store, case: dict[str, Any], index: int, total: int,
                 only_flagged: bool) -> str:
     claims = store.claims(case)
     if only_flagged:
-        claims = [c for c in claims if c.get("flags") or case.get("flags")]
+        claims = [c for c in claims if active_flags([*(c.get("flags") or []), *(case.get("flags") or [])])]
     progress = store.progress(only_flagged)
     pct = 0 if not progress["total"] else round(100 * progress["done"] / progress["total"])
     claims_json = json.dumps(claims, ensure_ascii=False).replace("</", "<\\/")
@@ -279,6 +280,7 @@ def render_case(store: Store, case: dict[str, Any], index: int, total: int,
         entry["suggestion"] = suggestions.get(claim["claim_id"])
         entry["bucket"] = (buckets.get(claim["claim_id"]) or {}).get("bucket")
         entry["bucket_reasons"] = (buckets.get(claim["claim_id"]) or {}).get("reasons", [])
+        entry["has_active_flags"] = bool(active_flags([*(claim.get("flags") or []), *(case.get("flags") or [])]))
         entry["zh_claim"] = zh.get(text_key(claim["claim_text"]), {}).get("zh", "")
         claim_view.append(entry)
     claims_json = json.dumps(claim_view, ensure_ascii=False).replace("</", "<\\/")
@@ -500,7 +502,11 @@ const actionZh = (a) => ACTION_ZH[a] || a;
 const FLAG_ZH = {
   evidence_not_verbatim: '证据不是原文逐字',
   source_label_uncovered: '原数据集标的错误片段没落到任何主张上（拆漏了）',
-  answer_not_covered: '回答里有一段没被任何主张覆盖',
+  answer_not_covered: '回答定位覆盖缺口（需核查，不等于漏事实）',
+  answer_gap: '回答定位覆盖缺口（需核查，不等于漏事实）',
+  answer_span_not_exact: '回答定位不是唯一精确子串',
+  partial_overlap: '回答定位部分跨出上游标注范围（需人工核查）',
+  human_adjudication_required: '待人工裁决：拆分或上游标注疑点',
   supported_without_evidence: '判了有依据，但找不到逐字证据',
   model_disagrees: '起草模型的判断与脚本不一致',
   evidence_truncated: '上下文被截断，支持证据可能被截掉',
@@ -527,7 +533,7 @@ const SOURCE_ZH = {
 };
 const sourceZh = (s) => SOURCE_ZH[s] || s;
 const flagged = () => el('only-flagged').checked;
-const visible = () => CLAIMS.filter((c) => !flagged() || (c.flags && c.flags.length) || (CASE.flags && CASE.flags.length));
+const visible = () => CLAIMS.filter((c) => !flagged() || c.has_active_flags);
 
 function meta() {
   const bits = [sourceZh(CASE.source), CASE.split === 'dev' ? '开发集' : '测试集',
@@ -601,13 +607,10 @@ function renderAnswer(claim) {
 
 function flagsHtml(claim) {
   let out = '';
-  for (const f of (CASE.flags || [])) {
-    out += `<div class="flag ${f.level}">${f.level === 'red' ? '⛔' : '⚠️'} ${esc(flagZh(f.flag))}`
-         + `<span class="hint"> — ${esc(f.detail)}</span></div>`;
-  }
-  for (const f of (claim.flags || [])) {
-    out += `<div class="flag ${f.level}">${f.level === 'red' ? '⛔' : '⚠️'} ${esc(flagZh(f.flag))}`
-         + `<span class="hint"> — ${esc(f.detail)}</span></div>`;
+  for (const f of [...(CASE.flags || []), ...(claim.flags || [])]) {
+    const waived = f.status === 'waived' && f.waiver?.approved_by === 'user' && f.waiver?.revision_id;
+    out += `<div class="flag ${waived ? '' : f.level}">${waived ? '✓ 已人工豁免' : (f.level === 'red' ? '⛔' : '⚠️')} ${esc(flagZh(f.flag))}`
+         + `<span class="hint"> — ${esc(f.detail)}${waived ? '；依据：' + esc(f.waiver.reason) : ''}</span></div>`;
   }
   return out;
 }

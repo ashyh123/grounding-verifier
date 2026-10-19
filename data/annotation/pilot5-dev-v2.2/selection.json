@@ -1,0 +1,84 @@
+{
+  "created_at": "2026-10-19T15:24:29.450447+00:00",
+  "seed": 20261019,
+  "selection_rule": "seeded sample of sorted dev IDs: Summary 2, QA 2, Data2txt 1",
+  "model": "mimo-v2.6-pro",
+  "endpoint": "https://api.xiaomimimo.com/anthropic",
+  "parameters": {
+    "max_tokens": 8192,
+    "temperature": 0,
+    "thinking": {
+      "type": "disabled"
+    },
+    "tool_choice": {
+      "type": "auto"
+    }
+  },
+  "commit": "da00adedbc07278b247a82eac0d5a7f217069104",
+  "working_source_sha256": {
+    "annotation/draft_claims.py": "c0d4673c218f06e324626998e0d71894c58a437d34166166f616770cdf6cfea9",
+    "annotation/prompts.py": "e800c894b87f27edf16f6ec819285ef91ee1bc722feb91f8d07641c93653938e"
+  },
+  "cases": [
+    {
+      "id": "ragtruth-66",
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "generator_model": "gpt-4-0613",
+      "selection": {
+        "seed": 20261019,
+        "stratum": "clean",
+        "cell": "Summary/dev/clean",
+        "generator_class": "gpt"
+      }
+    },
+    {
+      "id": "ragtruth-2426",
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "generator_model": "mistral-7B-instruct",
+      "selection": {
+        "seed": 20261019,
+        "stratum": "subtle",
+        "cell": "Summary/dev/subtle",
+        "generator_class": "other"
+      }
+    },
+    {
+      "id": "ragtruth-15677",
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "generator_model": "llama-2-70b-chat",
+      "selection": {
+        "seed": 20261019,
+        "stratum": "subtle",
+        "cell": "QA/dev/subtle",
+        "generator_class": "other"
+      }
+    },
+    {
+      "id": "ragtruth-13105",
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "selection": {
+        "seed": 20261019,
+        "stratum": "evident_only",
+        "cell": "QA/dev/evident_only",
+        "generator_class": "gpt"
+      }
+    },
+    {
+      "id": "ragtruth-9775",
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "selection": {
+        "seed": 20261019,
+        "stratum": "subtle",
+        "cell": "Data2txt/dev/subtle",
+        "generator_class": "gpt"
+      }
+    }
+  ]
+}

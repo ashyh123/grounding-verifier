@@ -1,0 +1,178 @@
+{
+  "created_at": "2026-10-19T15:26:28.625921+00:00",
+  "status": "draft_only_not_gold",
+  "model": "mimo-v2.6-pro",
+  "cases": 5,
+  "claims": 63,
+  "claims_by_task": {
+    "ragtruth_qa": 21,
+    "ragtruth_summary": 21,
+    "ragtruth_data2txt": 21
+  },
+  "usage": {
+    "calls": 5,
+    "input_tokens": 7630,
+    "output_tokens": 5810,
+    "retries": 0
+  },
+  "claim_flags": {
+    "answer_span_not_exact": 1,
+    "partial_overlap": 3
+  },
+  "case_flags": {
+    "claim 12": 1,
+    "answer_gap": 4
+  },
+  "exact_answer_spans": 62,
+  "unresolved_answer_spans": 1,
+  "protected_files_verified_unchanged": 247,
+  "blind_review_called": false,
+  "translation_called": false,
+  "drafts_sha256": "97b7f8a0f73c7cf9c5097d1d44a5ebc6d350086024dabe1c367ee6429ad3fa13",
+  "tests": "make test: 185 passed",
+  "case_details": [
+    {
+      "case_id": "ragtruth-13105",
+      "task": "ragtruth_qa",
+      "split": "dev",
+      "claims": 14,
+      "claim_flags": {
+        "answer_span_not_exact": 1
+      },
+      "case_flags": [
+        {
+          "level": "red",
+          "flag": "claim 12",
+          "detail": "claim 12: non-exact or ambiguous answer quote"
+        },
+        {
+          "level": "red",
+          "flag": "answer_gap",
+          "detail": "answer_gap: more than 20 answer characters in an uncovered run"
+        }
+      ],
+      "exact_answer_spans": 13,
+      "unresolved_answer_spans": [
+        {
+          "claim_id": "ragtruth-13105-c12",
+          "quote": "the passages do not mention how to make a line graph",
+          "exact_occurrences": 0
+        }
+      ],
+      "call": {
+        "calls": 1,
+        "input_tokens": 1190,
+        "output_tokens": 1128,
+        "retries": 0,
+        "seconds": 14.87,
+        "started_at": "2026-10-19T15:24:29.914324+00:00",
+        "finished_at": "2026-10-19T15:24:44.788737+00:00"
+      },
+      "response_model": "mimo-v2.6-pro"
+    },
+    {
+      "case_id": "ragtruth-15677",
+      "task": "ragtruth_qa",
+      "split": "dev",
+      "claims": 7,
+      "claim_flags": {
+        "partial_overlap": 1
+      },
+      "case_flags": [
+        {
+          "level": "red",
+          "flag": "answer_gap",
+          "detail": "answer_gap: more than 20 answer characters in an uncovered run"
+        }
+      ],
+      "exact_answer_spans": 7,
+      "unresolved_answer_spans": [],
+      "call": {
+        "calls": 1,
+        "input_tokens": 1082,
+        "output_tokens": 719,
+        "retries": 0,
+        "seconds": 10.94,
+        "started_at": "2026-10-19T15:24:44.789900+00:00",
+        "finished_at": "2026-10-19T15:24:55.734654+00:00"
+      },
+      "response_model": "mimo-v2.6-pro"
+    },
+    {
+      "case_id": "ragtruth-2426",
+      "task": "ragtruth_summary",
+      "split": "dev",
+      "claims": 10,
+      "claim_flags": {
+        "partial_overlap": 1
+      },
+      "case_flags": [
+        {
+          "level": "red",
+          "flag": "answer_gap",
+          "detail": "answer_gap: more than 20 answer characters in an uncovered run"
+        }
+      ],
+      "exact_answer_spans": 10,
+      "unresolved_answer_spans": [],
+      "call": {
+        "calls": 1,
+        "input_tokens": 1766,
+        "output_tokens": 1070,
+        "retries": 0,
+        "seconds": 14.91,
+        "started_at": "2026-10-19T15:24:55.735903+00:00",
+        "finished_at": "2026-10-19T15:25:10.643915+00:00"
+      },
+      "response_model": "mimo-v2.6-pro"
+    },
+    {
+      "case_id": "ragtruth-66",
+      "task": "ragtruth_summary",
+      "split": "dev",
+      "claims": 11,
+      "claim_flags": {},
+      "case_flags": [],
+      "exact_answer_spans": 11,
+      "unresolved_answer_spans": [],
+      "call": {
+        "calls": 1,
+        "input_tokens": 1481,
+        "output_tokens": 1172,
+        "retries": 0,
+        "seconds": 18.75,
+        "started_at": "2026-10-19T15:25:10.646260+00:00",
+        "finished_at": "2026-10-19T15:25:29.399168+00:00"
+      },
+      "response_model": "mimo-v2.6-pro"
+    },
+    {
+      "case_id": "ragtruth-9775",
+      "task": "ragtruth_data2txt",
+      "split": "dev",
+      "claims": 21,
+      "claim_flags": {
+        "partial_overlap": 1
+      },
+      "case_flags": [
+        {
+          "level": "red",
+          "flag": "answer_gap",
+          "detail": "answer_gap: more than 20 answer characters in an uncovered run"
+        }
+      ],
+      "exact_answer_spans": 21,
+      "unresolved_answer_spans": [],
+      "call": {
+        "calls": 1,
+        "input_tokens": 2111,
+        "output_tokens": 1721,
+        "retries": 0,
+        "seconds": 22.46,
+        "started_at": "2026-10-19T15:25:29.401372+00:00",
+        "finished_at": "2026-10-19T15:25:51.860049+00:00"
+      },
+      "response_model": "mimo-v2.6-pro"
+    }
+  ]
+}

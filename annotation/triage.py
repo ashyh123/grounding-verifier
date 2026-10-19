@@ -25,6 +25,15 @@ LABEL_SOURCES = {"A": "ragtruth_human+model_blind_agree",
                  "B": "human_adjudicated", "C": "human_audit"}
 
 
+def active_flags(flags: list | None) -> list:
+    """Only explicit, recorded human metadata waivers resolve diagnostics; never truth labels."""
+    return [f for f in flags or [] if not (
+        isinstance(f, dict) and f.get("status") == "waived"
+        and f.get("flag") in ("answer_gap", "partial_overlap")
+        and f.get("waiver", {}).get("approved_by") == "user"
+        and f.get("waiver", {}).get("revision_id"))]
+
+
 def load(path, default):
     if not path.is_file():
         return default
@@ -44,8 +53,24 @@ def reasons_for(claim: dict[str, Any], case: dict[str, Any],
         reasons.append("missing_blind_review")
     elif upstream != blind:
         reasons.append("upstream_blind_disagree")
-    for flag in [*(case.get("flags") or []), *(claim.get("flags") or [])]:
+    for flag in active_flags([*(case.get("flags") or []), *(claim.get("flags") or [])]):
         reasons.append(flag.get("flag", "flagged") if isinstance(flag, dict) else str(flag))
+    # Human-review holds follow split/merged descendants as well as the original claim.
+    by_id = {c["claim_id"]: c for c in case.get("claims", [])}
+    pending = [claim]
+    seen = set()
+    while pending:
+        ancestor = pending.pop()
+        if ancestor["claim_id"] in seen:
+            continue
+        seen.add(ancestor["claim_id"])
+        if any(f.get("flag") == "human_adjudication_required"
+               for f in active_flags(ancestor.get("flags")) if isinstance(f, dict)):
+            reasons.append("human_adjudication_required")
+        parents = ancestor.get("derived_from") or []
+        if isinstance(parents, str):
+            parents = [parents]
+        pending.extend(by_id[p] for p in parents if p in by_id)
     evidence = (review or {}).get("evidence_candidates") or []
     exact = False
     passages = case["context_passages"]
