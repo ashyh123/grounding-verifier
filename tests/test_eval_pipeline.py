@@ -121,3 +121,95 @@ def test_fusion_metric_has_no_false_positive_floor():
     assert _fused_claims(fused, sentences) == 1
     # a single-sentence answer can never fuse
     assert _fused_claims(sentences[:1], sentences[:1]) == 0
+
+
+def test_rescore_cli_counts_guards_groups_failures_and_extra_outputs(tmp_path, monkeypatch):
+    """Saved runs traverse the real rescore path; failed cases keep their gold denominator.
+
+    Covers length boundaries, missing task/difficulty metadata, case-vs-claim multi-passage tags,
+    duplicate output, changed numbers, oracle bypass and report consistency without provider calls.
+    """
+    import httpx
+    from eval.dataset import EvalCase, GoldClaim, GoldEvidence
+
+    async def no_network(*args, **kwargs):
+        raise AssertionError("rescore must not call a provider")
+
+    monkeypatch.setattr(httpx.AsyncClient, "send", no_network)
+    data = tmp_path / "dataset.jsonl"
+    pred_path = tmp_path / "baseline_run0.jsonl"
+    cases, predictions = [], []
+    for n, words in enumerate((399, 400, 799, 800)):
+        passages = ["The primary server uses TLS.", "The backup server stores logs."]
+        passages[0] += " filler" * (words - sum(len(p.split()) for p in passages))
+        difficulty = ["subtle", "evident", "clean", None][n]
+        first = "The server waits 60 seconds."
+        combined = "The primary server uses TLS and the backup server stores logs."
+        cases.append(EvalCase(
+            id=f"case{n}", split="dev", tags=["multi_passage"] + ([difficulty] if difficulty else []),
+            context_passages=passages, generated_answer=first + " " + combined,
+            source=["ragtruth_summary", "ragtruth_qa", "ragtruth_data2txt", None][n],
+            gold_claims=[GoldClaim(claim_text=first, verdict="UNSUPPORTED"),
+                         GoldClaim(claim_text=combined, verdict="SUPPORTED",
+                                   tags=["multi_passage"] if n == 0 else [],
+                                   evidence=[GoldEvidence(index=i, quote=p.split(" filler")[0])
+                                             for i, p in enumerate(passages)])]))
+        if n == 3:
+            predictions.append({"id": f"case{n}", "error": "saved provider failure"})
+            continue
+        first_pred = {"claim_text": first.replace("60", "600") if n == 0 else first,
+                      "verdict": "UNSUPPORTED", "citations": [], "reasoning": "recorded"}
+        claims = [first_pred, {"claim_text": combined, "verdict": "SUPPORTED", "reasoning": "recorded",
+                              "citations": [{"index": i, "quote": p.split(" filler")[0], "start_char": 0,
+                                             "end_char": len(p.split(" filler")[0])}
+                                            for i, p in enumerate(passages)]}]
+        if n == 1:
+            claims.append(first_pred.copy())
+        predictions.append({"id": f"case{n}", "claims": claims, "meta": {}})
+    data.write_text("\n".join(c.model_dump_json() for c in cases) + "\n")
+    pred_path.write_text("\n".join(json.dumps(p) for p in predictions) + "\n")
+    summary_path = tmp_path / "summary.json"
+    summary_path.write_text(json.dumps({"split": "dev", "oracle": False, "n_cases": 4,
+                                        "methods": {"baseline": [{}]}}))
+    monkeypatch.setattr(sys, "argv", ["eval.run", "--data", str(data), "--rescore", str(tmp_path)])
+    raw_data, raw_pred = data.read_bytes(), pred_path.read_bytes()
+    asyncio.run(eval_run.main())
+    summary = json.loads(summary_path.read_text())
+    m = summary["methods"]["baseline"][0]
+    assert m["errors"] == 1 and m["decomposition"]["gold_claims"] == 8
+    assert m["decomposition"]["matched_pairs"] == 5
+    assert m["decomposition"]["missed_gold"] == 3
+    assert m["decomposition"]["extra_predictions"] == 2
+    assert m["decomposition"]["duplicate_predictions"] == 1
+    assert m["decomposition"]["added_predictions"] == 1
+    assert m["guard_rejected_pairs"] >= 1
+    assert m["claim_accuracy_all_gold"] == 5 / 8
+    groups = m["groups"]
+    assert groups["context_length_words"]["0-399"]["n_cases"] == 1
+    assert groups["context_length_words"]["400-799"]["n_cases"] == 2
+    assert groups["context_length_words"]["800+"]["n_cases"] == 1
+    assert groups["task"]["Summary"]["claim_accuracy_all_gold"] == 0.5
+    assert groups["task"]["unknown"]["missed_gold"] == 2
+    assert groups["difficulty"]["subtle"]["gold_claims"] == 2
+    assert groups["difficulty"]["evident"]["gold_claims"] == 2
+    assert groups["difficulty"]["unknown"]["missed_gold"] == 2
+    # Only explicit claim tags count; a case tag or two citations cannot mark every claim multi-passage.
+    assert groups["multi_passage"]["true"]["gold_claims"] == 1
+    assert groups["multi_passage"]["true"]["correct"] == 1
+    assert groups["multi_passage"]["false"]["gold_claims"] == 7
+    assert "Guard-rejected candidate pairs" in report.table(summary)
+    assert "Grouped claim metrics: `task`" in report.table(summary)
+    failures = report.failures(tmp_path, "baseline", str(data))
+    assert "MISSED gold claim" in failures and "EXTRA predicted claim" in failures
+    assert data.read_bytes() == raw_data and pred_path.read_bytes() == raw_pred
+    asyncio.run(eval_run.main())
+    assert json.loads(summary_path.read_text()) == summary
+    # Oracle reads exactly the same saved prediction texts by position, with no lexical guards.
+    pred_path.rename(tmp_path / "baseline_oracle_run0.jsonl")
+    summary["oracle"] = True
+    summary_path.write_text(json.dumps(summary))
+    asyncio.run(eval_run.main())
+    oracle = json.loads(summary_path.read_text())["methods"]["baseline"][0]
+    assert oracle["guard_rejected_pairs"] == 0
+    assert oracle["decomposition"]["matched_pairs"] == 6
+    assert oracle["claim_accuracy_all_gold"] == 6 / 8

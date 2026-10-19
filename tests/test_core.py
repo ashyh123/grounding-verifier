@@ -67,4 +67,5 @@ def test_align():
     pairs = align_claims(["WAL checkpoints at about 1000 pages", "WAL is encrypted"],
                          ["WAL mode is encrypted with AES-256 by default",
                           "SQLite WAL mode automatically checkpoints at roughly 1,000 pages"])
-    assert {(p, g) for p, g, _ in pairs} == {(0, 1), (1, 0)}
+    assert {(p, g) for p, g, _ in pairs.pairs} == {(0, 1)}
+    assert pairs.guard_rejected_pairs >= 1  # AES-256 was dropped from the second claim

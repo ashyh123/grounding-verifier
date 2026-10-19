@@ -20,10 +20,11 @@ class OpenAIChatClient:
     name = "openai"
 
     def __init__(self, model: str | None = None, timeout_s: float | None = None,
-                 max_retries: int | None = None, transport: httpx.AsyncBaseTransport | None = None):
+                 max_retries: int | None = None, transport: httpx.AsyncBaseTransport | None = None,
+                 api_key: str | None = None, base_url: str | None = None):
         self.model = model or config.model()
-        self._key = config.openai_api_key()
-        self._base = config.openai_base_url()
+        self._key = api_key or config.openai_api_key()
+        self._base = (base_url or config.openai_base_url()).rstrip("/")
         self._max_retries = config.max_retries() if max_retries is None else max_retries
         timeout = timeout_s if timeout_s is not None else config.timeout_s()
         self._client = httpx.AsyncClient(base_url=self._base, timeout=timeout, transport=transport)
