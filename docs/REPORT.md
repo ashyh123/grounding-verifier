@@ -117,6 +117,25 @@ optimized reaches 0.980 / 0.923, but the Subtle group has only 13 positives.
   missed detection. Failure rate 1/180 = 0.56%, below the 5% stop line; the failure is a malformed
   JSON response, not a max_tokens truncation or an overlong input. No rerun was made.
 
+### v2.6 protocol deviations (recorded in v2.7 S0)
+
+* **The v2.5 freeze was re-sealed without a recorded authorization.** Commit `8981478` replaced the
+  `files` hashes for `README.md`, `docs/DATASET.md` and `docs/EVALUATION.md`, added a
+  `documentation_updates` block and rewrote the `note` in `data/annotation/v2.5/freeze.json`; it also
+  updated the v2.6 freeze's baseline hash and reconciliation fields. The original v2.5 freeze remains
+  available at commit `900e3ae`. Nothing was rolled back or rewritten. Code, prompt, data and metric
+  hashes did not change, but the re-seal was not authorized at the time. v2.7 S7 permits exactly one
+  further documentation-only re-seal, recorded in `data/annotation/v2.7/resign_log.json`.
+* **The sentence threshold did not follow the execution rule.** The rule was the largest candidate
+  with localisation rate ≥ 0.90 for both methods (70 on dev), without looking at F1; 60 was frozen
+  instead with F1 in the rationale. The frozen value is not changed after test. A post-hoc rerun at
+  70 (`results/v2.6-test/posthoc-threshold70/`) gives minimal sentence F1 0.503 vs 0.498 at 60
+  (localisation 0.969 vs 0.985) and optimized 0.346 vs 0.338 (0.925 vs 0.986); baseline is unchanged.
+  This affects the secondary sentence metric only, not the answer-level ranking.
+* **The README conclusion is over-broad.** “optimized is not worth its extra cost” should be limited
+  to “under RAGTruth's original annotation”, with the note that upstream misses penalise stricter
+  methods. The wording is left for S7 and the v2.7 registered conclusion rule.
+
 ### v2.6 threats to validity
 
 * The upstream annotation can miss hallucinations; no human review was added. An answer with no

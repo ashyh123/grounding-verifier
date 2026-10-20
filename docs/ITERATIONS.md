@@ -517,6 +517,26 @@ v2.5 的任何数据、预测或冻结文件。
   次要。v2.5 freeze 中 README、DATASET、EVALUATION 三份文档的哈希按 v2.6 要求重新签封；
   代码、prompt、数据和指标哈希未变，v2.6 freeze 记录了这次「仅文档」变更。
 
+### v2.6 事后记录的偏离（v2.7 S0）
+
+1. **v2.5 freeze 的重新签封缺少当时的授权记录。** 提交 `8981478`（P5 文档提交）修改了
+   `data/annotation/v2.5/freeze.json`：`files` 中 `README.md`、`docs/DATASET.md`、
+   `docs/EVALUATION.md` 三个哈希被替换，新增 `documentation_updates`，并改写了 `note`。
+   同一提交还更新了 v2.6 freeze 的 `verifier.frozen_baseline_sha256`、
+   `frozen_files_changed`、`authorized_documentation_updates`、`frozen_files_changed_note`、
+   `post_freeze_documentation_reconciliation`、`post_freeze_measurement` 和
+   `freeze_checks.sha256`。**原始 v2.5 freeze 在提交 `900e3ae`（P4）仍可查**；不回滚、
+   不改写历史。代码、prompt、数据和指标哈希没有变化，但这仍是一次未在签封时登记的偏离。
+   v2.7 的 S7 只允许再签封一次文档哈希，并按第 10 节写入 `data/annotation/v2.7/resign_log.json`。
+2. **句子对齐阈值的执行规则与冻结值不一致。** 执行文档的规则是「两方案定位率都 ≥ 0.90 的最大
+   候选值」，按 dev 数字应为 70，且不允许看 F1；实际冻结了 60，理由中参考了句子 F1。test 已跑完，
+   **冻结值 60 不改**。事后用同一批预测在 `results/v2.6-test/posthoc-threshold70/` 重算 70：
+   minimal 句子 F1 0.498 → 0.503（定位率 0.985 → 0.969），optimized 0.338 → 0.346
+   （定位率 0.986 → 0.925），baseline 不变。该结果标注为事后分析，只影响次要的句子指标，
+   不改变回答级结论。
+3. **README 的结论措辞过满。** 「optimized 不值得它的额外成本」应限定为「在 RAGTruth 原始标注下」，
+   并说明上游漏标对更严格的方案不利。S0 先记录，README 留到 S7 按 v2.7 第 5 节的规则一次性修改。
+
 ### test 结果（180 条回答 / 62 正例）
 
 | 方案 | 精度 | 召回 | F1 [95% CI] | 平衡准确率 | 句子 F1 | 原始引文合法率 | 每例费用 |
