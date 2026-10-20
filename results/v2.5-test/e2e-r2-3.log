@@ -1,0 +1,6 @@
+baseline_run0: claim_acc=0.140 macro_f1=0.133 answer_f1=0.861 errors=0
+minimal_run0: claim_acc=0.648 macro_f1=0.538 answer_f1=0.829 errors=0
+minimal_run1: claim_acc=0.678 macro_f1=0.567 answer_f1=0.829 errors=0
+optimized_run0: claim_acc=0.726 macro_f1=0.555 answer_f1=0.880 errors=0
+optimized_run1: claim_acc=0.737 macro_f1=0.555 answer_f1=0.868 errors=0
+wrote results/v2.5-test/e2e-r2-3
