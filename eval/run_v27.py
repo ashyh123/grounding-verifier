@@ -36,6 +36,15 @@ async def run_one(verifier, row: dict, sem: asyncio.Semaphore) -> dict:
             return {'id': row['id'], 'error': str(e)}
 
 
+async def run_oracle(verifier, row: dict, sem: asyncio.Semaphore) -> dict:
+    async with sem:
+        try:
+            result = await verifier.verify_claims(row['context_passages'], row['claims'])
+            return {'id': row['id']} | result.model_dump(mode='json')
+        except UpstreamError as e:
+            return {'id': row['id'], 'error': str(e)}
+
+
 def load_reuse(method: str) -> dict[str, dict]:
     path = V26_RESULTS / f'{method}_run0.jsonl'
     return {r['id']: r for r in (json.loads(line) for line in
@@ -97,17 +106,47 @@ async def track_ragtruthpp(rows: list[dict], methods: list[str], out: Path, conc
     return summary
 
 
+async def track_aggrefact(rows: list[dict], methods: list[str], out: Path, concurrency: int,
+                          prompt_version: str) -> dict:
+    out.mkdir(parents=True, exist_ok=True)
+    summary = {'design_version': '2.7', 'track': 'aggrefact', 'n_docs': len(rows),
+               'n_claims': sum(len(r['claims']) for r in rows),
+               'prompt_version': prompt_version, 'methods': {}}
+    for method in methods:
+        verifier = build(method, prompt_version)
+        sem = asyncio.Semaphore(concurrency)
+        rows_out = await asyncio.gather(*(run_oracle(verifier, row, sem) for row in rows))
+        path = out / f'{method}_run0.jsonl'
+        with path.open('w', encoding='utf-8') as stream:
+            for row in rows_out:
+                stream.write(json.dumps(row, ensure_ascii=False) + '\n')
+        failures = sum('error' in r for r in rows_out)
+        summary['methods'][method] = {'docs': len(rows_out), 'failures': failures,
+                                      'failure_rate': failures / len(rows_out)}
+        print(f'{method}: {len(rows_out)} docs, {failures} failures')
+        if failures / len(rows_out) > 0.05:
+            raise SystemExit(f'STOP: {method} failure rate {failures / len(rows_out):.2%} > 5%')
+    (out / 'summary.json').write_text(json.dumps(summary, indent=2, ensure_ascii=False) + '\n',
+                                      encoding='utf-8')
+    return summary
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--track', choices=['ragtruthpp', 'aggrefact'], required=True)
     ap.add_argument('--data', type=Path, default=None)
+    ap.add_argument('--split', choices=['dev', 'test'], default='test')
     ap.add_argument('--methods', nargs='+', default=['baseline', 'minimal', 'optimized'])
     ap.add_argument('--concurrency', type=int, default=4)
     ap.add_argument('--prompt-version', default='v3')
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
     if args.track == 'aggrefact':
-        raise SystemExit('STOP: LLM-AggreFact is gated and not downloaded; track A cannot run yet')
+        data = args.data or ROOT / 'data' / f'eval_aggrefact.v2.7.{args.split}.jsonl'
+        rows = v27.load_aggrefact(data)
+        asyncio.run(track_aggrefact(rows, args.methods, args.out, args.concurrency,
+                                    args.prompt_version))
+        return
     data = args.data or ROOT / 'data' / 'eval_ragtruthpp.v2.7.jsonl'
     rows = v27.load_rows(data)
     asyncio.run(track_ragtruthpp(rows, args.methods, args.out, args.concurrency,

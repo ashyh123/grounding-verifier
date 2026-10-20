@@ -1,0 +1,152 @@
+{
+  "split": "test",
+  "target_claims_per_subset": 100,
+  "subsets": {
+    "AggreFact-CNN": {
+      "docs_total": 384,
+      "claims_total": 558,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 70,
+      "selected_claims": 100,
+      "selected_positives": 87,
+      "selected_doc_words_min_median_max": [
+        232,
+        471.5,
+        1185
+      ]
+    },
+    "AggreFact-XSum": {
+      "docs_total": 483,
+      "claims_total": 558,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 88,
+      "selected_claims": 100,
+      "selected_positives": 45,
+      "selected_doc_words_min_median_max": [
+        47,
+        312.5,
+        1252
+      ]
+    },
+    "ClaimVerify": {
+      "docs_total": 697,
+      "claims_total": 1088,
+      "excluded_docs_over_4000_words": 49,
+      "excluded_claims_over_4000_words": 81,
+      "selected_docs": 63,
+      "selected_claims": 100,
+      "selected_positives": 81,
+      "selected_doc_words_min_median_max": [
+        26,
+        958,
+        3603
+      ]
+    },
+    "ExpertQA": {
+      "docs_total": 3135,
+      "claims_total": 3702,
+      "excluded_docs_over_4000_words": 67,
+      "excluded_claims_over_4000_words": 71,
+      "selected_docs": 81,
+      "selected_claims": 101,
+      "selected_positives": 88,
+      "selected_doc_words_min_median_max": [
+        29,
+        142,
+        3899
+      ]
+    },
+    "FactCheck-GPT": {
+      "docs_total": 1199,
+      "claims_total": 1566,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 75,
+      "selected_claims": 100,
+      "selected_positives": 22,
+      "selected_doc_words_min_median_max": [
+        20,
+        83,
+        147
+      ]
+    },
+    "Lfqa": {
+      "docs_total": 100,
+      "claims_total": 1911,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 5,
+      "selected_claims": 120,
+      "selected_positives": 79,
+      "selected_doc_words_min_median_max": [
+        154,
+        262,
+        286
+      ]
+    },
+    "Reveal": {
+      "docs_total": 1498,
+      "claims_total": 1710,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 91,
+      "selected_claims": 100,
+      "selected_positives": 24,
+      "selected_doc_words_min_median_max": [
+        17,
+        73,
+        268
+      ]
+    },
+    "TofuEval-MediaS": {
+      "docs_total": 15,
+      "claims_total": 726,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 2,
+      "selected_claims": 104,
+      "selected_positives": 77,
+      "selected_doc_words_min_median_max": [
+        803,
+        816.5,
+        830
+      ]
+    },
+    "TofuEval-MeetB": {
+      "docs_total": 15,
+      "claims_total": 772,
+      "excluded_docs_over_4000_words": 0,
+      "excluded_claims_over_4000_words": 0,
+      "selected_docs": 2,
+      "selected_claims": 103,
+      "selected_positives": 78,
+      "selected_doc_words_min_median_max": [
+        924,
+        987.5,
+        1051
+      ]
+    },
+    "Wice": {
+      "docs_total": 355,
+      "claims_total": 358,
+      "excluded_docs_over_4000_words": 18,
+      "excluded_claims_over_4000_words": 18,
+      "selected_docs": 99,
+      "selected_claims": 100,
+      "selected_positives": 36,
+      "selected_doc_words_min_median_max": [
+        269,
+        922,
+        3728
+      ]
+    }
+  },
+  "totals": {
+    "docs": 576,
+    "claims": 1028,
+    "positives": 617,
+    "selected_positives_rate": 0.6001945525291829
+  }
+}

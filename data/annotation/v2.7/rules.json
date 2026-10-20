@@ -1,6 +1,6 @@
 {
   "version": "2.7",
-  "status": "partial_track_b_registered_track_a_blocked",
+  "status": "registered_pending_s2_confirmation",
   "date": "2026-10-20",
   "design": "Notion evaluation design v2.7",
   "decisions": {
@@ -72,32 +72,99 @@
     "runs": "one run per method per track"
   },
   "track_a": {
-    "status": "blocked_gated",
+    "status": "registered_pending_s2_confirmation",
     "dataset": "lytang/LLM-AggreFact",
     "revision": "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4",
     "license": "CC-BY-ND-4.0",
-    "access": "gated; the user must accept the terms and provide an HF token; anonymous parquet access returns HTTP 401",
+    "access": "gated; the user accepted the terms and the local HF token is present; parquet downloaded, raw and derived data stay local",
     "subsets": "10 LLM-AggreFact subsets after excluding its RAGTruth subset",
     "seed": 20261024,
-    "sample": "100 claims per subset, drawn as whole documents; dev 10 claims per subset",
+    "sample": "whole documents by seeded rank until the target claim count is reached; one document may overshoot the target",
     "doc_length_cap": "pending S2 length statistics",
-    "input": "one document per case; split passages at blank lines, else accumulate sentences to about 150 words, recording character offsets",
+    "input": "paragraph-preferred packing to about 150 words; long blocks are split into sentences; passages are verbatim substrings with offsets; punctuation-only blocks are dropped; max 50 passages, 20,000 chars each",
     "mode": "oracle: claims are given, no decomposition",
-    "label_map": {"1": "SUPPORTED", "0": "CONTRADICTED or UNSUPPORTED"},
+    "label_map": {
+      "1": "SUPPORTED",
+      "0": "CONTRADICTED or UNSUPPORTED"
+    },
     "metrics": "balanced accuracy per subset and macro average; document bootstrap 10000, seed 20261024; paired optimized minus minimal; failures count wrong",
     "budget": "pending S4",
-    "leaderboard": "recompute the same 10-subset average from the public leaderboard; state sample/prompt/subset differences"
+    "leaderboard": "recompute the same 10-subset average from the public leaderboard; state sample/prompt/subset differences",
+    "subsets_listed": [
+      "AggreFact-CNN",
+      "AggreFact-XSum",
+      "ClaimVerify",
+      "ExpertQA",
+      "FactCheck-GPT",
+      "Lfqa",
+      "Reveal",
+      "TofuEval-MediaS",
+      "TofuEval-MeetB",
+      "Wice"
+    ],
+    "doc_length_cap_words": 4000,
+    "dev_target_claims_per_subset": 10,
+    "test_target_claims_per_subset": 100,
+    "actual_selected": {
+      "test": {
+        "docs": 576,
+        "claims": 1028,
+        "positives": 617
+      },
+      "dev": {
+        "docs": 58,
+        "claims": 196,
+        "positives": 108
+      }
+    },
+    "overshoot_note": "whole-document sampling exceeds the nominal 100/10 claim targets: Lfqa 120, TofuEval-MediaS 104, TofuEval-MeetB 103 on test; Lfqa 25, TofuEval-MediaS 61, TofuEval-MeetB 38 on dev",
+    "excluded_over_cap": {
+      "test": {
+        "ClaimVerify": {
+          "docs": 49,
+          "claims": 81
+        },
+        "ExpertQA": {
+          "docs": 67,
+          "claims": 71
+        },
+        "Wice": {
+          "docs": 18,
+          "claims": 18
+        }
+      },
+      "dev": {
+        "ClaimVerify": {
+          "docs": 42,
+          "claims": 74
+        },
+        "ExpertQA": {
+          "docs": 73,
+          "claims": 80
+        },
+        "Wice": {
+          "docs": 18,
+          "claims": 18
+        }
+      }
+    },
+    "fallback": "if S4 estimates total cost above $16, reduce test target to 80 claims per subset; dev and track B are not reduced",
+    "budget_estimate_usd": 9.06,
+    "budget_note": "1028 test + 196 dev claims at $0.0074 per claim from v2.5 oracle prices x2 for longer documents"
   },
   "budget": {
     "cap_usd": 16.0,
     "track_b_estimate_usd": 7.84,
-    "track_a_estimate_usd": null,
-    "basis": "v2.6 test actual unit prices; track A oracle prices from v2.5 with a 2x long-document factor"
+    "track_a_estimate_usd": 9.06,
+    "basis": "v2.6 test actual unit prices; track A oracle prices from v2.5 with a 2x long-document factor",
+    "total_estimate_usd": 16.9,
+    "cap_note": "the whole-document overshoot puts the estimate at $16.90, above the $16 cap; S4 fallback is target 80 per subset"
   },
   "notes": [
     "no prompt, verifier code, model or public gold change",
     "no v2.6 rerun",
-    "track A cannot be frozen or run until the gated parquet is available",
-    "the v2.6 post-hoc sentence threshold 70 is not used in v2.7; threshold 60 is inherited"
+    "track A data is gated and local-only; raw parquet and derived JSONL are not committed",
+    "the v2.6 post-hoc sentence threshold 70 is not used in v2.7; threshold 60 is inherited",
+    "S2 stats and the $16 cap still need the user confirmation gate"
   ]
 }

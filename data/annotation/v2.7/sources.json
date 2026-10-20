@@ -11,11 +11,22 @@
           "sha256": "2045c4f428a89f1f63b6040ff3a5dd45285ff8fde49284bee5574902622a8a6b",
           "bytes": 4927,
           "url": "https://huggingface.co/datasets/lytang/LLM-AggreFact/resolve/981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4/README.md",
+          "cached": true
+        },
+        "data/dev-00000-of-00001.parquet": {
+          "sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+          "bytes": 35453136,
+          "url": "https://huggingface.co/datasets/lytang/LLM-AggreFact/resolve/981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4/data/dev-00000-of-00001.parquet",
+          "cached": false
+        },
+        "data/test-00000-of-00001.parquet": {
+          "sha256": "ba6976c3da990a9d7b11670efaf4e3c93c1bd0530061ec742afd6b2d5bce698c",
+          "bytes": 17298205,
+          "url": "https://huggingface.co/datasets/lytang/LLM-AggreFact/resolve/981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4/data/test-00000-of-00001.parquet",
           "cached": false
         }
       },
-      "status": "blocked_gated",
-      "error": "aggrefact: HTTP 401; accept the dataset terms at https://huggingface.co/datasets/lytang/LLM-AggreFact. Then run `uv run --with huggingface_hub huggingface-cli login` or set HF_TOKEN."
+      "status": "downloaded"
     },
     "ragtruthpp": {
       "repo": "blue-guardrails/ragtruth-plus-plus",
@@ -45,5 +56,5 @@
       "status": "downloaded"
     }
   },
-  "fetched_at": "2026-10-20T09:48:38.825496+00:00"
+  "fetched_at": "2026-10-20T10:14:21.187522+00:00"
 }

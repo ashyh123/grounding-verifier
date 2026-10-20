@@ -51,13 +51,34 @@ strict 金标 BAcc 0.539、句子 F1 0.498；loose 金标 BAcc 0.526、句子 F1
 baseline 几乎对每条回答都报警，所以 strict 下 F1 看似高（0.853），但 BAcc 接近随机；
 这是解析与指标管线的检查，不是方案结果。
 
-## 轨道 A：LLM-AggreFact（阻塞）
+## 轨道 A：LLM-AggreFact
 
-- `lytang/LLM-AggreFact` 是 gated 数据集（`gated: auto`）；匿名访问 parquet 返回 HTTP 401，
-  datasets-server 也拒绝。README 可下载，但数据文件不可读。
-- 已记录 revision `981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4`、CC-BY-ND-4.0 和 gated 提示。
-- 需要用户在本机完成 Hugging Face 登录并接受数据集条款：
-  `uv run --with huggingface_hub huggingface-cli login`
-  登录后 token 写到 `~/.cache/huggingface/token`，`annotation/v27/fetch.py` 会自动读取。
-- 在拿到 parquet 之前，无法统计 10 个子集的长度分布、确定子集名称、写 rules.json 或估算
-  轨道 A 的实际费用。轨道 B 的统计已完成，但 S2 规则必须等两个轨道都齐备后再写。
+来源：`lytang/LLM-AggreFact`，revision `981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4`，
+CC-BY-ND-4.0；用户已接受 gated 条款，本机 HF token 已登录。原始 parquet 和生成的
+`data/eval_aggrefact.v2.7.*.jsonl` 都本地保留、不提交；仓库只保留 `sources.json`、
+`aggrefact-selection-*.json`（统计）和构建代码。
+
+- 10 个子集，排除 `RAGTruth` 子集：AggreFact-CNN、AggreFact-XSum、ClaimVerify、ExpertQA、
+  FactCheck-GPT、Lfqa、Reveal、TofuEval-MediaS、TofuEval-MeetB、Wice。
+- 文档长度上限 4000 词。被排除：test ClaimVerify 49 篇 / 81 主张、ExpertQA 67 / 71、
+  Wice 18 / 18；dev ClaimVerify 42 / 74、ExpertQA 73 / 80、Wice 18 / 18。
+- 按种子 `20261024` 整篇文档抽取：
+  - test：576 篇文档、**1028 条主张**、617 正例；每子集目标 100 条，整篇抽样导致
+    Lfqa 120、TofuEval-MediaS 104、TofuEval-MeetB 103。
+  - dev：58 篇文档、**196 条主张**、108 正例；每子集目标 10 条，Lfqa 25、
+    TofuEval-MediaS 61、TofuEval-MeetB 38。
+- 切段：优先空行段落，长段按句子拆，按约 150 词打包；每段都是原文的 verbatim substring，
+  记录 start/end；最多 25 段/文档、最大 8282 字符，均低于服务上限。
+- 免费 baseline：test 宏平均 BAcc 0.606 [0.579, 0.627]，dev 0.590；0 失败。
+  baseline 精度高、召回低，是管线检查，不是方案结果。
+
+### 预算
+
+- 轨道 A：1224 条主张（1028 test + 196 dev）× $0.0074 ≈ **$9.06**。
+- 轨道 B：$7.84。
+- 合计约 **$16.90**，比 $16 上限高约 $0.90。按第 10.2 节的回退规则，S4 若确认超过 $16，
+  test 目标降到每子集 80 条（实际约 854 条），dev 与轨道 B 不缩减。
+
+**S2 状态：统计与规则已齐备，等待用户确认样本量和 $16 上限的处理方式（100 条/子集 + 超出上限，
+或直接采用 80 条/子集的回退）。**
+

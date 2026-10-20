@@ -114,9 +114,172 @@ def track_b_report(rows: list[dict], predictions: dict[str, dict[str, dict]],
     }
 
 
+def load_aggrefact(path: Path) -> list[dict]:
+    rows = [json.loads(line) for line in Path(path).read_text(encoding='utf-8').splitlines()
+            if line.strip()]
+    ids = [r['id'] for r in rows]
+    if len(ids) != len(set(ids)):
+        raise SystemExit(f'{path}: duplicate ids')
+    for row in rows:
+        if len(row['claims']) != len(row['labels']):
+            raise SystemExit(f"{row['id']}: claims and labels differ")
+        if set(row['labels']) - {0, 1}:
+            raise SystemExit(f"{row['id']}: labels must be 0/1")
+        for passage, entry in zip(row['context_passages'], row['passage_map']):
+            if not passage or len(passage) > 20000:
+                raise SystemExit(f"{row['id']}: passage violates the service limit")
+    return rows
+
+
+def _doc_counts(row: dict, prediction: dict | None) -> np.ndarray:
+    """tp, fp, fn, tn for one document; a failed document is wrong on every claim."""
+    labels = row['labels']
+    positives = sum(labels)
+    negatives = len(labels) - positives
+    if prediction is None or 'error' in prediction:
+        return np.array([0, negatives, positives, 0], dtype=np.int64)
+    claims = prediction.get('claims') or []
+    if len(claims) != len(labels):
+        return np.array([0, negatives, positives, 0], dtype=np.int64)
+    predicted = [1 if c.get('verdict') == 'SUPPORTED' else 0 for c in claims]
+    tp = sum(g == 1 and p == 1 for g, p in zip(labels, predicted))
+    fp = sum(g == 0 and p == 1 for g, p in zip(labels, predicted))
+    fn = sum(g == 1 and p == 0 for g, p in zip(labels, predicted))
+    tn = sum(g == 0 and p == 0 for g, p in zip(labels, predicted))
+    return np.array([tp, fp, fn, tn], dtype=np.int64)
+
+
+def _bacc(counts: np.ndarray) -> float:
+    tp, fp, fn, tn = (float(x) for x in counts)
+    sensitivity = tp / (tp + fn) if tp + fn else float('nan')
+    specificity = tn / (tn + fp) if tn + fp else float('nan')
+    return (sensitivity + specificity) / 2
+
+
+def _prf(counts: np.ndarray) -> tuple[float, float, float]:
+    tp, fp, fn = (float(x) for x in counts[:3])
+    p = tp / (tp + fp) if tp + fp else float('nan')
+    r = tp / (tp + fn) if tp + fn else float('nan')
+    f = 2 * tp / (2 * tp + fp + fn) if 2 * tp + fp + fn else float('nan')
+    return p, r, f
+
+
+def _macro(values: dict[str, float]) -> float:
+    vals = [v for v in values.values() if np.isfinite(v)]
+    return float(np.mean(vals)) if vals else float('nan')
+
+
+def _subset_blocks(rows: list[dict], predictions: dict[str, dict[str, dict]],
+                   exclude_failures: bool) -> tuple[dict, dict]:
+    """Per-subset per-document counts and the reporting block."""
+    subsets = sorted({r['subset'] for r in rows})
+    per_doc: dict[str, dict[str, list[np.ndarray]]] = {m: {} for m in predictions}
+    blocks: dict[str, dict] = {m: {} for m in predictions}
+    for method, preds in predictions.items():
+        for subset in subsets:
+            docs = [r for r in rows if r['subset'] == subset]
+            if exclude_failures:
+                docs = [r for r in docs if (preds.get(r['id']) is not None
+                                            and 'error' not in preds[r['id']])]
+            counts = [_doc_counts(r, preds.get(r['id'])) for r in docs]
+            per_doc[method][subset] = np.stack(counts) if counts else np.zeros((0, 4), dtype=np.int64)
+            total = np.sum(counts, axis=0) if counts else np.zeros(4, dtype=np.int64)
+            p, r, f = _prf(total)
+            blocks[method][subset] = {
+                'docs': len(docs), 'claims': int(total.sum()), 'positives': int(total[2] + total[0]),
+                'failures': sum(preds.get(r['id']) is None or 'error' in preds[r['id']] for r in docs),
+                'tp': int(total[0]), 'fp': int(total[1]), 'fn': int(total[2]), 'tn': int(total[3]),
+                'balanced_accuracy': _bacc(total), 'precision': p, 'recall': r, 'f1': f,
+            }
+    return per_doc, blocks
+
+
+def _bootstrap_macro(per_doc: dict[str, dict[str, list[np.ndarray]]], subsets: list[str],
+                     replicates: int) -> dict[str, np.ndarray]:
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+    draws = {}
+    for subset in subsets:
+        n = len(next(iter(per_doc.values()))[subset])
+        draws[subset] = rng.integers(0, n, size=(replicates, n)) if n else np.zeros((replicates, 0), dtype=int)
+    samples = {}
+    for method in per_doc:
+        out = np.empty(replicates, dtype=float)
+        for rep in range(replicates):
+            values = {}
+            for subset in subsets:
+                counts = per_doc[method][subset]
+                if len(counts) == 0:
+                    continue
+                picked = draws[subset][rep]
+                values[subset] = _bacc(counts[picked].sum(axis=0))
+            out[rep] = _macro(values)
+        samples[method] = out
+    return samples
+
+
+def track_a_report(rows: list[dict], predictions: dict[str, dict[str, dict]],
+                   price_in: float = 0.0, price_out: float = 0.0,
+                   replicates: int = v26.BOOTSTRAP_REPLICATES) -> dict:
+    subsets = sorted({r['subset'] for r in rows})
+    output = {'design_version': '2.7', 'track': 'aggrefact', 'n_docs': len(rows),
+              'n_claims': sum(len(r['claims']) for r in rows), 'subsets': subsets,
+              'bootstrap': {'unit': 'document within subset', 'replicates': replicates,
+                            'seed': BOOTSTRAP_SEED, 'interval': 'percentile 2.5/97.5'},
+              'methods': {}, 'paired': {}}
+    for variant, drop in (('main', False), ('excluding_failures', True)):
+        per_doc, blocks = _subset_blocks(rows, predictions, drop)
+        samples = _bootstrap_macro(per_doc, subsets, replicates)
+        methods = {}
+        for method in predictions:
+            macro_bacc = _macro({s: blocks[method][s]['balanced_accuracy'] for s in subsets})
+            macro_prf = [_macro({s: blocks[method][s][k] for s in subsets})
+                         for k in ('precision', 'recall', 'f1')]
+            ci = v26.interval(macro_bacc, samples[method])
+            methods[method] = {
+                'macro_balanced_accuracy': ci,
+                'macro_precision': macro_prf[0], 'macro_recall': macro_prf[1],
+                'macro_f1': macro_prf[2], 'subsets': blocks[method],
+                'docs': sum(blocks[method][s]['docs'] for s in subsets),
+                'claims': sum(blocks[method][s]['claims'] for s in subsets),
+                'failures': sum(blocks[method][s]['failures'] for s in subsets),
+            }
+        output['methods'][variant] = methods
+        if 'optimized' in predictions and 'minimal' in predictions:
+            diff = samples['optimized'] - samples['minimal']
+            block = v26.interval(
+                methods['optimized']['macro_balanced_accuracy']['value']
+                - methods['minimal']['macro_balanced_accuracy']['value'], diff)
+            low, high = block['ci95']
+            block['excludes_zero'] = None if low is None else bool(low > 0 or high < 0)
+            block['statement'] = v26.wording('optimized', 'minimal', block)
+            output['paired'][variant] = block
+    # cost/latency per method over the full document set
+    output['cost_latency'] = {}
+    for method, preds in predictions.items():
+        metas = [(preds.get(r['id']) or {}).get('meta') or {} for r in rows]
+        failures = sum(preds.get(r['id']) is None or 'error' in preds[r['id']] for r in rows)
+        in_tok = sum(m.get('input_tokens', 0) for m in metas)
+        out_tok = sum(m.get('output_tokens', 0) for m in metas)
+        latency = sorted(m.get('latency_ms', 0.0) for m in metas)
+        n = max(1, len(rows))
+        pick = lambda q: latency[min(len(latency) - 1, int(q * len(latency)))] if latency else 0.0
+        total = (in_tok * price_in + out_tok * price_out) / 1e6
+        output['cost_latency'][method] = {
+            'docs': len(rows), 'failures': failures, 'failure_rate': failures / n,
+            'input_tokens': in_tok, 'output_tokens': out_tok,
+            'cost_usd_total': total, 'cost_usd_per_doc': total / n,
+            'latency_ms': {'mean': sum(latency) / n, 'p50': pick(.5), 'p95': pick(.95),
+                           'max': latency[-1] if latency else 0.0},
+            'retries': sum(m.get('retries', 0) for m in metas),
+            'avg_llm_calls': sum(m.get('llm_calls', 0) for m in metas) / n,
+        }
+    return output
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument('--data', type=Path, default=Path('data/eval_ragtruthpp.v2.7.jsonl'))
+    ap.add_argument('--track', choices=['ragtruthpp', 'aggrefact'], default='ragtruthpp')
+    ap.add_argument('--data', type=Path, default=None)
     ap.add_argument('--predictions', type=Path, required=True,
                     help='directory holding <method>_run0.jsonl')
     ap.add_argument('--methods', nargs='+', default=['baseline', 'minimal', 'optimized'])
@@ -124,24 +287,41 @@ def main() -> None:
     ap.add_argument('--price-out', type=float, default=0.0)
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
-    rows = load_rows(args.data)
     preds = {m: read_predictions(args.predictions / f'{m}_run0.jsonl') for m in args.methods}
-    report = track_b_report(rows, preds, args.price_in, args.price_out)
+    if args.track == 'ragtruthpp':
+        rows = load_rows(args.data or Path('data/eval_ragtruthpp.v2.7.jsonl'))
+        report = track_b_report(rows, preds, args.price_in, args.price_out)
+        filename = 'v27_report.json'
+    else:
+        data = args.data or Path('data/eval_aggrefact.v2.7.test.jsonl')
+        rows = load_aggrefact(data)
+        report = track_a_report(rows, preds, args.price_in, args.price_out)
+        filename = 'v27_aggrefact_report.json'
     args.out.mkdir(parents=True, exist_ok=True)
-    path = args.out / 'v27_report.json'
+    path = args.out / filename
     if path.exists():
         raise SystemExit('STOP: report already exists')
     path.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
-    for standard in ('strict', 'loose'):
-        print(standard)
-        for m in args.methods:
-            x = report['standards'][standard]['methods'][m]
-            a = x['answer_level']['main']['metrics']
-            s = x['sentence_level']['main']
-            print(f"  {m}: answer BAcc={a['balanced_accuracy']['value']:.3f} "
-                  f"sentence F1={s['metrics']['f1']['value']:.3f} failures={x['failures']}")
-        pair = report['standards'][standard]['paired_sentence_f1']
-        print('  ', pair.get('f1', {}).get('statement', pair.get('statement')))
+    if args.track == 'ragtruthpp':
+        for standard in ('strict', 'loose'):
+            print(standard)
+            for m in args.methods:
+                x = report['standards'][standard]['methods'][m]
+                a = x['answer_level']['main']['metrics']
+                s = x['sentence_level']['main']
+                print(f"  {m}: answer BAcc={a['balanced_accuracy']['value']:.3f} "
+                      f"sentence F1={s['metrics']['f1']['value']:.3f} failures={x['failures']}")
+            pair = report['standards'][standard]['paired_sentence_f1']
+            print('  ', pair.get('f1', {}).get('statement', pair.get('statement')))
+    else:
+        for variant in ('main', 'excluding_failures'):
+            print(variant)
+            for m in args.methods:
+                x = report['methods'][variant][m]
+                print(f"  {m}: macro BAcc={x['macro_balanced_accuracy']['value']:.3f} "
+                      f"failure docs={x['failures']}")
+            if variant in report['paired']:
+                print('  ', report['paired'][variant]['statement'])
 
 
 if __name__ == '__main__':
