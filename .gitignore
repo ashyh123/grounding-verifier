@@ -8,3 +8,6 @@ __pycache__/
 # v2 annotation pipeline: the upstream snapshots are large and reproducible from the manifest,
 # so only the manifest and the licence copies are committed (annotation/README.md).
 data/sources/v2/raw/
+
+# v2.7 external evaluation sources: local only, reproducible from annotation/v27/fetch.py
+data/sources/v2.7/raw/

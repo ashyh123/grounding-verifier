@@ -1,0 +1,54 @@
+# v2.7 数据统计（S2 草案）
+
+**状态：轨道 B 已完成统计；轨道 A 被 LLM-AggreFact 的 gated 访问挡住，等待 Hugging Face 登录。**
+本文件不构成 rules.json；样本量和预算确认后才写规则。
+
+## 轨道 B：RAGTruth++
+
+来源：`blue-guardrails/ragtruth-plus-plus`，revision
+`afaec19e64122b4a58718dc31bcd555c97460233`，只本地使用，原始 CSV 未提交。
+
+- 回答数：408（816 条 message，408 user + 408 assistant）；幻觉片段 865。
+- 与 RAGTruth `response.jsonl` 精确匹配：408/408；回答文本不一致 0；片段偏移不一致 0。
+- 任务：QA 234、Summary 174；无 Data2txt。
+- 生成模型：六个模型各 68 条。
+- 宽松金标（RAGTruth 原始片段）：正例 65/408（15.9%），幻觉句 88。
+- 严格金标（RAGTruth++ 片段）：正例 305/408（74.75%），幻觉句 619；每回答片段数
+  0:103、1:89、2:78、3:49、4:32、5:26、6:12、7:13、8:4、9:1、11:1。
+- 严格片段类型：Subtle Conflict 352、Subtle Baseless Info 190、Evident Conflict 183、
+  Evident Baseless Info 115、Incorrect Refusal 22、Subtle Introduction Of Baseless Info 3。
+
+### 排除与重叠
+
+- 与 v2.3–v2.5 用过的 source_id 重叠：24 条回答、4 个 source；排除后 **384 条**。
+- 其中与 v2.6 test 的 response_id 重叠：**29 条**，直接复用 v2.6 已有预测，不占 200 条新跑额度。
+- 与 v2.6 dev 的 response_id 重叠：4 条；不属于复用范围，按新回答处理。
+- 需要新跑：**355 条**。
+
+### 按种子 20261024 截取
+
+排序键：`random.Random(f"{seed}:response:{response_id}").random()`，再按 response_id 稳定排序。
+取前 200 条新回答；29 条 v2.6 test 重叠全部纳入。合计 **229 条**。
+
+- 新跑的 200 条：严格金标正例 150、宽松正例 31；QA 117、Summary 83。
+- 模型分布：llama-2-7b 38、gpt-4 38、mistral 32、gpt-3.5 32、llama-2-70b 30、llama-2-13b 30。
+- 长度：上下文 121 / 303.5 / 1230 词（min / median / max）；回答 7 / 94 / 282 词；
+  句子 1 / 5 / 22。
+- 全部 384 条的上下文最长 1230 词，回答最长 282 词，均在现有服务上限内；构建时 0 失败。
+
+### 预算估算（按 v2.6 test 实际单价）
+
+- 新跑 200 条：minimal 约 $1.04，optimized 约 $6.80，合计约 **$7.84**。
+- 复用的 29 条不产生模型费用；baseline 0。
+- 与设计文档的 $7.8 估算一致。
+
+## 轨道 A：LLM-AggreFact（阻塞）
+
+- `lytang/LLM-AggreFact` 是 gated 数据集（`gated: auto`）；匿名访问 parquet 返回 HTTP 401，
+  datasets-server 也拒绝。README 可下载，但数据文件不可读。
+- 已记录 revision `981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4`、CC-BY-ND-4.0 和 gated 提示。
+- 需要用户在本机完成 Hugging Face 登录并接受数据集条款：
+  `uv run --with huggingface_hub huggingface-cli login`
+  登录后 token 写到 `~/.cache/huggingface/token`，`annotation/v27/fetch.py` 会自动读取。
+- 在拿到 parquet 之前，无法统计 10 个子集的长度分布、确定子集名称、写 rules.json 或估算
+  轨道 A 的实际费用。轨道 B 的统计已完成，但 S2 规则必须等两个轨道都齐备后再写。
