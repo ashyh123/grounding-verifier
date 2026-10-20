@@ -1,0 +1,56 @@
+{
+  "version": "2.6",
+  "purpose": "natural-distribution RAGTruth response-level evaluation sample; design: Notion 'evaluation design v2.6'",
+  "seed": 20261022,
+  "upstream_splits": ["test"],
+  "quality": "good",
+  "allowed_generators": "all six RAGTruth generators (natural distribution)",
+  "generators_listed": [
+    "gpt-4-0613", "gpt-3.5-turbo-0613", "llama-2-7b-chat", "llama-2-13b-chat",
+    "llama-2-70b-chat", "mistral-7B-instruct"
+  ],
+  "quotas": {
+    "Summary": {"dev": 10, "test": 60},
+    "QA": {"dev": 10, "test": 60},
+    "Data2txt": {"dev": 10, "test": 60}
+  },
+  "total_cases": {"dev": 30, "test": 180},
+  "draw": "per task: rank sources by seeded random rank; for each source in rank order draw one response by seeded random rank among its eligible responses (all generators allowed); assign it to a split by the group rule below until the task quotas are met; dev is filled before test",
+  "seeded_rank": "random.Random(f'{seed}:source:{source_id}').random() for sources, random.Random(f'{seed}:response:{response_id}').random() for responses; independent of iteration order",
+  "one_response_per_source_id": true,
+  "near_duplicate": {
+    "word_ngram": 5,
+    "jaccard": 0.8,
+    "normalization": "lowercase \\w+ tokens",
+    "grouping": "connected components, computed over candidate sources, all v2.x cases, and the old data/eval.jsonl contexts",
+    "split_rule": "a component never straddles dev and test; the first selected source of a component fixes its split, later sources of the component may only fill that split"
+  },
+  "exclude": {
+    "existing_dataset": "data/eval_hard.v2.5.jsonl (all 63 v2.x cases, a superset of v2.4)",
+    "existing_response_ids_and_source_ids": true,
+    "existing_near_duplicate_groups": true,
+    "original_synthetic_dataset_near_duplicates": "data/eval.jsonl",
+    "legacy_response_ids_and_source_groups": "annotation.sources.LEGACY_RESPONSE_IDS (existing logic)"
+  },
+  "exclusion_order": ["missing_source", "legacy_project", "already_in_v2x", "near_duplicate_of_used", "context_too_long", "answer_too_long", "service_limits"],
+  "no_minimum_length": true,
+  "no_gpt_fraction": true,
+  "technical_caps": {
+    "basis": "maximum observed in data/eval_hard.v2.5.jsonl (63 cases)",
+    "max_context_words": 1626,
+    "max_answer_words": 304,
+    "word_definition": "len(text.split()); context words are over ' '.join(context_passages)",
+    "service_limits": {"max_passages": 50, "max_passage_chars": 20000, "max_answer_chars": 10000},
+    "over_cap_candidates": "excluded and counted per cap in selection.json"
+  },
+  "labels_not_read_during_sampling": true,
+  "context_transforms_allowed": ["remove 'passage N:' structure markers", "trim leading/trailing whitespace of a passage; both recorded in passage_map"],
+  "answer_transform": "none",
+  "gold": {
+    "gold_response": "true iff the upstream response has at least one hallucination span",
+    "gold_sentences": "deterministic regex sentence splitter (annotation/v26/sentences.py); a sentence is hallucinated iff it overlaps any upstream span",
+    "no_model_in_gold": true
+  },
+  "on_infeasible": "stop without relaxing quotas or caps",
+  "base_commit": "0e3c3b8"
+}
