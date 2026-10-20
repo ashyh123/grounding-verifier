@@ -1,6 +1,59 @@
 # Evaluation dataset
 
-## Current measurement target: RAGTruth v2.6 (response-level)
+## Current measurement target: v2.7 external checks
+
+v2.7 adds two external, public human-annotated resources. Both are **local-only**: raw files and
+the generated JSONL stay under `data/sources/v2.7/raw/` and git-ignored `data/eval_*v2.7*` files;
+the repository keeps only the source manifest, selection statistics, rules and build code.
+
+### Track B: RAGTruth++
+
+`blue-guardrails/ragtruth-plus-plus`, revision `afaec19e64122b4a58718dc31bcd555c97460233`. The
+publisher states no license; the results are local-only and are not redistributed. Raw files:
+865 spans and 816 messages (408 user/assistant pairs).
+
+- All 408 answer texts match the RAGTruth `response.jsonl` exactly; source, task, model and context
+  are recovered from the local RAGTruth snapshot. Span offsets were validated against the answers.
+- Excluding source_ids already used by v2.3–v2.5 leaves 384 answers. 29 of them overlap the v2.6
+  test split and reuse the v2.6 predictions; the remaining 355 are new.
+- The registered sample is 200 new answers by seed `20261024` plus all 29 overlaps = **229**.
+- Two sentence golds are stored per answer: **loose** (RAGTruth original spans; 65/408 positives)
+  and **strict** (RAGTruth++ spans; 305/408, 74.75 %). The sentence splitter is the v2.6
+  `v2.6-sentences-1`.
+- Strict label types: Subtle Conflict 352, Subtle Baseless Info 190, Evident Conflict 183,
+  Evident Baseless Info 115, Incorrect Refusal 22, Subtle Introduction Of Baseless Info 3.
+
+### Track A: LLM-AggreFact
+
+`lytang/LLM-AggreFact`, revision `981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4`, CC-BY-ND-4.0;
+gated, the user accepted the terms. The RAGTruth subset is excluded, leaving 10 subsets:
+AggreFact-CNN, AggreFact-XSum, ClaimVerify, ExpertQA, FactCheck-GPT, Lfqa, Reveal,
+TofuEval-MediaS, TofuEval-MeetB, Wice.
+
+- Documents over 4000 words are excluded before sampling (test: ClaimVerify 49 / ExpertQA 67 /
+  Wice 18; dev: 42 / 73 / 18).
+- One document is one case; all its claims are given to the verifier (oracle). The labeling is the
+  source `label`: 1 = supported, 0 = not supported.
+- Whole documents are drawn by seed `20261024` until the target claim count is reached; a document
+  may overshoot. S2 confirmed the fallback target of 80 claims per subset on test:
+  **461 documents / 854 claims / 512 positives**; dev target 10 gives **58 / 196 / 108**.
+  Overshoot on test: Lfqa 87, TofuEval-MediaS 104, TofuEval-MeetB 103; on dev: Lfqa 25,
+  TofuEval-MediaS 61, TofuEval-MeetB 38.
+- Passages are verbatim substrings: paragraph-preferred units packed to about 150 words, long
+  blocks split into sentences, punctuation-only blocks dropped; max 25 passages and 8,282 chars
+  per document in the selected test set.
+
+### Freeze and reports
+
+The freeze is `data/annotation/v2.7/freeze.json`; check it with
+`uv run python -m annotation.v27.freeze --check`. Rules and samples:
+`data/annotation/v2.7/rules.json`, `selection.json`, `aggrefact-selection-{test,dev}.json`.
+The dev and test write-ups are [s4-dev-report.md](../data/annotation/v2.7/s4-dev-report.md) and
+[s6-test-report.md](../data/annotation/v2.7/s6-test-report.md). Known limitations: the strict
+RAGTruth++ labels start from the publisher's detector; there is no peer review, no human review in
+this project, and no RAGTruth++ license declared by the publisher.
+
+## Prior target: RAGTruth v2.6 (response-level)
 
 The current target is **`data/eval_ragtruth_resp.v2.6.jsonl`**: 210 RAGTruth responses, 30 dev / 180
 test, 10 dev and 60 test per task (Data2txt / QA / Summary). The test split has 62 positive

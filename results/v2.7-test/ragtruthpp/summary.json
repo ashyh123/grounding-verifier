@@ -1,0 +1,31 @@
+{
+  "design_version": "2.7",
+  "track": "ragtruthpp",
+  "n_cases": 229,
+  "n_reused": 29,
+  "n_new": 200,
+  "prompt_version": "v3",
+  "methods": {
+    "baseline": {
+      "rows": 229,
+      "failures": 0,
+      "failure_rate": 0.0,
+      "reused": 29,
+      "new": 200
+    },
+    "minimal": {
+      "rows": 229,
+      "failures": 0,
+      "failure_rate": 0.0,
+      "reused": 29,
+      "new": 200
+    },
+    "optimized": {
+      "rows": 229,
+      "failures": 0,
+      "failure_rate": 0.0,
+      "reused": 29,
+      "new": 200
+    }
+  }
+}

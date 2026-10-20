@@ -8,9 +8,134 @@ definitions in [EVALUATION.md](EVALUATION.md).
 Configuration for all numbers: provider `DeepSeek`, model `deepseek-v4-pro` with
 `VERIFIER_EXTRA_BODY={"thinking":{"type":"disabled"}}`, prompt set `v3`, `temperature=0`. In the
 historical synthetic benchmark every LLM row is the mean of 3 runs; the baseline is deterministic and
-ran once. The v2.6 measurement is one run per method, as preregistered.
+ran once. The v2.6 and v2.7 measurements are one run per method, as preregistered.
 
-## v2.6 response-level measurement (current headline)
+## v2.7 external checks (current headline)
+
+v2.7 does not replace the v2.6 end-to-end result. It asks two separate questions with two public
+human-annotated resources: (1) does the v2.6 ranking survive a stricter annotation standard, and
+(2) with claims given, which method verifies more accurately? The two tracks have independent
+conclusions; they are not combined into one score.
+
+### How the annotation standard changes the ranking
+
+Track B uses the same 229 RAGTruth++ responses and the same predictions, scored under two human
+standards: the **loose** RAGTruth original spans and the **strict** RAGTruth++ spans. The metric is
+sentence-level F1 against the corresponding sentence gold, with the v2.6 splitter and threshold 60.
+
+| Gold standard | minimal sentence F1 [95% CI] | optimized sentence F1 [95% CI] | paired optimized − minimal |
+|---|---:|---:|---|
+| loose (RAGTruth original) | **0.371** [0.271, 0.463] | 0.218 [0.152, 0.284] | −0.153 [−0.226, −0.086] |
+| strict (RAGTruth++) | 0.522 [0.461, 0.578] | **0.628** [0.578, 0.677] | +0.106 [+0.046, +0.168] |
+
+Answer-level balanced accuracy points the same way: loose 0.758 (minimal) vs 0.620 (optimized);
+strict 0.647 vs 0.751. The paired answer-level differences are −0.138 [−0.201, −0.076] and
++0.104 [+0.031, +0.176] respectively.
+
+**Registered conclusion: the ranking is decided by the annotation standard. minimal is better under
+the loose standard, optimized under the strict standard; choose by use case.** The result is not a
+contradiction: the answers and predictions are identical, only the gold changes. The strict set has
+about 75 % positive responses (170/229) and marks more spans; the loose set has 35/229 positives.
+
+Task groups (sentence F1, minimal / optimized): loose QA 0.352 / 0.301, Summary 0.567 / 0.353;
+strict QA 0.714 / 0.853, Summary 0.661 / 0.867. The strict standard rewards the extra verification;
+the loose standard punishes its additional C/U claims as false positives.
+
+### External comparison of verification ability
+
+Track A uses LLM-AggreFact with claims given (oracle), excluding its RAGTruth subset: 10 subsets,
+461 documents, 854 claims. The metric is macro balanced accuracy over the 10 subsets; documents are
+the bootstrap unit.
+
+| Method | macro balanced accuracy | 95% CI |
+|---|---:|---|
+| baseline | 0.608 | [0.577, 0.628] |
+| minimal | 0.729 | [0.687, 0.759] |
+| optimized | **0.776** | [0.729, 0.804] |
+
+Paired optimized − minimal: **+0.047 [+0.011, +0.079]**. With claims given, the optimized pipeline
+verifies more accurately. It wins 6/10 subsets; minimal wins AggreFact-XSum, ExpertQA,
+FactCheck-GPT, Lfqa and Wice, so the macro result is not uniform.
+
+Per-subset balanced accuracy (baseline / minimal / optimized):
+
+| Subset | claims | baseline | minimal | optimized |
+|---|---:|---:|---:|---:|
+| AggreFact-CNN | 80 | 0.550 | 0.336 | 0.736 |
+| AggreFact-XSum | 80 | 0.501 | 0.822 | 0.751 |
+| ClaimVerify | 80 | 0.740 | 0.795 | 0.830 |
+| ExpertQA | 80 | 0.614 | 0.664 | 0.621 |
+| FactCheck-GPT | 80 | 0.496 | 0.670 | 0.654 |
+| Lfqa | 87 | 0.733 | 0.888 | 0.853 |
+| Reveal | 80 | 0.662 | 0.895 | 0.910 |
+| TofuEval-MediaS | 104 | 0.476 | 0.515 | 0.768 |
+| TofuEval-MeetB | 103 | 0.704 | 0.862 | 0.869 |
+| Wice | 80 | 0.602 | 0.844 | 0.762 |
+
+**Public leaderboard context.** Recomputing the mean of the same 10 subsets from the public
+LLM-AggreFact leaderboard gives: Bespoke-Minicheck-7B 76.75, Claude-3.5 Sonnet 76.32, Granite
+Guardian 3.3 75.92, Mistral-Large 2 75.54, gpt-4o-2024-05-13 75.08, MiniCheck-Flan-T5-L 74.70
+(source: [llm-aggrefact.github.io](https://llm-aggrefact.github.io), accessed 2026-10-20).
+optimized's 77.55 is near the top of that reported range, minimal's 72.90 is mid-range, and the
+baseline's 60.77 is below it. This is **not a like-for-like rank**: we sample 80 claims per subset,
+the leaderboard uses the full sets; our prompt and harness differ; and the leaderboard's metric
+definition may not be identical. It is context, not a claim of state of the art.
+
+### Failure examples (first five by ID, not cherry-picked)
+
+Track B, strict gold: the first five cases where either method missed a bad sentence are all minimal
+misses; optimized catches one of them.
+
+* `ragtruthpp-1155` Summary, llama-2-7b: 1 gold-bad sentence, minimal emitted no C/U claim.
+* `ragtruthpp-1156` Summary, llama-2-13b: 2 gold-bad sentences, minimal missed both; optimized
+  flagged "A Delaware family ... are in critical condition ..." as CONTRADICTED.
+* `ragtruthpp-1182` Summary, gpt-4: 2 gold-bad sentences, minimal missed both.
+* `ragtruthpp-1183` Summary, gpt-3.5: 1 gold-bad sentence, minimal missed it.
+* `ragtruthpp-1185` Summary, llama-2-7b: 4 gold-bad sentences, minimal missed 1 and produced 1
+  false-positive sentence.
+
+Track A, first five documents with a wrong claim (all AggreFact-CNN; minimal has a false positive in
+each, optimized in two):
+
+* `aggrefact-AggreFact-CNN-02d82ecf292a`: 2 claims; minimal wrong 1, optimized 0. "Celtic beat
+  St Mirren 2-0 ..." is gold 0, minimal said SUPPORTED.
+* `aggrefact-AggreFact-CNN-38e94fc24e33`: 1 claim; both wrong. "jafar adeli ... arranged to meet
+  ..." is gold 0.
+* `aggrefact-AggreFact-CNN-6002ade50606`: 2 claims; minimal wrong 1, optimized 0. "Equal Pay Day
+  ... 77 cents" is gold 0.
+* `aggrefact-AggreFact-CNN-67126bdf6043`: 1 claim; both wrong. "roberto martinez ... free-kick ..."
+  is gold 0.
+* `aggrefact-AggreFact-CNN-7b79dd51ba9f`: 2 claims; minimal wrong 1, optimized 0. "Nathan Hughes
+  ... knocked out George North ..." is gold 0.
+
+### Cost and protocol
+
+Test spend: $9.0471 (track A $4.0340 + track B $5.0131), plus $1.7553 for two S4 dev runs;
+total **$10.8024**, below the $16 cap. All six paid runs completed with 0 failures and no
+truncation; optimized had one recovered retry in each track. Track B reused 29 v2.6 test predictions; their tokens/cost are not counted as new spend.
+The run protocol deviation is minimal's oracle batching (20 claims per call; the 80/subset sample was
+the S2-confirmed fallback), approved
+after the unbatched S4 run truncated a 61-claim document; prompt, model, verifier code and gold are
+unchanged. The v2.6 test was not rerun. Detailed run record:
+[s6-test-report.md](../data/annotation/v2.7/s6-test-report.md); freeze:
+[freeze.json](../data/annotation/v2.7/freeze.json).
+
+### v2.7 threats to validity
+
+* RAGTruth++ has no publisher-declared license; raw CSV and the derived JSONL stay local and are
+  not redistributed. Its strict labels start from the publisher's detector and have no peer review.
+* Track A excludes the RAGTruth subset and documents over 4000 words; whole-document sampling
+  overshoots the nominal 80/10 claim targets (Lfqa 87, TofuEval-MediaS 104, TofuEval-MeetB 103 on
+  test). The 10-subset macro is not a natural-prevalence estimate.
+* Track A uses oracle claims, so it measures verification only; track B uses end-to-end claims, so
+  it mixes decomposition and verification. They are deliberately not combined.
+* LLM-AggreFact is public; training-data contamination cannot be ruled out. The leaderboard
+  comparison is contextual, not like-for-like.
+* Sentence alignment is lexical and approximate; citation sufficiency is not assessed.
+* The v2.7 protocol was designed after v2.6; the verifier and prompt did not change, but the
+  evaluation is new and the conclusion is conditional on these two external standards.
+
+## v2.6 response-level measurement (prior headline)
 
 **Status: measured once on 180 unseen RAGTruth test responses (62 hallucinated); no rerun.** The
 gold is RAGTruth's upstream human span annotation; no model participated in labelling. The response

@@ -1,6 +1,75 @@
 # Evaluation method
 
-## v2.6 preregistration (2026-10-20, before test)
+## v2.7 preregistration and analysis (2026-10-20)
+
+v2.7 asks two independent questions and does not combine them into a score:
+
+1. **Track B — annotation strictness.** Does the v2.6 ranking survive a stricter gold? The same 229
+   RAGTruth++ responses and predictions are scored under loose (RAGTruth original) and strict
+   (RAGTruth++) sentence gold.
+2. **Track A — verification ability.** With claims given (oracle), which method verifies more
+   accurately on LLM-AggreFact, and how does it compare with the public leaderboard?
+
+Both tracks use `deepseek-v4-pro`, prompt v3, temperature 0, thinking disabled, concurrency 4.
+The full record is `data/annotation/v2.7/freeze.json`; verify with
+`uv run python -m annotation.v27.freeze --check`. The test was run once; the results are in
+[REPORT.md](REPORT.md).
+
+### Track B metrics
+
+* Sentence-level precision/recall/F1 against each gold (threshold 60, v2.6 splitter), case bootstrap
+  10000, seed 20261024.
+* Answer-level balanced accuracy against each gold; failures count all their claims wrong, with an
+  `excluding_failures` variant.
+* Paired optimized − minimal on the same responses; sentence F1 and answer BAcc.
+* The 29 v2.6 test overlaps reuse the v2.6 predictions; cost is new spend only.
+
+### Track A metrics
+
+* One document is one case; oracle calls receive all its claims. minimal is batched at 20 claims per
+  call (approved deviation after the unbatched S4 run truncated a 61-claim document); optimized is
+  already per-claim.
+* Prediction mapping: `SUPPORTED` = 1; `CONTRADICTED`/`UNSUPPORTED` = 0.
+* Per-subset balanced accuracy and the macro average over the 10 subsets; document bootstrap 10000,
+  seed 20261024; paired optimized − minimal on the same document draws.
+* A failed document is wrong on every claim; the `excluding_failures` variant is reported.
+* The leaderboard comparison recomputes the 10-subset mean from the public LLM-AggreFact page; it
+  is contextual, not a like-for-like rank.
+
+### Registered conclusion rules
+
+* A single comparison may be written as “X is better than Y” only if the paired 95 % interval
+  excludes 0; otherwise write “no evidence of a difference” and give the interval.
+* Track B: loose-minimal + strict-minimal → robust; loose-minimal + strict-none → ranking depends on
+  the standard with no strict difference; loose-minimal + strict-optimized → the ranking is decided
+  by the standard, choose by use case; loose-none → no overall ranking.
+* Track A is an independent conclusion; do not merge it with track B.
+* README applies the fixed wording, reports precision and recall separately, and uses no
+  unqualified “not worth it” or “better method”.
+* No multiplicity correction; the report states the number of comparisons.
+
+### Commands
+
+```bash
+# build the local-only data (raw sources are git-ignored)
+uv run --with pyarrow python -m annotation.v27.aggrefact --split test --target 80 --write
+uv run --with pyarrow python -m annotation.v27.aggrefact --split dev --target 10 --write
+uv run python -m annotation.v27.ragtruthpp --write
+
+# track A and B
+uv run python -m eval.run_v27 --track aggrefact --split test --methods baseline minimal optimized \
+  --oracle-batch-size 20 --out results/v2.7-test/aggrefact
+uv run python -m eval.run_v27 --track ragtruthpp --methods baseline minimal optimized \
+  --out results/v2.7-test/ragtruthpp
+uv run python -m eval.v27 --track aggrefact --data data/eval_aggrefact.v2.7.test.jsonl \
+  --predictions results/v2.7-test/aggrefact --out results/v2.7-test/aggrefact/report \
+  --price-in 1.32 --price-out 3.96
+uv run python -m eval.v27 --track ragtruthpp --data data/eval_ragtruthpp.v2.7.jsonl \
+  --predictions results/v2.7-test/ragtruthpp --out results/v2.7-test/ragtruthpp/report \
+  --price-in 1.32 --price-out 3.96
+```
+
+## v2.6 preregistration (prior headline)
 
 This round measures `data/eval_ragtruth_resp.v2.6.jsonl`: 210 RAGTruth responses, 30 dev / 180 test,
 10 dev and 60 test per task; the test split has 62 positives. Gold is the upstream human span

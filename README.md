@@ -12,15 +12,64 @@ POST /verify ─► decompose ─► verify each claim ─► deterministic vali
                                invalid citation)      or the claim is downgraded)
 ```
 
-Three implementations are benchmarked on the current RAGTruth v2.6 response-level set (180 held-out
-answers from six generators) and, historically, on the original 46-case / 150-claim synthetic set.
+Three implementations are benchmarked on the v2.7 external checks (RAGTruth++ and LLM-AggreFact),
+the v2.6 RAGTruth response-level set (180 held-out answers), and the historical synthetic set.
 
-> **Documentation v2** (2026-10-17; updated 2026-10-20 for the v2.6 headline) — index, revision record
+> **Documentation v2** (2026-10-17; updated 2026-10-20 for the v2.7 headline) — index, revision record
 > and conventions in [docs/README.md](docs/README.md).
 
-## Current headline: RAGTruth v2.6 response-level (measured)
+## Current headline: v2.7 two external checks (measured)
 
-**On natural-distribution answers, the optimized pipeline is not worth its extra cost.** 180 unseen
+**The ranking depends on the annotation standard; when claims are given, the optimized pipeline
+verifies more accurately.**
+
+### 1) v2.6 end-to-end, RAGTruth original annotation
+
+On 180 unseen RAGTruth responses, minimal's answer-level F1 was 0.720, optimized's 0.609, and the
+baseline's 0.521. Under this loose annotation and the end-to-end setting, minimal was better
+(paired difference minimal − optimized +0.110 [+0.060, +0.163]). The v2.6 details remain in the
+prior section below.
+
+### 2) Track B: RAGTruth++ strict vs loose sentence gold
+
+Same 229 RAGTruth++ responses, same predictions, two human annotation standards:
+
+| Gold standard | minimal sentence F1 | optimized sentence F1 | paired optimized − minimal | Conclusion |
+|---|---:|---:|---|---|
+| loose (RAGTruth original) | **0.371** [0.271, 0.463] | 0.218 [0.152, 0.284] | −0.153 [−0.226, −0.086] | minimal is better |
+| strict (RAGTruth++) | 0.522 [0.461, 0.578] | **0.628** [0.578, 0.677] | +0.106 [+0.046, +0.168] | optimized is better |
+
+**The ranking is decided by the annotation standard: minimal is better under the loose standard,
+optimized under the strict standard; choose by use case.** Answer-level balanced accuracy points the
+same way: 0.758 vs 0.620 under loose gold, 0.647 vs 0.751 under strict gold. This is one set of
+answers and one set of predictions; only the gold changed.
+
+### 3) Track A: LLM-AggreFact, claims given (oracle)
+
+461 documents / 854 claims, 10 subsets, claims supplied; this isolates verification from
+decomposition:
+
+| Method | Macro balanced accuracy | 95% CI |
+|---|---:|---|
+| baseline | 0.608 | [0.577, 0.628] |
+| minimal | 0.729 | [0.687, 0.759] |
+| optimized | **0.776** | [0.729, 0.804] |
+
+Paired optimized − minimal: **+0.047 [+0.011, +0.079]**. When the claims are given, the optimized
+pipeline verifies more accurately. This is an independent conclusion from track B; it is not
+combined into one score.
+
+Test spend: $10.80 total (two dev runs $1.76 + track A test $4.03 + track B test $5.01), below the
+$16 cap. Full tables and the first five failure examples per track:
+[REPORT.md](docs/REPORT.md); raw reports:
+[v2.7-test/aggrefact](results/v2.7-test/aggrefact/report/v27_aggrefact_report.json) and
+[v2.7-test/ragtruthpp](results/v2.7-test/ragtruthpp/report/v27_report.json); protocol:
+[EVALUATION.md](docs/EVALUATION.md).
+
+## Prior headline: RAGTruth v2.6 response-level (measured)
+
+**Under RAGTruth's original annotation, the optimized pipeline's extra cost did not produce a higher
+answer-level F1.** 180 unseen
 RAGTruth test responses (62 hallucinated), gold from RAGTruth's upstream human spans, no model in
 labelling, one run per method:
 
@@ -33,18 +82,18 @@ labelling, one run per method:
 Paired F1 differences (same responses, 95% CI): minimal − optimized +0.110 [+0.060, +0.163];
 minimal − baseline +0.199 [+0.144, +0.256]; optimized − baseline +0.088 [+0.051, +0.126]. All
 exclude 0, so minimal is better than optimized, and both LLM methods are better than the baseline.
-optimized is 6.6× the cost and buys +1.6 pp recall, but produces 75 false positives against
+Under this annotation, optimized is 6.6× the cost and buys +1.6 pp recall, but produces 75 false positives against
 minimal's 43; its sentence-level F1 is 0.338 vs 0.498. The full metric report is
 [v26_report.json](results/v2.6-test/report/v26_report.json); the freeze is
 [freeze.json](data/annotation/v2.6/freeze.json); the test write-up is
 [P4 report](data/annotation/v2.6/p4-test-report.md).
 
-**Why the benchmark changed.** v2.5's claim-level gold was noisy: RAGTruth marks hallucination spans
+**Why v2.6 changed the benchmark.** v2.5's claim-level gold was noisy: RAGTruth marks hallucination spans
 on the answer, not atomic claims, and the claim splitter/overlap mapping introduced upstream misses
 and mapping errors. Its detection F1 also did not penalise missed SUPPORTED gold, and the 45-case hard
 test was enriched for contradictions (40/45 hallucinated), so an all-positive baseline reached F1
 0.94. v2.6 draws new, unseen natural-distribution responses and takes the gold directly from the
-upstream annotation. The v2.5 results are kept below as exploratory analysis.
+upstream annotation. The v2.5 results are kept below as exploratory analysis. v2.7 then tested whether this ranking survives a stricter gold (track B) and how the methods compare when claims are given (track A); see the current headline above.
 
 ## Exploratory: RAGTruth v2.5 claim-level (superseded)
 
@@ -88,10 +137,10 @@ The v2.6 result is a protocol change, not a prompt change: the verifier and prom
 to v2.5, but the data and the unit of measurement are not. It is the round that made the cost/benefit
 question answerable.
 
-- **v2.6 — measured, current headline.** New natural-distribution RAGTruth responses, upstream human
-  spans as gold, response-level F1. minimal 0.720 > optimized 0.609; optimized costs 6.6× and is
-  11.1 F1 points behind, so the extra verification does not pay for itself. v2.5 is demoted to
-  exploratory analysis. Log: [ITERATIONS.md](docs/ITERATIONS.md).
+- **v2.6 — measured, prior headline.** New natural-distribution RAGTruth responses, upstream human
+  spans as gold, response-level F1. minimal 0.720 > optimized 0.609; under RAGTruth's original end-to-end annotation, optimized
+  costs 6.6× and is 11.1 F1 points behind. v2.7 shows the ranking reverses under strict gold and in
+  oracle mode. v2.5 is demoted to exploratory analysis. Log: [ITERATIONS.md](docs/ITERATIONS.md).
 
 The prompt-version history below belongs to the historical synthetic benchmark: every change was
 measured on its dev split (26 cases / 89 claims, 3 runs) before it was kept; its test split was run
@@ -193,7 +242,7 @@ uv run python -m eval.run_v26 --rescore results/v2.6-test
 
 The freeze, sampling rules and dev threshold calibration are in
 [data/annotation/v2.6/](../data/annotation/v2.6); the full method is in
-[EVALUATION.md](docs/EVALUATION.md#v26-preregistration-2026-10-20-before-test).
+[EVALUATION.md](docs/EVALUATION.md#v26-preregistration-prior-headline).
 
 ## How the historical synthetic benchmark is measured
 
@@ -232,11 +281,13 @@ dataset. Definitions and caveats: [docs/EVALUATION.md](docs/EVALUATION.md).
 
 Working and verified end to end against a live provider on both client transports; the suite is green
 (`make test`, no key required — it includes the eval-harness and documentation-consistency checks).
-The current headline is the v2.6 natural-distribution measurement: minimal 0.720 response-level F1,
-optimized 0.609, baseline 0.521; one run per method on 180 unseen responses. The optimized pipeline
-is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1 on the historical synthetic set,
+The current headline is v2.7: under RAGTruth's original annotation minimal leads end-to-end
+(0.720 vs 0.609), under RAGTruth++ strict gold optimized leads (sentence F1 0.628 vs 0.522), and with
+claims given optimized verifies more accurately on LLM-AggreFact (macro BAcc 0.776 vs 0.729).
+The optimized pipeline is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1 on the historical synthetic set,
 oracle-perfect at 1.000 (test split, 3 runs), but that benchmark is not the current target. Known
 open items: optimized's false positives on clean natural answers; minimal's misses on subtle
 conflicts and null-valued attributes; one annotator in the historical set and no human review in
-v2.6; and cost reported as a computed upper bound rather than a bill. Not implemented: streaming,
+v2.6/v2.7; RAGTruth++ has no declared license and stays local-only; and cost is a computed upper
+bound rather than a bill. Not implemented: streaming,
 request caching, a batched cheaper mode, abstain/confidence output, non-English text.

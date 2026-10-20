@@ -1,0 +1,25 @@
+{
+  "design_version": "2.7",
+  "track": "aggrefact",
+  "n_docs": 461,
+  "n_claims": 854,
+  "prompt_version": "v3",
+  "oracle_batch_size": 20,
+  "methods": {
+    "baseline": {
+      "docs": 461,
+      "failures": 0,
+      "failure_rate": 0.0
+    },
+    "minimal": {
+      "docs": 461,
+      "failures": 0,
+      "failure_rate": 0.0
+    },
+    "optimized": {
+      "docs": 461,
+      "failures": 0,
+      "failure_rate": 0.0
+    }
+  }
+}
