@@ -36,13 +36,52 @@ async def run_one(verifier, row: dict, sem: asyncio.Semaphore) -> dict:
             return {'id': row['id'], 'error': str(e)}
 
 
-async def run_oracle(verifier, row: dict, sem: asyncio.Semaphore) -> dict:
-    async with sem:
-        try:
-            result = await verifier.verify_claims(row['context_passages'], row['claims'])
-            return {'id': row['id']} | result.model_dump(mode='json')
-        except UpstreamError as e:
-            return {'id': row['id'], 'error': str(e)}
+async def run_oracle(verifier, row: dict, sem: asyncio.Semaphore,
+                     batch_size: int | None = None) -> dict:
+    """Oracle call; minimal is batched because one long claim list can exceed max_tokens."""
+    claims = row['claims']
+    if batch_size is None or len(claims) <= batch_size:
+        async with sem:
+            try:
+                result = await verifier.verify_claims(row['context_passages'], claims)
+                return {'id': row['id']} | result.model_dump(mode='json')
+            except UpstreamError as e:
+                return {'id': row['id'], 'error': str(e)}
+    chunks = [claims[i:i + batch_size] for i in range(0, len(claims), batch_size)]
+
+    async def one(chunk: list[str]) -> dict:
+        async with sem:
+            try:
+                result = await verifier.verify_claims(row['context_passages'], chunk)
+                return result.model_dump(mode='json')
+            except UpstreamError as e:
+                return {'error': str(e)}
+
+    parts = await asyncio.gather(*(one(chunk) for chunk in chunks))
+    errors = [p['error'] for p in parts if 'error' in p]
+    if errors:
+        return {'id': row['id'], 'error': errors[0]}
+    merged_claims = []
+    for chunk, part in zip(chunks, parts):
+        if len(part.get('claims') or []) != len(chunk):
+            return {'id': row['id'],
+                    'error': f'oracle batch returned {len(part.get("claims") or [])} claims for {len(chunk)} inputs'}
+        merged_claims.extend(part['claims'])
+    metas = [p.get('meta') or {} for p in parts]
+    meta = {key: metas[0].get(key) for key in ('method', 'model', 'prompt_version')}
+    meta.update({
+        'latency_ms': sum(m.get('latency_ms', 0.0) for m in metas),
+        'llm_calls': sum(m.get('llm_calls', 0) for m in metas),
+        'input_tokens': sum(m.get('input_tokens', 0) for m in metas),
+        'output_tokens': sum(m.get('output_tokens', 0) for m in metas),
+        'retries': sum(m.get('retries', 0) for m in metas),
+        'raw_citations_total': sum(m.get('raw_citations_total', 0) for m in metas),
+        'raw_citations_invalid': sum(m.get('raw_citations_invalid', 0) for m in metas),
+        'downgraded_claims': sum(m.get('downgraded_claims', 0) for m in metas),
+        'warnings': [w for m in metas for w in (m.get('warnings') or [])],
+        'oracle_batch_size': batch_size, 'oracle_batches': len(chunks),
+    })
+    return {'id': row['id'], 'claims': merged_claims, 'meta': meta}
 
 
 def load_reuse(method: str) -> dict[str, dict]:
@@ -107,15 +146,18 @@ async def track_ragtruthpp(rows: list[dict], methods: list[str], out: Path, conc
 
 
 async def track_aggrefact(rows: list[dict], methods: list[str], out: Path, concurrency: int,
-                          prompt_version: str) -> dict:
+                          prompt_version: str, oracle_batch_size: int = 20) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     summary = {'design_version': '2.7', 'track': 'aggrefact', 'n_docs': len(rows),
                'n_claims': sum(len(r['claims']) for r in rows),
-               'prompt_version': prompt_version, 'methods': {}}
+               'prompt_version': prompt_version,
+               'oracle_batch_size': oracle_batch_size, 'methods': {}}
     for method in methods:
         verifier = build(method, prompt_version)
         sem = asyncio.Semaphore(concurrency)
-        rows_out = await asyncio.gather(*(run_oracle(verifier, row, sem) for row in rows))
+        batch_size = oracle_batch_size if method == 'minimal' else None
+        rows_out = await asyncio.gather(*(run_oracle(verifier, row, sem, batch_size)
+                                          for row in rows))
         path = out / f'{method}_run0.jsonl'
         with path.open('w', encoding='utf-8') as stream:
             for row in rows_out:
@@ -139,13 +181,15 @@ def main() -> None:
     ap.add_argument('--methods', nargs='+', default=['baseline', 'minimal', 'optimized'])
     ap.add_argument('--concurrency', type=int, default=4)
     ap.add_argument('--prompt-version', default='v3')
+    ap.add_argument('--oracle-batch-size', type=int, default=20,
+                    help='minimal oracle claims per call; longer lists are batched')
     ap.add_argument('--out', type=Path, required=True)
     args = ap.parse_args()
     if args.track == 'aggrefact':
         data = args.data or ROOT / 'data' / f'eval_aggrefact.v2.7.{args.split}.jsonl'
         rows = v27.load_aggrefact(data)
         asyncio.run(track_aggrefact(rows, args.methods, args.out, args.concurrency,
-                                    args.prompt_version))
+                                    args.prompt_version, args.oracle_batch_size))
         return
     data = args.data or ROOT / 'data' / 'eval_ragtruthpp.v2.7.jsonl'
     rows = v27.load_rows(data)

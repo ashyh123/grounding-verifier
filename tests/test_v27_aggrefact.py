@@ -1,4 +1,5 @@
 """v2.7 track A: document splitting, selection counts, oracle baseline and metrics."""
+import asyncio
 import json
 from pathlib import Path
 
@@ -100,3 +101,34 @@ def test_paired_macro_bacc_is_zero_for_identical_predictions():
     paired = report['paired']['main']
     assert paired['value'] == 0.0 and paired['ci95'] == [0.0, 0.0]
     assert paired['excludes_zero'] is False
+
+
+def test_oracle_batching_merges_claims_and_metadata():
+    from eval import run_v27
+
+    class Result:
+        def __init__(self, claims):
+            self.claims = claims
+
+        def model_dump(self, mode='json'):
+            return {'claims': [{'claim_text': c, 'verdict': 'SUPPORTED'} for c in self.claims],
+                    'meta': {'method': 'minimal', 'model': 'fake', 'prompt_version': 'v3',
+                             'latency_ms': 10.0, 'llm_calls': 1, 'input_tokens': 5,
+                             'output_tokens': 2, 'retries': 0, 'raw_citations_total': 1,
+                             'raw_citations_invalid': 0, 'downgraded_claims': 0, 'warnings': []}}
+
+    class Fake:
+        def __init__(self):
+            self.calls = []
+
+        async def verify_claims(self, passages, claims):
+            self.calls.append(list(claims))
+            return Result(claims)
+
+    fake = Fake()
+    row = {'id': 'x', 'context_passages': ['p'], 'claims': ['a', 'b', 'c', 'd', 'e']}
+    out = asyncio.run(run_v27.run_oracle(fake, row, asyncio.Semaphore(4), batch_size=2))
+    assert fake.calls == [['a', 'b'], ['c', 'd'], ['e']]
+    assert [c['claim_text'] for c in out['claims']] == ['a', 'b', 'c', 'd', 'e']
+    assert out['meta']['llm_calls'] == 3 and out['meta']['input_tokens'] == 15
+    assert out['meta']['oracle_batches'] == 3 and out['meta']['oracle_batch_size'] == 2

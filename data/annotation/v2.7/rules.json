@@ -1,6 +1,6 @@
 {
   "version": "2.7",
-  "status": "s4_stopped_pending_decision",
+  "status": "s4_complete_pending_freeze_confirmation",
   "date": "2026-10-20",
   "design": "Notion evaluation design v2.7",
   "decisions": {
@@ -72,7 +72,7 @@
     "runs": "one run per method per track"
   },
   "track_a": {
-    "status": "s4_stopped_pending_decision",
+    "status": "s4_complete_pending_freeze_confirmation",
     "dataset": "lytang/LLM-AggreFact",
     "revision": "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4",
     "license": "CC-BY-ND-4.0",
@@ -149,16 +149,27 @@
       }
     },
     "fallback": "applied: S2 confirmed the 80-claims-per-subset test target after the 100 target estimated $16.90; dev and track B are not reduced",
-    "budget_estimate_usd": 3.73,
-    "budget_note": "854 test + 196 dev claims at $0.0074 per claim from v2.5 oracle prices x2 for longer documents"
+    "budget_estimate_usd": 3.92,
+    "budget_note": "854 test + 196 dev claims at $0.0074 per claim from v2.5 oracle prices x2 for longer documents",
+    "oracle_batching": {
+      "approved": true,
+      "reason": "minimal sends all claims in one call; a 61-claim TofuEval document produced a 16k-character truncated JSON at max_tokens=4096 in S4",
+      "claims_per_call": 20,
+      "methods": [
+        "minimal"
+      ],
+      "implementation": "eval/run_v27.py only; prompt, model, verifier code and gold are unchanged",
+      "merge": "claims concatenated in input order; meta tokens/calls summed; any failed batch fails the document",
+      "deviation": "this changes the call count and cost of minimal oracle mode; it is recorded as a protocol deviation"
+    }
   },
   "budget": {
     "cap_usd": 16.0,
     "track_b_estimate_usd": 7.84,
-    "track_a_estimate_usd": 3.73,
+    "track_a_estimate_usd": 3.92,
     "basis": "v2.6 test actual unit prices; track A oracle prices from v2.5 with a 2x long-document factor",
-    "total_estimate_usd": 12.43,
-    "cap_note": "dev actual $0.855 + projected track A test $3.73 + track B $7.84 = $12.43, within $16; the blocking issue is a truncation, not budget"
+    "total_estimate_usd": 12.66,
+    "cap_note": "dev actual $0.8999 + projected track A test $3.92 + track B $7.84 = $12.66, within $16"
   },
   "notes": [
     "no prompt, verifier code, model or public gold change",
@@ -168,20 +179,39 @@
     "S2 sample and budget are confirmed; S4 will measure the dev cost before freeze"
   ],
   "s4": {
-    "status": "stopped_on_truncation",
+    "status": "batched_rerun_complete_no_stop_condition",
     "dev_docs": 58,
     "dev_claims": 196,
-    "failures": {
-      "baseline": 0,
-      "minimal": 1,
-      "optimized": 0
+    "first_run": "minimal had one truncation (61-claim TofuEval-MediaS document, max_tokens=4096)",
+    "batched_run": {
+      "failures": {
+        "baseline": 0,
+        "minimal": 0,
+        "optimized": 0
+      },
+      "macro_bacc": {
+        "baseline": 0.5895,
+        "minimal": 0.7972,
+        "optimized": 0.8113
+      },
+      "paired_optimized_minus_minimal": {
+        "value": 0.014,
+        "ci95": [
+          -0.032,
+          0.053
+        ],
+        "excludes_zero": false
+      },
+      "cost_usd": {
+        "baseline": 0.0,
+        "minimal": 0.2269,
+        "optimized": 0.673,
+        "total": 0.8999
+      }
     },
-    "dev_cost_usd": 0.8554,
-    "dev_cost_per_claim_usd": 0.004365,
-    "projected_test_cost_usd": 3.73,
-    "projected_total_including_dev_and_track_b_usd": 12.43,
-    "blocker": "minimal oracle sends all 61 claims in one call; the 16k-character JSON is truncated at max_tokens=4096 on a TofuEval-MediaS document",
-    "decision_pending": "batch minimal oracle claims (harness-only) vs count the truncation as a failure vs reduce the sample",
-    "test_not_run": true
+    "projected_test_cost_usd": 3.92,
+    "projected_total_including_dev_and_track_b_usd": 12.66,
+    "blocker": null,
+    "note": "oracle batching for minimal is now part of the run plan and must be recorded in the freeze"
   }
 }
