@@ -1,0 +1,176 @@
+{
+  "design_version": "2.3",
+  "drafts_sha256": "0359c49e7e58d7027fea190503542810cede255eec8ba46566c4dea3fcebf40f",
+  "cases": [
+    {
+      "id": "ragtruth-14011",
+      "claims": 9,
+      "retained": 8,
+      "labels": {
+        "SUPPORTED": 8
+      },
+      "excluded_claims": 1,
+      "exclusion_reasons": {
+        "partial_overlap": 1
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-14912",
+      "claims": 9,
+      "retained": 7,
+      "labels": {
+        "SUPPORTED": 6,
+        "UNSUPPORTED": 1
+      },
+      "excluded_claims": 2,
+      "exclusion_reasons": {
+        "partial_overlap": 2
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-15985",
+      "claims": 6,
+      "retained": 5,
+      "labels": {
+        "SUPPORTED": 4,
+        "UNSUPPORTED": 1
+      },
+      "excluded_claims": 1,
+      "exclusion_reasons": {
+        "partial_overlap": 1
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-16620",
+      "claims": 5,
+      "retained": 4,
+      "labels": {
+        "SUPPORTED": 4
+      },
+      "excluded_claims": 1,
+      "exclusion_reasons": {
+        "partial_overlap": 1
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-2354",
+      "claims": 10,
+      "retained": 10,
+      "labels": {
+        "CONTRADICTED": 2,
+        "SUPPORTED": 8
+      },
+      "excluded_claims": 0,
+      "exclusion_reasons": {},
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-3126",
+      "claims": 10,
+      "retained": 9,
+      "labels": {
+        "SUPPORTED": 9
+      },
+      "excluded_claims": 1,
+      "exclusion_reasons": {
+        "partial_overlap": 1
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-3482",
+      "claims": 12,
+      "retained": 12,
+      "labels": {
+        "SUPPORTED": 10,
+        "CONTRADICTED": 1,
+        "UNSUPPORTED": 1
+      },
+      "excluded_claims": 0,
+      "exclusion_reasons": {},
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-3522",
+      "claims": 10,
+      "retained": 9,
+      "labels": {
+        "SUPPORTED": 9
+      },
+      "excluded_claims": 1,
+      "exclusion_reasons": {
+        "partial_overlap": 1
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-4736",
+      "claims": 12,
+      "retained": 12,
+      "labels": {
+        "SUPPORTED": 11,
+        "CONTRADICTED": 1
+      },
+      "excluded_claims": 0,
+      "exclusion_reasons": {},
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-8395",
+      "claims": 21,
+      "retained": 21,
+      "labels": {
+        "SUPPORTED": 20,
+        "CONTRADICTED": 1
+      },
+      "excluded_claims": 0,
+      "exclusion_reasons": {},
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-9492",
+      "claims": 15,
+      "retained": 15,
+      "labels": {
+        "SUPPORTED": 14,
+        "CONTRADICTED": 1
+      },
+      "excluded_claims": 0,
+      "exclusion_reasons": {},
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-9809",
+      "claims": 22,
+      "retained": 19,
+      "labels": {
+        "SUPPORTED": 17,
+        "UNSUPPORTED": 2
+      },
+      "excluded_claims": 3,
+      "exclusion_reasons": {
+        "partial_overlap": 3
+      },
+      "status": "ready"
+    },
+    {
+      "id": "ragtruth-9827",
+      "claims": 14,
+      "retained": 13,
+      "labels": {
+        "SUPPORTED": 11,
+        "CONTRADICTED": 1,
+        "UNSUPPORTED": 1
+      },
+      "excluded_claims": 1,
+      "exclusion_reasons": {
+        "partial_overlap": 1
+      },
+      "status": "ready"
+    }
+  ]
+}

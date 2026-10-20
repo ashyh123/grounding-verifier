@@ -1,6 +1,6 @@
-# 标注流水线（v2.5 进行中，2026-10-20）
+# 标注流水线（v2.5 已冻结，2026-10-20）
 
-当前状态：**v2.4 已冻结；v2.5 进行中**。仅在 `eval-v2` 工作，不提交到 main。
+当前状态：**v2.4 已冻结；v2.5 已冻结**。仅在 `eval-v2` 工作，不提交到 main。
 
 ## 版本索引
 
@@ -8,7 +8,13 @@
 |---|---|---|---|
 | v2.3 | 已冻结 `c78d411` | `data/eval_hard.jsonl` | [完整报告](../data/annotation/full-v2.3/report.md)、[五例试点报告](../data/annotation/pilot5-dev-v2.3/report.md)、[冻结记录](../data/annotation/freeze.json) |
 | v2.4 | 已冻结 `cbccac9` | `data/eval_hard.v2.4.jsonl` | [检查点报告](../data/annotation/v2.4/report.md)、[合并统计](../data/annotation/v2.4/final_report.md)、[冻结记录](../data/annotation/v2.4/freeze.json) |
-| v2.5 | 进行中（第 3 节抽样检查点） | 目标 `data/eval_hard.v2.5.jsonl` | 新产物在 `data/annotation/v2.5/`；抽样规则见 `data/annotation/v2.5/sampling_rules.json` |
+| v2.5 | 已冻结（source commit 见 freeze） | `data/eval_hard.v2.5.jsonl` | [合并统计](../data/annotation/v2.5/final_report.md)、[审计](../data/annotation/v2.5/audit.json)、[冻结记录](../data/annotation/v2.5/freeze.json) |
+
+v2.5 在 v2.4 的 50 例上追加 13 例 `subtle_supplement`（test 10 / dev 3，全部来自上游
+train），补齐全部主张的 `overlapping_source_labels`，并对既有疑问和全部 C/U 主张做
+`doubt_category` 分类与预先登记的敏感性分析。目标「test 中 Subtle Conflict 来源的 C ≥ 8」
+**未达到**（保留 7 条）；未追加案例、未放宽规则。v2.4 freeze 的 README 校验已按用户授权
+做最小适配；v2.4 历史提交 `cbccac9` 不变。
 
 v2.5 规格来自 Notion「v2.5 修改建议」，并继续沿用
 [zcode 执行指令 v2.3](https://app.notion.com/p/3fe7b21c6588813fa732c6a51e30e6f7) 与

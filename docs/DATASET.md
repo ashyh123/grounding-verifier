@@ -1,10 +1,55 @@
 # Evaluation dataset
 
-## Current measurement target: RAGTruth v2.4
+## Current measurement target: RAGTruth v2.5
 
-This round uses **`data/eval_hard.v2.4.jsonl`**. `data/eval_hard.jsonl` remains the
-historical v2.3 dataset at commit **c78d411**; it is not overwritten or redirected on disk.
-The synthetic dataset described below remains a separate historical regression benchmark.
+This round uses **`data/eval_hard.v2.5.jsonl`**. It keeps the frozen v2.4 cases and adds 13
+`subtle_supplement` cases (test 10 / dev 3) selected under
+`data/annotation/v2.5/sampling_rules.json` with seed 20261021. `data/eval_hard.jsonl` remains
+the historical v2.3 dataset at commit **c78d411**, and `data/eval_hard.v2.4.jsonl` remains the
+v2.4 dataset at **cbccac9**; neither is overwritten or redirected on disk.
+
+The v2.5 changes are based only on label distribution and annotation-pipeline diagnostics.
+**No evaluated verifier has been run on the hard test during this workflow.** The selection
+pool is RAGTruth upstream `train` (quality=good, at least one Subtle Conflict) plus the
+remaining qualified upstream-`test` candidates. Selected cases record `upstream_split`; all 13
+selected here came from upstream `train`. The sample excludes legacy project IDs/source groups,
+existing v2.4 source IDs and near-duplicate groups, and takes one response per source_id and
+per connected near-duplicate component. Task quotas are Summary test 4 / dev 1, QA test 3 / dev
+1, Data2txt test 3 / dev 1. The GPT-4/GPT-3.5 target is at least half; the realized sample has
+7 GPT cases out of 13. No model sets a label.
+
+Every claim carries `overlapping_source_labels`, recomputed from its exact `answer_spans` and
+the upstream human fragments. The verdict must replay from those overlaps with Conflict
+precedence, then Baseless, else SUPPORTED. The v2.3 merge had dropped this field on the
+original 30 cases; v2.5 restores it without changing any label. A unit test replays the rule
+for every gold claim.
+
+`doubt_category` (`agree`, `suspected_wrong_label`, `c_vs_u_boundary`, `partial_claim`,
+`evidence_not_found`) is recorded for every existing doubt and every C/U claim, including the
+new cases. It is used only for the preregistered sensitivity analysis; it never changes a gold
+label. “上游无标注回答” still means only that RAGTruth provided no marked hallucination span;
+it does not establish that the answer is correct.
+
+Statistics, exclusions, lengths, evidence coverage, doubt categories and target checks are in
+[the v2.5 report](../data/annotation/v2.5/final_report.md) and
+`data/annotation/v2.5/audit.json`. Retained counts: 63 例 / 782 条主张
+(S701/C37/U44)；test 45 例 / 537 条主张 (S483/C27/U27)，natural 30 例 / 382 条主张，
+conflict_supplement 20 例 / 256 条主张，subtle_supplement 13 例 / 144 条主张。 The target “test Subtle Conflict 来源的 C ≥ 8” was **not met**:
+7 retained (6 new + 1 natural). The unchanged partial_overlap rule excluded 11 new claims,
+8 of them C, including conflict-bearing statements. No cases were added and no rule was
+relaxed.
+
+The v2.5 freeze is `data/annotation/v2.5/freeze.json`;
+verify it with `uv run python -m annotation.v25.freeze --check`. Offline replay is
+`uv run python -m annotation.v25.merge --check`. The v2.4 freeze remains valid at `cbccac9`;
+v2.5 explicitly authorizes the `annotation/README.md` status update and the minimal v2.4 freeze
+validation adaptation. Preregistered metrics and the saved-run scoring command are in
+[EVALUATION.md](EVALUATION.md). Hard-test measurement awaits separate instructions.
+
+## Historical target: RAGTruth v2.4
+
+This round used **`data/eval_hard.v2.4.jsonl`**. The text below records the v2.4 state; exact
+v2.3 texts remain available at c78d411.
 
 v2.4 changes are based only on label distribution and evidence-pipeline diagnostics.
 **No evaluated verifier has been run on the hard test during this workflow**, so these changes

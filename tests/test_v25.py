@@ -1,6 +1,8 @@
 """v2.5 overlap provenance: every gold verdict must replay from answer spans + upstream labels."""
 import hashlib
 import json
+import subprocess
+import sys
 from collections import Counter
 from pathlib import Path
 
@@ -114,3 +116,61 @@ def test_subtle_selection_pins_rules_quotas_and_source_isolation():
     existing_sources = {row['provenance']['source_id']
                         for row in overlaps.read_jsonl(V24)}
     assert not existing_sources & {row['provenance']['source_id'] for row in rows}
+
+
+V25_AUDIT = ROOT / 'data' / 'annotation' / 'v2.5' / 'audit.json'
+V25_FREEZE = ROOT / 'data' / 'annotation' / 'v2.5' / 'freeze.json'
+DOUBT_CLASSES = ROOT / 'data' / 'annotation' / 'v2.5' / 'doubt_classes.jsonl'
+
+
+def test_v25_final_dataset_replays_labels_evidence_and_subsets():
+    if not V25.exists():
+        pytest.skip('v2.5 final dataset not merged yet')
+    rows = overlaps.read_jsonl(V25)
+    audit = json.loads(V25_AUDIT.read_text(encoding='utf-8'))
+    assert len(rows) == 63
+    assert Counter(row['subset'] for row in rows) == Counter({
+        'natural': 30, 'conflict_supplement': 20, 'subtle_supplement': 13})
+    assert audit['retained_cases'] == len(rows)
+    assert audit['retained_claims'] == sum(len(row['gold_claims']) for row in rows)
+    for row in rows:
+        assert not overlaps.verify_case(row)
+        for claim in row['gold_claims']:
+            assert 'overlapping_source_labels' in claim
+            for evidence in claim['evidence']:
+                assert (row['context_passages'][evidence['index']]
+                        [evidence['start_char']:evidence['end_char']] == evidence['quote'])
+    target = audit['targets']['test_contradicted_from_subtle_conflict']
+    assert target['met'] == (target['observed'] >= 8)
+    assert audit['doubt_categories']['errors'] == 0
+    if DOUBT_CLASSES.exists():
+        doubt_rows = overlaps.read_jsonl(DOUBT_CLASSES)
+        assert audit['doubt_categories']['protocol_errors'] == sum(
+            bool(row.get('protocol_error')) for row in doubt_rows)
+
+
+def test_v25_freeze_check_when_frozen():
+    if not V25_FREEZE.exists():
+        pytest.skip('v2.5 freeze not written yet')
+    result = subprocess.run([sys.executable, '-m', 'annotation.v25.freeze', '--check'],
+                            cwd=ROOT, capture_output=True, text=True, timeout=120)
+    assert result.returncode == 0, result.stderr
+
+
+def test_doubt_items_union_cu_claims_and_existing_doubts():
+    from annotation.v25 import doubts
+    claims = [
+        {'claim_id': 'x-c1', 'claim_text': 'a', 'verdict': 'SUPPORTED'},
+        {'claim_id': 'x-c2', 'claim_text': 'b', 'verdict': 'CONTRADICTED'},
+    ]
+    case = {'id': 'x', 'context_passages': ['A.'], 'gold_claims': claims}
+    index = {('x', claim['claim_id']): claim for claim in claims}
+    items, skipped = doubts.build_items({'x': case}, index,
+                                        {('x', 'x-c1'): 2, ('x', 'missing'): 1})
+    assert {item['claim_id'] for item in items} == {'x-c1', 'x-c2'}
+    assert {item['claim_id']: item['origin'] for item in items} == {
+        'x-c1': 'existing_doubt', 'x-c2': 'c_u_claim'}
+    assert skipped == [{'case_id': 'x', 'claim_id': 'missing',
+                        'reason': 'case_or_claim_not_found'}]
+    assert set(doubts.CATEGORIES) == {'agree', 'suspected_wrong_label', 'c_vs_u_boundary',
+                                      'partial_claim', 'evidence_not_found'}

@@ -18,17 +18,28 @@ a minimal single-call LLM verifier, and an optimized multi-step pipeline.
 > **Documentation v2** (2026-10-17) — index, revision record and conventions in
 > [docs/README.md](docs/README.md).
 
-## Current headline: RAGTruth v2.4 (unmeasured)
+## Current headline: RAGTruth v2.5 (unmeasured)
 
-The current benchmark is `data/eval_hard.v2.4.jsonl`, with `all` as the headline and
-`natural` alongside it; `conflict_supplement` is also reported separately. All-data and
-natural hallucination-detection P/R/F1 and macro-F1 are **not yet measured**. The scoring
-entry includes 95% case-bootstrap intervals (10000 draws, seed 20261020) and per-label n.
-Dataset counts: all 案例=50、主张=638 (S570/C30/U38); natural 案例=30、主张=382
-(S341/C7/U34). Within held-out test: all 案例=35、主张=427 (S385/C21/U21), natural
-案例=20、主张=256 (S235/C4/U17). These are label counts, not verifier scores.
-See [dataset statistics](data/annotation/v2.4/final_report.md) and
+The current benchmark is `data/eval_hard.v2.5.jsonl`, with `all` as the headline and
+`natural` alongside it; `conflict_supplement` and `subtle_supplement` are reported separately.
+All-data and natural hallucination-detection P/R/F1 and macro-F1 are **not yet measured**.
+The scoring entry includes 95% case-bootstrap intervals (10000 draws, seed 20261020),
+per-label n, a preregistered sensitivity analysis that removes claims whose `doubt_category`
+is `suspected_wrong_label` or `c_vs_u_boundary`, and evident/subtle and generator-model groups.
+Dataset counts: all 案例=63、主张=782 (S701/C37/U44); natural 案例=30、主张=382
+(S341/C7/U34); conflict_supplement 20 例 / 256 主张; subtle_supplement 13 例 / 144 主张.
+Within held-out test: all 案例=45、主张=537 (S483/C27/U27), natural 案例=20、主张=256
+(S235/C4/U17). These are label counts, not verifier scores.
+See [dataset statistics](data/annotation/v2.5/final_report.md) and
 [preregistered scoring rules](docs/EVALUATION.md). No hard-test verifier ran in this revision.
+The v2.5 target of at least 8 test CONTRADICTED claims from Subtle Conflict fragments was
+**not met** (7 retained); no cases were added or rules relaxed.
+
+## Historical headline: RAGTruth v2.4 (unmeasured)
+
+The v2.4 benchmark was `data/eval_hard.v2.4.jsonl`: all 案例=50、主张=638 (S570/C30/U38);
+natural 案例=30、主张=382 (S341/C7/U34). Its results remain in
+[the v2.4 report](data/annotation/v2.4/final_report.md).
 
 ## Historical synthetic result (held-out test split, 20 cases / 61 claims, 3 runs)
 

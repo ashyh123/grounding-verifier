@@ -1,5 +1,41 @@
 # Evaluation method
 
+## v2.5 preregistration (2026-10-20, before hard-test measurement)
+
+This round measures `data/eval_hard.v2.5.jsonl`: the frozen v2.4 set plus 13
+`subtle_supplement` cases (test 10 / dev 3) selected under
+`data/annotation/v2.5/sampling_rules.json` with seed 20261021. No evaluated verifier has been
+run on the hard test. The v2.4 metric definitions, alignment rules and bootstrap settings are
+inherited unchanged; `eval/v25.py` scores saved predictions without provider calls.
+
+* Report `all` (headline), `natural`, `conflict_supplement` and `subtle_supplement` with the
+  same definitions; bootstrap each subset independently. `all` means all subsets in the
+  selected split. The supplements intentionally change label prevalence; all-data precision is
+  not a natural-population estimate.
+* **Preregistered sensitivity:** rerun every primary metric after removing gold claims whose
+  `doubt_category` is `suspected_wrong_label` or `c_vs_u_boundary`. Report primary and
+  sensitivity results side by side. The sensitivity analysis removes claims, not cases; its
+  intervals still resample complete cases. It never changes a gold label.
+* **Preregistered groups:** by origin (`subtle` if any overlapping upstream fragment starts
+  with Subtle, else `evident` if any starts with Evident, else `clean`) and by generator
+  model. A case can appear in more than one origin group, so group `n_cases` is not a partition.
+* `doubt_category` is a structured model classification over context, claim and fixed label.
+  Categories are `agree`, `suspected_wrong_label`, `c_vs_u_boundary`, `partial_claim`,
+  `evidence_not_found`. It is annotation-pipeline provenance, not a label and not a benchmark
+  prediction.
+* Scoring command after measurement is separately authorized:
+
+```bash
+uv run python -m eval.v25 --data data/eval_hard.v2.5.jsonl --split test \
+  --predictions <saved-run.jsonl> --doubts data/annotation/v2.5/doubt_classes.jsonl \
+  --out <new-report.json>
+# Add --oracle only for a run generated from gold claims in their original order.
+```
+
+The CLI requires exactly the selected case IDs, including explicit error records for failures;
+it records dataset/prediction/doubt hashes and refuses output overwrite. Hard-test measurement
+remains **unmeasured**.
+
 ## v2.4 preregistration (2026-10-20, before hard-test measurement)
 
 This round measures `data/eval_hard.v2.4.jsonl`. No verifier has been run on its hard test.
