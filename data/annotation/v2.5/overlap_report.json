@@ -1,0 +1,27 @@
+{
+  "design_version": "2.5",
+  "operation": "overlap_backfill",
+  "rule": "Conflict wins, then Baseless, else SUPPORTED; exact half-open span overlap",
+  "input": "data/eval_hard.v2.4.jsonl",
+  "input_sha256": "90813831d2dd6b7c162a1090ba41ea7260c654ff2dd54fb6a62bf3cf05fc38d6",
+  "output_sha256": "ce03eeba4d23bcefa765994a5a1deeff4c1cabea05f8a34bec47bc016ce64c17",
+  "cases": 50,
+  "claims": 638,
+  "claims_with_overlap": 68,
+  "by_verdict": {
+    "CONTRADICTED": 30,
+    "SUPPORTED": 570,
+    "UNSUPPORTED": 38
+  },
+  "with_overlap_by_verdict": {
+    "CONTRADICTED": 30,
+    "UNSUPPORTED": 38
+  },
+  "overlap_label_types": {
+    "Evident Baseless Info": 21,
+    "Evident Conflict": 29,
+    "Subtle Baseless Info": 17,
+    "Subtle Conflict": 2
+  },
+  "verdict_replay_mismatches": 0
+}
