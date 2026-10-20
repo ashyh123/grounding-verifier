@@ -168,8 +168,8 @@
     "track_b_estimate_usd": 7.84,
     "track_a_estimate_usd": 3.92,
     "basis": "v2.6 test actual unit prices; track A oracle prices from v2.5 with a 2x long-document factor",
-    "total_estimate_usd": 12.66,
-    "cap_note": "dev actual $0.8999 + projected track A test $3.92 + track B $7.84 = $12.66, within $16"
+    "total_estimate_usd": 13.52,
+    "cap_note": "two dev runs $1.7553 + projected track A test $3.92 + track B $7.84 = $13.52, within $16"
   },
   "notes": [
     "no prompt, verifier code, model or public gold change",
@@ -206,11 +206,13 @@
         "baseline": 0.0,
         "minimal": 0.2269,
         "optimized": 0.673,
-        "total": 0.8999
+        "total": 0.8999,
+        "first_unbatched_run": 0.8554,
+        "both_dev_runs": 1.7553
       }
     },
     "projected_test_cost_usd": 3.92,
-    "projected_total_including_dev_and_track_b_usd": 12.66,
+    "projected_total_including_dev_and_track_b_usd": 13.52,
     "blocker": null,
     "note": "oracle batching for minimal is now part of the run plan and must be recorded in the freeze"
   }

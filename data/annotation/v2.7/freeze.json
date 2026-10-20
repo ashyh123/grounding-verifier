@@ -1,0 +1,229 @@
+{
+  "design_version": "2.7",
+  "frozen_at": "2026-10-20T10:35:31.276698+00:00",
+  "source_commit": "4e6bf57007bef4bb7c2b1d0ad03eda17f2cc53fd",
+  "base_commit": "c8df7d0",
+  "purpose": "Two independent external checks: RAGTruth++ annotation-strictness sensitivity (track B) and LLM-AggreFact oracle verification (track A).",
+  "rules": {
+    "path": "data/annotation/v2.7/rules.json",
+    "sha256": "b93a373811d75f83795cafb347a26249d826d1eff37c03fe0c7270430b727b9f"
+  },
+  "conclusion_rules": {
+    "single_comparison": "write 'X is better than Y' only if the paired 95% interval excludes 0; otherwise write 'no evidence of a difference' and give the interval",
+    "track_b": {
+      "metric": "sentence-level F1 difference, optimized minus minimal",
+      "loose_win_strict_win": "minimal is better and robust to annotation strictness",
+      "loose_win_strict_none": "the ranking depends on the annotation standard; under the stricter standard there is no significant difference",
+      "loose_win_strict_loss": "the ranking is decided by the annotation standard: minimal is better under the loose standard and optimized under the strict standard; choose by use case",
+      "loose_none": "report both results; no overall ranking"
+    },
+    "track_a": "independent conclusion: with claims given, which method verifies more accurately; do not combine with track B",
+    "readme": "apply the fixed wording table; always report precision and recall separately; never use unqualified 'not worth it' or 'better method'",
+    "multiplicity": "no correction, but state the number of comparisons in the report"
+  },
+  "files": {
+    "annotation/v27/fetch.py": "7c4f7996bb667439ff0363f777b6cd3f80406cabee4be39c7aa353605ab26cb8",
+    "annotation/v27/ragtruthpp.py": "e86a0938a3fa22dc65dcc43d5755825e578dcbf5f5f2f6063c34487a2d599487",
+    "annotation/v27/aggrefact.py": "c1adc98d36f21f206f9c0a15c346c4a5fccbd69d1880aadfa5d26f986e56a71a",
+    "annotation/v27/freeze.py": "d8d39350a487aa8431438bfdb4a848ca80afcce6535344883801f12c56fc2337",
+    "annotation/v26/sentences.py": "020fd7ae33a26144b1bed8c49cfc813a3912a9201bba861b685e1e19a7fdf861",
+    "eval/run.py": "b1eb0328d7d3e4772a34f06a15242951e81b65e85063806bc79c6205732a7c60",
+    "eval/v26.py": "8efcf1fddadbfad09d9fc789f4b176746595ee30ccbd855ea270b7cf530b6b97",
+    "eval/v27.py": "07c40e43df872282829867602e668c6075fee76b8a175e227bdb48df8ad638e8",
+    "eval/run_v27.py": "150c1fda37f2cdc902758513129434591bee218929c2147aa0c111f5e085faf5",
+    "tests/test_v27_ragtruthpp.py": "9e76859b6c4291faf71f95e931cc9e3bb667f4184628bba2734df33a726428c7",
+    "tests/test_v27_aggrefact.py": "cd69a157f1cdb51af28ffab2578cfae7b70d040baa0509051fd1f63c05b5e0d0",
+    "data/annotation/v2.7/sources.json": "d7e9f5bd3c7d0ff41eb598770d7b0edd2c256e244b9d3a354b6a2f1b85299520",
+    "data/annotation/v2.7/selection.json": "0cb049030f51b092e61dcc50848a5fd4e359fc6afdfd303437b93e05ba70881f",
+    "data/annotation/v2.7/aggrefact-selection-test.json": "3c3c77cba5a5133383ca3497b532e2872b3b547893999a0ecf928b4640c22bd7",
+    "data/annotation/v2.7/aggrefact-selection-dev.json": "6fb6fa909081c1ca9716da8ed9b2f14bc3e4d2c4d960e155425323876db21f65",
+    "data/annotation/v2.7/stats.md": "2933157244595eeda77a507785ab970a17c95f5e69c1f8c4c05b555f8a94c70f",
+    "data/annotation/v2.7/s4-dev-report.md": "ebe548b1c3aea0ed2262eda81edd5c9be359d5335cb1c72df409594e54afe497"
+  },
+  "verifier_files": {
+    "__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "align.py": "20a4c554576a2e03f40e785fb08ebb68d3077ec68c8d5a605ed44e380ec60154",
+    "api.py": "8d39c8bd7a61e6fea2e96d826cda2c8a82781c5fae7da1619107ed51040f8c5c",
+    "baseline.py": "0041afe49a72985d2375beada42dc4ceeec1c0485b3c43b5f6af5244c28aea8e",
+    "config.py": "08d6354150003691217491bab01742b13532975c07e0462d3c9ee0754d372f55",
+    "llm.py": "1ba7f40bc01986ef7d2f7e547e2626ba6a7993021dc79458c51c73810f5291aa",
+    "llm_verifiers.py": "fd612411d289f9876181cd9d644742d0ddf2278bdc1310ac17c9b84ff3689685",
+    "openai_client.py": "94b274f3fab3078c8f3289650a83f0f32d9b5c808fc2a6689b37609a4813460e",
+    "prompts.py": "af0e648b3fc3a6a439575596e06d1a9cefddd3c13a81d3cc935da713b9255678",
+    "schemas.py": "37c9b958c48926528110ca9b39363100ff248dcbc5ed8bcc4cb4db372a5624af",
+    "segment.py": "891d9aa08067fad5427b613c5dc1f69a7cbdf12cb08a6ba295880289e70f0a10",
+    "validate.py": "76f470ffaaf21e6e55f19054a2ca7bcdb4ead773e4579fbf8c39bb182dfc70b8"
+  },
+  "data": {
+    "data/eval_ragtruthpp.v2.7.jsonl": {
+      "sha256": "56ed8f63a9c9793d555addaf123c0176d8ffe73b7f1f486007d5c63fb6161e91",
+      "bytes": 2595684
+    },
+    "data/eval_aggrefact.v2.7.test.jsonl": {
+      "sha256": "ef23914dd9f2cad7a6f6d206854d8c7dbce810b077e63d1f1b2fd34c1a91157c",
+      "bytes": 1993146
+    },
+    "data/eval_aggrefact.v2.7.dev.jsonl": {
+      "sha256": "43916aae6cacf871f0df96d0cf931c3b06441d561235552ba1dc488411246a89",
+      "bytes": 286662
+    },
+    "data/sources/v2.7/raw/ragtruthpp-hallucination_spans.csv": {
+      "sha256": "7b239d07608c2abde74e66f116f68012d75034bf672a77f72b62413ad07ebb21",
+      "bytes": 143232
+    },
+    "data/sources/v2.7/raw/ragtruthpp-messages.csv": {
+      "sha256": "aa45c84735cb1c90ad07415cd12748f31d3fec7495c47b2a16a90ad9e0e5723e",
+      "bytes": 1299712
+    },
+    "data/sources/v2.7/raw/aggrefact-data-test-00000-of-00001.parquet": {
+      "sha256": "ba6976c3da990a9d7b11670efaf4e3c93c1bd0530061ec742afd6b2d5bce698c",
+      "bytes": 17298205
+    },
+    "data/sources/v2.7/raw/aggrefact-data-dev-00000-of-00001.parquet": {
+      "sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+      "bytes": 35453136
+    }
+  },
+  "model": {
+    "provider": "openai",
+    "model": "deepseek-v4-pro",
+    "prompt_version": "v3",
+    "base_url": "https://api.deepseek.com/v1",
+    "parameters": {
+      "temperature": 0,
+      "extra_body": {
+        "thinking": {
+          "type": "disabled"
+        }
+      },
+      "max_tokens": 4096,
+      "timeout_s": 60.0,
+      "max_retries": 3,
+      "concurrency": 4
+    },
+    "prices_usd_per_mtok": {
+      "in": 1.32,
+      "out": 3.96
+    }
+  },
+  "run_plan": {
+    "track_a": {
+      "data": "data/eval_aggrefact.v2.7.test.jsonl",
+      "n_docs": 461,
+      "n_claims": 854,
+      "methods": [
+        "baseline",
+        "minimal",
+        "optimized"
+      ],
+      "runs": 1,
+      "oracle": true,
+      "minimal_batch_size": 20,
+      "output": "results/v2.7-test/aggrefact"
+    },
+    "track_b": {
+      "data": "data/eval_ragtruthpp.v2.7.jsonl",
+      "n_cases": 229,
+      "n_new": 200,
+      "n_reused": 29,
+      "methods": [
+        "baseline",
+        "minimal",
+        "optimized"
+      ],
+      "runs": 1,
+      "oracle": false,
+      "sentence_threshold": 60,
+      "output": "results/v2.7-test/ragtruthpp"
+    },
+    "order": [
+      "aggrefact",
+      "ragtruthpp"
+    ],
+    "test_runs_total": 6,
+    "stop_conditions": [
+      "any method failure rate > 5%",
+      "any overlong or truncated output",
+      "total cost > $16",
+      "a prompt, verifier code, metric code or data change would be required"
+    ],
+    "on_stop": "stop and report; do not rerun or substitute results",
+    "no_retuning_after_test": true
+  },
+  "budget": {
+    "cap_usd": 16.0,
+    "dev_spent_usd": 1.7553,
+    "track_a_test_estimate_usd": 3.92,
+    "track_b_test_estimate_usd": 7.84,
+    "projected_total_usd": 13.52,
+    "note": "two dev runs (unbatched $0.8554 + batched $0.8999) + projected tests remain below the cap; the S2 fallback to 80 claims per track A subset is applied"
+  },
+  "deviations": {
+    "minimal_oracle_batching": {
+      "approved": true,
+      "claims_per_call": 20,
+      "reason": "a 61-claim TofuEval document produced a truncated 16k-character JSON at max_tokens=4096 in the unbatched S4 run",
+      "scope": "eval/run_v27.py only; prompt, model, verifier code and gold unchanged",
+      "effect": "minimal dev cost rose from $0.1812 to $0.2269; 0 failures after batching"
+    },
+    "v25_documentation_reseal": {
+      "recorded_as_deviation": true,
+      "commit": "8981478",
+      "original_version_commit": "900e3ae",
+      "log": "data/annotation/v2.7/resign_log.json"
+    }
+  },
+  "s4": {
+    "status": "batched_rerun_complete_no_stop_condition",
+    "dev_docs": 58,
+    "dev_claims": 196,
+    "failures": {
+      "baseline": 0,
+      "minimal": 0,
+      "optimized": 0
+    },
+    "macro_bacc": {
+      "baseline": 0.5895,
+      "minimal": 0.7972,
+      "optimized": 0.8113
+    },
+    "paired_optimized_minus_minimal": {
+      "value": 0.014,
+      "ci95": [
+        -0.032,
+        0.053
+      ],
+      "excludes_zero": false
+    },
+    "cost_usd": {
+      "baseline": 0.0,
+      "minimal": 0.2269,
+      "optimized": 0.673,
+      "total": 0.8999,
+      "first_unbatched_run": 0.8554,
+      "both_dev_runs": 1.7553
+    }
+  },
+  "resign_policy": {
+    "log": "data/annotation/v2.7/resign_log.json",
+    "allowed_resignations": 1,
+    "used": 0,
+    "scope": [
+      "README.md",
+      "docs/DATASET.md",
+      "docs/EVALUATION.md"
+    ],
+    "authorization": "v2.7 section 10.1; S7 may re-seal these documentation hashes once"
+  },
+  "test_authorized": false,
+  "test_authorization_note": "S5 freeze is written; the test run requires explicit user approval at the S6 gate",
+  "limitations": [
+    "RAGTruth++ has no publisher-declared license; raw CSV and derived JSONL stay local and are not redistributed",
+    "RAGTruth++ strict labels start from the publisher detector; no peer review",
+    "track A excludes the RAGTruth subset and documents over 4000 words; whole-document sampling overshoots the nominal claim target",
+    "LLM-AggreFact is a public benchmark; contamination cannot be ruled out",
+    "sentence localisation is lexical and approximate; citation sufficiency is not assessed",
+    "the protocol changed after v2.6; the verifier and prompt are unchanged, but v2.7 is a new evaluation"
+  ],
+  "note": "All data hashes are local; raw and derived external data are git-ignored. The v2.5 documentation re-seal at 8981478 is recorded as a deviation and may be repeated once at S7."
+}

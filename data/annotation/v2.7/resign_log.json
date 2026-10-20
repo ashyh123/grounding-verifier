@@ -1,0 +1,43 @@
+{
+  "version": "2.7",
+  "events": [
+    {
+      "type": "recorded_deviation",
+      "date": "2026-10-20",
+      "commit": "8981478",
+      "summary": "the v2.5 freeze was re-sealed for documentation without a recorded authorization",
+      "changed_fields": [
+        "data/annotation/v2.5/freeze.json files[README.md]",
+        "data/annotation/v2.5/freeze.json files[docs/DATASET.md]",
+        "data/annotation/v2.5/freeze.json files[docs/EVALUATION.md]",
+        "data/annotation/v2.5/freeze.json documentation_updates (added)",
+        "data/annotation/v2.5/freeze.json note (rewritten)",
+        "data/annotation/v2.6/freeze.json verifier.frozen_baseline_sha256",
+        "data/annotation/v2.6/freeze.json verifier.frozen_files_changed (added)",
+        "data/annotation/v2.6/freeze.json post_freeze_documentation_reconciliation (added)",
+        "data/annotation/v2.6/freeze.json post_freeze_measurement (added)",
+        "data/annotation/v2.6/freeze.json freeze_checks.sha256"
+      ],
+      "old_hashes": {
+        "README.md": "d28229847839ae3ca1187f4638778212faf6d10c04ee67b279d1718360dce478",
+        "docs/DATASET.md": "3a5a3e7005748f152002d523131b148b56b61e0a1321206aa1851e04a7bcc67f",
+        "docs/EVALUATION.md": "afa8b472aea7b59b6e426771774b146394228f946d48758648f3ba60f1e9dac5"
+      },
+      "new_hashes_at_8981478": {
+        "README.md": "f85b1b4df7b180c839c4e8eb8e4cb41229c4c1331e7058f669db7f5c17d1591c",
+        "docs/DATASET.md": "cc64441db0e7445d0027c70d83bc300e37ff8784b48600df6dca0e290f353366",
+        "docs/EVALUATION.md": "86e5a74bd44e54a7c110ad9fc4a72ca7ae4339fb4b6b24ddade4378bcd4035b7"
+      },
+      "original_version_commit": "900e3ae",
+      "authorization": "none recorded at the time; v2.7 S0 records it as a deviation and does not roll it back",
+      "code_prompt_data_metric_hashes_unchanged": true
+    }
+  ],
+  "pending": {
+    "allowed_resignations": 1,
+    "used": 0,
+    "scope": ["README.md", "docs/DATASET.md", "docs/EVALUATION.md"],
+    "authorization": "v2.7 section 10.1; S7 is the only permitted further documentation re-seal",
+    "rule": "only documentation hashes may change; code, prompt, data and metric hashes must not change; append one event with old/new hashes and this authorization"
+  }
+}
