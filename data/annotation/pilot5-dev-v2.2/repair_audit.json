@@ -1,0 +1,116 @@
+{
+  "created_at": "2026-10-19T15:49:10.580354+00:00",
+  "status": "metadata_revision_only_not_gold",
+  "original_path": "data/annotation/drafts.original-mimo-pilot.jsonl",
+  "original_sha256": "97b7f8a0f73c7cf9c5097d1d44a5ebc6d350086024dabe1c367ee6429ad3fa13",
+  "revised_path": "data/annotation/drafts.jsonl",
+  "revised_sha256": "91b8d6cea82e626cf8aaafbe317d5d578da676177dccb5b4473345ed2d20937e",
+  "journal_path": "data/annotation/draft_revisions.jsonl",
+  "journal_sha256": "9ebf7386cf083f936baca07d81b48014cc8ccc969107ea3d9ed7f2111fe220c4",
+  "revisions": 7,
+  "changed_answer_locations": [
+    {
+      "claim_id": "ragtruth-13105-c12",
+      "before": [
+        {
+          "quote": "the passages do not mention how to make a line graph",
+          "start": null,
+          "end": null,
+          "match": "candidate_only"
+        }
+      ],
+      "after": [
+        {
+          "quote": "The passages do not mention how to make a line graph",
+          "start": 1015,
+          "end": 1067,
+          "match": "exact"
+        }
+      ]
+    },
+    {
+      "claim_id": "ragtruth-9775-c18",
+      "before": [
+        {
+          "quote": "despite having gone on their first date at Peabody's, they had no desire to return.",
+          "start": 1361,
+          "end": 1444,
+          "match": "exact"
+        }
+      ],
+      "after": [
+        {
+          "quote": "They also stated that despite having gone on their first date at Peabody's, they had no desire to return.",
+          "start": 1339,
+          "end": 1444,
+          "match": "exact"
+        }
+      ]
+    }
+  ],
+  "exact_answer_spans": 63,
+  "active_case_flags": {},
+  "active_claim_flags": {
+    "partial_overlap": 2,
+    "human_adjudication_required": 1
+  },
+  "human_waivers": {
+    "partial_overlap": 1,
+    "answer_gap": 3
+  },
+  "claims": 63,
+  "labels_changed": 0,
+  "claim_texts_changed": 0,
+  "raw_model_outputs_changed": 0,
+  "pending_human_claims": [
+    "ragtruth-2426-c10",
+    "ragtruth-9775-c19"
+  ],
+  "c12_upstream_verdict_preserved": null,
+  "c19_stays_human_review_even_if_blind_agrees": true,
+  "protected_prior_files_unchanged": 247,
+  "scoring_registry_unchanged": true,
+  "models_called": 0,
+  "test_result": "make test: 194 passed",
+  "implementation_notes": [
+    "An initial derived-file command resolved the venv interpreter symlink and failed before output creation; rerun with .venv/bin/python succeeded. Original archive and journal remained intact."
+  ],
+  "working_diff_vs_HEAD_including_prior_drafting_changes": [
+    {
+      "path": "annotation/draft_claims.py",
+      "added": 199,
+      "deleted": 89
+    },
+    {
+      "path": "annotation/review_app.py",
+      "added": 14,
+      "deleted": 11
+    },
+    {
+      "path": "annotation/triage.py",
+      "added": 26,
+      "deleted": 1
+    },
+    {
+      "path": "tests/test_annotation.py",
+      "added": 10,
+      "deleted": 9
+    },
+    {
+      "path": "annotation/repair_drafts.py",
+      "added": 126,
+      "deleted": 0
+    },
+    {
+      "path": "tests/test_drafting_cli.py",
+      "added": 147,
+      "deleted": 0
+    },
+    {
+      "path": "tests/test_draft_repairs.py",
+      "added": 169,
+      "deleted": 0
+    }
+  ],
+  "repair_tool_sha256": "5d60bc32d6b9160120deaf77a386d9cd43b571d5517495a88d7cd6e754a932b6"
+}

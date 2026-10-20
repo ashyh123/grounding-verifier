@@ -1,0 +1,66 @@
+{
+  "seed": 20261019,
+  "created_by": "annotation.select_cases",
+  "candidates_sha256": "acdb71051dee48879d50533780fb0a40ab6a8cfd53ed8d93fedcdf38dc1823db",
+  "quotas": {
+    "ragtruth_summary": {
+      "dev": 5,
+      "test": 9
+    },
+    "ragtruth_qa": {
+      "dev": 2,
+      "test": 4
+    },
+    "ragtruth_data2txt": {
+      "dev": 1,
+      "test": 3
+    },
+    "factscore": {
+      "dev": 3,
+      "test": 5
+    },
+    "halueval_summary": {
+      "dev": 1,
+      "test": 3
+    }
+  },
+  "strata": {
+    "dev": {
+      "subtle": 4,
+      "evident_only": 2,
+      "clean": 2
+    },
+    "test": {
+      "subtle": 8,
+      "evident_only": 4,
+      "clean": 4
+    }
+  },
+  "cells": {
+    "Summary/dev/subtle": 3,
+    "Summary/dev/evident_only": 1,
+    "Summary/dev/clean": 1,
+    "QA/dev/subtle": 1,
+    "QA/dev/clean": 1,
+    "Data2txt/dev/evident_only": 1,
+    "Summary/test/subtle": 4,
+    "Summary/test/evident_only": 2,
+    "Summary/test/clean": 3,
+    "QA/test/subtle": 2,
+    "QA/test/evident_only": 1,
+    "QA/test/clean": 1,
+    "Data2txt/test/subtle": 2,
+    "Data2txt/test/evident_only": 1
+  },
+  "counts": {
+    "total": 36,
+    "test": 24,
+    "dev": 12
+  },
+  "ragtruth_upstream_split": "test",
+  "ragtruth_generator_mix": {
+    "gpt": 17,
+    "other": 7
+  },
+  "factscore_failures": []
+}

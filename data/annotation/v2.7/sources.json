@@ -1,0 +1,60 @@
+{
+  "version": "2.7",
+  "datasets": {
+    "aggrefact": {
+      "repo": "lytang/LLM-AggreFact",
+      "revision": "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4",
+      "license": "CC-BY-ND-4.0",
+      "gated": "auto",
+      "files": {
+        "README.md": {
+          "sha256": "2045c4f428a89f1f63b6040ff3a5dd45285ff8fde49284bee5574902622a8a6b",
+          "bytes": 4927,
+          "url": "https://huggingface.co/datasets/lytang/LLM-AggreFact/resolve/981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4/README.md",
+          "cached": true
+        },
+        "data/dev-00000-of-00001.parquet": {
+          "sha256": "ca9a5bda9561bbc6f7327ef81ab41727fa10e96f96e9dc74ef32ba3af3c1d8a8",
+          "bytes": 35453136,
+          "url": "https://huggingface.co/datasets/lytang/LLM-AggreFact/resolve/981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4/data/dev-00000-of-00001.parquet",
+          "cached": false
+        },
+        "data/test-00000-of-00001.parquet": {
+          "sha256": "ba6976c3da990a9d7b11670efaf4e3c93c1bd0530061ec742afd6b2d5bce698c",
+          "bytes": 17298205,
+          "url": "https://huggingface.co/datasets/lytang/LLM-AggreFact/resolve/981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4/data/test-00000-of-00001.parquet",
+          "cached": false
+        }
+      },
+      "status": "downloaded"
+    },
+    "ragtruthpp": {
+      "repo": "blue-guardrails/ragtruth-plus-plus",
+      "revision": "afaec19e64122b4a58718dc31bcd555c97460233",
+      "license": "not stated by the publisher",
+      "gated": false,
+      "files": {
+        "README.md": {
+          "sha256": "d023c216f4b62d5d98e583c9d0c97e427aa9afa7b008b7cb2109f3c4819f4ec1",
+          "bytes": 1356,
+          "url": "https://huggingface.co/datasets/blue-guardrails/ragtruth-plus-plus/resolve/afaec19e64122b4a58718dc31bcd555c97460233/README.md",
+          "cached": true
+        },
+        "hallucination_spans.csv": {
+          "sha256": "7b239d07608c2abde74e66f116f68012d75034bf672a77f72b62413ad07ebb21",
+          "bytes": 143232,
+          "url": "https://huggingface.co/datasets/blue-guardrails/ragtruth-plus-plus/resolve/afaec19e64122b4a58718dc31bcd555c97460233/hallucination_spans.csv",
+          "cached": true
+        },
+        "messages.csv": {
+          "sha256": "aa45c84735cb1c90ad07415cd12748f31d3fec7495c47b2a16a90ad9e0e5723e",
+          "bytes": 1299712,
+          "url": "https://huggingface.co/datasets/blue-guardrails/ragtruth-plus-plus/resolve/afaec19e64122b4a58718dc31bcd555c97460233/messages.csv",
+          "cached": true
+        }
+      },
+      "status": "downloaded"
+    }
+  },
+  "fetched_at": "2026-10-20T10:14:21.187522+00:00"
+}

@@ -1,0 +1,189 @@
+{
+  "design_version": "2.2",
+  "seed": 20261019,
+  "created_by": "annotation.select_cases",
+  "candidates_sha256": "98ef2859a199bf814cbbed23365ab267de96616ce2f976e349eacc08a48f57ca",
+  "quotas": {
+    "ragtruth_summary": {
+      "dev": 6,
+      "test": 12
+    },
+    "ragtruth_qa": {
+      "dev": 3,
+      "test": 5
+    },
+    "ragtruth_data2txt": {
+      "dev": 1,
+      "test": 3
+    }
+  },
+  "strata": {
+    "dev": {
+      "subtle": 5,
+      "evident_only": 3,
+      "clean": 2
+    },
+    "test": {
+      "subtle": 10,
+      "evident_only": 5,
+      "clean": 5
+    }
+  },
+  "gpt_quotas": {
+    "dev": 7,
+    "test": 14
+  },
+  "selection_method": "seeded minimum-cost integer allocation over fixed margins",
+  "counts": {
+    "total": 30,
+    "dev": 10,
+    "test": 20
+  },
+  "ragtruth_upstream_split": "test",
+  "ragtruth_generator_mix": {
+    "gpt": 21,
+    "other": 9
+  },
+  "near_duplicate_rule": {
+    "word_ngram": 5,
+    "jaccard_threshold": 0.8,
+    "normalization": "lowercase Unicode word tokens; grouping only",
+    "grouping": "connected components; one response per component",
+    "legacy_contexts_excluded": true
+  },
+  "statistics": [
+    {
+      "task": "Data2txt",
+      "split": "dev",
+      "stratum": "subtle",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "stratum": "subtle",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 2
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "stratum": "subtle",
+      "generator_model": "gpt-4-0613",
+      "count": 1
+    },
+    {
+      "task": "QA",
+      "split": "dev",
+      "stratum": "evident_only",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 2
+    },
+    {
+      "task": "QA",
+      "split": "dev",
+      "stratum": "subtle",
+      "generator_model": "llama-2-70b-chat",
+      "count": 1
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "stratum": "subtle",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 2
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "stratum": "subtle",
+      "generator_model": "llama-2-70b-chat",
+      "count": 2
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "stratum": "subtle",
+      "generator_model": "mistral-7B-instruct",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "stratum": "clean",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "stratum": "clean",
+      "generator_model": "gpt-4-0613",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "stratum": "evident_only",
+      "generator_model": "gpt-4-0613",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "stratum": "subtle",
+      "generator_model": "gpt-4-0613",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "stratum": "subtle",
+      "generator_model": "mistral-7B-instruct",
+      "count": 2
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "stratum": "clean",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 3
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "stratum": "clean",
+      "generator_model": "gpt-4-0613",
+      "count": 2
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "stratum": "evident_only",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "stratum": "evident_only",
+      "generator_model": "gpt-4-0613",
+      "count": 3
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "stratum": "evident_only",
+      "generator_model": "mistral-7B-instruct",
+      "count": 1
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "stratum": "subtle",
+      "generator_model": "mistral-7B-instruct",
+      "count": 2
+    }
+  ]
+}

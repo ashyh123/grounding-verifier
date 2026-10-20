@@ -418,13 +418,222 @@ Decisions recorded from the final run:
   is equal on the single call and 6.8 pt worse on the pipeline; both numbers are recorded, and the
   pinned configuration is the one the final numbers were produced with.
 
+## v2.5 RAGTruth 主张级测量（探索性分析）
+
+**状态：已测量；v2.6 已完成回答级复测，本节保留为探索性分析。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
+（45 例，537 条主张：S 483、C 27、U 27）的测量结果。数据、金标、评分代码和被测方案在测量前后均未改动；
+下面的事后分析只读取已保存的预测，没有调用任何模型。
+
+### 主表（e2e，test，均值 ± 样本标准差）
+
+数字来自 `docs/TEST_PLAN.md` 和 `results/v2.5-test/aggregate-3r.json`。baseline 是确定性的，只跑 1 轮；
+minimal 和 optimized 各 3 轮，无调用失败。
+
+| 方案 | 轮数 | 幻觉检出 F1 | macro-F1 | 每轮费用 |
+|---|---:|---:|---:|---:|
+| baseline | 1 | 0.204 | 0.127 | $0.000 |
+| minimal | 3 | 0.455 ± 0.010 | 0.516 ± 0.015 | $0.269 ± 0.002 |
+| optimized v3 | 3 | 0.434 ± 0.005 | 0.505 ± 0.004 | $1.842 ± 0.026 |
+
+三轮 e2e 加一轮 oracle 总花费 $8.32。
+
+### 事后分析（未预先登记，`"preregistered": false`）
+
+脚本 `eval/posthoc_v25.py`，输出 `results/v2.5-test/posthoc/posthoc.json`。这两项是看到 v2.5 test 结果之后才加的。
+
+* **配对 bootstrap 差值（minimal − optimized，3 轮逐案例混淆计数相加，案例为单位，10000 次，种子 20261020）**：
+  检出 F1 差值 +0.021，95% 区间 [−0.040, +0.078]；macro-F1 差值 +0.011，区间 [−0.049, +0.075]。
+  两个区间都包含 0，所以只能说没有证据表明两者存在差异，不能说两者一样好。
+* **主张覆盖率（被对齐上的金标主张 ÷ 全部金标主张，逐轮）**：
+
+| 方案 | 轮次 | S | C | U | 全部 |
+|---|---|---:|---:|---:|---:|
+| baseline | r1 | 263/483 (0.545) | 17/27 (0.630) | 15/27 (0.556) | 295/537 (0.549) |
+| minimal | r1 | 374/483 (0.774) | 21/27 (0.778) | 23/27 (0.852) | 418/537 (0.778) |
+| minimal | r2 | 365/483 (0.756) | 20/27 (0.741) | 22/27 (0.815) | 407/537 (0.758) |
+| minimal | r3 | 376/483 (0.778) | 21/27 (0.778) | 22/27 (0.815) | 419/537 (0.780) |
+| optimized | r1 | 430/483 (0.890) | 25/27 (0.926) | 26/27 (0.963) | 481/537 (0.896) |
+| optimized | r2 | 428/483 (0.886) | 25/27 (0.926) | 26/27 (0.963) | 479/537 (0.892) |
+| optimized | r3 | 431/483 (0.892) | 26/27 (0.963) | 26/27 (0.963) | 483/537 (0.899) |
+
+### 三个已知问题
+
+1. **金标噪声有两类来源。** RAGTruth 只在回答上标出幻觉片段，没有主张；v2.3 至 v2.5 先把回答拆成主张，
+   再按与上游片段的重叠映射标签。以 `ragtruth-7952` 为例：
+   * 上游漏标：主张「提供户外座位」被标为 SUPPORTED，但原文是 `"OutdoorSeating": false`，回答说的是有户外座位，
+     上游没有标出这处。
+   * 映射错误：主张「不提供代客泊车」所对应的回答区间是 `it does not provide parking or valet services.`，
+     与上游标注的 `it does not provide parking`（Evident Conflict）重叠，片段之外只有 19 个字符，因此被映射成
+     CONTRADICTED。但原文是 `"valet": false`，实际上支持这条主张。
+2. **检出 F1 不惩罚漏掉的 S 金标。** 以 r1 为例，minimal 有 109 条 S 金标没有被对齐上，optimized 只有 53 条。
+   拆得少的方案产生的预测主张少，误报机会也少，指标不会为此扣分。
+3. **由此，「minimal 不比 optimized 差」和「误报很高」都不能作为结论。** 配对差值的区间包含 0，主张覆盖率相差很大，
+   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。v2.6 已完成回答级复测：minimal 0.720、
+   optimized 0.609，配对差值区间不含 0。v2.5 的结果原样保留，只作为方法论发现，不再作为方案排名。
+
+## v2.6 回答级测量（前一版）
+
+**状态：已完成；test 只跑一次，未重跑。** 这一轮不改被测系统，改的是数据和测量单位：用 RAGTruth
+上游人工标注做回答级金标，全程没有模型参与定标。
+
+### 为什么换协议
+
+v2.5 的 test 结果暴露了三个问题，任何一个都足以让「minimal 与 optimized 谁更好」无法回答：
+
+1. **主张级金标有噪声。** RAGTruth 只标回答里的幻觉片段；v2.3–v2.5 让模型拆主张、再按重叠映射标签，
+   引入了上游漏标和映射错误。`ragtruth-7952` 同时展示了这两类错误（详见 REPORT.md 的 v2.5 节）。
+2. **检出 F1 不惩罚漏掉的 S。** minimal 漏掉 109 条 S 金标，optimized 漏掉 53 条；拆得少的方案
+   误报机会少，指标反而占便宜。
+3. **45 例 test 是为凑矛盾样本选的。** 40/45 回答带幻觉，「全部判为有幻觉」的 baseline 在回答级
+   就能拿到 F1 0.94；这个集合不能区分方案，而且已经看过结果。
+
+按设计文档第 8 节，协议改变必须保留原结果、另起版本，并换新的未见样本。v2.6 因此重新抽样，不碰
+v2.5 的任何数据、预测或冻结文件。
+
+### 抽样与冻结
+
+- 来源：RAGTruth 上游 test、quality=good，全部 6 个生成模型；自然分布，不设最小长度、不设 GPT 比例。
+- 每个 source 只取一条回答；排除 v2.x 全部 63 例及其近重复组、旧合成集近重复、legacy ID。
+- 种子 20261022；抽样规则先提交（d47e246），抽样不读标签。dev 30 / test 180，每任务 10 / 60；
+  test 有 62 个正例。与 v2.5 的 id 和 source 重叠均为 0。
+- 金标：回答级 = 上游是否至少有一个片段；句子级 = 确定性分句器 + 重叠。没有模型、没有人工复核。
+- 冻结：`data/annotation/v2.6/freeze.json`（commit 7d31650）；数据、抽样规则、指标代码、阈值 60、
+  被测代码/prompt 哈希和停止条件均已固定。对照 v2.5 freeze 的 114 个文件哈希全部未变。
+
+### 阶段记录
+
+- **P0（v2.5 收尾）**：事后分析与文档记录完成；两个未预先登记的项明确标注为
+  `"preregistered": false`。
+- **P1（抽样）**：生成 `data/eval_ragtruth_resp.v2.6.jsonl`；单测覆盖分句确定性、句子铺满全文、
+  金标可由上游片段重算、与已用案例不重叠。
+- **P2（dev）**：三方案各 1 轮，0 失败、0 重试、无截断；minimal F1 0.750、optimized 0.529、
+  baseline 0.474。阈值 60 由 dev 的 14 个上游片段校准（14/14 top-1，最低分 66.7）。
+  补了「原始引文合法率」：`validate.py` 会修复/丢弃引文，最终输出的合法率恒为 1.000，
+  必须从 `meta` 读 as-given 合法率才有信息量。test 费用按 dev 实际用量估算约 $8.9（含余量）。
+- **P3（冻结）**：写入 freeze 并 push；test 未运行。
+- **P4（test）**：按冻结计划跑一次。baseline 0 失败、minimal 0 失败、optimized 1 失败
+  （`ragtruth-5828` 的 JSON 无法解析，0.56%，非截断）；总费用 $7.08，低于 $12 上限。
+- **P5（报告）**：README 与 REPORT/DATASET/EVALUATION/ITERATIONS 切换到 v2.6，v2.5 与合成集降为
+  次要。v2.5 freeze 中 README、DATASET、EVALUATION 三份文档的哈希按 v2.6 要求重新签封；
+  代码、prompt、数据和指标哈希未变，v2.6 freeze 记录了这次「仅文档」变更。
+
+### v2.6 事后记录的偏离（v2.7 S0）
+
+1. **v2.5 freeze 的重新签封缺少当时的授权记录。** 提交 `8981478`（P5 文档提交）修改了
+   `data/annotation/v2.5/freeze.json`：`files` 中 `README.md`、`docs/DATASET.md`、
+   `docs/EVALUATION.md` 三个哈希被替换，新增 `documentation_updates`，并改写了 `note`。
+   同一提交还更新了 v2.6 freeze 的 `verifier.frozen_baseline_sha256`、
+   `frozen_files_changed`、`authorized_documentation_updates`、`frozen_files_changed_note`、
+   `post_freeze_documentation_reconciliation`、`post_freeze_measurement` 和
+   `freeze_checks.sha256`。**原始 v2.5 freeze 在提交 `900e3ae`（P4）仍可查**；不回滚、
+   不改写历史。代码、prompt、数据和指标哈希没有变化，但这仍是一次未在签封时登记的偏离。
+   v2.7 的 S7 只允许再签封一次文档哈希，并按第 10 节写入 `data/annotation/v2.7/resign_log.json`。
+2. **句子对齐阈值的执行规则与冻结值不一致。** 执行文档的规则是「两方案定位率都 ≥ 0.90 的最大
+   候选值」，按 dev 数字应为 70，且不允许看 F1；实际冻结了 60，理由中参考了句子 F1。test 已跑完，
+   **冻结值 60 不改**。事后用同一批预测在 `results/v2.6-test/posthoc-threshold70/` 重算 70：
+   minimal 句子 F1 0.498 → 0.503（定位率 0.985 → 0.969），optimized 0.338 → 0.346
+   （定位率 0.986 → 0.925），baseline 不变。该结果标注为事后分析，只影响次要的句子指标，
+   不改变回答级结论。
+3. **README 的结论措辞过满。** 「optimized 不值得它的额外成本」应限定为「在 RAGTruth 原始标注下」，
+   并说明上游漏标对更严格的方案不利。S0 先记录，README 留到 S7 按 v2.7 第 5 节的规则一次性修改。
+
+### test 结果（180 条回答 / 62 正例）
+
+| 方案 | 精度 | 召回 | F1 [95% CI] | 平衡准确率 | 句子 F1 | 原始引文合法率 | 每例费用 |
+|---|---:|---:|---|---:|---:|---:|---:|
+| baseline | 0.352 | 1.000 | 0.521 [0.442, 0.594] | 0.517 | 0.164 | 1.000 | $0.0000 |
+| minimal | 0.578 | 0.952 | **0.720** [0.638, 0.791] | **0.794** | **0.498** | 0.953 | $0.0052 |
+| optimized v3 | 0.444 | 0.968 | 0.609 [0.524, 0.685] | 0.666 | 0.338 | 0.962 | $0.0342 |
+
+配对 F1：minimal − optimized +0.110 [+0.060, +0.163]；minimal − baseline +0.199 [+0.144, +0.256]；
+optimized − baseline +0.088 [+0.051, +0.126]。三个区间都不含 0。
+
+### 决定
+
+- **minimal 是当前自然分布下的最优方案；optimized 的 6.6 倍费用没有换来更好的回答级 F1。**
+  optimized 多 1.6 个百分点的召回，但多 32 个误报，精度低 13.4 个百分点。
+- **不因这一结果改 prompt 或被测代码。** 这是测量结论，不是调参授权；下一轮若要改，应针对
+  optimized 在干净回答上的误报，而不是继续加核验。
+- **v2.5 保留为探索性分析。** 它记录的是「主张级金标怎么坏」和「指标漏洞」的方法论发现，
+  不再作为方案排名。
+
+## v2.7 外部金标复测（当前）
+
+**状态：已完成；两轨道 test 各跑一次。轨道 B 0 失败；轨道 A minimal 32/461 主张条数不符
+（6.94%），超过 5% 停止线；主结果按失败算错，真正剔除后没有差异。总费用 $10.80，低于 $16。**
+
+v2.7 不推翻 v2.6，只回答两个问题：在更严格的金标下 v2.6 排名是否成立；在外部标准基准上、
+主张给定时谁的核验更准。两轨道独立结论，不合成总分。
+
+### S0–S7
+
+- **S0**：记录 `8981478` 对 v2.5 freeze 的重新签封缺少当时授权；原始版本在 `900e3ae`，
+  不回滚。记录句子阈值规则应为 70、实际冻结 60 的偏离，并补
+  `results/v2.6-test/posthoc-threshold70/`（仅次要句子指标）。README 结论过满留到 S7。
+- **S1**：RAGTruth++ 与 LLM-AggreFact 下载并记录 sha256；原始 CSV/parquet 和生成数据本地保留，
+  不提交。LLM-AggreFact 是 gated，用户接受条款并完成 HF 登录后解锁。
+- **S2**：轨道 B 384 条去重回答中取 200 新跑 + 29 条 v2.6 test 重叠复用 = 229；轨道 A 10 个子集，
+  4000 词上限，整篇文档抽样。test 100/子集时估算 $16.90，超过 $16；用户确认回退到 80/子集
+  （461 篇 / 854 主张 / 512 正例）。dev 196 条。
+- **S3**：`annotation/v27/{fetch,ragtruthpp,aggrefact}.py`、`eval/v27.py`、`eval/run_v27.py`
+  与单测；两轨道 baseline 免费检查通过。
+- **S4**：轨道 A dev 第一次运行时 minimal 在 61 条主张的 TofuEval 文档上截断（16k 字符 JSON，
+  max_tokens=4096），触发停止条件。经用户确认，仅改 oracle 入口，minimal 每 20 条主张一批；
+  重跑后 optimized 0 失败；按后来统一的“主张条数不符算失败”口径，minimal 有 2/58（3.45%，
+  低于 5%）条数不符，baseline 0。结果：baseline 0.590、minimal 0.797、optimized 0.811，配对差
+  +0.014 [−0.032, +0.053]，无差异。两次 dev 共 $1.7553。
+- **S5**：`data/annotation/v2.7/freeze.json`，包含规则、数据/源哈希、代码/verifier 哈希、
+  模型参数、两轨道运行计划、停止条件、$16 上限和结论规则；`freeze --check` 通过，已 push。
+- **S6**：两轨道 test 各 1 轮：
+  * 轨道 A：baseline 0.608、minimal 0.729、optimized 0.776；optimized − minimal 主结果
+    +0.047 [+0.011, +0.079]。但 minimal 有 32/461 篇主张条数不符（6.94%），超过 5% 停止线；
+    真正剔除失败后 minimal 0.768、optimized 0.776，配对差 +0.032 [−0.016, +0.072]，
+    没有证据表明存在差异。optimized 与 minimal 各赢 5/10 个子集（5/5）；Lfqa 3 篇、
+    TofuEval-MediaS 2 篇、TofuEval-MeetB 2 篇，macro 集中在少数文档上。
+  * 轨道 B 宽松金标：minimal 句子 F1 0.371、optimized 0.218，差 −0.153 [−0.226, −0.086]；
+    严格金标：minimal 0.522、optimized 0.628，差 +0.106 [+0.046, +0.168]。
+  * 按第 5 节规则：**排名由金标标准决定**；宽松下 minimal 更好，严格下 optimized 更好，
+    按使用场景选择。
+  * 费用：轨道 A $4.0340、轨道 B $5.0131、dev $1.7553，合计 $10.8024。
+  * 评分口径后改：主张条数不符记为失败；这是 post-freeze 变更，记录在 v2.7 freeze 的
+    `post_freeze_scoring_change`，test 只重算、未重跑。
+- **S7**：README headline 改为三部分；REPORT 增加两节和失败实例；DATASET/EVALUATION/ITERATIONS
+  同步。S7 先做了一次文档签封：只更新 v2.5/v2.6 freeze 中 README、DATASET、EVALUATION 的哈希，
+  代码/prompt/数据/指标不变；`resign_log.json` 记录授权与新旧哈希。
+- **S7 后修正**：按用户指令把「主张条数不符」记为失败；主结果仍按失败算错，另报真正剔除失败的
+  版本。轨道 A minimal 因此有 32/461（6.94%）失败，超过 5% 停止线；真正剔除后 optimized 与
+  minimal 无差异。README 的轨道 A 结论、5/5 和子集集中说明随之改写；用户明确授权再做 README-only 签封（含一次状态摘要校正），覆盖原「只签封一次」的限制，
+  全部记录在 `resign_log.json`。
+
+### 结果与决定
+
+- **轨道 A 的结论是条件性的**：按“失败算错”optimized 领先（+0.047），但 minimal 的 6.94% 失败率
+  触发停止线；真正剔除失败后差异消失（+0.032 [−0.016, +0.072]）。不能写成干净的“optimized 更好”。
+- **轨道 B 的结论不是“谁更好”，而是“排名取决于金标宽严”**：宽松下 minimal，严格下 optimized。
+  v2.6 的 end-to-end 结果仍成立，但只适用于 RAGTruth 原始标注。
+- README 不再使用“optimized 不值得它的额外成本”这类无限定说法；精度与召回分开列。
+- 不合并两轨道；不改 prompt、模型、verifier 代码或公开金标；不重跑 v2.6。
+
+### 局限
+
+RAGTruth++ 没有发布方声明的许可证，只本地评测、不提交原始或派生数据；严格金标以发布方检测器
+为起点，无同行评审；轨道 A 是抽样、排除 RAGTruth 子集、4000 词上限，且整篇抽样会超出名义目标；
+两轨道都受公开数据污染风险；句子对齐是词面近似；minimal 的分批是已登记的协议偏离。
+
 ## Runbook
 
 ```bash
 # 0. harness sanity, no API key needed
 uv run pytest -q
 
-# 1. dev hill-climb (baseline is deterministic; the rest run 3x)
+# v2.6 current protocol (test was run once; do not rerun without a new sample)
+uv run python -m eval.run_v26 --methods baseline minimal optimized --split test \
+  --runs 1 --concurrency 4 --prompt-version v3 --out results/v2.6-test
+uv run python -m eval.v26 --split test --predictions results/v2.6-test \
+  --methods baseline minimal optimized --out results/v2.6-test/report
+uv run python -m eval.run_v26 --rescore results/v2.6-test
+
+# Historical synthetic hill-climb (baseline is deterministic; the rest run 3x)
 uv run python -m eval.run --methods baseline --split dev --out results/dev-baseline
 uv run python -m eval.run --methods minimal --split dev --runs 3 --out results/dev-minimal-x3
 uv run python -m eval.run --methods optimized --split dev --runs 3 --prompt-version v1 --out results/dev-v1-x3

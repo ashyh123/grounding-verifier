@@ -1,0 +1,3131 @@
+{
+  "design_version": "2.5",
+  "oracle": false,
+  "preregistration": {
+    "subset": "subtle_supplement added; all other subsets unchanged",
+    "sensitivity": "remove claims whose doubt_category is suspected_wrong_label or c_vs_u_boundary",
+    "groups": "by_origin uses the most specific upstream fragment type: subtle > evident > clean",
+    "bootstrap": {
+      "unit": "case",
+      "replicates": 10000,
+      "seed": 20261020,
+      "interval": "percentile 2.5/97.5"
+    }
+  },
+  "errors": 0,
+  "dropped_sensitive_claims": [
+    "ragtruth-12692-c8",
+    "ragtruth-13340-c12",
+    "ragtruth-13340-c5",
+    "ragtruth-1340-c12",
+    "ragtruth-14912-c1",
+    "ragtruth-14912-c5",
+    "ragtruth-1730-c6",
+    "ragtruth-2354-c1",
+    "ragtruth-2468-c4",
+    "ragtruth-2672-c2",
+    "ragtruth-2672-c7",
+    "ragtruth-348-c11",
+    "ragtruth-3980-c2",
+    "ragtruth-4118-c8",
+    "ragtruth-5675-c8",
+    "ragtruth-7051-c9",
+    "ragtruth-7098-c10",
+    "ragtruth-7159-c16",
+    "ragtruth-7952-c6",
+    "ragtruth-7952-c9",
+    "ragtruth-9492-c8"
+  ],
+  "dropped_sensitive_by_label": {
+    "SUPPORTED": 11,
+    "CONTRADICTED": 7,
+    "UNSUPPORTED": 3
+  },
+  "reports": {
+    "all": {
+      "n_cases": 45,
+      "gold_claims": 537,
+      "extra_predictions": 35,
+      "missed_gold": 119,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 328,
+          "CONTRADICTED": 16,
+          "UNSUPPORTED": 30,
+          "MISSED": 109
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 7,
+          "CONTRADICTED": 10,
+          "UNSUPPORTED": 4,
+          "MISSED": 6
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 5,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 17,
+          "MISSED": 4
+        },
+        "EXTRA": {
+          "SUPPORTED": 23,
+          "CONTRADICTED": 6,
+          "UNSUPPORTED": 6,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.35555555555555557,
+          "ci95": [
+            0.2672270114942529,
+            0.4675324675324675
+          ]
+        },
+        "r": {
+          "value": 0.5925925925925926,
+          "ci95": [
+            0.46938775510204084,
+            0.7118708269131997
+          ]
+        },
+        "f1": {
+          "value": 0.4444444444444444,
+          "ci95": [
+            0.3508714969241285,
+            0.543046357615894
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.5045029832263874,
+        "ci95": [
+          0.4335467753835018,
+          0.5773467580150707
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 483,
+          "note": "",
+          "p": {
+            "value": 0.9035812672176309,
+            "ci95": [
+              0.8660968660968661,
+              0.935656836461126
+            ]
+          },
+          "r": {
+            "value": 0.6790890269151139,
+            "ci95": [
+              0.634576616880094,
+              0.7267080745341615
+            ]
+          },
+          "f1": {
+            "value": 0.7754137115839244,
+            "ci95": [
+              0.73989898989899,
+              0.8096398048943177
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 27,
+          "note": "",
+          "p": {
+            "value": 0.30303030303030304,
+            "ci95": [
+              0.16216216216216217,
+              0.4642857142857143
+            ]
+          },
+          "r": {
+            "value": 0.37037037037037035,
+            "ci95": [
+              0.1922619047619048,
+              0.5789473684210527
+            ]
+          },
+          "f1": {
+            "value": 0.3333333333333333,
+            "ci95": [
+              0.18175033921302586,
+              0.4857142857142857
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 27,
+          "note": "",
+          "p": {
+            "value": 0.2982456140350877,
+            "ci95": [
+              0.16362708719851576,
+              0.4643064784053153
+            ]
+          },
+          "r": {
+            "value": 0.6296296296296297,
+            "ci95": [
+              0.42857142857142855,
+              0.8125
+            ]
+          },
+          "f1": {
+            "value": 0.40476190476190477,
+            "ci95": [
+              0.24390243902439024,
+              0.5652283706631531
+            ]
+          }
+        }
+      }
+    },
+    "natural": {
+      "n_cases": 20,
+      "gold_claims": 256,
+      "extra_predictions": 6,
+      "missed_gold": 62,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 155,
+          "CONTRADICTED": 8,
+          "UNSUPPORTED": 14,
+          "MISSED": 58
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 1,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 0,
+          "MISSED": 2
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 4,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 11,
+          "MISSED": 2
+        },
+        "EXTRA": {
+          "SUPPORTED": 5,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 1,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.34285714285714286,
+          "ci95": [
+            0.1701241134751774,
+            0.5517468239564425
+          ]
+        },
+        "r": {
+          "value": 0.5714285714285714,
+          "ci95": [
+            0.30434782608695654,
+            0.8181818181818182
+          ]
+        },
+        "f1": {
+          "value": 0.42857142857142855,
+          "ci95": [
+            0.2222222222222222,
+            0.6222222222222222
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.4801580202742994,
+        "ci95": [
+          0.3677050113290305,
+          0.6189989872286479
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 235,
+          "note": "",
+          "p": {
+            "value": 0.9393939393939394,
+            "ci95": [
+              0.9132947976878613,
+              0.9636363636363636
+            ]
+          },
+          "r": {
+            "value": 0.6595744680851063,
+            "ci95": [
+              0.612,
+              0.7142857142857143
+            ]
+          },
+          "f1": {
+            "value": 0.775,
+            "ci95": [
+              0.7411394806949367,
+              0.8111111111111111
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 4,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.1111111111111111,
+            "ci95": [
+              0.0,
+              0.375
+            ]
+          },
+          "r": {
+            "value": 0.25,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.15384615384615385,
+            "ci95": [
+              0.0,
+              0.5
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 17,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.4230769230769231,
+            "ci95": [
+              0.19230769230769232,
+              0.6875538793103441
+            ]
+          },
+          "r": {
+            "value": 0.6470588235294118,
+            "ci95": [
+              0.375,
+              0.8571428571428571
+            ]
+          },
+          "f1": {
+            "value": 0.5116279069767442,
+            "ci95": [
+              0.2631578947368421,
+              0.72
+            ]
+          }
+        }
+      }
+    },
+    "conflict_supplement": {
+      "n_cases": 15,
+      "gold_claims": 171,
+      "extra_predictions": 11,
+      "missed_gold": 27,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 111,
+          "CONTRADICTED": 6,
+          "UNSUPPORTED": 9,
+          "MISSED": 24
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 4,
+          "CONTRADICTED": 7,
+          "UNSUPPORTED": 3,
+          "MISSED": 3
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 1,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 2,
+          "MISSED": 0
+        },
+        "EXTRA": {
+          "SUPPORTED": 3,
+          "CONTRADICTED": 5,
+          "UNSUPPORTED": 3,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.3611111111111111,
+          "ci95": [
+            0.25,
+            0.52
+          ]
+        },
+        "r": {
+          "value": 0.6190476190476191,
+          "ci95": [
+            0.45454545454545453,
+            0.7727272727272727
+          ]
+        },
+        "f1": {
+          "value": 0.45614035087719296,
+          "ci95": [
+            0.3333333333333333,
+            0.5862068965517241
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.46821462992466706,
+        "ci95": [
+          0.36705060961028857,
+          0.5661310164086533
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 150,
+          "note": "",
+          "p": {
+            "value": 0.9327731092436975,
+            "ci95": [
+              0.8848920863309353,
+              0.9747899159663865
+            ]
+          },
+          "r": {
+            "value": 0.74,
+            "ci95": [
+              0.6307692307692307,
+              0.8333333333333334
+            ]
+          },
+          "f1": {
+            "value": 0.8252788104089219,
+            "ci95": [
+              0.7524728901461575,
+              0.8811215604319053
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 17,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.3684210526315789,
+            "ci95": [
+              0.19047619047619047,
+              0.6
+            ]
+          },
+          "r": {
+            "value": 0.4117647058823529,
+            "ci95": [
+              0.19047619047619047,
+              0.6666666666666666
+            ]
+          },
+          "f1": {
+            "value": 0.3888888888888889,
+            "ci95": [
+              0.1935483870967742,
+              0.5806451612903226
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 4,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.11764705882352941,
+            "ci95": [
+              0.0,
+              0.26324561403508645
+            ]
+          },
+          "r": {
+            "value": 0.5,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.19047619047619047,
+            "ci95": [
+              0.0,
+              0.38461538461538464
+            ]
+          }
+        }
+      }
+    },
+    "subtle_supplement": {
+      "n_cases": 10,
+      "gold_claims": 110,
+      "extra_predictions": 18,
+      "missed_gold": 30,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 62,
+          "CONTRADICTED": 2,
+          "UNSUPPORTED": 7,
+          "MISSED": 27
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 2,
+          "CONTRADICTED": 2,
+          "UNSUPPORTED": 1,
+          "MISSED": 1
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 0,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 4,
+          "MISSED": 2
+        },
+        "EXTRA": {
+          "SUPPORTED": 15,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 2,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.3684210526315789,
+          "ci95": [
+            0.22727272727272727,
+            0.7
+          ]
+        },
+        "r": {
+          "value": 0.5833333333333334,
+          "ci95": [
+            0.4166666666666667,
+            0.7777777777777778
+          ]
+        },
+        "f1": {
+          "value": 0.45161290322580644,
+          "ci95": [
+            0.3157894736842105,
+            0.6428571428571429
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.48806711179592527,
+        "ci95": [
+          0.3810791761567691,
+          0.6464679482476092
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 98,
+          "note": "",
+          "p": {
+            "value": 0.7848101265822784,
+            "ci95": [
+              0.6567164179104478,
+              0.8850664511494252
+            ]
+          },
+          "r": {
+            "value": 0.6326530612244898,
+            "ci95": [
+              0.5425531914893617,
+              0.7070707070707071
+            ]
+          },
+          "f1": {
+            "value": 0.7005649717514124,
+            "ci95": [
+              0.5966802365028594,
+              0.7777777777777778
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 6,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.4,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "r": {
+            "value": 0.3333333333333333,
+            "ci95": [
+              0.0,
+              0.8575892857142792
+            ]
+          },
+          "f1": {
+            "value": 0.36363636363636365,
+            "ci95": [
+              0.0,
+              0.75
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 6,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.2857142857142857,
+            "ci95": [
+              0.06896551724137931,
+              0.75
+            ]
+          },
+          "r": {
+            "value": 0.6666666666666666,
+            "ci95": [
+              0.3333333333333333,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.4,
+            "ci95": [
+              0.11428571428571428,
+              0.7692307692307693
+            ]
+          }
+        }
+      }
+    }
+  },
+  "sensitivity": {
+    "all": {
+      "n_cases": 45,
+      "gold_claims": 516,
+      "extra_predictions": 35,
+      "missed_gold": 114,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 327,
+          "CONTRADICTED": 9,
+          "UNSUPPORTED": 29,
+          "MISSED": 107
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 5,
+          "CONTRADICTED": 8,
+          "UNSUPPORTED": 4,
+          "MISSED": 3
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 2,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 17,
+          "MISSED": 4
+        },
+        "EXTRA": {
+          "SUPPORTED": 23,
+          "CONTRADICTED": 6,
+          "UNSUPPORTED": 6,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.375,
+          "ci95": [
+            0.2777777777777778,
+            0.4927587262706674
+          ]
+        },
+        "r": {
+          "value": 0.6818181818181818,
+          "ci95": [
+            0.545414673046252,
+            0.8125
+          ]
+        },
+        "f1": {
+          "value": 0.4838709677419355,
+          "ci95": [
+            0.3783783783783784,
+            0.592
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.5258462185181124,
+        "ci95": [
+          0.4498276757710625,
+          0.6011948519347787
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 472,
+          "note": "",
+          "p": {
+            "value": 0.9159663865546218,
+            "ci95": [
+              0.8792119980311619,
+              0.9468091839482897
+            ]
+          },
+          "r": {
+            "value": 0.6927966101694916,
+            "ci95": [
+              0.6504671815507096,
+              0.7386614626385445
+            ]
+          },
+          "f1": {
+            "value": 0.7889022919179735,
+            "ci95": [
+              0.7552438446969697,
+              0.8211764705882353
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 20,
+          "note": "",
+          "p": {
+            "value": 0.3333333333333333,
+            "ci95": [
+              0.1724137931034483,
+              0.5
+            ]
+          },
+          "r": {
+            "value": 0.4,
+            "ci95": [
+              0.1875,
+              0.65
+            ]
+          },
+          "f1": {
+            "value": 0.36363636363636365,
+            "ci95": [
+              0.18604651162790697,
+              0.5306122448979592
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 24,
+          "note": "",
+          "p": {
+            "value": 0.30357142857142855,
+            "ci95": [
+              0.16666666666666666,
+              0.470615982241953
+            ]
+          },
+          "r": {
+            "value": 0.7083333333333334,
+            "ci95": [
+              0.5,
+              0.88
+            ]
+          },
+          "f1": {
+            "value": 0.425,
+            "ci95": [
+              0.25806451612903225,
+              0.5882352941176471
+            ]
+          }
+        }
+      }
+    },
+    "natural": {
+      "n_cases": 20,
+      "gold_claims": 247,
+      "extra_predictions": 6,
+      "missed_gold": 60,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 154,
+          "CONTRADICTED": 5,
+          "UNSUPPORTED": 13,
+          "MISSED": 57
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 1,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 0,
+          "MISSED": 1
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 2,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 11,
+          "MISSED": 2
+        },
+        "EXTRA": {
+          "SUPPORTED": 5,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 1,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.3870967741935484,
+          "ci95": [
+            0.19230769230769232,
+            0.6071428571428571
+          ]
+        },
+        "r": {
+          "value": 0.6666666666666666,
+          "ci95": [
+            0.375,
+            0.9047619047619048
+          ]
+        },
+        "f1": {
+          "value": 0.4897959183673469,
+          "ci95": [
+            0.2608695652173913,
+            0.6857142857142857
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.5199820024628209,
+        "ci95": [
+          0.3826956143829876,
+          0.6764070322322963
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 229,
+          "note": "",
+          "p": {
+            "value": 0.9506172839506173,
+            "ci95": [
+              0.924048782293286,
+              0.9748427672955975
+            ]
+          },
+          "r": {
+            "value": 0.6724890829694323,
+            "ci95": [
+              0.6244541484716157,
+              0.7293577981651376
+            ]
+          },
+          "f1": {
+            "value": 0.7877237851662404,
+            "ci95": [
+              0.7546293242450894,
+              0.8238349328780028
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 3,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.16666666666666666,
+            "ci95": [
+              0.0,
+              0.5
+            ]
+          },
+          "r": {
+            "value": 0.3333333333333333,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.2222222222222222,
+            "ci95": [
+              0.0,
+              0.6
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 15,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.44,
+            "ci95": [
+              0.20833333333333334,
+              0.6923076923076923
+            ]
+          },
+          "r": {
+            "value": 0.7333333333333333,
+            "ci95": [
+              0.4444444444444444,
+              0.9411764705882353
+            ]
+          },
+          "f1": {
+            "value": 0.55,
+            "ci95": [
+              0.29250871080139385,
+              0.7547379454926623
+            ]
+          }
+        }
+      }
+    },
+    "conflict_supplement": {
+      "n_cases": 15,
+      "gold_claims": 163,
+      "extra_predictions": 11,
+      "missed_gold": 25,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 111,
+          "CONTRADICTED": 4,
+          "UNSUPPORTED": 9,
+          "MISSED": 23
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 3,
+          "CONTRADICTED": 5,
+          "UNSUPPORTED": 3,
+          "MISSED": 2
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 0,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 2,
+          "MISSED": 0
+        },
+        "EXTRA": {
+          "SUPPORTED": 3,
+          "CONTRADICTED": 5,
+          "UNSUPPORTED": 3,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.34375,
+          "ci95": [
+            0.21428571428571427,
+            0.48484848484848486
+          ]
+        },
+        "r": {
+          "value": 0.6875,
+          "ci95": [
+            0.46153846153846156,
+            0.8888888888888888
+          ]
+        },
+        "f1": {
+          "value": 0.4583333333333333,
+          "ci95": [
+            0.30303030303030304,
+            0.6
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.466017316017316,
+        "ci95": [
+          0.3628326506591337,
+          0.5620972844572849
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 147,
+          "note": "",
+          "p": {
+            "value": 0.9487179487179487,
+            "ci95": [
+              0.9136690647482014,
+              0.9818222768222767
+            ]
+          },
+          "r": {
+            "value": 0.7551020408163265,
+            "ci95": [
+              0.6526908048310159,
+              0.8427672955974843
+            ]
+          },
+          "f1": {
+            "value": 0.8409090909090909,
+            "ci95": [
+              0.7739130434782608,
+              0.8927046051947667
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 13,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.3333333333333333,
+            "ci95": [
+              0.14261904761904784,
+              0.5454545454545454
+            ]
+          },
+          "r": {
+            "value": 0.38461538461538464,
+            "ci95": [
+              0.125,
+              0.7142857142857143
+            ]
+          },
+          "f1": {
+            "value": 0.35714285714285715,
+            "ci95": [
+              0.14285714285714285,
+              0.5517241379310345
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 3,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.11764705882352941,
+            "ci95": [
+              0.0,
+              0.26324561403508645
+            ]
+          },
+          "r": {
+            "value": 0.6666666666666666,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.2,
+            "ci95": [
+              0.0,
+              0.4
+            ]
+          }
+        }
+      }
+    },
+    "subtle_supplement": {
+      "n_cases": 10,
+      "gold_claims": 106,
+      "extra_predictions": 18,
+      "missed_gold": 29,
+      "confusion": {
+        "SUPPORTED": {
+          "SUPPORTED": 62,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 7,
+          "MISSED": 27
+        },
+        "CONTRADICTED": {
+          "SUPPORTED": 1,
+          "CONTRADICTED": 2,
+          "UNSUPPORTED": 1,
+          "MISSED": 0
+        },
+        "UNSUPPORTED": {
+          "SUPPORTED": 0,
+          "CONTRADICTED": 0,
+          "UNSUPPORTED": 4,
+          "MISSED": 2
+        },
+        "EXTRA": {
+          "SUPPORTED": 15,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 2,
+          "MISSED": 0
+        }
+      },
+      "hallucination_detection": {
+        "p": {
+          "value": 0.4117647058823529,
+          "ci95": [
+            0.2413793103448276,
+            0.7272727272727273
+          ]
+        },
+        "r": {
+          "value": 0.7,
+          "ci95": [
+            0.5454545454545454,
+            1.0
+          ]
+        },
+        "f1": {
+          "value": 0.5185185185185185,
+          "ci95": [
+            0.35,
+            0.75
+          ]
+        }
+      },
+      "macro_f1": {
+        "value": 0.5613574165298303,
+        "ci95": [
+          0.4184367807993988,
+          0.7201035798432911
+        ]
+      },
+      "per_label": {
+        "SUPPORTED": {
+          "n": 96,
+          "note": "",
+          "p": {
+            "value": 0.7948717948717948,
+            "ci95": [
+              0.6619718309859155,
+              0.8974358974358975
+            ]
+          },
+          "r": {
+            "value": 0.6458333333333334,
+            "ci95": [
+              0.5670103092783505,
+              0.7153861788617886
+            ]
+          },
+          "f1": {
+            "value": 0.7126436781609196,
+            "ci95": [
+              0.6143790849673203,
+              0.7843137254901961
+            ]
+          }
+        },
+        "CONTRADICTED": {
+          "n": 4,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.6666666666666666,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "r": {
+            "value": 0.5,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.5714285714285714,
+            "ci95": [
+              0.0,
+              1.0
+            ]
+          }
+        },
+        "UNSUPPORTED": {
+          "n": 6,
+          "note": "仅供参考",
+          "p": {
+            "value": 0.2857142857142857,
+            "ci95": [
+              0.06896551724137931,
+              0.75
+            ]
+          },
+          "r": {
+            "value": 0.6666666666666666,
+            "ci95": [
+              0.3333333333333333,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.4,
+            "ci95": [
+              0.11428571428571428,
+              0.7692307692307693
+            ]
+          }
+        }
+      }
+    }
+  },
+  "groups": {
+    "by_origin": {
+      "evident": {
+        "primary": {
+          "n_cases": 21,
+          "gold_claims": 32,
+          "extra_predictions": 14,
+          "missed_gold": 4,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 5,
+              "CONTRADICTED": 8,
+              "UNSUPPORTED": 3,
+              "MISSED": 4
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 3,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 8,
+              "MISSED": 0
+            },
+            "EXTRA": {
+              "SUPPORTED": 8,
+              "CONTRADICTED": 3,
+              "UNSUPPORTED": 3,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.7692307692307693,
+              "ci95": [
+                0.5555555555555556,
+                1.0
+              ]
+            },
+            "r": {
+              "value": 0.625,
+              "ci95": [
+                0.4642857142857143,
+                0.7741935483870968
+              ]
+            },
+            "f1": {
+              "value": 0.6896551724137931,
+              "ci95": [
+                0.5333333333333333,
+                0.8301886792452831
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.3717948717948718,
+            "ci95": [
+              0.24999521072796935,
+              0.483137676366843
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 20,
+              "note": "",
+              "p": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.4444444444444444,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.4,
+                "ci95": [
+                  0.2,
+                  0.631578947368421
+                ]
+              },
+              "f1": {
+                "value": 0.5,
+                "ci95": [
+                  0.29411764705882354,
+                  0.6857142857142857
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 12,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.5714285714285714,
+                "ci95": [
+                  0.2857142857142857,
+                  0.8888888888888888
+                ]
+              },
+              "r": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.3,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6153846153846154,
+                "ci95": [
+                  0.3157894736842105,
+                  0.8333333333333334
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 21,
+          "gold_claims": 26,
+          "extra_predictions": 14,
+          "missed_gold": 2,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 4,
+              "CONTRADICTED": 6,
+              "UNSUPPORTED": 3,
+              "MISSED": 2
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 8,
+              "MISSED": 0
+            },
+            "EXTRA": {
+              "SUPPORTED": 8,
+              "CONTRADICTED": 3,
+              "UNSUPPORTED": 3,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.75,
+              "ci95": [
+                0.5263157894736842,
+                1.0
+              ]
+            },
+            "r": {
+              "value": 0.6923076923076923,
+              "ci95": [
+                0.5,
+                0.8518518518518519
+              ]
+            },
+            "f1": {
+              "value": 0.72,
+              "ci95": [
+                0.5555555555555556,
+                0.8627450980392157
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.37333333333333335,
+            "ci95": [
+              0.24427572194051858,
+              0.4851234243697478
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 15,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.6,
+                "ci95": [
+                  0.375,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.4,
+                "ci95": [
+                  0.15789473684210525,
+                  0.7
+                ]
+              },
+              "f1": {
+                "value": 0.48,
+                "ci95": [
+                  0.23529411764705882,
+                  0.6896551724137931
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 11,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.5714285714285714,
+                "ci95": [
+                  0.2857142857142857,
+                  0.8888888888888888
+                ]
+              },
+              "r": {
+                "value": 0.7272727272727273,
+                "ci95": [
+                  0.375,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.64,
+                "ci95": [
+                  0.3333333333333333,
+                  0.8461538461538461
+                ]
+              }
+            }
+          }
+        }
+      },
+      "subtle": {
+        "primary": {
+          "n_cases": 16,
+          "gold_claims": 22,
+          "extra_predictions": 15,
+          "missed_gold": 6,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 1,
+              "MISSED": 2
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 9,
+              "MISSED": 4
+            },
+            "EXTRA": {
+              "SUPPORTED": 11,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 3,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.75,
+              "ci95": [
+                0.5789473684210527,
+                0.9333333333333333
+              ]
+            },
+            "r": {
+              "value": 0.5454545454545454,
+              "ci95": [
+                0.3888888888888889,
+                0.7
+              ]
+            },
+            "f1": {
+              "value": 0.631578947368421,
+              "ci95": [
+                0.4827586206896552,
+                0.7647058823529411
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.34761904761904766,
+            "ci95": [
+              0.20512820512820515,
+              0.48067632850241554
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 7,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.2857142857142857,
+                "ci95": [
+                  0.0,
+                  0.75
+                ]
+              },
+              "f1": {
+                "value": 0.4,
+                "ci95": [
+                  0.0,
+                  0.8
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 15,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.6923076923076923,
+                "ci95": [
+                  0.42857142857142855,
+                  0.9230769230769231
+                ]
+              },
+              "r": {
+                "value": 0.6,
+                "ci95": [
+                  0.4,
+                  0.8
+                ]
+              },
+              "f1": {
+                "value": 0.6428571428571429,
+                "ci95": [
+                  0.42105263157894735,
+                  0.81085304054054
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 16,
+          "gold_claims": 18,
+          "extra_predictions": 15,
+          "missed_gold": 5,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 1,
+              "MISSED": 1
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 9,
+              "MISSED": 4
+            },
+            "EXTRA": {
+              "SUPPORTED": 11,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 3,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.75,
+              "ci95": [
+                0.5789473684210527,
+                0.9333333333333333
+              ]
+            },
+            "r": {
+              "value": 0.6666666666666666,
+              "ci95": [
+                0.47368421052631576,
+                0.8571428571428571
+              ]
+            },
+            "f1": {
+              "value": 0.7058823529411765,
+              "ci95": [
+                0.5384615384615384,
+                0.8666666666666667
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.3974358974358974,
+            "ci95": [
+              0.22825610221205186,
+              0.5322880286648402
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 5,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.4,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  0.8571428571428571
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 13,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.6923076923076923,
+                "ci95": [
+                  0.42857142857142855,
+                  0.9230769230769231
+                ]
+              },
+              "r": {
+                "value": 0.6923076923076923,
+                "ci95": [
+                  0.45454545454545453,
+                  0.9166666666666666
+                ]
+              },
+              "f1": {
+                "value": 0.6923076923076923,
+                "ci95": [
+                  0.45454545454545453,
+                  0.88
+                ]
+              }
+            }
+          }
+        }
+      },
+      "clean": {
+        "primary": {
+          "n_cases": 45,
+          "gold_claims": 483,
+          "extra_predictions": 35,
+          "missed_gold": 109,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 328,
+              "CONTRADICTED": 16,
+              "UNSUPPORTED": 30,
+              "MISSED": 109
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "EXTRA": {
+              "SUPPORTED": 23,
+              "CONTRADICTED": 6,
+              "UNSUPPORTED": 6,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "r": {
+              "value": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "f1": {
+              "value": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.2621902478017586,
+            "ci95": [
+              0.25,
+              0.27385274303584467
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 483,
+              "note": "",
+              "p": {
+                "value": 0.9344729344729344,
+                "ci95": [
+                  0.8958333333333334,
+                  0.966967710284542
+                ]
+              },
+              "r": {
+                "value": 0.6790890269151139,
+                "ci95": [
+                  0.634576616880094,
+                  0.7267080745341615
+                ]
+              },
+              "f1": {
+                "value": 0.7865707434052758,
+                "ci95": [
+                  0.75,
+                  0.8215582291075341
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 45,
+          "gold_claims": 472,
+          "extra_predictions": 35,
+          "missed_gold": 107,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 327,
+              "CONTRADICTED": 9,
+              "UNSUPPORTED": 29,
+              "MISSED": 107
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "EXTRA": {
+              "SUPPORTED": 23,
+              "CONTRADICTED": 6,
+              "UNSUPPORTED": 6,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "r": {
+              "value": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            },
+            "f1": {
+              "value": 0.0,
+              "ci95": [
+                0.0,
+                0.0
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.26520681265206814,
+            "ci95": [
+              0.25366618864686646,
+              0.27629651941097727
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 472,
+              "note": "",
+              "p": {
+                "value": 0.9342857142857143,
+                "ci95": [
+                  0.89542383107089,
+                  0.9668512447580376
+                ]
+              },
+              "r": {
+                "value": 0.6927966101694916,
+                "ci95": [
+                  0.6504671815507096,
+                  0.7386614626385445
+                ]
+              },
+              "f1": {
+                "value": 0.7956204379562044,
+                "ci95": [
+                  0.7609985659405992,
+                  0.8288895582329318
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "by_generator_model": {
+      "gpt-3.5-turbo-0613": {
+        "primary": {
+          "n_cases": 11,
+          "gold_claims": 159,
+          "extra_predictions": 5,
+          "missed_gold": 39,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 102,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 10,
+              "MISSED": 36
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 2
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 3,
+              "MISSED": 1
+            },
+            "EXTRA": {
+              "SUPPORTED": 5,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.2,
+              "ci95": [
+                0.0,
+                0.4
+              ]
+            },
+            "r": {
+              "value": 0.3333333333333333,
+              "ci95": [
+                0.0,
+                0.75
+              ]
+            },
+            "f1": {
+              "value": 0.25,
+              "ci95": [
+                0.0,
+                0.4444444444444444
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.3668016194331984,
+            "ci95": [
+              0.2679655073708315,
+              0.4341642203063357
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 150,
+              "note": "",
+              "p": {
+                "value": 0.9272727272727272,
+                "ci95": [
+                  0.8571428571428571,
+                  0.9714285714285714
+                ]
+              },
+              "r": {
+                "value": 0.68,
+                "ci95": [
+                  0.6338007697346872,
+                  0.7463955522238878
+                ]
+              },
+              "f1": {
+                "value": 0.7846153846153846,
+                "ci95": [
+                  0.7426470588235294,
+                  0.831858407079646
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 3,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 6,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.23076923076923078,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              },
+              "r": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.3157894736842105,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 11,
+          "gold_claims": 157,
+          "extra_predictions": 5,
+          "missed_gold": 37,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 102,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 10,
+              "MISSED": 35
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 1
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 3,
+              "MISSED": 1
+            },
+            "EXTRA": {
+              "SUPPORTED": 5,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.2,
+              "ci95": [
+                0.0,
+                0.4
+              ]
+            },
+            "r": {
+              "value": 0.375,
+              "ci95": [
+                0.0,
+                0.75
+              ]
+            },
+            "f1": {
+              "value": 0.2608695652173913,
+              "ci95": [
+                0.0,
+                0.45161290322580644
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.36781142044299936,
+            "ci95": [
+              0.2685162266226623,
+              0.43470881288750707
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 149,
+              "note": "",
+              "p": {
+                "value": 0.9272727272727272,
+                "ci95": [
+                  0.8571428571428571,
+                  0.9714285714285714
+                ]
+              },
+              "r": {
+                "value": 0.6845637583892618,
+                "ci95": [
+                  0.6424581005586593,
+                  0.7477477477477478
+                ]
+              },
+              "f1": {
+                "value": 0.7876447876447876,
+                "ci95": [
+                  0.7463762834326277,
+                  0.8333333333333334
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 2,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 6,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.23076923076923078,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              },
+              "r": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.3157894736842105,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              }
+            }
+          }
+        }
+      },
+      "gpt-4-0613": {
+        "primary": {
+          "n_cases": 9,
+          "gold_claims": 117,
+          "extra_predictions": 5,
+          "missed_gold": 31,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 79,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 0,
+              "MISSED": 31
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 3,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "EXTRA": {
+              "SUPPORTED": 5,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.3333333333333333,
+              "ci95": [
+                0.0,
+                1.0
+              ]
+            },
+            "r": {
+              "value": 0.2,
+              "ci95": [
+                0.0,
+                0.6666666666666666
+              ]
+            },
+            "f1": {
+              "value": 0.25,
+              "ci95": [
+                0.0,
+                0.6666666666666666
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.35857142857142854,
+            "ci95": [
+              0.24646464646464647,
+              0.51345227980742
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 112,
+              "note": "",
+              "p": {
+                "value": 0.8977272727272727,
+                "ci95": [
+                  0.8461538461538461,
+                  0.9397590361445783
+                ]
+              },
+              "r": {
+                "value": 0.7053571428571429,
+                "ci95": [
+                  0.6271152811407049,
+                  0.7926829268292683
+                ]
+              },
+              "f1": {
+                "value": 0.79,
+                "ci95": [
+                  0.7291666666666666,
+                  0.8502024291497976
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 4,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.25,
+                "ci95": [
+                  0.0,
+                  0.8
+                ]
+              },
+              "f1": {
+                "value": 0.2857142857142857,
+                "ci95": [
+                  0.0,
+                  0.75
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 1,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 9,
+          "gold_claims": 114,
+          "extra_predictions": 5,
+          "missed_gold": 31,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 79,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 0,
+              "MISSED": 31
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            },
+            "EXTRA": {
+              "SUPPORTED": 5,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 0,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.5,
+              "ci95": [
+                0.0,
+                1.0
+              ]
+            },
+            "r": {
+              "value": 0.3333333333333333,
+              "ci95": [
+                0.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.4,
+              "ci95": [
+                0.0,
+                0.8571428571428571
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.4006768189509306,
+            "ci95": [
+              0.2519201228878648,
+              0.5552239811187049
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 111,
+              "note": "",
+              "p": {
+                "value": 0.9186046511627907,
+                "ci95": [
+                  0.8666666666666667,
+                  0.96
+                ]
+              },
+              "r": {
+                "value": 0.7117117117117117,
+                "ci95": [
+                  0.6290322580645161,
+                  0.8055555555555556
+                ]
+              },
+              "f1": {
+                "value": 0.8020304568527918,
+                "ci95": [
+                  0.743455497382199,
+                  0.8585871807075995
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 3,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.4,
+                "ci95": [
+                  0.0,
+                  0.8571428571428571
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 0,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "r": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              }
+            }
+          }
+        }
+      },
+      "llama-2-70b-chat": {
+        "primary": {
+          "n_cases": 10,
+          "gold_claims": 111,
+          "extra_predictions": 17,
+          "missed_gold": 22,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 65,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 9,
+              "MISSED": 19
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 4,
+              "UNSUPPORTED": 1,
+              "MISSED": 1
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 7,
+              "MISSED": 2
+            },
+            "EXTRA": {
+              "SUPPORTED": 9,
+              "CONTRADICTED": 4,
+              "UNSUPPORTED": 4,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.4,
+              "ci95": [
+                0.24242424242424243,
+                0.6538461538461539
+              ]
+            },
+            "r": {
+              "value": 0.7058823529411765,
+              "ci95": [
+                0.5294117647058824,
+                0.8823529411764706
+              ]
+            },
+            "f1": {
+              "value": 0.5106382978723404,
+              "ci95": [
+                0.3389830508474576,
+                0.7200555555555547
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.5673202614379086,
+            "ci95": [
+              0.46910367630319805,
+              0.6695549461189044
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 94,
+              "note": "",
+              "p": {
+                "value": 0.8552631578947368,
+                "ci95": [
+                  0.75,
+                  0.9425287356321839
+                ]
+              },
+              "r": {
+                "value": 0.6914893617021277,
+                "ci95": [
+                  0.5368356867779204,
+                  0.8295454545454546
+                ]
+              },
+              "f1": {
+                "value": 0.7647058823529411,
+                "ci95": [
+                  0.6419707020453289,
+                  0.8539325842696629
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 8,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.4444444444444444,
+                "ci95": [
+                  0.16666666666666666,
+                  0.8
+                ]
+              },
+              "r": {
+                "value": 0.5,
+                "ci95": [
+                  0.18181818181818182,
+                  0.8333333333333334
+                ]
+              },
+              "f1": {
+                "value": 0.47058823529411764,
+                "ci95": [
+                  0.18181818181818182,
+                  0.7272727272727273
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 9,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.1,
+                  0.6923076923076923
+                ]
+              },
+              "r": {
+                "value": 0.7777777777777778,
+                "ci95": [
+                  0.4444444444444444,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.4666666666666667,
+                "ci95": [
+                  0.16666666666666666,
+                  0.7742831541218624
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 10,
+          "gold_claims": 110,
+          "extra_predictions": 17,
+          "missed_gold": 22,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 65,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 9,
+              "MISSED": 19
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 4,
+              "UNSUPPORTED": 1,
+              "MISSED": 1
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 0,
+              "UNSUPPORTED": 7,
+              "MISSED": 2
+            },
+            "EXTRA": {
+              "SUPPORTED": 9,
+              "CONTRADICTED": 4,
+              "UNSUPPORTED": 4,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.4,
+              "ci95": [
+                0.24242424242424243,
+                0.6538461538461539
+              ]
+            },
+            "r": {
+              "value": 0.75,
+              "ci95": [
+                0.5625,
+                0.9333333333333333
+              ]
+            },
+            "f1": {
+              "value": 0.5217391304347826,
+              "ci95": [
+                0.34615384615384615,
+                0.7317073170731707
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.5786324786324787,
+            "ci95": [
+              0.4769826868919611,
+              0.6805890425714461
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 94,
+              "note": "",
+              "p": {
+                "value": 0.8666666666666667,
+                "ci95": [
+                  0.7611940298507462,
+                  0.9466666666666667
+                ]
+              },
+              "r": {
+                "value": 0.6914893617021277,
+                "ci95": [
+                  0.5368356867779204,
+                  0.8295454545454546
+                ]
+              },
+              "f1": {
+                "value": 0.7692307692307693,
+                "ci95": [
+                  0.6428571428571429,
+                  0.8612457653756156
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 7,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.4444444444444444,
+                "ci95": [
+                  0.16666666666666666,
+                  0.8
+                ]
+              },
+              "r": {
+                "value": 0.5714285714285714,
+                "ci95": [
+                  0.25,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.5,
+                "ci95": [
+                  0.2,
+                  0.75
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 9,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.1,
+                  0.6923076923076923
+                ]
+              },
+              "r": {
+                "value": 0.7777777777777778,
+                "ci95": [
+                  0.4444444444444444,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.4666666666666667,
+                "ci95": [
+                  0.16666666666666666,
+                  0.7742831541218624
+                ]
+              }
+            }
+          }
+        }
+      },
+      "mistral-7B-instruct": {
+        "primary": {
+          "n_cases": 15,
+          "gold_claims": 150,
+          "extra_predictions": 8,
+          "missed_gold": 27,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 82,
+              "CONTRADICTED": 11,
+              "UNSUPPORTED": 11,
+              "MISSED": 23
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 5,
+              "UNSUPPORTED": 3,
+              "MISSED": 3
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 2,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 7,
+              "MISSED": 1
+            },
+            "EXTRA": {
+              "SUPPORTED": 4,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 2,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.38095238095238093,
+              "ci95": [
+                0.2619047619047619,
+                0.5517241379310345
+              ]
+            },
+            "r": {
+              "value": 0.6956521739130435,
+              "ci95": [
+                0.5789473684210527,
+                0.8181818181818182
+              ]
+            },
+            "f1": {
+              "value": 0.49230769230769234,
+              "ci95": [
+                0.36923076923076925,
+                0.6274509803921569
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.49786820343430077,
+            "ci95": [
+              0.37986969237502016,
+              0.6295776352308375
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 127,
+              "note": "",
+              "p": {
+                "value": 0.9213483146067416,
+                "ci95": [
+                  0.8387096774193549,
+                  0.9789473684210527
+                ]
+              },
+              "r": {
+                "value": 0.6456692913385826,
+                "ci95": [
+                  0.552,
+                  0.7424242424242424
+                ]
+              },
+              "f1": {
+                "value": 0.7592592592592593,
+                "ci95": [
+                  0.6764670360897983,
+                  0.8346472961540964
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 12,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.2631578947368421,
+                "ci95": [
+                  0.09523809523809523,
+                  0.5
+                ]
+              },
+              "r": {
+                "value": 0.4166666666666667,
+                "ci95": [
+                  0.15,
+                  0.8333333333333334
+                ]
+              },
+              "f1": {
+                "value": 0.3225806451612903,
+                "ci95": [
+                  0.12121212121212122,
+                  0.5454545454545454
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 11,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.30434782608695654,
+                "ci95": [
+                  0.09673579109062984,
+                  0.5789473684210527
+                ]
+              },
+              "r": {
+                "value": 0.6363636363636364,
+                "ci95": [
+                  0.2857142857142857,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.4117647058823529,
+                "ci95": [
+                  0.15384615384615385,
+                  0.6666666666666666
+                ]
+              }
+            }
+          }
+        },
+        "sensitivity": {
+          "n_cases": 15,
+          "gold_claims": 135,
+          "extra_predictions": 8,
+          "missed_gold": 24,
+          "confusion": {
+            "SUPPORTED": {
+              "SUPPORTED": 81,
+              "CONTRADICTED": 5,
+              "UNSUPPORTED": 10,
+              "MISSED": 22
+            },
+            "CONTRADICTED": {
+              "SUPPORTED": 1,
+              "CONTRADICTED": 3,
+              "UNSUPPORTED": 3,
+              "MISSED": 1
+            },
+            "UNSUPPORTED": {
+              "SUPPORTED": 0,
+              "CONTRADICTED": 1,
+              "UNSUPPORTED": 7,
+              "MISSED": 1
+            },
+            "EXTRA": {
+              "SUPPORTED": 4,
+              "CONTRADICTED": 2,
+              "UNSUPPORTED": 2,
+              "MISSED": 0
+            }
+          },
+          "hallucination_detection": {
+            "p": {
+              "value": 0.42424242424242425,
+              "ci95": [
+                0.2777777777777778,
+                0.5862068965517241
+              ]
+            },
+            "r": {
+              "value": 0.8235294117647058,
+              "ci95": [
+                0.6666666666666666,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.56,
+              "ci95": [
+                0.39215686274509803,
+                0.7111111111111111
+              ]
+            }
+          },
+          "macro_f1": {
+            "value": 0.5205066746562802,
+            "ci95": [
+              0.38482295850553383,
+              0.6628905716953931
+            ]
+          },
+          "per_label": {
+            "SUPPORTED": {
+              "n": 118,
+              "note": "",
+              "p": {
+                "value": 0.9418604651162791,
+                "ci95": [
+                  0.8571428571428571,
+                  1.0
+                ]
+              },
+              "r": {
+                "value": 0.6864406779661016,
+                "ci95": [
+                  0.6,
+                  0.7711864406779662
+                ]
+              },
+              "f1": {
+                "value": 0.7941176470588235,
+                "ci95": [
+                  0.7191011235955056,
+                  0.8583333333333333
+                ]
+              }
+            },
+            "CONTRADICTED": {
+              "n": 8,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.2727272727272727,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              },
+              "r": {
+                "value": 0.375,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.3157894736842105,
+                "ci95": [
+                  0.0,
+                  0.5714285714285714
+                ]
+              }
+            },
+            "UNSUPPORTED": {
+              "n": 9,
+              "note": "仅供参考",
+              "p": {
+                "value": 0.3181818181818182,
+                "ci95": [
+                  0.10526315789473684,
+                  0.5833333333333334
+                ]
+              },
+              "r": {
+                "value": 0.7777777777777778,
+                "ci95": [
+                  0.4,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.45161290322580644,
+                "ci95": [
+                  0.16666666666666666,
+                  0.7058823529411765
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "split": "test",
+  "dataset_sha256": "e80a0eceda7b42c04207ca0eea3298adcc16d035255e6700bdb757f8cd976da2",
+  "predictions_sha256": "fde50e45e486e268620f124b9dbea48fa021e83d82d593632980a8d3b7523b3e",
+  "doubt_classes_sha256": "0bfda62d65b893de879aeee6950ac2fbb317d355d55105a39270a90590bd1951",
+  "doubt_classes": 137
+}

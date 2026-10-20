@@ -1,0 +1,232 @@
+{
+  "preregistered": false,
+  "note": "post-hoc analyses added after the v2.5 test results were seen",
+  "bootstrap": {
+    "unit": "case",
+    "replicates": 10000,
+    "seed": 20261020,
+    "interval": "percentile 2.5/97.5",
+    "counts": "per-case confusion counts summed over all rounds of a method"
+  },
+  "n_cases": 45,
+  "paired_difference_minimal_minus_optimized": {
+    "preregistered": false,
+    "rounds": {
+      "minimal": 3,
+      "optimized": 3
+    },
+    "hallucination_f1": {
+      "a": 0.4549763033175355,
+      "b": 0.4343257443082312,
+      "diff": 0.020650559009304348,
+      "ci95": [
+        -0.04044947047878243,
+        0.07813166677063192
+      ],
+      "excludes_zero": false
+    },
+    "macro_f1": {
+      "a": 0.516478082724238,
+      "b": 0.5050048177336016,
+      "diff": 0.01147326499063639,
+      "ci95": [
+        -0.049311965598208246,
+        0.07513197453892748
+      ],
+      "excludes_zero": false
+    }
+  },
+  "claim_coverage": {
+    "preregistered": false,
+    "per_method": {
+      "baseline": [
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 263,
+            "missed": 220,
+            "coverage": 0.5445134575569358
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 17,
+            "missed": 10,
+            "coverage": 0.6296296296296297
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 15,
+            "missed": 12,
+            "coverage": 0.5555555555555556
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 295,
+            "missed": 242,
+            "coverage": 0.5493482309124768
+          }
+        }
+      ],
+      "minimal": [
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 374,
+            "missed": 109,
+            "coverage": 0.7743271221532091
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 21,
+            "missed": 6,
+            "coverage": 0.7777777777777778
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 23,
+            "missed": 4,
+            "coverage": 0.8518518518518519
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 418,
+            "missed": 119,
+            "coverage": 0.7783985102420856
+          }
+        },
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 365,
+            "missed": 118,
+            "coverage": 0.7556935817805382
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 20,
+            "missed": 7,
+            "coverage": 0.7407407407407407
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 22,
+            "missed": 5,
+            "coverage": 0.8148148148148148
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 407,
+            "missed": 130,
+            "coverage": 0.7579143389199255
+          }
+        },
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 376,
+            "missed": 107,
+            "coverage": 0.7784679089026915
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 21,
+            "missed": 6,
+            "coverage": 0.7777777777777778
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 22,
+            "missed": 5,
+            "coverage": 0.8148148148148148
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 419,
+            "missed": 118,
+            "coverage": 0.7802607076350093
+          }
+        }
+      ],
+      "optimized": [
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 430,
+            "missed": 53,
+            "coverage": 0.8902691511387164
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 25,
+            "missed": 2,
+            "coverage": 0.9259259259259259
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 26,
+            "missed": 1,
+            "coverage": 0.9629629629629629
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 481,
+            "missed": 56,
+            "coverage": 0.8957169459962756
+          }
+        },
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 428,
+            "missed": 55,
+            "coverage": 0.8861283643892339
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 25,
+            "missed": 2,
+            "coverage": 0.9259259259259259
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 26,
+            "missed": 1,
+            "coverage": 0.9629629629629629
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 479,
+            "missed": 58,
+            "coverage": 0.8919925512104283
+          }
+        },
+        {
+          "SUPPORTED": {
+            "gold": 483,
+            "aligned": 431,
+            "missed": 52,
+            "coverage": 0.8923395445134575
+          },
+          "CONTRADICTED": {
+            "gold": 27,
+            "aligned": 26,
+            "missed": 1,
+            "coverage": 0.9629629629629629
+          },
+          "UNSUPPORTED": {
+            "gold": 27,
+            "aligned": 26,
+            "missed": 1,
+            "coverage": 0.9629629629629629
+          },
+          "all": {
+            "gold": 537,
+            "aligned": 483,
+            "missed": 54,
+            "coverage": 0.8994413407821229
+          }
+        }
+      ]
+    }
+  }
+}

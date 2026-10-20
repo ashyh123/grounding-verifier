@@ -1,0 +1,4 @@
+baseline_oracle_run0: claim_acc=0.337 macro_f1=0.237 answer_f1=0.872 errors=0
+minimal_oracle_run0: claim_acc=0.855 macro_f1=0.584 answer_f1=0.870 errors=0
+optimized_oracle_run0: claim_acc=0.812 macro_f1=0.572 answer_f1=0.892 errors=0
+wrote results/v2.5-test/oracle-r1

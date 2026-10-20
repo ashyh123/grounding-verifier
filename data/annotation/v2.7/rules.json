@@ -1,0 +1,219 @@
+{
+  "version": "2.7",
+  "status": "s4_complete_pending_freeze_confirmation",
+  "date": "2026-10-20",
+  "design": "Notion evaluation design v2.7",
+  "decisions": {
+    "freeze_and_readme": {
+      "authorized": true,
+      "source": "v2.7 section 10.1",
+      "rule": "commit 8981478 re-sealed the v2.5 freeze without a recorded authorization and is recorded as a deviation; S7 may re-seal README.md, docs/DATASET.md and docs/EVALUATION.md exactly once, changing no code, prompt, data or metric hashes, with one entry in data/annotation/v2.7/resign_log.json"
+    },
+    "budget": {
+      "authorized": true,
+      "source": "v2.7 section 10.2",
+      "cap_usd": 16.0,
+      "track_a": "10 subsets x 100 claims; dev 100 claims",
+      "track_b": "200 new answers by seed order plus all v2.6-test overlaps; track B is not reduced",
+      "fallback": "if S4 estimate exceeds $16, reduce track A to 80 claims per subset; if still over, stop and report"
+    },
+    "ragtruthpp_license": {
+      "authorized": true,
+      "source": "v2.7 section 10.3",
+      "local_evaluation_only": true,
+      "no_training_or_tuning": true,
+      "raw_csv_not_committed_or_redistributed": true,
+      "attribution": "cite the publisher blog and dataset card; state that no license was declared",
+      "withdraw_if_restricted": true
+    },
+    "conclusion_rules_final": true
+  },
+  "conclusion_rules": {
+    "single_comparison": "write 'X is better than Y' only if the paired 95% interval excludes 0; otherwise write 'no evidence of a difference' and give the interval",
+    "track_b": {
+      "metric": "sentence-level F1 difference, optimized minus minimal",
+      "loose_win_strict_win": "minimal is better and robust to annotation strictness",
+      "loose_win_strict_none": "the ranking depends on the annotation standard; under the stricter standard there is no significant difference",
+      "loose_win_strict_loss": "the ranking is decided by the annotation standard: minimal is better under the loose standard and optimized under the strict standard; choose by use case",
+      "loose_none": "report both results; no overall ranking"
+    },
+    "track_a": "independent conclusion: with claims given, which method verifies more accurately; do not combine with track B",
+    "readme": "apply the fixed wording table; always report precision and recall separately; never use unqualified 'not worth it' or 'better method'",
+    "multiplicity": "no correction, but state the number of comparisons in the report"
+  },
+  "track_b": {
+    "status": "registered",
+    "dataset": "blue-guardrails/ragtruth-plus-plus",
+    "revision": "afaec19e64122b4a58718dc31bcd555c97460233",
+    "raw_manifest": "data/annotation/v2.7/sources.json",
+    "license": "not stated by the publisher; local evaluation only",
+    "match": "exact answer text against RAGTruth response.jsonl; source_id, task, model and context recovered; stop on any mismatch",
+    "exclude_sources": "all source_ids used by data/eval_hard.jsonl, data/eval_hard.v2.4.jsonl and data/eval_hard.v2.5.jsonl",
+    "reuse": "response ids present in the v2.6 test split reuse the v2.6 predictions; all are included and do not consume the 200 new-answer budget",
+    "seed": 20261024,
+    "rank": "random.Random(f'{seed}:response:{response_id}').random(), tie-break by response_id",
+    "sample": "first 200 non-overlap answers by rank, plus all v2.6-test overlaps",
+    "gold": {
+      "loose": "RAGTruth original human spans",
+      "strict": "RAGTruth++ human spans",
+      "sentence_splitter": "annotation/v26/sentences.py, v2.6-sentences-1",
+      "sentence_gold": "a sentence is hallucinated iff it overlaps a span in that standard",
+      "both_stored": true
+    },
+    "metrics": {
+      "sentence": "precision, recall, F1 under loose and strict gold; case bootstrap 10000, seed 20261024",
+      "answer": "balanced accuracy under loose and strict gold (strict prevalence about 75%)",
+      "paired": "optimized minus minimal on the same answers; sentence F1 and answer balanced accuracy",
+      "failures": "all claims of a failed answer count wrong; excluding_failures reported separately",
+      "no_threshold_tuning": true,
+      "sentence_threshold": 60
+    },
+    "no_dev": true,
+    "runs": "one run per method per track"
+  },
+  "track_a": {
+    "status": "s4_complete_pending_freeze_confirmation",
+    "dataset": "lytang/LLM-AggreFact",
+    "revision": "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4",
+    "license": "CC-BY-ND-4.0",
+    "access": "gated; the user accepted the terms and the local HF token is present; parquet downloaded, raw and derived data stay local",
+    "subsets": "10 LLM-AggreFact subsets after excluding its RAGTruth subset",
+    "seed": 20261024,
+    "sample": "whole documents by seeded rank until the target claim count is reached; one document may overshoot the target",
+    "doc_length_cap": "pending S2 length statistics",
+    "input": "paragraph-preferred packing to about 150 words; long blocks are split into sentences; passages are verbatim substrings with offsets; punctuation-only blocks are dropped; max 50 passages, 20,000 chars each",
+    "mode": "oracle: claims are given, no decomposition",
+    "label_map": {
+      "1": "SUPPORTED",
+      "0": "CONTRADICTED or UNSUPPORTED"
+    },
+    "metrics": "balanced accuracy per subset and macro average; document bootstrap 10000, seed 20261024; paired optimized minus minimal; failures count wrong",
+    "budget": "pending S4",
+    "leaderboard": "recompute the same 10-subset average from the public leaderboard; state sample/prompt/subset differences",
+    "subsets_listed": [
+      "AggreFact-CNN",
+      "AggreFact-XSum",
+      "ClaimVerify",
+      "ExpertQA",
+      "FactCheck-GPT",
+      "Lfqa",
+      "Reveal",
+      "TofuEval-MediaS",
+      "TofuEval-MeetB",
+      "Wice"
+    ],
+    "doc_length_cap_words": 4000,
+    "dev_target_claims_per_subset": 10,
+    "test_target_claims_per_subset": 80,
+    "actual_selected": {
+      "test": {
+        "docs": 461,
+        "claims": 854,
+        "positives": 512
+      },
+      "dev": {
+        "docs": 58,
+        "claims": 196,
+        "positives": 108
+      }
+    },
+    "overshoot_note": "whole-document sampling exceeds the nominal 80/10 targets: Lfqa 87, TofuEval-MediaS 104, TofuEval-MeetB 103 on test; Lfqa 25, TofuEval-MediaS 61, TofuEval-MeetB 38 on dev",
+    "excluded_over_cap": {
+      "test": {
+        "ClaimVerify": {
+          "docs": 49,
+          "claims": 81
+        },
+        "ExpertQA": {
+          "docs": 67,
+          "claims": 71
+        },
+        "Wice": {
+          "docs": 18,
+          "claims": 18
+        }
+      },
+      "dev": {
+        "ClaimVerify": {
+          "docs": 42,
+          "claims": 74
+        },
+        "ExpertQA": {
+          "docs": 73,
+          "claims": 80
+        },
+        "Wice": {
+          "docs": 18,
+          "claims": 18
+        }
+      }
+    },
+    "fallback": "applied: S2 confirmed the 80-claims-per-subset test target after the 100 target estimated $16.90; dev and track B are not reduced",
+    "budget_estimate_usd": 3.92,
+    "budget_note": "854 test + 196 dev claims at $0.0074 per claim from v2.5 oracle prices x2 for longer documents",
+    "oracle_batching": {
+      "approved": true,
+      "reason": "minimal sends all claims in one call; a 61-claim TofuEval document produced a 16k-character truncated JSON at max_tokens=4096 in S4",
+      "claims_per_call": 20,
+      "methods": [
+        "minimal"
+      ],
+      "implementation": "eval/run_v27.py only; prompt, model, verifier code and gold are unchanged",
+      "merge": "claims concatenated in input order; meta tokens/calls summed; any failed batch fails the document",
+      "deviation": "this changes the call count and cost of minimal oracle mode; it is recorded as a protocol deviation"
+    }
+  },
+  "budget": {
+    "cap_usd": 16.0,
+    "track_b_estimate_usd": 7.84,
+    "track_a_estimate_usd": 3.92,
+    "basis": "v2.6 test actual unit prices; track A oracle prices from v2.5 with a 2x long-document factor",
+    "total_estimate_usd": 13.52,
+    "cap_note": "two dev runs $1.7553 + projected track A test $3.92 + track B $7.84 = $13.52, within $16"
+  },
+  "notes": [
+    "no prompt, verifier code, model or public gold change",
+    "no v2.6 rerun",
+    "track A data is gated and local-only; raw parquet and derived JSONL are not committed",
+    "the v2.6 post-hoc sentence threshold 70 is not used in v2.7; threshold 60 is inherited",
+    "S2 sample and budget are confirmed; S4 will measure the dev cost before freeze"
+  ],
+  "s4": {
+    "status": "batched_rerun_complete_no_stop_condition",
+    "dev_docs": 58,
+    "dev_claims": 196,
+    "first_run": "minimal had one truncation (61-claim TofuEval-MediaS document, max_tokens=4096)",
+    "batched_run": {
+      "failures": {
+        "baseline": 0,
+        "minimal": 0,
+        "optimized": 0
+      },
+      "macro_bacc": {
+        "baseline": 0.5895,
+        "minimal": 0.7972,
+        "optimized": 0.8113
+      },
+      "paired_optimized_minus_minimal": {
+        "value": 0.014,
+        "ci95": [
+          -0.032,
+          0.053
+        ],
+        "excludes_zero": false
+      },
+      "cost_usd": {
+        "baseline": 0.0,
+        "minimal": 0.2269,
+        "optimized": 0.673,
+        "total": 0.8999,
+        "first_unbatched_run": 0.8554,
+        "both_dev_runs": 1.7553
+      }
+    },
+    "projected_test_cost_usd": 3.92,
+    "projected_total_including_dev_and_track_b_usd": 13.52,
+    "blocker": null,
+    "note": "oracle batching for minimal is now part of the run plan and must be recorded in the freeze"
+  }
+}

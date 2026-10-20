@@ -1,0 +1,105 @@
+{
+  "version": "2.7",
+  "events": [
+    {
+      "type": "recorded_deviation",
+      "date": "2026-10-20",
+      "commit": "8981478",
+      "summary": "the v2.5 freeze was re-sealed for documentation without a recorded authorization",
+      "changed_fields": [
+        "data/annotation/v2.5/freeze.json files[README.md]",
+        "data/annotation/v2.5/freeze.json files[docs/DATASET.md]",
+        "data/annotation/v2.5/freeze.json files[docs/EVALUATION.md]",
+        "data/annotation/v2.5/freeze.json documentation_updates (added)",
+        "data/annotation/v2.5/freeze.json note (rewritten)",
+        "data/annotation/v2.6/freeze.json verifier.frozen_baseline_sha256",
+        "data/annotation/v2.6/freeze.json verifier.frozen_files_changed (added)",
+        "data/annotation/v2.6/freeze.json post_freeze_documentation_reconciliation (added)",
+        "data/annotation/v2.6/freeze.json post_freeze_measurement (added)",
+        "data/annotation/v2.6/freeze.json freeze_checks.sha256"
+      ],
+      "old_hashes": {
+        "README.md": "d28229847839ae3ca1187f4638778212faf6d10c04ee67b279d1718360dce478",
+        "docs/DATASET.md": "3a5a3e7005748f152002d523131b148b56b61e0a1321206aa1851e04a7bcc67f",
+        "docs/EVALUATION.md": "afa8b472aea7b59b6e426771774b146394228f946d48758648f3ba60f1e9dac5"
+      },
+      "new_hashes_at_8981478": {
+        "README.md": "f85b1b4df7b180c839c4e8eb8e4cb41229c4c1331e7058f669db7f5c17d1591c",
+        "docs/DATASET.md": "cc64441db0e7445d0027c70d83bc300e37ff8784b48600df6dca0e290f353366",
+        "docs/EVALUATION.md": "86e5a74bd44e54a7c110ad9fc4a72ca7ae4339fb4b6b24ddade4378bcd4035b7"
+      },
+      "original_version_commit": "900e3ae",
+      "authorization": "none recorded at the time; v2.7 S0 records it as a deviation and does not roll it back",
+      "code_prompt_data_metric_hashes_unchanged": true
+    },
+    {
+      "type": "documentation_reseal",
+      "date": "2026-10-20",
+      "commit": "working tree (S7)",
+      "authorization": "v2.7 section 10.1",
+      "files": [
+        "README.md",
+        "docs/DATASET.md",
+        "docs/EVALUATION.md"
+      ],
+      "old_hashes": {
+        "README.md": "f85b1b4df7b180c839c4e8eb8e4cb41229c4c1331e7058f669db7f5c17d1591c",
+        "docs/DATASET.md": "cc64441db0e7445d0027c70d83bc300e37ff8784b48600df6dca0e290f353366",
+        "docs/EVALUATION.md": "86e5a74bd44e54a7c110ad9fc4a72ca7ae4339fb4b6b24ddade4378bcd4035b7"
+      },
+      "new_hashes": {
+        "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517",
+        "docs/DATASET.md": "1acf8e4cef66536454d0e80d9110542f20e77966561f99cc361adbe50293a81b",
+        "docs/EVALUATION.md": "2e8d1aeb8990f9fff864bb50aafb91ec4a1b4a661d248a6af59004f083da7e70"
+      },
+      "code_prompt_data_metric_hashes_unchanged": true,
+      "v25_freeze_sha256_after": "48ca13e2d9009b348f0656bc3289568e135341162314e27b6dc17b9abcb8f43c"
+    },
+    {
+      "type": "documentation_reseal",
+      "date": "2026-10-20",
+      "commit": "working tree (post-report correction)",
+      "authorization": "user instruction 2026-10-20: README-only correction after claim-count failure scoring change; this explicitly supersedes the one-time limit",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517"
+      },
+      "new_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "code_prompt_data_metric_hashes_unchanged": true,
+      "v25_freeze_sha256_after": "4eade30d046d4104184336ff8394ccc4f24f1f9662f033d3154fb786a9e36411"
+    },
+    {
+      "type": "documentation_reseal",
+      "date": "2026-10-20",
+      "commit": "working tree (README status correction)",
+      "authorization": "same user instruction 2026-10-20: README status summary correction",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "new_hashes": {
+        "README.md": "2847c56322676d17baf90e9778512ef24132fc2264823fef6e1b610582aacc2a"
+      },
+      "code_prompt_data_metric_hashes_unchanged": true,
+      "v25_freeze_sha256_after": "19aac29f69dfd8829fb49f559e53d4371636061d028e68be24a603542a9366d7"
+    }
+  ],
+  "pending": {
+    "allowed_resignations": 3,
+    "used": 3,
+    "scope": [
+      "README.md",
+      "docs/DATASET.md",
+      "docs/EVALUATION.md"
+    ],
+    "authorization": "v2.7 section 10.1; S7 is the only permitted further documentation re-seal",
+    "rule": "only documentation hashes may change; code, prompt, data and metric hashes must not change; append one event with old/new hashes and this authorization",
+    "completed_at": "2026-10-20T11:21:45.100664+00:00"
+  }
+}

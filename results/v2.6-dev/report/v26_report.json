@@ -1,0 +1,2498 @@
+{
+  "design_version": "2.6",
+  "n_cases": 30,
+  "gold_positives": 9,
+  "prediction_rule": "predicted hallucinated iff the verifier output has at least one CONTRADICTED or UNSUPPORTED claim",
+  "failure_handling": "main result: a failed case is always wrong (gold positive -> missed, gold negative -> false alarm); `excluding_failures` drops failed cases (paired comparisons then use the cases both methods completed)",
+  "conclusion_wording_rule": "\"A is better than B\" may be written only if the 95% interval of the paired difference excludes 0; otherwise write \"no evidence of a difference\" and give the interval. Never write \"equally good\".",
+  "bootstrap": {
+    "unit": "case",
+    "replicates": 10000,
+    "seed": 20261022,
+    "interval": "percentile 2.5/97.5"
+  },
+  "sentence_alignment": {
+    "scorer": "token_set_ratio",
+    "threshold": 60.0,
+    "note": "lexical approximation, threshold set on dev only"
+  },
+  "methods": {
+    "baseline": {
+      "failures": 0,
+      "answer_level": {
+        "main": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.3103448275862069,
+              "ci95": [
+                0.14285714285714285,
+                0.4827586206896552
+              ]
+            },
+            "recall": {
+              "value": 1.0,
+              "ci95": [
+                1.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.47368421052631576,
+              "ci95": [
+                0.25,
+                0.6511627906976745
+              ]
+            },
+            "balanced_accuracy": {
+              "value": 0.5238095238095238,
+              "ci95": [
+                0.5,
+                0.5789473684210527
+              ]
+            }
+          }
+        },
+        "excluding_failures": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.3103448275862069,
+              "ci95": [
+                0.14285714285714285,
+                0.4827586206896552
+              ]
+            },
+            "recall": {
+              "value": 1.0,
+              "ci95": [
+                1.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.47368421052631576,
+              "ci95": [
+                0.25,
+                0.6511627906976745
+              ]
+            },
+            "balanced_accuracy": {
+              "value": 0.5238095238095238,
+              "ci95": [
+                0.5,
+                0.5789473684210527
+              ]
+            }
+          }
+        }
+      },
+      "sentence_level": {
+        "main": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.08176100628930817,
+              "ci95": [
+                0.03225806451612903,
+                0.14285714285714285
+              ]
+            },
+            "recall": {
+              "value": 0.8666666666666667,
+              "ci95": [
+                0.6363636363636364,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.14942528735632185,
+              "ci95": [
+                0.062111801242236024,
+                0.24598930481283424
+              ]
+            }
+          },
+          "scorer": "token_set_ratio",
+          "threshold": 60.0,
+          "gold_bad_sentences": 15,
+          "predicted_bad_sentences": 159,
+          "cu_claims": 163,
+          "localized_claims": 163,
+          "unlocalized_claims": 0,
+          "localization_rate": 1.0,
+          "localized_claims_on_gold_bad_sentence": 13,
+          "localized_claim_hit_rate": 0.07975460122699386,
+          "note": "lexical, approximate alignment; unlocalized claims count in no sentence"
+        },
+        "excluding_failures": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.08176100628930817,
+              "ci95": [
+                0.03225806451612903,
+                0.14285714285714285
+              ]
+            },
+            "recall": {
+              "value": 0.8666666666666667,
+              "ci95": [
+                0.6363636363636364,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.14942528735632185,
+              "ci95": [
+                0.062111801242236024,
+                0.24598930481283424
+              ]
+            }
+          },
+          "scorer": "token_set_ratio",
+          "threshold": 60.0,
+          "gold_bad_sentences": 15,
+          "predicted_bad_sentences": 159,
+          "cu_claims": 163,
+          "localized_claims": 163,
+          "unlocalized_claims": 0,
+          "localization_rate": 1.0,
+          "localized_claims_on_gold_bad_sentence": 13,
+          "localized_claim_hit_rate": 0.07975460122699386,
+          "note": "lexical, approximate alignment; unlocalized claims count in no sentence"
+        }
+      },
+      "citations": {
+        "citations": 60,
+        "valid": 60,
+        "wrong_passage_index": 0,
+        "not_exact_substring": 0,
+        "valid_rate": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "definition": "valid = quote is an exact substring of the cited passage and start/end offsets reproduce it; wrong_passage_index = the quote exists only in another passage"
+      },
+      "raw_citations": {
+        "citations": 60,
+        "not_exact_as_given": 0,
+        "as_given_valid_rate": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "downgraded_claims": 0,
+        "cases_with_downgrades": 0,
+        "definition": "as-given valid = the raw citation was an exact passage quote with the right index; repaired (normalized/fuzzy/relocated) and dropped citations count as invalid. downgraded_claims = claims forced to UNSUPPORTED for lack of a valid citation"
+      },
+      "groups": {
+        "task": {
+          "Data2txt": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.6,
+                "ci95": [
+                  0.3,
+                  0.9
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.75,
+                "ci95": [
+                  0.46153846153846156,
+                  0.9473684210526315
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 6,
+            "note": "for reference only (n < 20)"
+          },
+          "QA": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.2,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.0,
+                  0.6666666666666666
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 2,
+            "note": "for reference only (n < 20)"
+          },
+          "Summary": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.1111111111111111,
+                "ci95": [
+                  0.0,
+                  0.3333333333333333
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.2,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5555555555555556,
+                "ci95": [
+                  0.5,
+                  0.6666666666666666
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "generator_model": {
+          "gpt-3.5-turbo-0613": {
+            "n_cases": 7,
+            "metrics": {
+              "precision": {
+                "value": 0.14285714285714285,
+                "ci95": [
+                  0.0,
+                  0.42857142857142855
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.25,
+                "ci95": [
+                  0.0,
+                  0.6
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          },
+          "gpt-4-0613": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "recall": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              }
+            },
+            "positives": 0,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-13b-chat": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 0.75,
+                "ci95": [
+                  0.25,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.8571428571428571,
+                "ci95": [
+                  0.4,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 3,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-70b-chat": {
+            "n_cases": 5,
+            "metrics": {
+              "precision": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "recall": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              }
+            },
+            "positives": 0,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-7b-chat": {
+            "n_cases": 6,
+            "metrics": {
+              "precision": {
+                "value": 0.5,
+                "ci95": [
+                  0.16666666666666666,
+                  0.8333333333333334
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.2857142857142857,
+                  0.9090909090909091
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 3,
+            "note": "for reference only (n < 20)"
+          },
+          "mistral-7B-instruct": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.8,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.75,
+                "ci95": [
+                  0.5,
+                  1.0
+                ]
+              }
+            },
+            "positives": 2,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "context_length_words": {
+          "0-399": {
+            "n_cases": 23,
+            "metrics": {
+              "precision": {
+                "value": 0.3181818181818182,
+                "ci95": [
+                  0.13621541501976298,
+                  0.5217391304347826
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.4827586206896552,
+                "ci95": [
+                  0.23976923076923098,
+                  0.6857142857142857
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.53125,
+                "ci95": [
+                  0.5,
+                  0.6052631578947368
+                ]
+              }
+            },
+            "positives": 7,
+            "note": ""
+          },
+          "400-799": {
+            "n_cases": 5,
+            "metrics": {
+              "precision": {
+                "value": 0.2,
+                "ci95": [
+                  0.0,
+                  0.6
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.0,
+                  0.75
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          },
+          "800+": {
+            "n_cases": 2,
+            "metrics": {
+              "precision": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "upstream_label_type_positives_only": {
+          "evident_only": {
+            "n_cases": 6,
+            "metrics": {
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "note": "for reference only (n < 20)"
+          },
+          "with_subtle": {
+            "n_cases": 3,
+            "metrics": {
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "note": "for reference only (n < 20)"
+          }
+        }
+      },
+      "cost_latency": {
+        "cases": 30,
+        "failures": 0,
+        "failure_rate": 0.0,
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd_total": 0.0,
+        "cost_usd_per_case": 0.0,
+        "price_usd_per_mtok": {
+          "in": 1.32,
+          "out": 3.96
+        },
+        "latency_ms": {
+          "mean": 0.7664290741862109,
+          "p50": 0.6990410038270056,
+          "p95": 1.591250009369105,
+          "max": 1.7974579823203385
+        },
+        "retries": 0,
+        "avg_llm_calls": 0.0
+      }
+    },
+    "minimal": {
+      "failures": 0,
+      "answer_level": {
+        "main": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.6,
+              "ci95": [
+                0.3333333333333333,
+                0.8461538461538461
+              ]
+            },
+            "recall": {
+              "value": 1.0,
+              "ci95": [
+                1.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.75,
+              "ci95": [
+                0.5,
+                0.9166666666666666
+              ]
+            },
+            "balanced_accuracy": {
+              "value": 0.8571428571428572,
+              "ci95": [
+                0.7608695652173914,
+                0.9523809523809523
+              ]
+            }
+          }
+        },
+        "excluding_failures": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.6,
+              "ci95": [
+                0.3333333333333333,
+                0.8461538461538461
+              ]
+            },
+            "recall": {
+              "value": 1.0,
+              "ci95": [
+                1.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.75,
+              "ci95": [
+                0.5,
+                0.9166666666666666
+              ]
+            },
+            "balanced_accuracy": {
+              "value": 0.8571428571428572,
+              "ci95": [
+                0.7608695652173914,
+                0.9523809523809523
+              ]
+            }
+          }
+        }
+      },
+      "sentence_level": {
+        "main": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.38235294117647056,
+              "ci95": [
+                0.1836270871985158,
+                0.59375
+              ]
+            },
+            "recall": {
+              "value": 0.8666666666666667,
+              "ci95": [
+                0.6666666666666666,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.5306122448979592,
+              "ci95": [
+                0.29624183006535953,
+                0.72
+              ]
+            }
+          },
+          "scorer": "token_set_ratio",
+          "threshold": 60.0,
+          "gold_bad_sentences": 15,
+          "predicted_bad_sentences": 34,
+          "cu_claims": 42,
+          "localized_claims": 41,
+          "unlocalized_claims": 1,
+          "localization_rate": 0.9761904761904762,
+          "localized_claims_on_gold_bad_sentence": 19,
+          "localized_claim_hit_rate": 0.4634146341463415,
+          "note": "lexical, approximate alignment; unlocalized claims count in no sentence"
+        },
+        "excluding_failures": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.38235294117647056,
+              "ci95": [
+                0.1836270871985158,
+                0.59375
+              ]
+            },
+            "recall": {
+              "value": 0.8666666666666667,
+              "ci95": [
+                0.6666666666666666,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.5306122448979592,
+              "ci95": [
+                0.29624183006535953,
+                0.72
+              ]
+            }
+          },
+          "scorer": "token_set_ratio",
+          "threshold": 60.0,
+          "gold_bad_sentences": 15,
+          "predicted_bad_sentences": 34,
+          "cu_claims": 42,
+          "localized_claims": 41,
+          "unlocalized_claims": 1,
+          "localization_rate": 0.9761904761904762,
+          "localized_claims_on_gold_bad_sentence": 19,
+          "localized_claim_hit_rate": 0.4634146341463415,
+          "note": "lexical, approximate alignment; unlocalized claims count in no sentence"
+        }
+      },
+      "citations": {
+        "citations": 349,
+        "valid": 349,
+        "wrong_passage_index": 0,
+        "not_exact_substring": 0,
+        "valid_rate": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "definition": "valid = quote is an exact substring of the cited passage and start/end offsets reproduce it; wrong_passage_index = the quote exists only in another passage"
+      },
+      "raw_citations": {
+        "citations": 355,
+        "not_exact_as_given": 12,
+        "as_given_valid_rate": {
+          "value": 0.9661971830985916,
+          "ci95": [
+            0.9244186046511628,
+            0.993035506885681
+          ]
+        },
+        "downgraded_claims": 6,
+        "cases_with_downgrades": 4,
+        "definition": "as-given valid = the raw citation was an exact passage quote with the right index; repaired (normalized/fuzzy/relocated) and dropped citations count as invalid. downgraded_claims = claims forced to UNSUPPORTED for lack of a valid citation"
+      },
+      "groups": {
+        "task": {
+          "Data2txt": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.75,
+                "ci95": [
+                  0.42857142857142855,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.8571428571428571,
+                "ci95": [
+                  0.6,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.75,
+                "ci95": [
+                  0.5,
+                  1.0
+                ]
+              }
+            },
+            "positives": 6,
+            "note": "for reference only (n < 20)"
+          },
+          "QA": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.4,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.5714285714285714,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.8125,
+                "ci95": [
+                  0.6428571428571428,
+                  1.0
+                ]
+              }
+            },
+            "positives": 2,
+            "note": "for reference only (n < 20)"
+          },
+          "Summary": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.9444444444444444,
+                "ci95": [
+                  0.8333333333333333,
+                  1.0
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "generator_model": {
+          "gpt-3.5-turbo-0613": {
+            "n_cases": 7,
+            "metrics": {
+              "precision": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.9166666666666667,
+                "ci95": [
+                  0.75,
+                  1.0
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          },
+          "gpt-4-0613": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "recall": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "f1": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "balanced_accuracy": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              }
+            },
+            "positives": 0,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-13b-chat": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "positives": 3,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-70b-chat": {
+            "n_cases": 5,
+            "metrics": {
+              "precision": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "recall": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              }
+            },
+            "positives": 0,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-7b-chat": {
+            "n_cases": 6,
+            "metrics": {
+              "precision": {
+                "value": 0.6,
+                "ci95": [
+                  0.16666666666666666,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.75,
+                "ci95": [
+                  0.2857142857142857,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.5,
+                  1.0
+                ]
+              }
+            },
+            "positives": 3,
+            "note": "for reference only (n < 20)"
+          },
+          "mistral-7B-instruct": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "positives": 2,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "context_length_words": {
+          "0-399": {
+            "n_cases": 23,
+            "metrics": {
+              "precision": {
+                "value": 0.6363636363636364,
+                "ci95": [
+                  0.3333333333333333,
+                  0.9090909090909091
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.7777777777777778,
+                "ci95": [
+                  0.5,
+                  0.9523809523809523
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.875,
+                "ci95": [
+                  0.7647058823529411,
+                  0.9705882352941176
+                ]
+              }
+            },
+            "positives": 7,
+            "note": ""
+          },
+          "400-799": {
+            "n_cases": 5,
+            "metrics": {
+              "precision": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.75,
+                "ci95": [
+                  0.5,
+                  1.0
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          },
+          "800+": {
+            "n_cases": 2,
+            "metrics": {
+              "precision": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "upstream_label_type_positives_only": {
+          "evident_only": {
+            "n_cases": 6,
+            "metrics": {
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "note": "for reference only (n < 20)"
+          },
+          "with_subtle": {
+            "n_cases": 3,
+            "metrics": {
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "note": "for reference only (n < 20)"
+          }
+        }
+      },
+      "cost_latency": {
+        "cases": 30,
+        "failures": 0,
+        "failure_rate": 0.0,
+        "input_tokens": 37739,
+        "output_tokens": 27280,
+        "cost_usd_total": 0.15784428,
+        "cost_usd_per_case": 0.005261476,
+        "price_usd_per_mtok": {
+          "in": 1.32,
+          "out": 3.96
+        },
+        "latency_ms": {
+          "mean": 8343.353459743472,
+          "p50": 8845.96370899817,
+          "p95": 12008.144667022862,
+          "max": 14277.281416987535
+        },
+        "retries": 0,
+        "avg_llm_calls": 1.0
+      }
+    },
+    "optimized": {
+      "failures": 0,
+      "answer_level": {
+        "main": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.36,
+              "ci95": [
+                0.17857142857142858,
+                0.5555555555555556
+              ]
+            },
+            "recall": {
+              "value": 1.0,
+              "ci95": [
+                1.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.5294117647058824,
+              "ci95": [
+                0.30303030303030304,
+                0.7142857142857143
+              ]
+            },
+            "balanced_accuracy": {
+              "value": 0.6190476190476191,
+              "ci95": [
+                0.5277777777777778,
+                0.7142857142857143
+              ]
+            }
+          }
+        },
+        "excluding_failures": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.36,
+              "ci95": [
+                0.17857142857142858,
+                0.5555555555555556
+              ]
+            },
+            "recall": {
+              "value": 1.0,
+              "ci95": [
+                1.0,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.5294117647058824,
+              "ci95": [
+                0.30303030303030304,
+                0.7142857142857143
+              ]
+            },
+            "balanced_accuracy": {
+              "value": 0.6190476190476191,
+              "ci95": [
+                0.5277777777777778,
+                0.7142857142857143
+              ]
+            }
+          }
+        }
+      },
+      "sentence_level": {
+        "main": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.19047619047619047,
+              "ci95": [
+                0.08333333333333333,
+                0.3225806451612903
+              ]
+            },
+            "recall": {
+              "value": 0.8,
+              "ci95": [
+                0.5384615384615384,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.3076923076923077,
+              "ci95": [
+                0.14582386363636365,
+                0.47788572527895334
+              ]
+            }
+          },
+          "scorer": "token_set_ratio",
+          "threshold": 60.0,
+          "gold_bad_sentences": 15,
+          "predicted_bad_sentences": 63,
+          "cu_claims": 82,
+          "localized_claims": 80,
+          "unlocalized_claims": 2,
+          "localization_rate": 0.975609756097561,
+          "localized_claims_on_gold_bad_sentence": 19,
+          "localized_claim_hit_rate": 0.2375,
+          "note": "lexical, approximate alignment; unlocalized claims count in no sentence"
+        },
+        "excluding_failures": {
+          "n_cases": 30,
+          "metrics": {
+            "precision": {
+              "value": 0.19047619047619047,
+              "ci95": [
+                0.08333333333333333,
+                0.3225806451612903
+              ]
+            },
+            "recall": {
+              "value": 0.8,
+              "ci95": [
+                0.5384615384615384,
+                1.0
+              ]
+            },
+            "f1": {
+              "value": 0.3076923076923077,
+              "ci95": [
+                0.14582386363636365,
+                0.47788572527895334
+              ]
+            }
+          },
+          "scorer": "token_set_ratio",
+          "threshold": 60.0,
+          "gold_bad_sentences": 15,
+          "predicted_bad_sentences": 63,
+          "cu_claims": 82,
+          "localized_claims": 80,
+          "unlocalized_claims": 2,
+          "localization_rate": 0.975609756097561,
+          "localized_claims_on_gold_bad_sentence": 19,
+          "localized_claim_hit_rate": 0.2375,
+          "note": "lexical, approximate alignment; unlocalized claims count in no sentence"
+        }
+      },
+      "citations": {
+        "citations": 525,
+        "valid": 525,
+        "wrong_passage_index": 0,
+        "not_exact_substring": 0,
+        "valid_rate": {
+          "value": 1.0,
+          "ci95": [
+            1.0,
+            1.0
+          ]
+        },
+        "definition": "valid = quote is an exact substring of the cited passage and start/end offsets reproduce it; wrong_passage_index = the quote exists only in another passage"
+      },
+      "raw_citations": {
+        "citations": 526,
+        "not_exact_as_given": 14,
+        "as_given_valid_rate": {
+          "value": 0.973384030418251,
+          "ci95": [
+            0.9532520325203252,
+            0.9892008639308856
+          ]
+        },
+        "downgraded_claims": 0,
+        "cases_with_downgrades": 0,
+        "definition": "as-given valid = the raw citation was an exact passage quote with the right index; repaired (normalized/fuzzy/relocated) and dropped citations count as invalid. downgraded_claims = claims forced to UNSUPPORTED for lack of a valid citation"
+      },
+      "groups": {
+        "task": {
+          "Data2txt": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.6,
+                "ci95": [
+                  0.3,
+                  0.9
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.75,
+                "ci95": [
+                  0.46153846153846156,
+                  0.9473684210526315
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 6,
+            "note": "for reference only (n < 20)"
+          },
+          "QA": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.25,
+                "ci95": [
+                  0.0,
+                  0.5714285714285714
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.4,
+                "ci95": [
+                  0.0,
+                  0.7272727272727273
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.625,
+                "ci95": [
+                  0.5,
+                  0.7857142857142857
+                ]
+              }
+            },
+            "positives": 2,
+            "note": "for reference only (n < 20)"
+          },
+          "Summary": {
+            "n_cases": 10,
+            "metrics": {
+              "precision": {
+                "value": 0.14285714285714285,
+                "ci95": [
+                  0.0,
+                  0.42857142857142855
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.25,
+                "ci95": [
+                  0.0,
+                  0.6
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.5,
+                  0.8333333333333333
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "generator_model": {
+          "gpt-3.5-turbo-0613": {
+            "n_cases": 7,
+            "metrics": {
+              "precision": {
+                "value": 0.16666666666666666,
+                "ci95": [
+                  0.0,
+                  0.5
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.2857142857142857,
+                "ci95": [
+                  0.0,
+                  0.6666666666666666
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5833333333333334,
+                "ci95": [
+                  0.5,
+                  0.75
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          },
+          "gpt-4-0613": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "recall": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              }
+            },
+            "positives": 0,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-13b-chat": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 0.75,
+                "ci95": [
+                  0.25,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.8571428571428571,
+                "ci95": [
+                  0.4,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 3,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-70b-chat": {
+            "n_cases": 5,
+            "metrics": {
+              "precision": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "recall": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              },
+              "f1": {
+                "value": 0.0,
+                "ci95": [
+                  0.0,
+                  0.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": null,
+                "ci95": [
+                  null,
+                  null
+                ]
+              }
+            },
+            "positives": 0,
+            "note": "for reference only (n < 20)"
+          },
+          "llama-2-7b-chat": {
+            "n_cases": 6,
+            "metrics": {
+              "precision": {
+                "value": 0.5,
+                "ci95": [
+                  0.16666666666666666,
+                  0.8333333333333334
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.2857142857142857,
+                  0.9090909090909091
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 3,
+            "note": "for reference only (n < 20)"
+          },
+          "mistral-7B-instruct": {
+            "n_cases": 4,
+            "metrics": {
+              "precision": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.8,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.75,
+                "ci95": [
+                  0.5,
+                  1.0
+                ]
+              }
+            },
+            "positives": 2,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "context_length_words": {
+          "0-399": {
+            "n_cases": 23,
+            "metrics": {
+              "precision": {
+                "value": 0.3888888888888889,
+                "ci95": [
+                  0.16666666666666666,
+                  0.625
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.56,
+                "ci95": [
+                  0.2857142857142857,
+                  0.7692307692307693
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.65625,
+                "ci95": [
+                  0.55,
+                  0.7777777777777778
+                ]
+              }
+            },
+            "positives": 7,
+            "note": ""
+          },
+          "400-799": {
+            "n_cases": 5,
+            "metrics": {
+              "precision": {
+                "value": 0.2,
+                "ci95": [
+                  0.0,
+                  0.6
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.3333333333333333,
+                "ci95": [
+                  0.0,
+                  0.75
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          },
+          "800+": {
+            "n_cases": 2,
+            "metrics": {
+              "precision": {
+                "value": 0.5,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              },
+              "f1": {
+                "value": 0.6666666666666666,
+                "ci95": [
+                  0.0,
+                  1.0
+                ]
+              },
+              "balanced_accuracy": {
+                "value": 0.5,
+                "ci95": [
+                  0.5,
+                  0.5
+                ]
+              }
+            },
+            "positives": 1,
+            "note": "for reference only (n < 20)"
+          }
+        },
+        "upstream_label_type_positives_only": {
+          "evident_only": {
+            "n_cases": 6,
+            "metrics": {
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "note": "for reference only (n < 20)"
+          },
+          "with_subtle": {
+            "n_cases": 3,
+            "metrics": {
+              "recall": {
+                "value": 1.0,
+                "ci95": [
+                  1.0,
+                  1.0
+                ]
+              }
+            },
+            "note": "for reference only (n < 20)"
+          }
+        }
+      },
+      "cost_latency": {
+        "cases": 30,
+        "failures": 0,
+        "failure_rate": 0.0,
+        "input_tokens": 629807,
+        "output_tokens": 75022,
+        "cost_usd_total": 1.12843236,
+        "cost_usd_per_case": 0.037614412,
+        "price_usd_per_mtok": {
+          "in": 1.32,
+          "out": 3.96
+        },
+        "latency_ms": {
+          "mean": 13202.208812528988,
+          "p50": 11056.795833981596,
+          "p95": 24459.611541009508,
+          "max": 32779.919416992925
+        },
+        "retries": 0,
+        "avg_llm_calls": 13.666666666666666
+      }
+    }
+  },
+  "paired_f1_difference": {
+    "main": [
+      {
+        "n_cases": 30,
+        "f1": {
+          "value": -0.22058823529411764,
+          "ci95": [
+            -0.37058823529411766,
+            -0.10588079676314979
+          ],
+          "a": 0.5294117647058824,
+          "b": 0.75,
+          "excludes_zero": true
+        },
+        "balanced_accuracy": {
+          "value": -0.23809523809523814,
+          "ci95": [
+            -0.34375,
+            -0.13157894736842102
+          ],
+          "a": 0.6190476190476191,
+          "b": 0.8571428571428572,
+          "excludes_zero": true
+        },
+        "a": "optimized",
+        "b": "minimal",
+        "statement": {
+          "f1": "minimal is better than optimized (paired difference optimized minus minimal -0.221, 95% CI [-0.371, -0.106])",
+          "balanced_accuracy": "minimal is better than optimized (paired difference optimized minus minimal -0.238, 95% CI [-0.344, -0.132])"
+        }
+      },
+      {
+        "n_cases": 30,
+        "f1": {
+          "value": 0.27631578947368424,
+          "ci95": [
+            0.15384615384615385,
+            0.42631578947368426
+          ],
+          "a": 0.75,
+          "b": 0.47368421052631576,
+          "excludes_zero": true
+        },
+        "balanced_accuracy": {
+          "value": 0.33333333333333337,
+          "ci95": [
+            0.2333333333333334,
+            0.4318181818181819
+          ],
+          "a": 0.8571428571428572,
+          "b": 0.5238095238095238,
+          "excludes_zero": true
+        },
+        "a": "minimal",
+        "b": "baseline",
+        "statement": {
+          "f1": "minimal is better than baseline (paired difference minimal minus baseline +0.276, 95% CI [+0.154, +0.426])",
+          "balanced_accuracy": "minimal is better than baseline (paired difference minimal minus baseline +0.333, 95% CI [+0.233, +0.432])"
+        }
+      },
+      {
+        "n_cases": 30,
+        "f1": {
+          "value": 0.055727554179566596,
+          "ci95": [
+            0.0,
+            0.12661498708010333
+          ],
+          "a": 0.5294117647058824,
+          "b": 0.47368421052631576,
+          "excludes_zero": false
+        },
+        "balanced_accuracy": {
+          "value": 0.09523809523809523,
+          "ci95": [
+            0.0,
+            0.20454545454545459
+          ],
+          "a": 0.6190476190476191,
+          "b": 0.5238095238095238,
+          "excludes_zero": false
+        },
+        "a": "optimized",
+        "b": "baseline",
+        "statement": {
+          "f1": "no evidence of a difference between optimized and baseline (paired difference optimized minus baseline +0.056, 95% CI [+0.000, +0.127])",
+          "balanced_accuracy": "no evidence of a difference between optimized and baseline (paired difference optimized minus baseline +0.095, 95% CI [+0.000, +0.205])"
+        }
+      }
+    ],
+    "excluding_failures": [
+      {
+        "n_cases": 30,
+        "f1": {
+          "value": -0.22058823529411764,
+          "ci95": [
+            -0.37058823529411766,
+            -0.10588079676314979
+          ],
+          "a": 0.5294117647058824,
+          "b": 0.75,
+          "excludes_zero": true
+        },
+        "balanced_accuracy": {
+          "value": -0.23809523809523814,
+          "ci95": [
+            -0.34375,
+            -0.13157894736842102
+          ],
+          "a": 0.6190476190476191,
+          "b": 0.8571428571428572,
+          "excludes_zero": true
+        },
+        "a": "optimized",
+        "b": "minimal",
+        "statement": {
+          "f1": "minimal is better than optimized (paired difference optimized minus minimal -0.221, 95% CI [-0.371, -0.106])",
+          "balanced_accuracy": "minimal is better than optimized (paired difference optimized minus minimal -0.238, 95% CI [-0.344, -0.132])"
+        }
+      },
+      {
+        "n_cases": 30,
+        "f1": {
+          "value": 0.27631578947368424,
+          "ci95": [
+            0.15384615384615385,
+            0.42631578947368426
+          ],
+          "a": 0.75,
+          "b": 0.47368421052631576,
+          "excludes_zero": true
+        },
+        "balanced_accuracy": {
+          "value": 0.33333333333333337,
+          "ci95": [
+            0.2333333333333334,
+            0.4318181818181819
+          ],
+          "a": 0.8571428571428572,
+          "b": 0.5238095238095238,
+          "excludes_zero": true
+        },
+        "a": "minimal",
+        "b": "baseline",
+        "statement": {
+          "f1": "minimal is better than baseline (paired difference minimal minus baseline +0.276, 95% CI [+0.154, +0.426])",
+          "balanced_accuracy": "minimal is better than baseline (paired difference minimal minus baseline +0.333, 95% CI [+0.233, +0.432])"
+        }
+      },
+      {
+        "n_cases": 30,
+        "f1": {
+          "value": 0.055727554179566596,
+          "ci95": [
+            0.0,
+            0.12661498708010333
+          ],
+          "a": 0.5294117647058824,
+          "b": 0.47368421052631576,
+          "excludes_zero": false
+        },
+        "balanced_accuracy": {
+          "value": 0.09523809523809523,
+          "ci95": [
+            0.0,
+            0.20454545454545459
+          ],
+          "a": 0.6190476190476191,
+          "b": 0.5238095238095238,
+          "excludes_zero": false
+        },
+        "a": "optimized",
+        "b": "baseline",
+        "statement": {
+          "f1": "no evidence of a difference between optimized and baseline (paired difference optimized minus baseline +0.056, 95% CI [+0.000, +0.127])",
+          "balanced_accuracy": "no evidence of a difference between optimized and baseline (paired difference optimized minus baseline +0.095, 95% CI [+0.000, +0.205])"
+        }
+      }
+    ]
+  },
+  "split": "dev",
+  "dataset": "data/eval_ragtruth_resp.v2.6.jsonl",
+  "dataset_sha256": "8eb9d6e73a762111fe2964e012d210a625fd9fcc5ac048f3a02268b9da0b924d",
+  "predictions_sha256": {
+    "baseline": "b7e06611126d72e3fd4f2d28ddb5c24dc9fb48fe44912979aace9f9a8213b975",
+    "minimal": "fe7a4e95a1bdf22d610af6de95affea7364579b0eda1052429f790d4b3f02554",
+    "optimized": "f55eb0d272bc8cb59d610b838726452359ccc475f75986734bb6b87fc0d2d787"
+  },
+  "threshold_sweep": {
+    "baseline": [
+      {
+        "threshold": 55.0,
+        "cu_claims": 163,
+        "localization_rate": 1.0,
+        "localized_claim_hit_rate": 0.07975460122699386,
+        "sentence_precision": 0.08176100628930817,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.14942528735632185
+      },
+      {
+        "threshold": 60.0,
+        "cu_claims": 163,
+        "localization_rate": 1.0,
+        "localized_claim_hit_rate": 0.07975460122699386,
+        "sentence_precision": 0.08176100628930817,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.14942528735632185
+      },
+      {
+        "threshold": 65.0,
+        "cu_claims": 163,
+        "localization_rate": 1.0,
+        "localized_claim_hit_rate": 0.07975460122699386,
+        "sentence_precision": 0.08176100628930817,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.14942528735632185
+      },
+      {
+        "threshold": 70.0,
+        "cu_claims": 163,
+        "localization_rate": 1.0,
+        "localized_claim_hit_rate": 0.07975460122699386,
+        "sentence_precision": 0.08176100628930817,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.14942528735632185
+      },
+      {
+        "threshold": 75.0,
+        "cu_claims": 163,
+        "localization_rate": 1.0,
+        "localized_claim_hit_rate": 0.07975460122699386,
+        "sentence_precision": 0.08176100628930817,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.14942528735632185
+      }
+    ],
+    "minimal": [
+      {
+        "threshold": 55.0,
+        "cu_claims": 42,
+        "localization_rate": 1.0,
+        "localized_claim_hit_rate": 0.4523809523809524,
+        "sentence_precision": 0.37142857142857144,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.52
+      },
+      {
+        "threshold": 60.0,
+        "cu_claims": 42,
+        "localization_rate": 0.9761904761904762,
+        "localized_claim_hit_rate": 0.4634146341463415,
+        "sentence_precision": 0.38235294117647056,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.5306122448979592
+      },
+      {
+        "threshold": 65.0,
+        "cu_claims": 42,
+        "localization_rate": 0.9285714285714286,
+        "localized_claim_hit_rate": 0.46153846153846156,
+        "sentence_precision": 0.38235294117647056,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.5306122448979592
+      },
+      {
+        "threshold": 70.0,
+        "cu_claims": 42,
+        "localization_rate": 0.9047619047619048,
+        "localized_claim_hit_rate": 0.4473684210526316,
+        "sentence_precision": 0.38235294117647056,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.5306122448979592
+      },
+      {
+        "threshold": 75.0,
+        "cu_claims": 42,
+        "localization_rate": 0.9047619047619048,
+        "localized_claim_hit_rate": 0.4473684210526316,
+        "sentence_precision": 0.38235294117647056,
+        "sentence_recall": 0.8666666666666667,
+        "sentence_f1": 0.5306122448979592
+      }
+    ],
+    "optimized": [
+      {
+        "threshold": 55.0,
+        "cu_claims": 82,
+        "localization_rate": 0.9878048780487805,
+        "localized_claim_hit_rate": 0.2345679012345679,
+        "sentence_precision": 0.19047619047619047,
+        "sentence_recall": 0.8,
+        "sentence_f1": 0.3076923076923077
+      },
+      {
+        "threshold": 60.0,
+        "cu_claims": 82,
+        "localization_rate": 0.975609756097561,
+        "localized_claim_hit_rate": 0.2375,
+        "sentence_precision": 0.19047619047619047,
+        "sentence_recall": 0.8,
+        "sentence_f1": 0.3076923076923077
+      },
+      {
+        "threshold": 65.0,
+        "cu_claims": 82,
+        "localization_rate": 0.9512195121951219,
+        "localized_claim_hit_rate": 0.24358974358974358,
+        "sentence_precision": 0.1935483870967742,
+        "sentence_recall": 0.8,
+        "sentence_f1": 0.3116883116883117
+      },
+      {
+        "threshold": 70.0,
+        "cu_claims": 82,
+        "localization_rate": 0.926829268292683,
+        "localized_claim_hit_rate": 0.23684210526315788,
+        "sentence_precision": 0.19672131147540983,
+        "sentence_recall": 0.8,
+        "sentence_f1": 0.3157894736842105
+      },
+      {
+        "threshold": 75.0,
+        "cu_claims": 82,
+        "localization_rate": 0.8536585365853658,
+        "localized_claim_hit_rate": 0.24285714285714285,
+        "sentence_precision": 0.2033898305084746,
+        "sentence_recall": 0.8,
+        "sentence_f1": 0.32432432432432434
+      }
+    ]
+  },
+  "best_score_quantiles": {
+    "baseline": {
+      "n": 163,
+      "min": 100.0,
+      "p10": 100.0,
+      "p25": 100.0,
+      "p50": 100.0,
+      "p75": 100.0,
+      "p90": 100.0,
+      "max": 100.0
+    },
+    "minimal": {
+      "n": 42,
+      "min": 55.55555555555556,
+      "p10": 79.0873189995612,
+      "p25": 84.92424242424242,
+      "p50": 96.83393289773144,
+      "p75": 100.0,
+      "p90": 100.0,
+      "max": 100.0
+    },
+    "optimized": {
+      "n": 82,
+      "min": 43.17180616740088,
+      "p10": 72.16440959847945,
+      "p25": 84.72859629688242,
+      "p50": 93.06335204490777,
+      "p75": 100.0,
+      "p90": 100.0,
+      "max": 100.0
+    }
+  },
+  "span_alignment": {
+    "n": 14,
+    "top1_in_containing": 14,
+    "score_quantiles": {
+      "min": 66.66666666666666,
+      "p10": 76.94404591104734,
+      "p25": 89.11064425770309,
+      "p50": 100.0,
+      "p75": 100.0,
+      "p90": 100.0,
+      "max": 100.0
+    },
+    "scorer": "token_set_ratio",
+    "rows": [
+      {
+        "id": "ragtruth-10816",
+        "label_type": "Evident Baseless Info",
+        "best_sentence": 3,
+        "containing_sentences": [
+          3
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-11488",
+        "label_type": "Evident Conflict",
+        "best_sentence": 4,
+        "containing_sentences": [
+          4
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-12518",
+        "label_type": "Subtle Baseless Info",
+        "best_sentence": 1,
+        "containing_sentences": [
+          1,
+          2,
+          3
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-14469",
+        "label_type": "Evident Baseless Info",
+        "best_sentence": 4,
+        "containing_sentences": [
+          4
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-2667",
+        "label_type": "Subtle Conflict",
+        "best_sentence": 1,
+        "containing_sentences": [
+          1
+        ],
+        "score": 94.73684210526315,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-2667",
+        "label_type": "Evident Conflict",
+        "best_sentence": 5,
+        "containing_sentences": [
+          5
+        ],
+        "score": 78.04878048780488,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-6171",
+        "label_type": "Evident Conflict",
+        "best_sentence": 3,
+        "containing_sentences": [
+          3
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-6171",
+        "label_type": "Subtle Baseless Info",
+        "best_sentence": 2,
+        "containing_sentences": [
+          2
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-7024",
+        "label_type": "Evident Conflict",
+        "best_sentence": 4,
+        "containing_sentences": [
+          4
+        ],
+        "score": 92.15686274509804,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-7024",
+        "label_type": "Evident Conflict",
+        "best_sentence": 6,
+        "containing_sentences": [
+          6
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-7024",
+        "label_type": "Evident Baseless Info",
+        "best_sentence": 6,
+        "containing_sentences": [
+          6
+        ],
+        "score": 66.66666666666666,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-7024",
+        "label_type": "Evident Conflict",
+        "best_sentence": 5,
+        "containing_sentences": [
+          5
+        ],
+        "score": 76.47058823529412,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-8240",
+        "label_type": "Evident Conflict",
+        "best_sentence": 2,
+        "containing_sentences": [
+          2
+        ],
+        "score": 88.0952380952381,
+        "top1_in_containing": true
+      },
+      {
+        "id": "ragtruth-8659",
+        "label_type": "Evident Conflict",
+        "best_sentence": 3,
+        "containing_sentences": [
+          3
+        ],
+        "score": 100.0,
+        "top1_in_containing": true
+      }
+    ]
+  }
+}

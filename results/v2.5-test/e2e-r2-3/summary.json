@@ -1,0 +1,2791 @@
+{
+  "split": "test",
+  "oracle": false,
+  "n_cases": 45,
+  "prompt_version": "v3",
+  "methods": {
+    "baseline": [
+      {
+        "n_cases": 45,
+        "errors": 0,
+        "answer_level": {
+          "p": 0.7555555555555555,
+          "r": 1.0,
+          "f1": 0.8607594936708861,
+          "acc": 0.7555555555555555
+        },
+        "decomposition": {
+          "recall": 0.5493482309124768,
+          "precision": 0.9021406727828746,
+          "gold_claims": 537,
+          "predicted_claims": 327,
+          "matched_pairs": 295,
+          "used_predictions": 295,
+          "missed_gold": 242,
+          "extra_predictions": 32,
+          "duplicate_predictions": 0,
+          "added_predictions": 32
+        },
+        "guard_rejected_pairs": 112,
+        "scoring_units_registry_sha256": null,
+        "groups": {
+          "context_length_words": {
+            "0-399": {
+              "n_cases": 21,
+              "gold_claims": 259,
+              "matched_pairs": 147,
+              "missed_gold": 112,
+              "correct": 32,
+              "claim_accuracy_all_gold": 0.12355212355212356,
+              "claim_accuracy_matched": 0.21768707482993196,
+              "decomposition_recall": 0.5675675675675675,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.10043668122270742,
+                  "f1": 0.18253968253968256
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.07317073170731707,
+                  "r": 0.5625,
+                  "f1": 0.12949640287769784
+                }
+              },
+              "macro_f1": 0.10401202847246013,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 23,
+                  "MISSED": 101,
+                  "UNSUPPORTED": 104,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 10,
+                  "MISSED": 4
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 7,
+                  "UNSUPPORTED": 9
+                }
+              }
+            },
+            "400-799": {
+              "n_cases": 12,
+              "gold_claims": 134,
+              "matched_pairs": 63,
+              "missed_gold": 71,
+              "correct": 17,
+              "claim_accuracy_all_gold": 0.12686567164179105,
+              "claim_accuracy_matched": 0.2698412698412698,
+              "decomposition_recall": 0.4701492537313433,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.11016949152542373,
+                  "f1": 0.1984732824427481
+                },
+                "CONTRADICTED": {
+                  "p": 1.0,
+                  "r": 0.125,
+                  "f1": 0.2222222222222222
+                },
+                "UNSUPPORTED": {
+                  "p": 0.061224489795918366,
+                  "r": 0.375,
+                  "f1": 0.10526315789473682
+                }
+              },
+              "macro_f1": 0.17531955418656903,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 43,
+                  "MISSED": 62,
+                  "SUPPORTED": 13
+                },
+                "CONTRADICTED": {
+                  "MISSED": 4,
+                  "UNSUPPORTED": 3,
+                  "CONTRADICTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 3,
+                  "MISSED": 5
+                }
+              }
+            },
+            "800+": {
+              "n_cases": 12,
+              "gold_claims": 144,
+              "matched_pairs": 85,
+              "missed_gold": 59,
+              "correct": 26,
+              "claim_accuracy_all_gold": 0.18055555555555555,
+              "claim_accuracy_matched": 0.3058823529411765,
+              "decomposition_recall": 0.5902777777777778,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.16911764705882354,
+                  "f1": 0.2893081761006289
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.05,
+                  "r": 1.0,
+                  "f1": 0.09523809523809523
+                }
+              },
+              "macro_f1": 0.12818209044624138,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 54,
+                  "MISSED": 57,
+                  "SUPPORTED": 23,
+                  "CONTRADICTED": 2
+                },
+                "CONTRADICTED": {
+                  "MISSED": 2,
+                  "UNSUPPORTED": 3
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 3
+                }
+              }
+            }
+          },
+          "difficulty": {
+            "clean": {
+              "n_cases": 5,
+              "gold_claims": 60,
+              "matched_pairs": 40,
+              "missed_gold": 20,
+              "correct": 16,
+              "claim_accuracy_all_gold": 0.26666666666666666,
+              "claim_accuracy_matched": 0.4,
+              "decomposition_recall": 0.6666666666666666,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.26666666666666666,
+                  "f1": 0.4210526315789474
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                }
+              },
+              "macro_f1": 0.14035087719298248,
+              "confusion": {
+                "SUPPORTED": {
+                  "MISSED": 20,
+                  "UNSUPPORTED": 24,
+                  "SUPPORTED": 16
+                },
+                "CONTRADICTED": {},
+                "UNSUPPORTED": {}
+              }
+            },
+            "evident": {
+              "n_cases": 19,
+              "gold_claims": 222,
+              "matched_pairs": 120,
+              "missed_gold": 102,
+              "correct": 19,
+              "claim_accuracy_all_gold": 0.08558558558558559,
+              "claim_accuracy_matched": 0.15833333333333333,
+              "decomposition_recall": 0.5405405405405406,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.07575757575757576,
+                  "f1": 0.14084507042253522
+                },
+                "CONTRADICTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.05555555555555555,
+                  "f1": 0.09523809523809525
+                },
+                "UNSUPPORTED": {
+                  "p": 0.029411764705882353,
+                  "r": 0.5,
+                  "f1": 0.05555555555555555
+                }
+              },
+              "macro_f1": 0.09721290707206201,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 15,
+                  "MISSED": 94,
+                  "UNSUPPORTED": 87,
+                  "CONTRADICTED": 2
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 12,
+                  "MISSED": 5,
+                  "CONTRADICTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 3,
+                  "MISSED": 3
+                }
+              }
+            },
+            "subtle": {
+              "n_cases": 21,
+              "gold_claims": 255,
+              "matched_pairs": 135,
+              "missed_gold": 120,
+              "correct": 40,
+              "claim_accuracy_all_gold": 0.1568627450980392,
+              "claim_accuracy_matched": 0.2962962962962963,
+              "decomposition_recall": 0.5294117647058824,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.12444444444444444,
+                  "f1": 0.22134387351778656
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.11320754716981132,
+                  "r": 0.5714285714285714,
+                  "f1": 0.18897637795275593
+                }
+              },
+              "macro_f1": 0.1367734171568475,
+              "confusion": {
+                "SUPPORTED": {
+                  "MISSED": 106,
+                  "UNSUPPORTED": 90,
+                  "SUPPORTED": 28,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {
+                  "MISSED": 5,
+                  "UNSUPPORTED": 4
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 9,
+                  "UNSUPPORTED": 12
+                }
+              }
+            }
+          },
+          "multi_passage": {
+            "false": {
+              "n_cases": 45,
+              "gold_claims": 537,
+              "matched_pairs": 295,
+              "missed_gold": 242,
+              "correct": 75,
+              "claim_accuracy_all_gold": 0.13966480446927373,
+              "claim_accuracy_matched": 0.2542372881355932,
+              "decomposition_recall": 0.5493482309124768,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.12215320910973085,
+                  "f1": 0.2177121771217712
+                },
+                "CONTRADICTED": {
+                  "p": 0.25,
+                  "r": 0.037037037037037035,
+                  "f1": 0.06451612903225806
+                },
+                "UNSUPPORTED": {
+                  "p": 0.06465517241379311,
+                  "r": 0.5555555555555556,
+                  "f1": 0.11583011583011583
+                }
+              },
+              "macro_f1": 0.1326861406613817,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 59,
+                  "MISSED": 220,
+                  "UNSUPPORTED": 201,
+                  "CONTRADICTED": 3
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 16,
+                  "MISSED": 10,
+                  "CONTRADICTED": 1
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 12,
+                  "UNSUPPORTED": 15
+                }
+              }
+            }
+          },
+          "task": {
+            "Data2txt": {
+              "n_cases": 12,
+              "gold_claims": 210,
+              "matched_pairs": 106,
+              "missed_gold": 104,
+              "correct": 12,
+              "claim_accuracy_all_gold": 0.05714285714285714,
+              "claim_accuracy_matched": 0.11320754716981132,
+              "decomposition_recall": 0.5047619047619047,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.05699481865284974,
+                  "f1": 0.10784313725490197
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.010526315789473684,
+                  "r": 0.16666666666666666,
+                  "f1": 0.0198019801980198
+                }
+              },
+              "macro_f1": 0.042548372484307255,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 11,
+                  "MISSED": 95,
+                  "UNSUPPORTED": 87
+                },
+                "CONTRADICTED": {
+                  "MISSED": 4,
+                  "UNSUPPORTED": 7
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 5,
+                  "UNSUPPORTED": 1
+                }
+              }
+            },
+            "QA": {
+              "n_cases": 11,
+              "gold_claims": 83,
+              "matched_pairs": 54,
+              "missed_gold": 29,
+              "correct": 21,
+              "claim_accuracy_all_gold": 0.25301204819277107,
+              "claim_accuracy_matched": 0.3888888888888889,
+              "decomposition_recall": 0.6506024096385542,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.19402985074626866,
+                  "f1": 0.325
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.2,
+                  "r": 0.6666666666666666,
+                  "f1": 0.30769230769230765
+                }
+              },
+              "macro_f1": 0.2108974358974359,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 29,
+                  "MISSED": 24,
+                  "SUPPORTED": 13,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 3,
+                  "MISSED": 1
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 4,
+                  "UNSUPPORTED": 8
+                }
+              }
+            },
+            "Summary": {
+              "n_cases": 22,
+              "gold_claims": 244,
+              "matched_pairs": 135,
+              "missed_gold": 109,
+              "correct": 42,
+              "claim_accuracy_all_gold": 0.1721311475409836,
+              "claim_accuracy_matched": 0.3111111111111111,
+              "decomposition_recall": 0.5532786885245902,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.15695067264573992,
+                  "f1": 0.2713178294573644
+                },
+                "CONTRADICTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.08333333333333333,
+                  "f1": 0.13333333333333333
+                },
+                "UNSUPPORTED": {
+                  "p": 0.061855670103092786,
+                  "r": 0.6666666666666666,
+                  "f1": 0.11320754716981132
+                }
+              },
+              "macro_f1": 0.17261956998683634,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 85,
+                  "MISSED": 101,
+                  "SUPPORTED": 35,
+                  "CONTRADICTED": 2
+                },
+                "CONTRADICTED": {
+                  "MISSED": 5,
+                  "UNSUPPORTED": 6,
+                  "CONTRADICTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 6,
+                  "MISSED": 3
+                }
+              }
+            }
+          }
+        },
+        "sentence_coverage": 1.0,
+        "fused_claim_rate": 0.0,
+        "claim_accuracy_matched": 0.2542372881355932,
+        "claim_accuracy_all_gold": 0.13966480446927373,
+        "macro_f1": 0.1326861406613817,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 1.0,
+            "r": 0.12215320910973085,
+            "f1": 0.2177121771217712
+          },
+          "CONTRADICTED": {
+            "p": 0.25,
+            "r": 0.037037037037037035,
+            "f1": 0.06451612903225806
+          },
+          "UNSUPPORTED": {
+            "p": 0.06465517241379311,
+            "r": 0.5555555555555556,
+            "f1": 0.11583011583011583
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 59,
+            "MISSED": 220,
+            "UNSUPPORTED": 201,
+            "CONTRADICTED": 3
+          },
+          "CONTRADICTED": {
+            "UNSUPPORTED": 16,
+            "MISSED": 10,
+            "CONTRADICTED": 1
+          },
+          "UNSUPPORTED": {
+            "MISSED": 12,
+            "UNSUPPORTED": 15
+          }
+        },
+        "per_tag_accuracy": {
+          "baseless": 0.155,
+          "clean": 0.267,
+          "conflict": 0.089,
+          "evident": 0.085,
+          "long_context": 0.181,
+          "numeric": 0.198,
+          "subtle": 0.157
+        },
+        "citation_counts": {
+          "predicted": 60,
+          "hit": 57,
+          "gold": 83,
+          "gold_hit": 56,
+          "invalid": 0
+        },
+        "citation_precision": 0.95,
+        "citation_recall": 0.6746987951807228,
+        "citation_passage_precision": 1.0,
+        "citation_passage_recall": 0.8313253012048193,
+        "raw_citation_invalid_rate": 0.0,
+        "latency_ms_p50": 0.7194170029833913,
+        "latency_ms_p95": 1.837250019889325,
+        "avg_llm_calls": 0,
+        "avg_input_tokens": 0,
+        "avg_output_tokens": 0,
+        "avg_cost_usd": 0.0
+      }
+    ],
+    "minimal": [
+      {
+        "n_cases": 45,
+        "errors": 0,
+        "answer_level": {
+          "p": 0.8055555555555556,
+          "r": 0.8529411764705882,
+          "f1": 0.8285714285714286,
+          "acc": 0.7333333333333333
+        },
+        "decomposition": {
+          "recall": 0.7579143389199255,
+          "precision": 0.925,
+          "gold_claims": 537,
+          "predicted_claims": 440,
+          "matched_pairs": 407,
+          "used_predictions": 407,
+          "missed_gold": 130,
+          "extra_predictions": 33,
+          "duplicate_predictions": 12,
+          "added_predictions": 21
+        },
+        "guard_rejected_pairs": 117,
+        "scoring_units_registry_sha256": null,
+        "groups": {
+          "context_length_words": {
+            "0-399": {
+              "n_cases": 21,
+              "gold_claims": 259,
+              "matched_pairs": 194,
+              "missed_gold": 65,
+              "correct": 162,
+              "claim_accuracy_all_gold": 0.6254826254826255,
+              "claim_accuracy_matched": 0.8350515463917526,
+              "decomposition_recall": 0.749034749034749,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9612903225806452,
+                  "r": 0.6506550218340611,
+                  "f1": 0.7760416666666666
+                },
+                "CONTRADICTED": {
+                  "p": 0.3,
+                  "r": 0.21428571428571427,
+                  "f1": 0.25
+                },
+                "UNSUPPORTED": {
+                  "p": 0.3448275862068966,
+                  "r": 0.625,
+                  "f1": 0.4444444444444445
+                }
+              },
+              "macro_f1": 0.49016203703703703,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 149,
+                  "MISSED": 56,
+                  "UNSUPPORTED": 17,
+                  "CONTRADICTED": 7
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 3,
+                  "MISSED": 5,
+                  "SUPPORTED": 4,
+                  "UNSUPPORTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 10,
+                  "SUPPORTED": 2,
+                  "MISSED": 4
+                }
+              }
+            },
+            "400-799": {
+              "n_cases": 12,
+              "gold_claims": 134,
+              "matched_pairs": 101,
+              "missed_gold": 33,
+              "correct": 88,
+              "claim_accuracy_all_gold": 0.6567164179104478,
+              "claim_accuracy_matched": 0.8712871287128713,
+              "decomposition_recall": 0.753731343283582,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9746835443037974,
+                  "r": 0.652542372881356,
+                  "f1": 0.7817258883248732
+                },
+                "CONTRADICTED": {
+                  "p": 0.5454545454545454,
+                  "r": 0.75,
+                  "f1": 0.631578947368421
+                },
+                "UNSUPPORTED": {
+                  "p": 0.45454545454545453,
+                  "r": 0.625,
+                  "f1": 0.5263157894736842
+                }
+              },
+              "macro_f1": 0.6465402083889928,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 77,
+                  "MISSED": 32,
+                  "CONTRADICTED": 4,
+                  "UNSUPPORTED": 5
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "CONTRADICTED": 6,
+                  "UNSUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 5,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "800+": {
+              "n_cases": 12,
+              "gold_claims": 144,
+              "matched_pairs": 112,
+              "missed_gold": 32,
+              "correct": 98,
+              "claim_accuracy_all_gold": 0.6805555555555556,
+              "claim_accuracy_matched": 0.875,
+              "decomposition_recall": 0.7777777777777778,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.979381443298969,
+                  "r": 0.6985294117647058,
+                  "f1": 0.815450643776824
+                },
+                "CONTRADICTED": {
+                  "p": 0.2857142857142857,
+                  "r": 0.4,
+                  "f1": 0.3333333333333333
+                },
+                "UNSUPPORTED": {
+                  "p": 0.125,
+                  "r": 0.3333333333333333,
+                  "f1": 0.18181818181818182
+                }
+              },
+              "macro_f1": 0.44353405297611304,
+              "confusion": {
+                "SUPPORTED": {
+                  "CONTRADICTED": 5,
+                  "MISSED": 30,
+                  "UNSUPPORTED": 6,
+                  "SUPPORTED": 95
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "UNSUPPORTED": 1,
+                  "CONTRADICTED": 2,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 1,
+                  "SUPPORTED": 1,
+                  "UNSUPPORTED": 1
+                }
+              }
+            }
+          },
+          "difficulty": {
+            "clean": {
+              "n_cases": 5,
+              "gold_claims": 60,
+              "matched_pairs": 50,
+              "missed_gold": 10,
+              "correct": 47,
+              "claim_accuracy_all_gold": 0.7833333333333333,
+              "claim_accuracy_matched": 0.94,
+              "decomposition_recall": 0.8333333333333334,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.7833333333333333,
+                  "f1": 0.8785046728971964
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                }
+              },
+              "macro_f1": 0.2928348909657321,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 47,
+                  "MISSED": 10,
+                  "UNSUPPORTED": 2,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {},
+                "UNSUPPORTED": {}
+              }
+            },
+            "evident": {
+              "n_cases": 19,
+              "gold_claims": 222,
+              "matched_pairs": 175,
+              "missed_gold": 47,
+              "correct": 146,
+              "claim_accuracy_all_gold": 0.6576576576576577,
+              "claim_accuracy_matched": 0.8342857142857143,
+              "decomposition_recall": 0.7882882882882883,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9642857142857143,
+                  "r": 0.6818181818181818,
+                  "f1": 0.7988165680473372
+                },
+                "CONTRADICTED": {
+                  "p": 0.42105263157894735,
+                  "r": 0.4444444444444444,
+                  "f1": 0.43243243243243246
+                },
+                "UNSUPPORTED": {
+                  "p": 0.1875,
+                  "r": 0.5,
+                  "f1": 0.2727272727272727
+                }
+              },
+              "macro_f1": 0.5013254244023475,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 135,
+                  "MISSED": 43,
+                  "UNSUPPORTED": 10,
+                  "CONTRADICTED": 10
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 8,
+                  "MISSED": 4,
+                  "SUPPORTED": 3,
+                  "UNSUPPORTED": 3
+                },
+                "UNSUPPORTED": {
+                  "SUPPORTED": 2,
+                  "UNSUPPORTED": 3,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "subtle": {
+              "n_cases": 21,
+              "gold_claims": 255,
+              "matched_pairs": 182,
+              "missed_gold": 73,
+              "correct": 155,
+              "claim_accuracy_all_gold": 0.6078431372549019,
+              "claim_accuracy_matched": 0.8516483516483516,
+              "decomposition_recall": 0.7137254901960784,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9652777777777778,
+                  "r": 0.6177777777777778,
+                  "f1": 0.7533875338753387
+                },
+                "CONTRADICTED": {
+                  "p": 0.375,
+                  "r": 0.3333333333333333,
+                  "f1": 0.35294117647058826
+                },
+                "UNSUPPORTED": {
+                  "p": 0.43333333333333335,
+                  "r": 0.6190476190476191,
+                  "f1": 0.5098039215686274
+                }
+              },
+              "macro_f1": 0.5387108773048515,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 139,
+                  "CONTRADICTED": 5,
+                  "UNSUPPORTED": 16,
+                  "MISSED": 65
+                },
+                "CONTRADICTED": {
+                  "MISSED": 3,
+                  "UNSUPPORTED": 1,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 3
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 13,
+                  "SUPPORTED": 3,
+                  "MISSED": 5
+                }
+              }
+            }
+          },
+          "multi_passage": {
+            "false": {
+              "n_cases": 45,
+              "gold_claims": 537,
+              "matched_pairs": 407,
+              "missed_gold": 130,
+              "correct": 348,
+              "claim_accuracy_all_gold": 0.6480446927374302,
+              "claim_accuracy_matched": 0.855036855036855,
+              "decomposition_recall": 0.7579143389199255,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9697885196374623,
+                  "r": 0.6645962732919255,
+                  "f1": 0.7886977886977887
+                },
+                "CONTRADICTED": {
+                  "p": 0.39285714285714285,
+                  "r": 0.4074074074074074,
+                  "f1": 0.39999999999999997
+                },
+                "UNSUPPORTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.5925925925925926,
+                  "f1": 0.4266666666666667
+                }
+              },
+              "macro_f1": 0.5384548184548185,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 321,
+                  "MISSED": 118,
+                  "UNSUPPORTED": 28,
+                  "CONTRADICTED": 16
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 11,
+                  "MISSED": 7,
+                  "SUPPORTED": 5,
+                  "UNSUPPORTED": 4
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 16,
+                  "SUPPORTED": 5,
+                  "MISSED": 5,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          },
+          "task": {
+            "Data2txt": {
+              "n_cases": 12,
+              "gold_claims": 210,
+              "matched_pairs": 151,
+              "missed_gold": 59,
+              "correct": 127,
+              "claim_accuracy_all_gold": 0.6047619047619047,
+              "claim_accuracy_matched": 0.8410596026490066,
+              "decomposition_recall": 0.719047619047619,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9609375,
+                  "r": 0.6373056994818653,
+                  "f1": 0.7663551401869159
+                },
+                "CONTRADICTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.18181818181818182,
+                  "f1": 0.23529411764705885
+                },
+                "UNSUPPORTED": {
+                  "p": 0.11764705882352941,
+                  "r": 0.3333333333333333,
+                  "f1": 0.1739130434782609
+                }
+              },
+              "macro_f1": 0.39185410043741187,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 123,
+                  "MISSED": 53,
+                  "UNSUPPORTED": 13,
+                  "CONTRADICTED": 4
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 2,
+                  "SUPPORTED": 3,
+                  "MISSED": 4,
+                  "UNSUPPORTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 2,
+                  "SUPPORTED": 2,
+                  "MISSED": 2
+                }
+              }
+            },
+            "QA": {
+              "n_cases": 11,
+              "gold_claims": 83,
+              "matched_pairs": 66,
+              "missed_gold": 17,
+              "correct": 55,
+              "claim_accuracy_all_gold": 0.6626506024096386,
+              "claim_accuracy_matched": 0.8333333333333334,
+              "decomposition_recall": 0.7951807228915663,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9565217391304348,
+                  "r": 0.6567164179104478,
+                  "f1": 0.7787610619469028
+                },
+                "CONTRADICTED": {
+                  "p": 0.4,
+                  "r": 0.5,
+                  "f1": 0.4444444444444445
+                },
+                "UNSUPPORTED": {
+                  "p": 0.6,
+                  "r": 0.75,
+                  "f1": 0.6666666666666665
+                }
+              },
+              "macro_f1": 0.6299573910193379,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 44,
+                  "CONTRADICTED": 3,
+                  "UNSUPPORTED": 6,
+                  "MISSED": 14
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 2,
+                  "MISSED": 1,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 9,
+                  "SUPPORTED": 1,
+                  "MISSED": 2
+                }
+              }
+            },
+            "Summary": {
+              "n_cases": 22,
+              "gold_claims": 244,
+              "matched_pairs": 190,
+              "missed_gold": 54,
+              "correct": 166,
+              "claim_accuracy_all_gold": 0.680327868852459,
+              "claim_accuracy_matched": 0.8736842105263158,
+              "decomposition_recall": 0.7786885245901639,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9808917197452229,
+                  "r": 0.6905829596412556,
+                  "f1": 0.8105263157894737
+                },
+                "CONTRADICTED": {
+                  "p": 0.4117647058823529,
+                  "r": 0.5833333333333334,
+                  "f1": 0.4827586206896552
+                },
+                "UNSUPPORTED": {
+                  "p": 0.3125,
+                  "r": 0.5555555555555556,
+                  "f1": 0.39999999999999997
+                }
+              },
+              "macro_f1": 0.5644283121597096,
+              "confusion": {
+                "SUPPORTED": {
+                  "CONTRADICTED": 9,
+                  "MISSED": 51,
+                  "UNSUPPORTED": 9,
+                  "SUPPORTED": 154
+                },
+                "CONTRADICTED": {
+                  "MISSED": 2,
+                  "CONTRADICTED": 7,
+                  "UNSUPPORTED": 2,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 1,
+                  "SUPPORTED": 2,
+                  "UNSUPPORTED": 5,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          }
+        },
+        "sentence_coverage": 0.9327217125382263,
+        "fused_claim_rate": 0.00909090909090909,
+        "claim_accuracy_matched": 0.855036855036855,
+        "claim_accuracy_all_gold": 0.6480446927374302,
+        "macro_f1": 0.5384548184548185,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 0.9697885196374623,
+            "r": 0.6645962732919255,
+            "f1": 0.7886977886977887
+          },
+          "CONTRADICTED": {
+            "p": 0.39285714285714285,
+            "r": 0.4074074074074074,
+            "f1": 0.39999999999999997
+          },
+          "UNSUPPORTED": {
+            "p": 0.3333333333333333,
+            "r": 0.5925925925925926,
+            "f1": 0.4266666666666667
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 321,
+            "MISSED": 118,
+            "UNSUPPORTED": 28,
+            "CONTRADICTED": 16
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 11,
+            "MISSED": 7,
+            "SUPPORTED": 5,
+            "UNSUPPORTED": 4
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 16,
+            "SUPPORTED": 5,
+            "MISSED": 5,
+            "CONTRADICTED": 1
+          }
+        },
+        "per_tag_accuracy": {
+          "baseless": 0.61,
+          "clean": 0.783,
+          "conflict": 0.644,
+          "evident": 0.652,
+          "long_context": 0.681,
+          "numeric": 0.62,
+          "subtle": 0.608
+        },
+        "citation_counts": {
+          "predicted": 444,
+          "hit": 414,
+          "gold": 518,
+          "gold_hit": 257,
+          "invalid": 0
+        },
+        "citation_precision": 0.9324324324324325,
+        "citation_recall": 0.49613899613899615,
+        "citation_passage_precision": 0.972972972972973,
+        "citation_passage_recall": 0.832046332046332,
+        "raw_citation_invalid_rate": 0.07366482504604052,
+        "latency_ms_p50": 9189.636042050552,
+        "latency_ms_p95": 12021.395583986305,
+        "avg_llm_calls": 1,
+        "avg_input_tokens": 1515.4888888888888,
+        "avg_output_tokens": 987.1555555555556,
+        "avg_cost_usd": 0.005909581333333334
+      },
+      {
+        "n_cases": 45,
+        "errors": 0,
+        "answer_level": {
+          "p": 0.8055555555555556,
+          "r": 0.8529411764705882,
+          "f1": 0.8285714285714286,
+          "acc": 0.7333333333333333
+        },
+        "decomposition": {
+          "recall": 0.7802607076350093,
+          "precision": 0.9208791208791208,
+          "gold_claims": 537,
+          "predicted_claims": 455,
+          "matched_pairs": 419,
+          "used_predictions": 419,
+          "missed_gold": 118,
+          "extra_predictions": 36,
+          "duplicate_predictions": 14,
+          "added_predictions": 22
+        },
+        "guard_rejected_pairs": 117,
+        "scoring_units_registry_sha256": null,
+        "groups": {
+          "context_length_words": {
+            "0-399": {
+              "n_cases": 21,
+              "gold_claims": 259,
+              "matched_pairs": 201,
+              "missed_gold": 58,
+              "correct": 171,
+              "claim_accuracy_all_gold": 0.6602316602316602,
+              "claim_accuracy_matched": 0.8507462686567164,
+              "decomposition_recall": 0.7760617760617761,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9627329192546584,
+                  "r": 0.6768558951965066,
+                  "f1": 0.7948717948717949
+                },
+                "CONTRADICTED": {
+                  "p": 0.46153846153846156,
+                  "r": 0.42857142857142855,
+                  "f1": 0.4444444444444445
+                },
+                "UNSUPPORTED": {
+                  "p": 0.37037037037037035,
+                  "r": 0.625,
+                  "f1": 0.4651162790697674
+                }
+              },
+              "macro_f1": 0.5681441727953356,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 155,
+                  "UNSUPPORTED": 17,
+                  "CONTRADICTED": 7,
+                  "MISSED": 50
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 6,
+                  "MISSED": 4,
+                  "SUPPORTED": 4
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 10,
+                  "SUPPORTED": 2,
+                  "MISSED": 4
+                }
+              }
+            },
+            "400-799": {
+              "n_cases": 12,
+              "gold_claims": 134,
+              "matched_pairs": 104,
+              "missed_gold": 30,
+              "correct": 92,
+              "claim_accuracy_all_gold": 0.6865671641791045,
+              "claim_accuracy_matched": 0.8846153846153846,
+              "decomposition_recall": 0.7761194029850746,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9647058823529412,
+                  "r": 0.6949152542372882,
+                  "f1": 0.8078817733990148
+                },
+                "CONTRADICTED": {
+                  "p": 0.45454545454545453,
+                  "r": 0.625,
+                  "f1": 0.5263157894736842
+                },
+                "UNSUPPORTED": {
+                  "p": 0.625,
+                  "r": 0.625,
+                  "f1": 0.625
+                }
+              },
+              "macro_f1": 0.6530658542908997,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 82,
+                  "MISSED": 29,
+                  "CONTRADICTED": 5,
+                  "UNSUPPORTED": 2
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "CONTRADICTED": 5,
+                  "UNSUPPORTED": 1,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 5,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "800+": {
+              "n_cases": 12,
+              "gold_claims": 144,
+              "matched_pairs": 114,
+              "missed_gold": 30,
+              "correct": 101,
+              "claim_accuracy_all_gold": 0.7013888888888888,
+              "claim_accuracy_matched": 0.8859649122807017,
+              "decomposition_recall": 0.7916666666666666,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9801980198019802,
+                  "r": 0.7279411764705882,
+                  "f1": 0.8354430379746834
+                },
+                "CONTRADICTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.4,
+                  "f1": 0.3636363636363636
+                },
+                "UNSUPPORTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                }
+              },
+              "macro_f1": 0.399693133870349,
+              "confusion": {
+                "SUPPORTED": {
+                  "CONTRADICTED": 3,
+                  "MISSED": 28,
+                  "UNSUPPORTED": 6,
+                  "SUPPORTED": 99
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "UNSUPPORTED": 1,
+                  "CONTRADICTED": 2,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 1,
+                  "SUPPORTED": 1,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          },
+          "difficulty": {
+            "clean": {
+              "n_cases": 5,
+              "gold_claims": 60,
+              "matched_pairs": 51,
+              "missed_gold": 9,
+              "correct": 48,
+              "claim_accuracy_all_gold": 0.8,
+              "claim_accuracy_matched": 0.9411764705882353,
+              "decomposition_recall": 0.85,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.8,
+                  "f1": 0.888888888888889
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                }
+              },
+              "macro_f1": 0.29629629629629634,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 48,
+                  "MISSED": 9,
+                  "UNSUPPORTED": 2,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {},
+                "UNSUPPORTED": {}
+              }
+            },
+            "evident": {
+              "n_cases": 19,
+              "gold_claims": 222,
+              "matched_pairs": 183,
+              "missed_gold": 39,
+              "correct": 160,
+              "claim_accuracy_all_gold": 0.7207207207207207,
+              "claim_accuracy_matched": 0.8743169398907104,
+              "decomposition_recall": 0.8243243243243243,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9668874172185431,
+                  "r": 0.7373737373737373,
+                  "f1": 0.8366762177650429
+                },
+                "CONTRADICTED": {
+                  "p": 0.5238095238095238,
+                  "r": 0.6111111111111112,
+                  "f1": 0.5641025641025642
+                },
+                "UNSUPPORTED": {
+                  "p": 0.2727272727272727,
+                  "r": 0.5,
+                  "f1": 0.3529411764705882
+                }
+              },
+              "macro_f1": 0.584573319446065,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 146,
+                  "UNSUPPORTED": 7,
+                  "MISSED": 36,
+                  "CONTRADICTED": 9
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 11,
+                  "MISSED": 3,
+                  "SUPPORTED": 3,
+                  "UNSUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "SUPPORTED": 2,
+                  "UNSUPPORTED": 3,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "subtle": {
+              "n_cases": 21,
+              "gold_claims": 255,
+              "matched_pairs": 185,
+              "missed_gold": 70,
+              "correct": 156,
+              "claim_accuracy_all_gold": 0.611764705882353,
+              "claim_accuracy_matched": 0.8432432432432433,
+              "decomposition_recall": 0.7254901960784313,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9594594594594594,
+                  "r": 0.6311111111111111,
+                  "f1": 0.7613941018766756
+                },
+                "CONTRADICTED": {
+                  "p": 0.25,
+                  "r": 0.2222222222222222,
+                  "f1": 0.23529411764705882
+                },
+                "UNSUPPORTED": {
+                  "p": 0.41379310344827586,
+                  "r": 0.5714285714285714,
+                  "f1": 0.48000000000000004
+                }
+              },
+              "macro_f1": 0.49222940650791147,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 142,
+                  "CONTRADICTED": 5,
+                  "UNSUPPORTED": 16,
+                  "MISSED": 62
+                },
+                "CONTRADICTED": {
+                  "MISSED": 3,
+                  "UNSUPPORTED": 1,
+                  "SUPPORTED": 3,
+                  "CONTRADICTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 12,
+                  "SUPPORTED": 3,
+                  "MISSED": 5,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          },
+          "multi_passage": {
+            "false": {
+              "n_cases": 45,
+              "gold_claims": 537,
+              "matched_pairs": 419,
+              "missed_gold": 118,
+              "correct": 364,
+              "claim_accuracy_all_gold": 0.6778398510242085,
+              "claim_accuracy_matched": 0.8687350835322196,
+              "decomposition_recall": 0.7802607076350093,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.968299711815562,
+                  "r": 0.6956521739130435,
+                  "f1": 0.8096385542168674
+                },
+                "CONTRADICTED": {
+                  "p": 0.43333333333333335,
+                  "r": 0.48148148148148145,
+                  "f1": 0.456140350877193
+                },
+                "UNSUPPORTED": {
+                  "p": 0.35714285714285715,
+                  "r": 0.5555555555555556,
+                  "f1": 0.43478260869565216
+                }
+              },
+              "macro_f1": 0.5668538379299042,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 336,
+                  "UNSUPPORTED": 25,
+                  "CONTRADICTED": 15,
+                  "MISSED": 107
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 13,
+                  "MISSED": 6,
+                  "SUPPORTED": 6,
+                  "UNSUPPORTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 15,
+                  "SUPPORTED": 5,
+                  "MISSED": 5,
+                  "CONTRADICTED": 2
+                }
+              }
+            }
+          },
+          "task": {
+            "Data2txt": {
+              "n_cases": 12,
+              "gold_claims": 210,
+              "matched_pairs": 159,
+              "missed_gold": 51,
+              "correct": 138,
+              "claim_accuracy_all_gold": 0.6571428571428571,
+              "claim_accuracy_matched": 0.8679245283018868,
+              "decomposition_recall": 0.7571428571428571,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9568345323741008,
+                  "r": 0.689119170984456,
+                  "f1": 0.8012048192771084
+                },
+                "CONTRADICTED": {
+                  "p": 0.5,
+                  "r": 0.36363636363636365,
+                  "f1": 0.4210526315789474
+                },
+                "UNSUPPORTED": {
+                  "p": 0.08333333333333333,
+                  "r": 0.16666666666666666,
+                  "f1": 0.1111111111111111
+                }
+              },
+              "macro_f1": 0.44445618732238895,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 133,
+                  "UNSUPPORTED": 11,
+                  "MISSED": 45,
+                  "CONTRADICTED": 4
+                },
+                "CONTRADICTED": {
+                  "SUPPORTED": 4,
+                  "MISSED": 3,
+                  "CONTRADICTED": 4
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 1,
+                  "SUPPORTED": 2,
+                  "MISSED": 3
+                }
+              }
+            },
+            "QA": {
+              "n_cases": 11,
+              "gold_claims": 83,
+              "matched_pairs": 67,
+              "missed_gold": 16,
+              "correct": 56,
+              "claim_accuracy_all_gold": 0.6746987951807228,
+              "claim_accuracy_matched": 0.835820895522388,
+              "decomposition_recall": 0.8072289156626506,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9565217391304348,
+                  "r": 0.6567164179104478,
+                  "f1": 0.7787610619469028
+                },
+                "CONTRADICTED": {
+                  "p": 0.4,
+                  "r": 0.5,
+                  "f1": 0.4444444444444445
+                },
+                "UNSUPPORTED": {
+                  "p": 0.625,
+                  "r": 0.8333333333333334,
+                  "f1": 0.7142857142857143
+                }
+              },
+              "macro_f1": 0.6458304068923538,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 44,
+                  "CONTRADICTED": 3,
+                  "UNSUPPORTED": 6,
+                  "MISSED": 14
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 2,
+                  "MISSED": 1,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 10,
+                  "SUPPORTED": 1,
+                  "MISSED": 1
+                }
+              }
+            },
+            "Summary": {
+              "n_cases": 22,
+              "gold_claims": 244,
+              "matched_pairs": 193,
+              "missed_gold": 51,
+              "correct": 170,
+              "claim_accuracy_all_gold": 0.6967213114754098,
+              "claim_accuracy_matched": 0.8808290155440415,
+              "decomposition_recall": 0.7909836065573771,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9814814814814815,
+                  "r": 0.7130044843049327,
+                  "f1": 0.8259740259740259
+                },
+                "CONTRADICTED": {
+                  "p": 0.4117647058823529,
+                  "r": 0.5833333333333334,
+                  "f1": 0.4827586206896552
+                },
+                "UNSUPPORTED": {
+                  "p": 0.2857142857142857,
+                  "r": 0.4444444444444444,
+                  "f1": 0.34782608695652173
+                }
+              },
+              "macro_f1": 0.5521862445400676,
+              "confusion": {
+                "SUPPORTED": {
+                  "CONTRADICTED": 8,
+                  "MISSED": 48,
+                  "UNSUPPORTED": 8,
+                  "SUPPORTED": 159
+                },
+                "CONTRADICTED": {
+                  "MISSED": 2,
+                  "CONTRADICTED": 7,
+                  "UNSUPPORTED": 2,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "MISSED": 1,
+                  "SUPPORTED": 2,
+                  "UNSUPPORTED": 4,
+                  "CONTRADICTED": 2
+                }
+              }
+            }
+          }
+        },
+        "sentence_coverage": 0.9357798165137615,
+        "fused_claim_rate": 0.008791208791208791,
+        "claim_accuracy_matched": 0.8687350835322196,
+        "claim_accuracy_all_gold": 0.6778398510242085,
+        "macro_f1": 0.5668538379299042,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 0.968299711815562,
+            "r": 0.6956521739130435,
+            "f1": 0.8096385542168674
+          },
+          "CONTRADICTED": {
+            "p": 0.43333333333333335,
+            "r": 0.48148148148148145,
+            "f1": 0.456140350877193
+          },
+          "UNSUPPORTED": {
+            "p": 0.35714285714285715,
+            "r": 0.5555555555555556,
+            "f1": 0.43478260869565216
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 336,
+            "UNSUPPORTED": 25,
+            "CONTRADICTED": 15,
+            "MISSED": 107
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 13,
+            "MISSED": 6,
+            "SUPPORTED": 6,
+            "UNSUPPORTED": 2
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 15,
+            "SUPPORTED": 5,
+            "MISSED": 5,
+            "CONTRADICTED": 2
+          }
+        },
+        "per_tag_accuracy": {
+          "baseless": 0.618,
+          "clean": 0.8,
+          "conflict": 0.681,
+          "evident": 0.699,
+          "long_context": 0.701,
+          "numeric": 0.636,
+          "subtle": 0.612
+        },
+        "citation_counts": {
+          "predicted": 472,
+          "hit": 437,
+          "gold": 551,
+          "gold_hit": 260,
+          "invalid": 0
+        },
+        "citation_precision": 0.9258474576271186,
+        "citation_recall": 0.47186932849364793,
+        "citation_passage_precision": 0.961864406779661,
+        "citation_passage_recall": 0.8166969147005445,
+        "raw_citation_invalid_rate": 0.04903677758318739,
+        "latency_ms_p50": 8973.248333029915,
+        "latency_ms_p95": 12270.005709026009,
+        "avg_llm_calls": 1,
+        "avg_input_tokens": 1515.4888888888888,
+        "avg_output_tokens": 1012.8,
+        "avg_cost_usd": 0.006011133333333333
+      }
+    ],
+    "optimized": [
+      {
+        "n_cases": 45,
+        "errors": 0,
+        "answer_level": {
+          "p": 0.8048780487804879,
+          "r": 0.9705882352941176,
+          "f1": 0.8800000000000001,
+          "acc": 0.8
+        },
+        "decomposition": {
+          "recall": 0.8919925512104283,
+          "precision": 0.8772893772893773,
+          "gold_claims": 537,
+          "predicted_claims": 546,
+          "matched_pairs": 479,
+          "used_predictions": 479,
+          "missed_gold": 58,
+          "extra_predictions": 67,
+          "duplicate_predictions": 43,
+          "added_predictions": 24
+        },
+        "guard_rejected_pairs": 237,
+        "scoring_units_registry_sha256": null,
+        "groups": {
+          "context_length_words": {
+            "0-399": {
+              "n_cases": 21,
+              "gold_claims": 259,
+              "matched_pairs": 228,
+              "missed_gold": 31,
+              "correct": 181,
+              "claim_accuracy_all_gold": 0.6988416988416989,
+              "claim_accuracy_matched": 0.793859649122807,
+              "decomposition_recall": 0.8803088803088803,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.963855421686747,
+                  "r": 0.6986899563318777,
+                  "f1": 0.810126582278481
+                },
+                "CONTRADICTED": {
+                  "p": 0.38095238095238093,
+                  "r": 0.5714285714285714,
+                  "f1": 0.4571428571428571
+                },
+                "UNSUPPORTED": {
+                  "p": 0.3170731707317073,
+                  "r": 0.8125,
+                  "f1": 0.45614035087719296
+                }
+              },
+              "macro_f1": 0.5744699300995103,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 160,
+                  "UNSUPPORTED": 27,
+                  "CONTRADICTED": 13,
+                  "MISSED": 29
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 8,
+                  "SUPPORTED": 4,
+                  "MISSED": 1,
+                  "UNSUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 13,
+                  "SUPPORTED": 2,
+                  "MISSED": 1
+                }
+              }
+            },
+            "400-799": {
+              "n_cases": 12,
+              "gold_claims": 134,
+              "matched_pairs": 124,
+              "missed_gold": 10,
+              "correct": 99,
+              "claim_accuracy_all_gold": 0.7388059701492538,
+              "claim_accuracy_matched": 0.7983870967741935,
+              "decomposition_recall": 0.9253731343283582,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9782608695652174,
+                  "r": 0.7627118644067796,
+                  "f1": 0.857142857142857
+                },
+                "CONTRADICTED": {
+                  "p": 0.4444444444444444,
+                  "r": 0.5,
+                  "f1": 0.47058823529411764
+                },
+                "UNSUPPORTED": {
+                  "p": 0.21739130434782608,
+                  "r": 0.625,
+                  "f1": 0.3225806451612903
+                }
+              },
+              "macro_f1": 0.5501039125327549,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 90,
+                  "MISSED": 10,
+                  "UNSUPPORTED": 14,
+                  "CONTRADICTED": 4
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 4,
+                  "CONTRADICTED": 4
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 5,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "800+": {
+              "n_cases": 12,
+              "gold_claims": 144,
+              "matched_pairs": 127,
+              "missed_gold": 17,
+              "correct": 110,
+              "claim_accuracy_all_gold": 0.7638888888888888,
+              "claim_accuracy_matched": 0.8661417322834646,
+              "decomposition_recall": 0.8819444444444444,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9814814814814815,
+                  "r": 0.7794117647058824,
+                  "f1": 0.8688524590163934
+                },
+                "CONTRADICTED": {
+                  "p": 0.2857142857142857,
+                  "r": 0.4,
+                  "f1": 0.3333333333333333
+                },
+                "UNSUPPORTED": {
+                  "p": 0.16666666666666666,
+                  "r": 0.6666666666666666,
+                  "f1": 0.26666666666666666
+                }
+              },
+              "macro_f1": 0.4896174863387978,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 9,
+                  "MISSED": 16,
+                  "SUPPORTED": 106,
+                  "CONTRADICTED": 5
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "UNSUPPORTED": 1,
+                  "CONTRADICTED": 2,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 2,
+                  "SUPPORTED": 1
+                }
+              }
+            }
+          },
+          "difficulty": {
+            "clean": {
+              "n_cases": 5,
+              "gold_claims": 60,
+              "matched_pairs": 55,
+              "missed_gold": 5,
+              "correct": 52,
+              "claim_accuracy_all_gold": 0.8666666666666667,
+              "claim_accuracy_matched": 0.9454545454545454,
+              "decomposition_recall": 0.9166666666666666,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.8666666666666667,
+                  "f1": 0.9285714285714286
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                }
+              },
+              "macro_f1": 0.30952380952380953,
+              "confusion": {
+                "SUPPORTED": {
+                  "MISSED": 5,
+                  "SUPPORTED": 52,
+                  "UNSUPPORTED": 2,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {},
+                "UNSUPPORTED": {}
+              }
+            },
+            "evident": {
+              "n_cases": 19,
+              "gold_claims": 222,
+              "matched_pairs": 203,
+              "missed_gold": 19,
+              "correct": 155,
+              "claim_accuracy_all_gold": 0.6981981981981982,
+              "claim_accuracy_matched": 0.7635467980295566,
+              "decomposition_recall": 0.9144144144144144,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9657534246575342,
+                  "r": 0.7121212121212122,
+                  "f1": 0.8197674418604651
+                },
+                "CONTRADICTED": {
+                  "p": 0.4074074074074074,
+                  "r": 0.6111111111111112,
+                  "f1": 0.4888888888888889
+                },
+                "UNSUPPORTED": {
+                  "p": 0.1,
+                  "r": 0.5,
+                  "f1": 0.16666666666666669
+                }
+              },
+              "macro_f1": 0.4917743324720069,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 141,
+                  "UNSUPPORTED": 24,
+                  "CONTRADICTED": 15,
+                  "MISSED": 18
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 11,
+                  "SUPPORTED": 3,
+                  "UNSUPPORTED": 3,
+                  "MISSED": 1
+                },
+                "UNSUPPORTED": {
+                  "SUPPORTED": 2,
+                  "UNSUPPORTED": 3,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "subtle": {
+              "n_cases": 21,
+              "gold_claims": 255,
+              "matched_pairs": 221,
+              "missed_gold": 34,
+              "correct": 183,
+              "claim_accuracy_all_gold": 0.7176470588235294,
+              "claim_accuracy_matched": 0.8280542986425339,
+              "decomposition_recall": 0.8666666666666667,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9702380952380952,
+                  "r": 0.7244444444444444,
+                  "f1": 0.8295165394402035
+                },
+                "CONTRADICTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.3333333333333333,
+                  "f1": 0.3333333333333333
+                },
+                "UNSUPPORTED": {
+                  "p": 0.38636363636363635,
+                  "r": 0.8095238095238095,
+                  "f1": 0.523076923076923
+                }
+              },
+              "macro_f1": 0.56197559861682,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 163,
+                  "CONTRADICTED": 6,
+                  "UNSUPPORTED": 24,
+                  "MISSED": 32
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "UNSUPPORTED": 3,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 3
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 17,
+                  "SUPPORTED": 3,
+                  "MISSED": 1
+                }
+              }
+            }
+          },
+          "multi_passage": {
+            "false": {
+              "n_cases": 45,
+              "gold_claims": 537,
+              "matched_pairs": 479,
+              "missed_gold": 58,
+              "correct": 390,
+              "claim_accuracy_all_gold": 0.7262569832402235,
+              "claim_accuracy_matched": 0.81419624217119,
+              "decomposition_recall": 0.8919925512104283,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9726775956284153,
+                  "r": 0.7370600414078675,
+                  "f1": 0.8386336866902238
+                },
+                "CONTRADICTED": {
+                  "p": 0.3783783783783784,
+                  "r": 0.5185185185185185,
+                  "f1": 0.4375
+                },
+                "UNSUPPORTED": {
+                  "p": 0.2631578947368421,
+                  "r": 0.7407407407407407,
+                  "f1": 0.3883495145631068
+                }
+              },
+              "macro_f1": 0.5548277337511102,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 356,
+                  "UNSUPPORTED": 50,
+                  "CONTRADICTED": 22,
+                  "MISSED": 55
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 14,
+                  "SUPPORTED": 5,
+                  "UNSUPPORTED": 6,
+                  "MISSED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 20,
+                  "SUPPORTED": 5,
+                  "MISSED": 1,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          },
+          "task": {
+            "Data2txt": {
+              "n_cases": 12,
+              "gold_claims": 210,
+              "matched_pairs": 194,
+              "missed_gold": 16,
+              "correct": 159,
+              "claim_accuracy_all_gold": 0.7571428571428571,
+              "claim_accuracy_matched": 0.8195876288659794,
+              "decomposition_recall": 0.9238095238095239,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9675324675324676,
+                  "r": 0.772020725388601,
+                  "f1": 0.8587896253602306
+                },
+                "CONTRADICTED": {
+                  "p": 0.375,
+                  "r": 0.5454545454545454,
+                  "f1": 0.4444444444444444
+                },
+                "UNSUPPORTED": {
+                  "p": 0.16666666666666666,
+                  "r": 0.6666666666666666,
+                  "f1": 0.26666666666666666
+                }
+              },
+              "macro_f1": 0.5233002454904472,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 149,
+                  "UNSUPPORTED": 19,
+                  "CONTRADICTED": 10,
+                  "MISSED": 15
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 6,
+                  "SUPPORTED": 3,
+                  "MISSED": 1,
+                  "UNSUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 4,
+                  "SUPPORTED": 2
+                }
+              }
+            },
+            "QA": {
+              "n_cases": 11,
+              "gold_claims": 83,
+              "matched_pairs": 67,
+              "missed_gold": 16,
+              "correct": 48,
+              "claim_accuracy_all_gold": 0.5783132530120482,
+              "claim_accuracy_matched": 0.7164179104477612,
+              "decomposition_recall": 0.8072289156626506,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9459459459459459,
+                  "r": 0.5223880597014925,
+                  "f1": 0.673076923076923
+                },
+                "CONTRADICTED": {
+                  "p": 0.375,
+                  "r": 0.75,
+                  "f1": 0.5
+                },
+                "UNSUPPORTED": {
+                  "p": 0.45454545454545453,
+                  "r": 0.8333333333333334,
+                  "f1": 0.5882352941176471
+                }
+              },
+              "macro_f1": 0.5871040723981901,
+              "confusion": {
+                "SUPPORTED": {
+                  "MISSED": 15,
+                  "SUPPORTED": 35,
+                  "UNSUPPORTED": 12,
+                  "CONTRADICTED": 5
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 3,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 10,
+                  "SUPPORTED": 1,
+                  "MISSED": 1
+                }
+              }
+            },
+            "Summary": {
+              "n_cases": 22,
+              "gold_claims": 244,
+              "matched_pairs": 218,
+              "missed_gold": 26,
+              "correct": 183,
+              "claim_accuracy_all_gold": 0.75,
+              "claim_accuracy_matched": 0.8394495412844036,
+              "decomposition_recall": 0.8934426229508197,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9828571428571429,
+                  "r": 0.7713004484304933,
+                  "f1": 0.864321608040201
+                },
+                "CONTRADICTED": {
+                  "p": 0.38461538461538464,
+                  "r": 0.4166666666666667,
+                  "f1": 0.4
+                },
+                "UNSUPPORTED": {
+                  "p": 0.2,
+                  "r": 0.6666666666666666,
+                  "f1": 0.30769230769230765
+                }
+              },
+              "macro_f1": 0.5240046385775029,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 19,
+                  "MISSED": 25,
+                  "SUPPORTED": 172,
+                  "CONTRADICTED": 7
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 5,
+                  "MISSED": 1,
+                  "CONTRADICTED": 5,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 6,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          }
+        },
+        "sentence_coverage": 0.9388379204892966,
+        "fused_claim_rate": 0.09157509157509157,
+        "claim_accuracy_matched": 0.81419624217119,
+        "claim_accuracy_all_gold": 0.7262569832402235,
+        "macro_f1": 0.5548277337511102,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 0.9726775956284153,
+            "r": 0.7370600414078675,
+            "f1": 0.8386336866902238
+          },
+          "CONTRADICTED": {
+            "p": 0.3783783783783784,
+            "r": 0.5185185185185185,
+            "f1": 0.4375
+          },
+          "UNSUPPORTED": {
+            "p": 0.2631578947368421,
+            "r": 0.7407407407407407,
+            "f1": 0.3883495145631068
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 356,
+            "UNSUPPORTED": 50,
+            "CONTRADICTED": 22,
+            "MISSED": 55
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 14,
+            "SUPPORTED": 5,
+            "UNSUPPORTED": 6,
+            "MISSED": 2
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 20,
+            "SUPPORTED": 5,
+            "MISSED": 1,
+            "CONTRADICTED": 1
+          }
+        },
+        "per_tag_accuracy": {
+          "baseless": 0.713,
+          "clean": 0.867,
+          "conflict": 0.721,
+          "evident": 0.721,
+          "long_context": 0.764,
+          "numeric": 0.686,
+          "subtle": 0.718
+        },
+        "citation_counts": {
+          "predicted": 583,
+          "hit": 517,
+          "gold": 577,
+          "gold_hit": 273,
+          "invalid": 0
+        },
+        "citation_precision": 0.8867924528301887,
+        "citation_recall": 0.4731369150779896,
+        "citation_passage_precision": 0.9536878216123499,
+        "citation_passage_recall": 0.8908145580589255,
+        "raw_citation_invalid_rate": 0.04377564979480164,
+        "latency_ms_p50": 11967.773500015028,
+        "latency_ms_p95": 18423.589708982036,
+        "avg_llm_calls": 13.155555555555555,
+        "avg_input_tokens": 23179.222222222223,
+        "avg_output_tokens": 2467.177777777778,
+        "avg_cost_usd": 0.04036659733333334
+      },
+      {
+        "n_cases": 45,
+        "errors": 0,
+        "answer_level": {
+          "p": 0.7857142857142857,
+          "r": 0.9705882352941176,
+          "f1": 0.8684210526315789,
+          "acc": 0.7777777777777778
+        },
+        "decomposition": {
+          "recall": 0.8994413407821229,
+          "precision": 0.8563829787234043,
+          "gold_claims": 537,
+          "predicted_claims": 564,
+          "matched_pairs": 483,
+          "used_predictions": 483,
+          "missed_gold": 54,
+          "extra_predictions": 81,
+          "duplicate_predictions": 55,
+          "added_predictions": 26
+        },
+        "guard_rejected_pairs": 233,
+        "scoring_units_registry_sha256": null,
+        "groups": {
+          "context_length_words": {
+            "0-399": {
+              "n_cases": 21,
+              "gold_claims": 259,
+              "matched_pairs": 230,
+              "missed_gold": 29,
+              "correct": 186,
+              "claim_accuracy_all_gold": 0.7181467181467182,
+              "claim_accuracy_matched": 0.808695652173913,
+              "decomposition_recall": 0.888030888030888,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9649122807017544,
+                  "r": 0.7205240174672489,
+                  "f1": 0.825
+                },
+                "CONTRADICTED": {
+                  "p": 0.42105263157894735,
+                  "r": 0.5714285714285714,
+                  "f1": 0.48484848484848486
+                },
+                "UNSUPPORTED": {
+                  "p": 0.325,
+                  "r": 0.8125,
+                  "f1": 0.46428571428571436
+                }
+              },
+              "macro_f1": 0.5913780663780663,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 165,
+                  "CONTRADICTED": 11,
+                  "UNSUPPORTED": 25,
+                  "MISSED": 28
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 8,
+                  "SUPPORTED": 4,
+                  "UNSUPPORTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 13,
+                  "SUPPORTED": 2,
+                  "MISSED": 1
+                }
+              }
+            },
+            "400-799": {
+              "n_cases": 12,
+              "gold_claims": 134,
+              "matched_pairs": 124,
+              "missed_gold": 10,
+              "correct": 99,
+              "claim_accuracy_all_gold": 0.7388059701492538,
+              "claim_accuracy_matched": 0.7983870967741935,
+              "decomposition_recall": 0.9253731343283582,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.978494623655914,
+                  "r": 0.7711864406779662,
+                  "f1": 0.8625592417061612
+                },
+                "CONTRADICTED": {
+                  "p": 0.42857142857142855,
+                  "r": 0.375,
+                  "f1": 0.39999999999999997
+                },
+                "UNSUPPORTED": {
+                  "p": 0.20833333333333334,
+                  "r": 0.625,
+                  "f1": 0.3125
+                }
+              },
+              "macro_f1": 0.525019747235387,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 91,
+                  "MISSED": 10,
+                  "UNSUPPORTED": 14,
+                  "CONTRADICTED": 3
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 5,
+                  "CONTRADICTED": 3
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 5,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "800+": {
+              "n_cases": 12,
+              "gold_claims": 144,
+              "matched_pairs": 129,
+              "missed_gold": 15,
+              "correct": 111,
+              "claim_accuracy_all_gold": 0.7708333333333334,
+              "claim_accuracy_matched": 0.8604651162790697,
+              "decomposition_recall": 0.8958333333333334,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.981651376146789,
+                  "r": 0.7867647058823529,
+                  "f1": 0.873469387755102
+                },
+                "CONTRADICTED": {
+                  "p": 0.2857142857142857,
+                  "r": 0.4,
+                  "f1": 0.3333333333333333
+                },
+                "UNSUPPORTED": {
+                  "p": 0.15384615384615385,
+                  "r": 0.6666666666666666,
+                  "f1": 0.25
+                }
+              },
+              "macro_f1": 0.48560090702947845,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 10,
+                  "MISSED": 14,
+                  "SUPPORTED": 107,
+                  "CONTRADICTED": 5
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "UNSUPPORTED": 1,
+                  "CONTRADICTED": 2,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 2,
+                  "SUPPORTED": 1
+                }
+              }
+            }
+          },
+          "difficulty": {
+            "clean": {
+              "n_cases": 5,
+              "gold_claims": 60,
+              "matched_pairs": 56,
+              "missed_gold": 4,
+              "correct": 52,
+              "claim_accuracy_all_gold": 0.8666666666666667,
+              "claim_accuracy_matched": 0.9285714285714286,
+              "decomposition_recall": 0.9333333333333333,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 1.0,
+                  "r": 0.8666666666666667,
+                  "f1": 0.9285714285714286
+                },
+                "CONTRADICTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                },
+                "UNSUPPORTED": {
+                  "p": 0.0,
+                  "r": 0.0,
+                  "f1": 0.0
+                }
+              },
+              "macro_f1": 0.30952380952380953,
+              "confusion": {
+                "SUPPORTED": {
+                  "MISSED": 4,
+                  "SUPPORTED": 52,
+                  "UNSUPPORTED": 3,
+                  "CONTRADICTED": 1
+                },
+                "CONTRADICTED": {},
+                "UNSUPPORTED": {}
+              }
+            },
+            "evident": {
+              "n_cases": 19,
+              "gold_claims": 222,
+              "matched_pairs": 205,
+              "missed_gold": 17,
+              "correct": 162,
+              "claim_accuracy_all_gold": 0.7297297297297297,
+              "claim_accuracy_matched": 0.7902439024390244,
+              "decomposition_recall": 0.9234234234234234,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9673202614379085,
+                  "r": 0.7474747474747475,
+                  "f1": 0.8433048433048432
+                },
+                "CONTRADICTED": {
+                  "p": 0.4782608695652174,
+                  "r": 0.6111111111111112,
+                  "f1": 0.5365853658536586
+                },
+                "UNSUPPORTED": {
+                  "p": 0.10344827586206896,
+                  "r": 0.5,
+                  "f1": 0.17142857142857143
+                }
+              },
+              "macro_f1": 0.5171062601956911,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 148,
+                  "CONTRADICTED": 11,
+                  "UNSUPPORTED": 22,
+                  "MISSED": 17
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 11,
+                  "SUPPORTED": 3,
+                  "UNSUPPORTED": 4
+                },
+                "UNSUPPORTED": {
+                  "SUPPORTED": 2,
+                  "UNSUPPORTED": 3,
+                  "CONTRADICTED": 1
+                }
+              }
+            },
+            "subtle": {
+              "n_cases": 21,
+              "gold_claims": 255,
+              "matched_pairs": 222,
+              "missed_gold": 33,
+              "correct": 182,
+              "claim_accuracy_all_gold": 0.7137254901960784,
+              "claim_accuracy_matched": 0.8198198198198198,
+              "decomposition_recall": 0.8705882352941177,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9702380952380952,
+                  "r": 0.7244444444444444,
+                  "f1": 0.8295165394402035
+                },
+                "CONTRADICTED": {
+                  "p": 0.2222222222222222,
+                  "r": 0.2222222222222222,
+                  "f1": 0.2222222222222222
+                },
+                "UNSUPPORTED": {
+                  "p": 0.37777777777777777,
+                  "r": 0.8095238095238095,
+                  "f1": 0.5151515151515151
+                }
+              },
+              "macro_f1": 0.5222967589379803,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 163,
+                  "CONTRADICTED": 7,
+                  "UNSUPPORTED": 24,
+                  "MISSED": 31
+                },
+                "CONTRADICTED": {
+                  "MISSED": 1,
+                  "UNSUPPORTED": 4,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 17,
+                  "SUPPORTED": 3,
+                  "MISSED": 1
+                }
+              }
+            }
+          },
+          "multi_passage": {
+            "false": {
+              "n_cases": 45,
+              "gold_claims": 537,
+              "matched_pairs": 483,
+              "missed_gold": 54,
+              "correct": 396,
+              "claim_accuracy_all_gold": 0.7374301675977654,
+              "claim_accuracy_matched": 0.8198757763975155,
+              "decomposition_recall": 0.8994413407821229,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9731903485254692,
+                  "r": 0.7515527950310559,
+                  "f1": 0.8481308411214953
+                },
+                "CONTRADICTED": {
+                  "p": 0.3939393939393939,
+                  "r": 0.48148148148148145,
+                  "f1": 0.43333333333333324
+                },
+                "UNSUPPORTED": {
+                  "p": 0.2597402597402597,
+                  "r": 0.7407407407407407,
+                  "f1": 0.38461538461538464
+                }
+              },
+              "macro_f1": 0.5553598530234044,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 363,
+                  "CONTRADICTED": 19,
+                  "UNSUPPORTED": 49,
+                  "MISSED": 52
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 13,
+                  "SUPPORTED": 5,
+                  "UNSUPPORTED": 8,
+                  "MISSED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 20,
+                  "SUPPORTED": 5,
+                  "MISSED": 1,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          },
+          "task": {
+            "Data2txt": {
+              "n_cases": 12,
+              "gold_claims": 210,
+              "matched_pairs": 195,
+              "missed_gold": 15,
+              "correct": 165,
+              "claim_accuracy_all_gold": 0.7857142857142857,
+              "claim_accuracy_matched": 0.8461538461538461,
+              "decomposition_recall": 0.9285714285714286,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.96875,
+                  "r": 0.8031088082901554,
+                  "f1": 0.8781869688385269
+                },
+                "CONTRADICTED": {
+                  "p": 0.46153846153846156,
+                  "r": 0.5454545454545454,
+                  "f1": 0.4999999999999999
+                },
+                "UNSUPPORTED": {
+                  "p": 0.18181818181818182,
+                  "r": 0.6666666666666666,
+                  "f1": 0.28571428571428575
+                }
+              },
+              "macro_f1": 0.5546337515176042,
+              "confusion": {
+                "SUPPORTED": {
+                  "SUPPORTED": 155,
+                  "CONTRADICTED": 7,
+                  "UNSUPPORTED": 16,
+                  "MISSED": 15
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 6,
+                  "SUPPORTED": 3,
+                  "UNSUPPORTED": 2
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 4,
+                  "SUPPORTED": 2
+                }
+              }
+            },
+            "QA": {
+              "n_cases": 11,
+              "gold_claims": 83,
+              "matched_pairs": 68,
+              "missed_gold": 15,
+              "correct": 48,
+              "claim_accuracy_all_gold": 0.5783132530120482,
+              "claim_accuracy_matched": 0.7058823529411765,
+              "decomposition_recall": 0.8192771084337349,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9459459459459459,
+                  "r": 0.5223880597014925,
+                  "f1": 0.673076923076923
+                },
+                "CONTRADICTED": {
+                  "p": 0.3333333333333333,
+                  "r": 0.75,
+                  "f1": 0.46153846153846156
+                },
+                "UNSUPPORTED": {
+                  "p": 0.45454545454545453,
+                  "r": 0.8333333333333334,
+                  "f1": 0.5882352941176471
+                }
+              },
+              "macro_f1": 0.5742835595776772,
+              "confusion": {
+                "SUPPORTED": {
+                  "MISSED": 14,
+                  "SUPPORTED": 35,
+                  "UNSUPPORTED": 12,
+                  "CONTRADICTED": 6
+                },
+                "CONTRADICTED": {
+                  "CONTRADICTED": 3,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 10,
+                  "SUPPORTED": 1,
+                  "MISSED": 1
+                }
+              }
+            },
+            "Summary": {
+              "n_cases": 22,
+              "gold_claims": 244,
+              "matched_pairs": 220,
+              "missed_gold": 24,
+              "correct": 183,
+              "claim_accuracy_all_gold": 0.75,
+              "claim_accuracy_matched": 0.8318181818181818,
+              "decomposition_recall": 0.9016393442622951,
+              "per_label": {
+                "SUPPORTED": {
+                  "p": 0.9829545454545454,
+                  "r": 0.7757847533632287,
+                  "f1": 0.8671679197994988
+                },
+                "CONTRADICTED": {
+                  "p": 0.36363636363636365,
+                  "r": 0.3333333333333333,
+                  "f1": 0.34782608695652173
+                },
+                "UNSUPPORTED": {
+                  "p": 0.18181818181818182,
+                  "r": 0.6666666666666666,
+                  "f1": 0.28571428571428575
+                }
+              },
+              "macro_f1": 0.5002360974901021,
+              "confusion": {
+                "SUPPORTED": {
+                  "UNSUPPORTED": 21,
+                  "MISSED": 23,
+                  "SUPPORTED": 173,
+                  "CONTRADICTED": 6
+                },
+                "CONTRADICTED": {
+                  "UNSUPPORTED": 6,
+                  "MISSED": 1,
+                  "CONTRADICTED": 4,
+                  "SUPPORTED": 1
+                },
+                "UNSUPPORTED": {
+                  "UNSUPPORTED": 6,
+                  "SUPPORTED": 2,
+                  "CONTRADICTED": 1
+                }
+              }
+            }
+          }
+        },
+        "sentence_coverage": 0.9327217125382263,
+        "fused_claim_rate": 0.08687943262411348,
+        "claim_accuracy_matched": 0.8198757763975155,
+        "claim_accuracy_all_gold": 0.7374301675977654,
+        "macro_f1": 0.5553598530234044,
+        "per_label": {
+          "SUPPORTED": {
+            "p": 0.9731903485254692,
+            "r": 0.7515527950310559,
+            "f1": 0.8481308411214953
+          },
+          "CONTRADICTED": {
+            "p": 0.3939393939393939,
+            "r": 0.48148148148148145,
+            "f1": 0.43333333333333324
+          },
+          "UNSUPPORTED": {
+            "p": 0.2597402597402597,
+            "r": 0.7407407407407407,
+            "f1": 0.38461538461538464
+          }
+        },
+        "confusion": {
+          "SUPPORTED": {
+            "SUPPORTED": 363,
+            "CONTRADICTED": 19,
+            "UNSUPPORTED": 49,
+            "MISSED": 52
+          },
+          "CONTRADICTED": {
+            "CONTRADICTED": 13,
+            "SUPPORTED": 5,
+            "UNSUPPORTED": 8,
+            "MISSED": 1
+          },
+          "UNSUPPORTED": {
+            "UNSUPPORTED": 20,
+            "SUPPORTED": 5,
+            "MISSED": 1,
+            "CONTRADICTED": 1
+          }
+        },
+        "per_tag_accuracy": {
+          "baseless": 0.701,
+          "clean": 0.867,
+          "conflict": 0.736,
+          "evident": 0.734,
+          "long_context": 0.771,
+          "numeric": 0.686,
+          "subtle": 0.714
+        },
+        "citation_counts": {
+          "predicted": 589,
+          "hit": 532,
+          "gold": 581,
+          "gold_hit": 270,
+          "invalid": 0
+        },
+        "citation_precision": 0.9032258064516129,
+        "citation_recall": 0.46471600688468157,
+        "citation_passage_precision": 0.9626485568760611,
+        "citation_passage_recall": 0.8846815834767642,
+        "raw_citation_invalid_rate": 0.04666666666666667,
+        "latency_ms_p50": 11989.733416994568,
+        "latency_ms_p95": 18975.232124968898,
+        "avg_llm_calls": 13.555555555555555,
+        "avg_input_tokens": 23829.866666666665,
+        "avg_output_tokens": 2538.6444444444446,
+        "avg_cost_usd": 0.041508456
+      }
+    ]
+  }
+}

@@ -1,0 +1,1439 @@
+{
+  "design_version": "2.5",
+  "base_freeze_commit": "cbccac9",
+  "historical_freeze_commit": "c78d411",
+  "hard_test_verifier_run": false,
+  "label_source": "ragtruth_human",
+  "secondary_human_review": false,
+  "selected_cases": 63,
+  "retained_cases": 63,
+  "retained_claims": 782,
+  "excluded_claims": 11,
+  "excluded_cases": 0,
+  "excluded_claim_details": [
+    {
+      "case_id": "ragtruth-14011",
+      "claim_id": "ragtruth-14011-c7",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-14912",
+      "claim_id": "ragtruth-14912-c2",
+      "label": "UNSUPPORTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-14912",
+      "claim_id": "ragtruth-14912-c3",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-15985",
+      "claim_id": "ragtruth-15985-c1",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-16620",
+      "claim_id": "ragtruth-16620-c1",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-3126",
+      "claim_id": "ragtruth-3126-c1",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-3522",
+      "claim_id": "ragtruth-3522-c2",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-9809",
+      "claim_id": "ragtruth-9809-c2",
+      "label": "UNSUPPORTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-9809",
+      "claim_id": "ragtruth-9809-c3",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-9809",
+      "claim_id": "ragtruth-9809-c5",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-9827",
+      "claim_id": "ragtruth-9827-c11",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    }
+  ],
+  "excluded_by_label": {
+    "CONTRADICTED": 9,
+    "UNSUPPORTED": 2
+  },
+  "excluded_subtle_conflict_c": 7,
+  "case_exclusion_details": [],
+  "historical_v24": {
+    "retained_cases": 50,
+    "retained_claims": 638,
+    "excluded_claims": 12,
+    "excluded_cases": 0
+  },
+  "by_split_task_subset_label": [
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "claims": 5
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "claims": 48
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "claims": 21
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "CONTRADICTED",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "claims": 20
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "claims": 3
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "claims": 2
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "claims": 18
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "claims": 7
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "claims": 4
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "claims": 28
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "claims": 67
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "claims": 9
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "claims": 9
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "claims": 7
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "claims": 84
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "UNSUPPORTED",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "claims": 67
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "CONTRADICTED",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "claims": 42
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "claims": 3
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "claims": 4
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "claims": 17
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "claims": 32
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "claims": 10
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "claims": 18
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "claims": 6
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "claims": 49
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "UNSUPPORTED",
+      "claims": 3
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "claims": 136
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "claims": 5
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "CONTRADICTED",
+      "claims": 4
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "claims": 38
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "claims": 1
+    }
+  ],
+  "evident_subtle": [
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 5
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 48
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 21
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "CONTRADICTED",
+      "origin": "subtle",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 20
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 3
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 2
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 18
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 5
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 2
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 4
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 28
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "origin": "subtle",
+      "claims": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 67
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 6
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 3
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 9
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 7
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 84
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "origin": "subtle",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 67
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "CONTRADICTED",
+      "origin": "subtle",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 42
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 3
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 4
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 17
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 32
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 8
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 18
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 6
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 49
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 3
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "origin": "evident",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 136
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 3
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "origin": "subtle",
+      "claims": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "CONTRADICTED",
+      "origin": "subtle",
+      "claims": 4
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "SUPPORTED",
+      "origin": "clean",
+      "claims": 38
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "subtle_supplement",
+      "label": "UNSUPPORTED",
+      "origin": "evident",
+      "claims": 1
+    }
+  ],
+  "splits_subsets": [
+    {
+      "split": "dev",
+      "subset": "all",
+      "cases": 18,
+      "claims": 245,
+      "SUPPORTED": 218,
+      "CONTRADICTED": 10,
+      "UNSUPPORTED": 17,
+      "evidence": {
+        "exact": 227,
+        "eligible_sc": 228,
+        "coverage": 0.9956140350877193
+      },
+      "context_words": {
+        "n": 18,
+        "min": 125,
+        "median": 506.5,
+        "mean": 607.5,
+        "max": 1402
+      },
+      "answer_words": {
+        "n": 18,
+        "min": 64,
+        "median": 156.5,
+        "mean": 159.27777777777777,
+        "max": 269
+      }
+    },
+    {
+      "split": "dev",
+      "subset": "natural",
+      "cases": 10,
+      "claims": 126,
+      "SUPPORTED": 106,
+      "CONTRADICTED": 3,
+      "UNSUPPORTED": 17,
+      "evidence": {
+        "exact": 108,
+        "eligible_sc": 109,
+        "coverage": 0.9908256880733946
+      },
+      "context_words": {
+        "n": 10,
+        "min": 262,
+        "median": 708.0,
+        "mean": 652.1,
+        "max": 1054
+      },
+      "answer_words": {
+        "n": 10,
+        "min": 75,
+        "median": 156.5,
+        "mean": 163.2,
+        "max": 269
+      }
+    },
+    {
+      "split": "dev",
+      "subset": "conflict_supplement",
+      "cases": 5,
+      "claims": 85,
+      "SUPPORTED": 79,
+      "CONTRADICTED": 6,
+      "UNSUPPORTED": 0,
+      "evidence": {
+        "exact": 85,
+        "eligible_sc": 85,
+        "coverage": 1.0
+      },
+      "context_words": {
+        "n": 5,
+        "min": 204,
+        "median": 382,
+        "mean": 701,
+        "max": 1402
+      },
+      "answer_words": {
+        "n": 5,
+        "min": 93,
+        "median": 185,
+        "mean": 170.6,
+        "max": 236
+      }
+    },
+    {
+      "split": "dev",
+      "subset": "subtle_supplement",
+      "cases": 3,
+      "claims": 34,
+      "SUPPORTED": 33,
+      "CONTRADICTED": 1,
+      "UNSUPPORTED": 0,
+      "evidence": {
+        "exact": 34,
+        "eligible_sc": 34,
+        "coverage": 1.0
+      },
+      "context_words": {
+        "n": 3,
+        "min": 125,
+        "median": 316,
+        "mean": 303,
+        "max": 468
+      },
+      "answer_words": {
+        "n": 3,
+        "min": 64,
+        "median": 110,
+        "mean": 127.33333333333333,
+        "max": 208
+      }
+    },
+    {
+      "split": "test",
+      "subset": "all",
+      "cases": 45,
+      "claims": 537,
+      "SUPPORTED": 483,
+      "CONTRADICTED": 27,
+      "UNSUPPORTED": 27,
+      "evidence": {
+        "exact": 506,
+        "eligible_sc": 510,
+        "coverage": 0.9921568627450981
+      },
+      "context_words": {
+        "n": 45,
+        "min": 164,
+        "median": 425,
+        "mean": 549.4444444444445,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 45,
+        "min": 60,
+        "median": 128,
+        "mean": 136.48888888888888,
+        "max": 304
+      }
+    },
+    {
+      "split": "test",
+      "subset": "natural",
+      "cases": 20,
+      "claims": 256,
+      "SUPPORTED": 235,
+      "CONTRADICTED": 4,
+      "UNSUPPORTED": 17,
+      "evidence": {
+        "exact": 238,
+        "eligible_sc": 239,
+        "coverage": 0.99581589958159
+      },
+      "context_words": {
+        "n": 20,
+        "min": 164,
+        "median": 558.0,
+        "mean": 677.4,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 20,
+        "min": 62,
+        "median": 139.5,
+        "mean": 152.5,
+        "max": 304
+      }
+    },
+    {
+      "split": "test",
+      "subset": "conflict_supplement",
+      "cases": 15,
+      "claims": 171,
+      "SUPPORTED": 150,
+      "CONTRADICTED": 17,
+      "UNSUPPORTED": 4,
+      "evidence": {
+        "exact": 164,
+        "eligible_sc": 167,
+        "coverage": 0.9820359281437125
+      },
+      "context_words": {
+        "n": 15,
+        "min": 187,
+        "median": 399,
+        "mean": 389.3333333333333,
+        "max": 852
+      },
+      "answer_words": {
+        "n": 15,
+        "min": 60,
+        "median": 108,
+        "mean": 120.06666666666666,
+        "max": 187
+      }
+    },
+    {
+      "split": "test",
+      "subset": "subtle_supplement",
+      "cases": 10,
+      "claims": 110,
+      "SUPPORTED": 98,
+      "CONTRADICTED": 6,
+      "UNSUPPORTED": 6,
+      "evidence": {
+        "exact": 104,
+        "eligible_sc": 104,
+        "coverage": 1.0
+      },
+      "context_words": {
+        "n": 10,
+        "min": 177,
+        "median": 361.5,
+        "mean": 533.7,
+        "max": 1117
+      },
+      "answer_words": {
+        "n": 10,
+        "min": 94,
+        "median": 124.0,
+        "mean": 129.1,
+        "max": 196
+      }
+    },
+    {
+      "split": "all",
+      "subset": "all",
+      "cases": 63,
+      "claims": 782,
+      "SUPPORTED": 701,
+      "CONTRADICTED": 37,
+      "UNSUPPORTED": 44,
+      "evidence": {
+        "exact": 733,
+        "eligible_sc": 738,
+        "coverage": 0.9932249322493225
+      },
+      "context_words": {
+        "n": 63,
+        "min": 125,
+        "median": 425,
+        "mean": 566.031746031746,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 63,
+        "min": 60,
+        "median": 132,
+        "mean": 143,
+        "max": 304
+      }
+    },
+    {
+      "split": "all",
+      "subset": "natural",
+      "cases": 30,
+      "claims": 382,
+      "SUPPORTED": 341,
+      "CONTRADICTED": 7,
+      "UNSUPPORTED": 34,
+      "evidence": {
+        "exact": 346,
+        "eligible_sc": 348,
+        "coverage": 0.9942528735632183
+      },
+      "context_words": {
+        "n": 30,
+        "min": 164,
+        "median": 607.5,
+        "mean": 668.9666666666667,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 30,
+        "min": 62,
+        "median": 146.0,
+        "mean": 156.06666666666666,
+        "max": 304
+      }
+    },
+    {
+      "split": "all",
+      "subset": "conflict_supplement",
+      "cases": 20,
+      "claims": 256,
+      "SUPPORTED": 229,
+      "CONTRADICTED": 23,
+      "UNSUPPORTED": 4,
+      "evidence": {
+        "exact": 249,
+        "eligible_sc": 252,
+        "coverage": 0.9880952380952381
+      },
+      "context_words": {
+        "n": 20,
+        "min": 187,
+        "median": 390.5,
+        "mean": 467.25,
+        "max": 1402
+      },
+      "answer_words": {
+        "n": 20,
+        "min": 60,
+        "median": 124.0,
+        "mean": 132.7,
+        "max": 236
+      }
+    },
+    {
+      "split": "all",
+      "subset": "subtle_supplement",
+      "cases": 13,
+      "claims": 144,
+      "SUPPORTED": 131,
+      "CONTRADICTED": 7,
+      "UNSUPPORTED": 6,
+      "evidence": {
+        "exact": 138,
+        "eligible_sc": 138,
+        "coverage": 1.0
+      },
+      "context_words": {
+        "n": 13,
+        "min": 125,
+        "median": 332,
+        "mean": 480.46153846153845,
+        "max": 1117
+      },
+      "answer_words": {
+        "n": 13,
+        "min": 64,
+        "median": 124,
+        "mean": 128.69230769230768,
+        "max": 208
+      }
+    }
+  ],
+  "evidence": {
+    "overall": {
+      "exact": 733,
+      "eligible_sc": 738,
+      "coverage": 0.9932249322493225
+    },
+    "by_task": {
+      "ragtruth_data2txt": {
+        "exact": 296,
+        "eligible_sc": 299,
+        "coverage": 0.9899665551839465
+      },
+      "ragtruth_qa": {
+        "exact": 98,
+        "eligible_sc": 99,
+        "coverage": 0.98989898989899
+      },
+      "ragtruth_summary": {
+        "exact": 339,
+        "eligible_sc": 340,
+        "coverage": 0.9970588235294118
+      }
+    },
+    "subtle_supplement": {
+      "exact": 138,
+      "eligible_sc": 138,
+      "coverage": 1.0
+    }
+  },
+  "doubt_categories": {
+    "records": 137,
+    "in_dataset": 137,
+    "by_category": {
+      "agree": 49,
+      "evidence_not_found": 28,
+      "partial_claim": 31,
+      "suspected_wrong_label": 29
+    },
+    "by_category_label": {
+      "agree": {
+        "CONTRADICTED": 18,
+        "SUPPORTED": 13,
+        "UNSUPPORTED": 18
+      },
+      "evidence_not_found": {
+        "CONTRADICTED": 1,
+        "SUPPORTED": 7,
+        "UNSUPPORTED": 20
+      },
+      "partial_claim": {
+        "CONTRADICTED": 7,
+        "SUPPORTED": 22,
+        "UNSUPPORTED": 2
+      },
+      "suspected_wrong_label": {
+        "CONTRADICTED": 11,
+        "SUPPORTED": 14,
+        "UNSUPPORTED": 4
+      }
+    },
+    "sensitivity_claims_in_dataset": [
+      "ragtruth-12692-c8",
+      "ragtruth-13340-c12",
+      "ragtruth-13340-c5",
+      "ragtruth-1340-c12",
+      "ragtruth-14323-c6",
+      "ragtruth-14912-c1",
+      "ragtruth-14912-c5",
+      "ragtruth-15677-c3",
+      "ragtruth-1698-c2-v24-split1",
+      "ragtruth-1698-c6",
+      "ragtruth-1730-c6",
+      "ragtruth-2354-c1",
+      "ragtruth-2468-c4",
+      "ragtruth-2672-c2",
+      "ragtruth-2672-c7",
+      "ragtruth-3080-c4",
+      "ragtruth-348-c11",
+      "ragtruth-3980-c2",
+      "ragtruth-4118-c8",
+      "ragtruth-5675-c8",
+      "ragtruth-5851-c8",
+      "ragtruth-6973-c23",
+      "ragtruth-6973-c25",
+      "ragtruth-7051-c9",
+      "ragtruth-7098-c10",
+      "ragtruth-7159-c16",
+      "ragtruth-7952-c6",
+      "ragtruth-7952-c9",
+      "ragtruth-9492-c8"
+    ],
+    "sensitivity_claims_classification_only": [],
+    "protocol_errors": 0,
+    "errors": 0
+  },
+  "upstream_splits": {
+    "train": 13
+  },
+  "sampling": {
+    "rules_sha256": "d830c8c7562cfe8d5993d18b744437edc141b294684f52aed484421b4dfb455c",
+    "selection_sha256": "6794c537cf9ab36035fdb5807f089e7f7e8259fae2628d434863f8ecdf45ad29",
+    "counts": {
+      "dev": 3,
+      "test": 10
+    },
+    "gpt_counts": {
+      "dev": 3,
+      "test": 4
+    },
+    "gpt_cases": 7,
+    "max_feasible_gpt_cases": 13
+  },
+  "mapping": {
+    "design_version": "2.3",
+    "drafts_sha256": "0359c49e7e58d7027fea190503542810cede255eec8ba46566c4dea3fcebf40f",
+    "cases": [
+      {
+        "id": "ragtruth-14011",
+        "claims": 9,
+        "retained": 8,
+        "labels": {
+          "SUPPORTED": 8
+        },
+        "excluded_claims": 1,
+        "exclusion_reasons": {
+          "partial_overlap": 1
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-14912",
+        "claims": 9,
+        "retained": 7,
+        "labels": {
+          "SUPPORTED": 6,
+          "UNSUPPORTED": 1
+        },
+        "excluded_claims": 2,
+        "exclusion_reasons": {
+          "partial_overlap": 2
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-15985",
+        "claims": 6,
+        "retained": 5,
+        "labels": {
+          "SUPPORTED": 4,
+          "UNSUPPORTED": 1
+        },
+        "excluded_claims": 1,
+        "exclusion_reasons": {
+          "partial_overlap": 1
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-16620",
+        "claims": 5,
+        "retained": 4,
+        "labels": {
+          "SUPPORTED": 4
+        },
+        "excluded_claims": 1,
+        "exclusion_reasons": {
+          "partial_overlap": 1
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-2354",
+        "claims": 10,
+        "retained": 10,
+        "labels": {
+          "CONTRADICTED": 2,
+          "SUPPORTED": 8
+        },
+        "excluded_claims": 0,
+        "exclusion_reasons": {},
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-3126",
+        "claims": 10,
+        "retained": 9,
+        "labels": {
+          "SUPPORTED": 9
+        },
+        "excluded_claims": 1,
+        "exclusion_reasons": {
+          "partial_overlap": 1
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-3482",
+        "claims": 12,
+        "retained": 12,
+        "labels": {
+          "SUPPORTED": 10,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 1
+        },
+        "excluded_claims": 0,
+        "exclusion_reasons": {},
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-3522",
+        "claims": 10,
+        "retained": 9,
+        "labels": {
+          "SUPPORTED": 9
+        },
+        "excluded_claims": 1,
+        "exclusion_reasons": {
+          "partial_overlap": 1
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-4736",
+        "claims": 12,
+        "retained": 12,
+        "labels": {
+          "SUPPORTED": 11,
+          "CONTRADICTED": 1
+        },
+        "excluded_claims": 0,
+        "exclusion_reasons": {},
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-8395",
+        "claims": 21,
+        "retained": 21,
+        "labels": {
+          "SUPPORTED": 20,
+          "CONTRADICTED": 1
+        },
+        "excluded_claims": 0,
+        "exclusion_reasons": {},
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-9492",
+        "claims": 15,
+        "retained": 15,
+        "labels": {
+          "SUPPORTED": 14,
+          "CONTRADICTED": 1
+        },
+        "excluded_claims": 0,
+        "exclusion_reasons": {},
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-9809",
+        "claims": 22,
+        "retained": 19,
+        "labels": {
+          "SUPPORTED": 17,
+          "UNSUPPORTED": 2
+        },
+        "excluded_claims": 3,
+        "exclusion_reasons": {
+          "partial_overlap": 3
+        },
+        "status": "ready"
+      },
+      {
+        "id": "ragtruth-9827",
+        "claims": 14,
+        "retained": 13,
+        "labels": {
+          "SUPPORTED": 11,
+          "CONTRADICTED": 1,
+          "UNSUPPORTED": 1
+        },
+        "excluded_claims": 1,
+        "exclusion_reasons": {
+          "partial_overlap": 1
+        },
+        "status": "ready"
+      }
+    ]
+  },
+  "targets": {
+    "test_contradicted": {
+      "observed": 27,
+      "minimum": 15,
+      "met": true
+    },
+    "test_contradicted_from_subtle_conflict": {
+      "observed": 7,
+      "minimum": 8,
+      "met": false
+    },
+    "data2txt_evidence": {
+      "observed": 0.9899665551839465,
+      "minimum": 0.7,
+      "met": true
+    }
+  },
+  "limitations": [
+    "Upstream annotations may omit facts or contain errors; no second human review.",
+    "Exact quotation proves textual presence, not semantic sufficiency.",
+    "The targeted supplements change label prevalence; natural results must accompany all results.",
+    "The sensitivity analysis removes claims, not cases; its CIs resample cases."
+  ],
+  "input_files": {
+    "data/annotation/v2.5/doubt_class_report.json": "67216addb4a610540aabb267ca4ea6c123bc0731d2c0d4fdc64c83377b99e317",
+    "data/annotation/v2.5/doubt_classes.jsonl": "0bfda62d65b893de879aeee6950ac2fbb317d355d55105a39270a90590bd1951",
+    "data/annotation/v2.5/doubt_classification.log": "48a7c5ffec946b20e587821709f076737067e077dbce71b0c1aa5f883162d400",
+    "data/annotation/v2.5/overlap_report.json": "81c8823f0d61c4fa0065194a93b58e65c88091178ffd412e1ca4fcbcd427a462",
+    "data/annotation/v2.5/sampling_rules.json": "d830c8c7562cfe8d5993d18b744437edc141b294684f52aed484421b4dfb455c",
+    "data/annotation/v2.5/selection-stats.md": "1d34d24fd5dc4beba69a15ac6dd9eda6706eb92b1bc65e5143bdf00921971b4f",
+    "data/annotation/v2.5/selection.json": "6794c537cf9ab36035fdb5807f089e7f7e8259fae2628d434863f8ecdf45ad29",
+    "data/annotation/v2.5/subtle/draft.log": "51d28d2fd4565f5c69a2edd18c475c78cc28f761d376f3bde160f7f1468d796a",
+    "data/annotation/v2.5/subtle/drafts.jsonl": "0359c49e7e58d7027fea190503542810cede255eec8ba46566c4dea3fcebf40f",
+    "data/annotation/v2.5/subtle/evidence.log": "988b78877c5f92a108cec33d52b560de05560943924b35cf85132c990e47127f",
+    "data/annotation/v2.5/subtle/evidence_reruns.jsonl": "ff833e152a1a03515b03304f88cf24dcd63e58e3c881215d5287e47711bc0c0f",
+    "data/annotation/v2.5/subtle/evidenced.jsonl": "9a374ca70180e787a1c09caaddc56565b0afbb14523b80bcad45cf5bc289abc5",
+    "data/annotation/v2.5/subtle/excluded.jsonl": "17e0fdd9fa568bd6c7eeffcc1a5952b6f72bf7433ec8273c66dbde833b52934a",
+    "data/annotation/v2.5/subtle/mapped.jsonl": "eaafdc152e24c25ed65b884609b52dd2ece40f65416abf82ed83e111c484e29b",
+    "data/annotation/v2.5/subtle/mapping-report.json": "5e5c6576715e43887764038665a8fb01f1bcab66ca6cba34646c9b6d81bfa60e",
+    "data/annotation/v2.5/subtle/mapping.log": "5e5c6576715e43887764038665a8fb01f1bcab66ca6cba34646c9b6d81bfa60e",
+    "data/annotation/v2.5/subtle/model_doubts.jsonl": "fc48dc60898873fa7ee0b81507ff06d8e8bd56dc5907c6b429aa599a421ebc80",
+    "data/annotation/v2.5/subtle_candidates.jsonl": "672e192334189729dbfb85961f376336bebb3cb7f4158709008e26b339436450",
+    "data/annotation/v2.5/v24_with_overlaps.jsonl": "ce03eeba4d23bcefa765994a5a1deeff4c1cabea05f8a34bec47bc016ce64c17",
+    "data/eval_hard.v2.4.jsonl": "90813831d2dd6b7c162a1090ba41ea7260c654ff2dd54fb6a62bf3cf05fc38d6"
+  }
+}

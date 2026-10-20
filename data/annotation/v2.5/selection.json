@@ -1,0 +1,135 @@
+{
+  "version": "2.5",
+  "rules_sha256": "d830c8c7562cfe8d5993d18b744437edc141b294684f52aed484421b4dfb455c",
+  "existing_sha256": "90813831d2dd6b7c162a1090ba41ea7260c654ff2dd54fb6a62bf3cf05fc38d6",
+  "seed": 20261021,
+  "counts": {
+    "dev": 3,
+    "test": 10
+  },
+  "gpt_counts": {
+    "dev": 3,
+    "test": 4
+  },
+  "gpt_minimum_cases": 7,
+  "max_feasible_gpt_cases": 13,
+  "gpt_cases": 7,
+  "pool": {
+    "eligible": 73,
+    "excluded": {
+      "already_in_v24": 200,
+      "answer_length": 1646,
+      "legacy_project": 49,
+      "no_subtle_conflict": 8892,
+      "summary_context": 852
+    },
+    "by_upstream_split_task_model": {
+      "test/Data2txt/gpt-3.5-turbo-0613": 1,
+      "test/Data2txt/llama-2-70b-chat": 1,
+      "test/Summary/llama-2-70b-chat": 1,
+      "train/Data2txt/gpt-3.5-turbo-0613": 3,
+      "train/Data2txt/gpt-4-0613": 3,
+      "train/Data2txt/llama-2-70b-chat": 14,
+      "train/Data2txt/mistral-7B-instruct": 8,
+      "train/QA/gpt-3.5-turbo-0613": 6,
+      "train/QA/gpt-4-0613": 6,
+      "train/QA/llama-2-70b-chat": 2,
+      "train/QA/mistral-7B-instruct": 7,
+      "train/Summary/gpt-3.5-turbo-0613": 3,
+      "train/Summary/gpt-4-0613": 5,
+      "train/Summary/llama-2-70b-chat": 5,
+      "train/Summary/mistral-7B-instruct": 8
+    },
+    "unique_groups": 68,
+    "unique_source_ids": 68
+  },
+  "rows": [
+    {
+      "task": "Data2txt",
+      "split": "dev",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "gpt-4-0613",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 2
+    },
+    {
+      "task": "QA",
+      "split": "dev",
+      "generator_model": "gpt-4-0613",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 2
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "generator_model": "gpt-4-0613",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "generator_model": "gpt-4-0613",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_split": "train",
+      "upstream_subtle_conflict_spans": 1,
+      "cases": 3
+    }
+  ],
+  "selected_ids": [
+    "ragtruth-14011",
+    "ragtruth-14912",
+    "ragtruth-15985",
+    "ragtruth-16620",
+    "ragtruth-2354",
+    "ragtruth-3126",
+    "ragtruth-3482",
+    "ragtruth-3522",
+    "ragtruth-4736",
+    "ragtruth-8395",
+    "ragtruth-9492",
+    "ragtruth-9809",
+    "ragtruth-9827"
+  ]
+}

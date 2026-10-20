@@ -6,8 +6,310 @@ them. Every table below was regenerated from the raw artifacts in `results/` (on
 definitions in [EVALUATION.md](EVALUATION.md).
 
 Configuration for all numbers: provider `DeepSeek`, model `deepseek-v4-pro` with
-`VERIFIER_EXTRA_BODY={"thinking":{"type":"disabled"}}`, prompt set `v3`, `temperature=0`. Every LLM row
-is the mean of 3 runs; the baseline is deterministic and ran once.
+`VERIFIER_EXTRA_BODY={"thinking":{"type":"disabled"}}`, prompt set `v3`, `temperature=0`. In the
+historical synthetic benchmark every LLM row is the mean of 3 runs; the baseline is deterministic and
+ran once. The v2.6 and v2.7 measurements are one run per method, as preregistered.
+
+## v2.7 external checks (current headline)
+
+v2.7 does not replace the v2.6 end-to-end result. It asks two separate questions with two public
+human-annotated resources: (1) does the v2.6 ranking survive a stricter annotation standard, and
+(2) with claims given, which method verifies more accurately? The two tracks have independent
+conclusions; they are not combined into one score.
+
+### How the annotation standard changes the ranking
+
+Track B uses the same 229 RAGTruth++ responses and the same predictions, scored under two human
+standards: the **loose** RAGTruth original spans and the **strict** RAGTruth++ spans. The metric is
+sentence-level F1 against the corresponding sentence gold, with the v2.6 splitter and threshold 60.
+
+| Gold standard | minimal sentence F1 [95% CI] | optimized sentence F1 [95% CI] | paired optimized − minimal |
+|---|---:|---:|---|
+| loose (RAGTruth original) | **0.371** [0.271, 0.463] | 0.218 [0.152, 0.284] | −0.153 [−0.226, −0.086] |
+| strict (RAGTruth++) | 0.522 [0.461, 0.578] | **0.628** [0.578, 0.677] | +0.106 [+0.046, +0.168] |
+
+Answer-level balanced accuracy points the same way: loose 0.758 (minimal) vs 0.620 (optimized);
+strict 0.647 vs 0.751. The paired answer-level differences are −0.138 [−0.201, −0.076] and
++0.104 [+0.031, +0.176] respectively.
+
+**Registered conclusion: the ranking is decided by the annotation standard. minimal is better under
+the loose standard, optimized under the strict standard; choose by use case.** The result is not a
+contradiction: the answers and predictions are identical, only the gold changes. The strict set has
+about 75 % positive responses (170/229) and marks more spans; the loose set has 35/229 positives.
+
+Task groups (sentence F1, minimal / optimized): loose QA 0.352 / 0.301, Summary 0.567 / 0.353;
+strict QA 0.714 / 0.853, Summary 0.661 / 0.867. The strict standard rewards the extra verification;
+the loose standard punishes its additional C/U claims as false positives.
+
+### External comparison of verification ability
+
+Track A uses LLM-AggreFact with claims given (oracle), excluding its RAGTruth subset: 10 subsets,
+461 documents, 854 claims. The metric is macro balanced accuracy over the 10 subsets; documents are
+the bootstrap unit.
+
+| Method | main BAcc (failures wrong) | failures | BAcc excluding failures |
+|---|---:|---:|---:|
+| baseline | 0.608 | 0 | 0.608 |
+| minimal | 0.729 | 32 / 461 (6.94%) | 0.768 |
+| optimized | **0.776** | 0 | **0.776** |
+
+A claim-count mismatch is a document failure: all its claims count wrong in the main result, and the
+`excluding_failures` variant drops it. Main paired optimized − minimal: **+0.047 [+0.011, +0.079]**.
+But minimal's 32/461 failures are **6.94 %, above the registered 5 % stop line**. When those 32 are
+truly excluded, minimal is 0.768 and optimized 0.776; the paired difference is
+**+0.032 [−0.016, +0.072]** — no evidence of a difference. optimized and minimal each win
+**5/10 subsets (5/5)**; the macro is concentrated: Lfqa has 3 documents, TofuEval-MediaS 2 and
+TofuEval-MeetB 2. Track A is therefore conditional: optimized leads under the failures-count-as-wrong
+convention, but the lead is not robust once minimal's malformed claim lists are removed. The test
+stop condition is reported as triggered; this is a post-freeze scoring exception, not a clean
+confirmatory result.
+
+Precision and recall, reported separately (not only the composite metric):
+
+| Track | Method | Precision | Recall |
+|---|---|---:|---:|
+| A, macro over 10 subsets | baseline | 0.742 | 0.257 |
+| A, macro over 10 subsets | minimal | 0.843 | 0.742 |
+| A, macro over 10 subsets | optimized | 0.888 | 0.701 |
+| B, loose sentence | minimal | 0.237 | 0.852 |
+| B, loose sentence | optimized | 0.126 | 0.796 |
+| B, strict sentence | minimal | 0.758 | 0.398 |
+| B, strict sentence | optimized | 0.654 | 0.604 |
+
+Answer-level precision/recall for track B: loose minimal 0.285 / 0.943, optimized 0.196 / 0.914;
+strict minimal 0.853 / 0.582, optimized 0.877 / 0.841.
+
+Per-subset balanced accuracy (baseline / minimal / optimized):
+
+| Subset | claims | baseline | minimal | optimized |
+|---|---:|---:|---:|---:|
+| AggreFact-CNN | 80 | 0.550 | 0.336 | 0.736 |
+| AggreFact-XSum | 80 | 0.501 | 0.822 | 0.751 |
+| ClaimVerify | 80 | 0.740 | 0.795 | 0.830 |
+| ExpertQA | 80 | 0.614 | 0.664 | 0.621 |
+| FactCheck-GPT | 80 | 0.496 | 0.670 | 0.654 |
+| Lfqa | 87 | 0.733 | 0.888 | 0.853 |
+| Reveal | 80 | 0.662 | 0.895 | 0.910 |
+| TofuEval-MediaS | 104 | 0.476 | 0.515 | 0.768 |
+| TofuEval-MeetB | 103 | 0.704 | 0.862 | 0.869 |
+| Wice | 80 | 0.602 | 0.844 | 0.762 |
+
+**Public leaderboard context.** Recomputing the mean of the same 10 subsets from the public
+LLM-AggreFact leaderboard gives: Bespoke-Minicheck-7B 76.75, Claude-3.5 Sonnet 76.32, Granite
+Guardian 3.3 75.92, Mistral-Large 2 75.54, gpt-4o-2024-05-13 75.08, MiniCheck-Flan-T5-L 74.70
+(source: [llm-aggrefact.github.io](https://llm-aggrefact.github.io), accessed 2026-10-20).
+optimized's 77.55 is near the top of that reported range, minimal's 72.90 is mid-range, and the
+baseline's 60.77 is below it. This is **not a like-for-like rank**: we sample 80 claims per subset,
+the leaderboard uses the full sets; our prompt and harness differ; the leaderboard's metric
+definition may not be identical; and track A's stop condition is triggered by minimal's failures.
+It is context, not a claim of state of the art. With the failures excluded, minimal's 76.80 is also
+near the leaderboard range, so the external comparison does not separate the two methods robustly.
+
+### Failure examples (first five by ID, not cherry-picked)
+
+Track B, strict gold: the first five cases where either method missed a bad sentence are all minimal
+misses; optimized catches one of them.
+
+* `ragtruthpp-1155` Summary, llama-2-7b: 1 gold-bad sentence, minimal emitted no C/U claim.
+* `ragtruthpp-1156` Summary, llama-2-13b: 2 gold-bad sentences, minimal missed both; optimized
+  flagged "A Delaware family ... are in critical condition ..." as CONTRADICTED.
+* `ragtruthpp-1182` Summary, gpt-4: 2 gold-bad sentences, minimal missed both.
+* `ragtruthpp-1183` Summary, gpt-3.5: 1 gold-bad sentence, minimal missed it.
+* `ragtruthpp-1185` Summary, llama-2-7b: 4 gold-bad sentences, minimal missed 1 and produced 1
+  false-positive sentence.
+
+Track A, first five documents with a wrong claim (all AggreFact-CNN; minimal has a false positive in
+each, optimized in two):
+
+* `aggrefact-AggreFact-CNN-02d82ecf292a`: 2 claims; minimal wrong 1, optimized 0
+  (one gold-0 claim was called SUPPORTED).
+* `aggrefact-AggreFact-CNN-38e94fc24e33`: 1 claim; both wrong (gold 0).
+* `aggrefact-AggreFact-CNN-6002ade50606`: 2 claims; minimal wrong 1, optimized 0 (gold 0).
+* `aggrefact-AggreFact-CNN-67126bdf6043`: 1 claim; both wrong (gold 0).
+* `aggrefact-AggreFact-CNN-7b79dd51ba9f`: 2 claims; minimal wrong 1, optimized 0 (gold 0).
+
+### Cost and protocol
+
+Test spend: $9.0471 (track A $4.0340 + track B $5.0131), plus $1.7553 for two S4 dev runs;
+total **$10.8024**, below the $16 cap. All six paid runs completed without provider errors or
+truncation; optimized had one recovered retry in each track. Track B had 0 failures. Track A minimal
+had 32/461 claim-count failures (6.94%), above the 5% stop line; the main and truly
+excluding-failures results are both reported above. Track B reused 29 v2.6 test predictions; their
+tokens/cost are not counted as new spend.
+The run protocol deviation is minimal's oracle batching (20 claims per call; the 80/subset sample was
+the S2-confirmed fallback), approved
+after the unbatched S4 run truncated a 61-claim document; prompt, model, verifier code and gold are
+unchanged. Committed track A predictions are sanitized: only document/claim IDs, verdicts and citation
+`index`/`start_char`/`end_char` remain; `claim_text`, `reasoning`, `quote` and `meta.warnings` are
+removed. Raw LLM-AggreFact data and full predictions stay local. RAGTruth++ predictions retain
+RAGTruth text under RAGTruth's MIT license. The v2.6 test was not rerun. Detailed run record:
+[s6-test-report.md](../data/annotation/v2.7/s6-test-report.md); freeze:
+[freeze.json](../data/annotation/v2.7/freeze.json).
+
+### v2.7 threats to validity
+
+* **Track A triggered the 5 % stop condition.** minimal returned a different number of claims than
+  the gold for 32/461 documents (6.94 %). The main result counts those documents wrong and shows a
+  +0.047 lead; truly excluding them leaves +0.032 [−0.016, +0.072], no evidence. The test was not
+  rerun; the scoring change is a post-freeze exception recorded in the freeze.
+* RAGTruth++ has no publisher-declared license; raw CSV and the derived JSONL stay local and are
+  not redistributed. Its strict labels start from the publisher's detector and have no peer review.
+* Track A excludes the RAGTruth subset and documents over 4000 words; whole-document sampling
+  overshoots the nominal 80/10 claim targets (Lfqa 87, TofuEval-MediaS 104, TofuEval-MeetB 103 on
+  test). The 10-subset macro is not a natural-prevalence estimate.
+* Track A uses oracle claims, so it measures verification only; track B uses end-to-end claims, so
+  it mixes decomposition and verification. They are deliberately not combined.
+* LLM-AggreFact is public; training-data contamination cannot be ruled out. The leaderboard
+  comparison is contextual, not like-for-like.
+* Sentence alignment is lexical and approximate; citation sufficiency is not assessed.
+* The v2.7 protocol was designed after v2.6; the verifier and prompt did not change, but the
+  evaluation is new and the conclusion is conditional on these two external standards.
+
+## v2.6 response-level measurement (prior headline)
+
+**Status: measured once on 180 unseen RAGTruth test responses (62 hallucinated); no rerun.** The
+gold is RAGTruth's upstream human span annotation; no model participated in labelling. The response
+is predicted hallucinated iff the verifier emits at least one `CONTRADICTED` or `UNSUPPORTED` claim.
+A failed case counts as wrong on the opposite side of its gold; the `excluding_failures` variant is
+reported alongside. Intervals resample complete responses (10000 draws, seed 20261022). The sentence
+alignment threshold is 60, fixed on dev before test. Freeze record:
+[freeze.json](../data/annotation/v2.6/freeze.json); raw runs:
+[results/v2.6-test](../results/v2.6-test); full metric report:
+[results/v2.6-test/report/v26_report.json](../results/v2.6-test/report/v26_report.json).
+
+| Method | Failures | Precision | Recall | F1 [95% CI] | Balanced acc. | Sentence F1 | Raw citation validity | Cost / response |
+|---|---:|---:|---:|---|---:|---:|---:|---:|
+| baseline | 0 | 0.352 | 1.000 | 0.521 [0.442, 0.594] | 0.517 | 0.164 | 1.000 | $0.0000 |
+| minimal | 0 | 0.578 | 0.952 | **0.720** [0.638, 0.791] | **0.794** | **0.498** | 0.953 | $0.0052 |
+| optimized v3 | 1 | 0.444 | 0.968 | 0.609 [0.524, 0.685] | 0.666 | 0.338 | 0.962 | $0.0342 |
+
+Paired bootstrap on the same responses (F1 difference, 95% CI):
+
+| Comparison | Main result | Excluding the failed case |
+|---|---|---|
+| optimized − minimal | −0.110 [−0.163, −0.060] | −0.104 [−0.156, −0.054] |
+| minimal − baseline | +0.199 [+0.144, +0.256] | +0.199 [+0.144, +0.256] |
+| optimized − baseline | +0.088 [+0.051, +0.126] | +0.095 [+0.061, +0.132] |
+
+All three intervals exclude 0. Under the registered wording rule: **minimal is better than
+optimized; both LLM methods are better than the baseline.** The v2.5 point estimate pointed the same
+way (minimal 0.455 vs optimized 0.434) but its interval crossed 0; v2.6 makes the difference
+measurable. It is the reverse of the pre-test expectation that optimized's extra verification would
+pay off, and it is the main result of this round.
+
+**What the extra cost buys.** optimized costs 6.6× minimal ($0.0342 vs $0.0052 per response) and
+raises recall by 1.6 points (0.968 vs 0.952), but it produces 75 false positives against minimal's
+43, costing 13.4 points of precision and 11.1 points of F1. On Data2txt the lexical baseline is
+nearly level with optimized (F1 0.800 vs 0.796); minimal wins on every task. The extra verification
+is not paying for itself on natural-distribution answers.
+
+**Why the benchmark changed.** The v2.5 claim-level gold was noisy in two ways: RAGTruth marks
+hallucination spans on the answer, not atomic claims, so the claim splitter and overlap mapping
+introduced upstream misses and mapping errors (the `ragtruth-7952` examples are in the v2.5 section
+below). The claim-level detection F1 also did not penalise missing `SUPPORTED` gold, so a method that
+emitted fewer claims had fewer chances to be wrong. Finally, the 45-case hard test had been enriched
+for contradictions (40/45 answers hallucinated), so an all-positive baseline reached F1 0.94 — the
+set could not separate methods. v2.6 instead draws new, never-used natural-distribution responses
+and takes the gold directly from the upstream annotation; no model labels anything. v2.5 is retained
+below as exploratory analysis, not as a ranking.
+
+### Secondary indicators
+
+**Sentence localisation.** Every `CONTRADICTED`/`UNSUPPORTED` claim is matched lexically
+(`rapidfuzz.token_set_ratio`, threshold 60) to the most similar answer sentence; claims below the
+threshold are counted as unlocalised and enter no sentence. The match is approximate. minimal has
+sentence-level P/R/F1 0.351 / 0.857 / **0.498**; optimized 0.209 / 0.879 / 0.338; baseline
+0.090 / 0.912 / 0.164. minimal localises 258 C/U claims at 0.985, optimized 511 at 0.987. The
+optimized pipeline emits more C/U claims, so it finds more bad sentences (recall 0.879 vs 0.857) but
+lands on many more clean sentences (precision 0.209 vs 0.351).
+
+**Citations.** The final-output citation validity is 1.000 for every method by construction:
+`validate.py` repairs, relocates or drops a citation before returning, and downgrades a claim with
+no valid citation to `UNSUPPORTED`. The informative number is the **as-given** validity, read from
+`meta.raw_citations_*`: minimal 0.953 (95 of 2023 raw citations invalid; 31 claims downgraded across
+16 responses), optimized 0.962 (100 of 2622 invalid; 0 downgrades), baseline 1.000. optimized has
+the cleaner citation discipline, but not enough to offset its false positives. Whether a citation
+is *sufficient* to prove a claim is not assessed.
+
+**Groups** (minimal / optimized F1; n<20 is for reference only):
+
+| Dimension | Group | n | Positives | minimal | optimized |
+|---|---|---:|---:|---:|---:|
+| Task | Data2txt | 60 | 40 | 0.857 | 0.796 |
+| Task | Summary | 60 | 14 | 0.585 | 0.491 |
+| Task | QA | 60 | 8 | 0.500 | 0.348 |
+| Generator | llama-2-13b-chat | 31 | 18 | 0.919 | 0.818 |
+| Generator | llama-2-70b-chat | 28 | 12 | 0.889 | 0.727 |
+| Generator | llama-2-7b-chat | 28 | 13 | 0.750 | 0.632 |
+| Generator | mistral-7B-instruct | 35 | 16 | 0.711 | 0.667 |
+| Generator | gpt-3.5-turbo-0613 | 32 | 2 | 0.286 | 0.211 |
+| Generator | gpt-4-0613 | 26 | 1 | 0.000 | 0.111 |
+| Context | 0–399 words | 132 | 43 | 0.726 | 0.609 |
+| Context | 400–799 words | 39 | 15 | 0.683 | 0.596 |
+| Context | 800+ words | 9 | 4 | 0.800 | 0.667 |
+
+QA and Summary are the hardest tasks; GPT-generated answers are the hardest generator group, but
+QA has 8 positives and GPT-4 has 1, so those rows are diagnostic only. On upstream label type
+(positives only), minimal recalls 0.980 of Evident cases and 0.846 of cases containing Subtle;
+optimized reaches 0.980 / 0.923, but the Subtle group has only 13 positives.
+
+### Failure analysis
+
+* **optimized over-flags clean answers.** `ragtruth-10458` (Data2txt, gpt-4) calls "Many customers
+  enjoy the store's atmosphere" UNSUPPORTED although one review says "I just love everything,
+  including the atmosphere"; `ragtruth-11191` treats a 4.0-star business rating as unsupported
+  because the wording says "according to customer reviews". These are reasonable summaries that a
+  strict verifier rejects. The pattern accounts for most of the 36 clean responses that optimized
+  flags and minimal does not.
+* **minimal misses real subtle conflicts.** `ragtruth-2374` (Summary, llama-2-13b) marks "friend of
+  44 years" and "remains unconscious in the hospital" SUPPORTED; upstream marks both `Subtle
+  Conflict` (the source says "more than 44 years", and the petition's "unconscious" is disputed by
+  the website's "alert"). `ragtruth-9840` marks "did not provide music" SUPPORTED from
+  `"Music": null`; upstream marks that negative assertion `Evident Baseless Info`. Null-valued
+  attributes are a systematic trap: null means unknown, not false.
+* **One provider failure.** `ragtruth-5828` (optimized) exhausted retries with `unparseable
+  response: Expecting ',' delimiter ...`; it is a gold-positive Data2txt case and counts as a
+  missed detection. Failure rate 1/180 = 0.56%, below the 5% stop line; the failure is a malformed
+  JSON response, not a max_tokens truncation or an overlong input. No rerun was made.
+
+### v2.6 protocol deviations (recorded in v2.7 S0)
+
+* **The v2.5 freeze was re-sealed without a recorded authorization.** Commit `8981478` replaced the
+  `files` hashes for `README.md`, `docs/DATASET.md` and `docs/EVALUATION.md`, added a
+  `documentation_updates` block and rewrote the `note` in `data/annotation/v2.5/freeze.json`; it also
+  updated the v2.6 freeze's baseline hash and reconciliation fields. The original v2.5 freeze remains
+  available at commit `900e3ae`. Nothing was rolled back or rewritten. Code, prompt, data and metric
+  hashes did not change, but the re-seal was not authorized at the time. v2.7 S7 permits exactly one
+  further documentation-only re-seal, recorded in `data/annotation/v2.7/resign_log.json`.
+* **The sentence threshold did not follow the execution rule.** The rule was the largest candidate
+  with localisation rate ≥ 0.90 for both methods (70 on dev), without looking at F1; 60 was frozen
+  instead with F1 in the rationale. The frozen value is not changed after test. A post-hoc rerun at
+  70 (`results/v2.6-test/posthoc-threshold70/`) gives minimal sentence F1 0.503 vs 0.498 at 60
+  (localisation 0.969 vs 0.985) and optimized 0.346 vs 0.338 (0.925 vs 0.986); baseline is unchanged.
+  This affects the secondary sentence metric only, not the answer-level ranking.
+* **The README conclusion is over-broad.** “optimized is not worth its extra cost” should be limited
+  to “under RAGTruth's original annotation”, with the note that upstream misses penalise stricter
+  methods. The wording is left for S7 and the v2.7 registered conclusion rule.
+
+### v2.6 threats to validity
+
+* The upstream annotation can miss hallucinations; no human review was added. An answer with no
+  upstream span is called **“upstream-unannotated”**, not “clean”.
+* 180 responses, 62 positives; QA has 8 positives and GPT-4 has 1, so task/generator groups are
+  diagnostic. Only `deepseek-v4-pro` and prompt v3 were measured.
+* RAGTruth has been public since 2024; training-data contamination cannot be ruled out.
+* Sentence alignment is lexical and approximate; citation sufficiency is not measured.
+* The protocol changed after the v2.5 test was seen. The verifier code and prompt did not change,
+  and v2.6 uses new responses with no id or source overlap with v2.5, but the change was not
+  preregistered before v2.5.
+* No human semantic spot check and no human-confirmed clean answers; this was a deliberate user
+  decision and is a limitation, not a claim of correctness.
+* Strict verifiers can be penalised when upstream annotators accepted a mild inference. This is
+  visible in the optimized false positives and is part of why the natural-distribution ranking
+  differs from the adversarial v2.5 set.
+
+The rest of this report documents the historical synthetic benchmark and the exploratory v2.5
+claim-level measurement.
 
 ## Development split (26 cases / 89 gold claims)
 
@@ -217,7 +519,61 @@ a claim the sources are simply silent about. One label was deliberately **kept**
 what that case tests. A whole-dataset read-back audit now agrees with 149/150 labels for the pipeline and
 147/150 for the single call.
 
-## Threats to validity
+## v2.5 RAGTruth 主张级测量（探索性分析）
+
+**状态：已测量；v2.6 已完成回答级复测，本节保留为探索性分析。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
+（45 例，537 条主张：S 483、C 27、U 27）的测量结果。数据、金标、评分代码和被测方案在测量前后均未改动；
+下面的事后分析只读取已保存的预测，没有调用任何模型。
+
+### 主表（e2e，test，均值 ± 样本标准差）
+
+数字来自 `docs/TEST_PLAN.md` 和 `results/v2.5-test/aggregate-3r.json`。baseline 是确定性的，只跑 1 轮；
+minimal 和 optimized 各 3 轮，无调用失败。
+
+| 方案 | 轮数 | 幻觉检出 F1 | macro-F1 | 每轮费用 |
+|---|---:|---:|---:|---:|
+| baseline | 1 | 0.204 | 0.127 | $0.000 |
+| minimal | 3 | 0.455 ± 0.010 | 0.516 ± 0.015 | $0.269 ± 0.002 |
+| optimized v3 | 3 | 0.434 ± 0.005 | 0.505 ± 0.004 | $1.842 ± 0.026 |
+
+三轮 e2e 加一轮 oracle 总花费 $8.32。
+
+### 事后分析（未预先登记，`"preregistered": false`）
+
+脚本 `eval/posthoc_v25.py`，输出 `results/v2.5-test/posthoc/posthoc.json`。这两项是看到 v2.5 test 结果之后才加的。
+
+* **配对 bootstrap 差值（minimal − optimized，3 轮逐案例混淆计数相加，案例为单位，10000 次，种子 20261020）**：
+  检出 F1 差值 +0.021，95% 区间 [−0.040, +0.078]；macro-F1 差值 +0.011，区间 [−0.049, +0.075]。
+  两个区间都包含 0，所以只能说没有证据表明两者存在差异，不能说两者一样好。
+* **主张覆盖率（被对齐上的金标主张 ÷ 全部金标主张，逐轮）**：
+
+| 方案 | 轮次 | S | C | U | 全部 |
+|---|---|---:|---:|---:|---:|
+| baseline | r1 | 263/483 (0.545) | 17/27 (0.630) | 15/27 (0.556) | 295/537 (0.549) |
+| minimal | r1 | 374/483 (0.774) | 21/27 (0.778) | 23/27 (0.852) | 418/537 (0.778) |
+| minimal | r2 | 365/483 (0.756) | 20/27 (0.741) | 22/27 (0.815) | 407/537 (0.758) |
+| minimal | r3 | 376/483 (0.778) | 21/27 (0.778) | 22/27 (0.815) | 419/537 (0.780) |
+| optimized | r1 | 430/483 (0.890) | 25/27 (0.926) | 26/27 (0.963) | 481/537 (0.896) |
+| optimized | r2 | 428/483 (0.886) | 25/27 (0.926) | 26/27 (0.963) | 479/537 (0.892) |
+| optimized | r3 | 431/483 (0.892) | 26/27 (0.963) | 26/27 (0.963) | 483/537 (0.899) |
+
+### 三个已知问题
+
+1. **金标噪声有两类来源。** RAGTruth 只在回答上标出幻觉片段，没有主张；v2.3 至 v2.5 先把回答拆成主张，
+   再按与上游片段的重叠映射标签。以 `ragtruth-7952` 为例：
+   * 上游漏标：主张「提供户外座位」被标为 SUPPORTED，但原文是 `"OutdoorSeating": false`，回答说的是有户外座位，
+     上游没有标出这处。
+   * 映射错误：主张「不提供代客泊车」所对应的回答区间是 `it does not provide parking or valet services.`，
+     与上游标注的 `it does not provide parking`（Evident Conflict）重叠，片段之外只有 19 个字符，因此被映射成
+     CONTRADICTED。但原文是 `"valet": false`，实际上支持这条主张。
+2. **检出 F1 不惩罚漏掉的 S 金标。** 以 r1 为例，minimal 有 109 条 S 金标没有被对齐上，optimized 只有 53 条。
+   拆得少的方案产生的预测主张少，误报机会也少，指标不会为此扣分。
+3. **由此，「minimal 不比 optimized 差」和「误报很高」都不能作为结论。** 配对差值的区间包含 0，主张覆盖率相差很大，
+   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。v2.6 用自然分布回答和上游回答级金标复测后，
+   minimal 的回答级 F1 为 0.720，optimized 为 0.609，配对差值区间不包含 0（见本文顶部）。v2.5 的结果原样保留，
+   只作为方法论发现，不再作为方案排名。
+
+## Threats to validity (historical synthetic benchmark)
 
 * **150 claims, one annotator, one model family.** Differences below ~5 points on one split are noise;
   that is why the report shows 3-run means ± std and why five prompt versions and two models were
@@ -237,6 +593,21 @@ what that case tests. A whole-dataset read-back audit now agrees with 149/150 la
   and test robustness rather than discrimination.
 
 ## Next steps
+
+**v2.6 follow-ups (current):**
+
+1. **Do not promote optimized as the default on this evidence.** It is 6.6× the cost and 11.1 F1
+   points behind minimal on natural-distribution answers. If the pipeline is kept, the next change
+   should target its false positives on clean answers, not add more verification.
+2. **Raise minimal's recall without losing precision.** The misses are concentrated in subtle
+   conflicts and null-valued attributes (`ragtruth-2374`, `ragtruth-9840`). A targeted rule for
+   “null means unknown, not false” is a falsifiable next experiment.
+3. **Repeat with a second provider and a second model** before treating the ranking as general; this
+   round used one model family and one prompt.
+4. **A small human spot check** of the 62 positive and 118 upstream-unannotated responses would
+   bound the annotation noise; it was deliberately out of scope here.
+
+**Historical synthetic follow-ups:**
 
 1. **v5 decomposition**, falsifiable target: keep the sentence-coverage mapping (which measurably worked:
    coverage 0.972 → 0.986, fusion 0.043 → 0.022) but state the exception explicitly ("a sentence with no

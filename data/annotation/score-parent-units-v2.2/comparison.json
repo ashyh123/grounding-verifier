@@ -1,0 +1,3688 @@
+{
+  "date": "2026-10-19",
+  "branch": "eval-v2",
+  "base_commit": "daf673e8036240a4bb9d63e12514b356f275c9ac",
+  "dataset_sha256": "b03aecf6e6554b46ddae087e1776e1080be4df47ce92cf30ee4676af74dcf96b",
+  "registry_path": "data/eval.scoring_units.jsonl",
+  "registry_sha256": "d1652fc887f500603e7b8a993a522be018b76a237654969e7e5fbeb844f00432",
+  "scoring_hashes": {
+    "verifier/align.py": "20a4c554576a2e03f40e785fb08ebb68d3077ec68c8d5a605ed44e380ec60154",
+    "eval/dataset.py": "f9b870cd9dc0a3b44e81083397ded469474ea4df51d79f543089457647f4f4e5",
+    "eval/scoring.py": "931f4e86ee134fbb2efd9ee3a32403ebee6a574da92d141d982d255fd1642858",
+    "eval/metrics.py": "1d9ccfdea22381062b8d73d8cb4786994326855b3b0d2b000a92f88a68247c88",
+    "eval/report.py": "813d5b694a2b6b9c3210eb10ef78b1880ea4b0b41b921ed4811054b17076a7f2",
+    "eval/run.py": "b1eb0328d7d3e4772a34f06a15242951e81b65e85063806bc79c6205732a7c60",
+    "tests/test_alignment.py": "e46b1ae6536151f82fdeef48eb8c2177a50de12c13e9bc1168e785b635b02770",
+    "tests/test_scoring_units.py": "7f599b4f1416bcc9e9a6291c5119149a44d7bb7471435bde23a1652a9a7ac561"
+  },
+  "tests": "make test: 165 passed in 2.17s",
+  "directories_rescored": 12,
+  "failed_directories": 0,
+  "protected_original_and_prior_stage_files_unchanged": 111,
+  "oracle_existing_numbers_unchanged": true,
+  "net_line_changes_this_turn": {
+    "verifier/align.py": 0,
+    "eval/dataset.py": 46,
+    "eval/scoring.py": 55,
+    "eval/metrics.py": -8,
+    "eval/report.py": 5,
+    "eval/run.py": 0,
+    "tests/test_alignment.py": 0,
+    "tests/test_scoring_units.py": 153,
+    "docs/EVALUATION.md": 41
+  },
+  "parent_match_changes": [
+    {
+      "result_file": "results/final_e2e/minimal_run0.jsonl",
+      "case_id": "kafka-retention-11",
+      "direct_matches": {
+        "0": [
+          0
+        ]
+      },
+      "parent_matches": {
+        "0": [
+          0
+        ],
+        "1": [
+          1,
+          2
+        ]
+      },
+      "used_predictions": [
+        0,
+        1,
+        2
+      ],
+      "parent_verdicts": {
+        "0": "SUPPORTED",
+        "1": "SUPPORTED"
+      }
+    },
+    {
+      "result_file": "results/final_e2e/minimal_run1.jsonl",
+      "case_id": "kafka-retention-11",
+      "direct_matches": {
+        "0": [
+          0
+        ]
+      },
+      "parent_matches": {
+        "0": [
+          0
+        ],
+        "1": [
+          1,
+          2
+        ]
+      },
+      "used_predictions": [
+        0,
+        1,
+        2
+      ],
+      "parent_verdicts": {
+        "0": "SUPPORTED",
+        "1": "SUPPORTED"
+      }
+    },
+    {
+      "result_file": "results/final_e2e/minimal_run2.jsonl",
+      "case_id": "kafka-retention-11",
+      "direct_matches": {
+        "0": [
+          0
+        ]
+      },
+      "parent_matches": {
+        "0": [
+          0
+        ],
+        "1": [
+          1,
+          2
+        ]
+      },
+      "used_predictions": [
+        0,
+        1,
+        2
+      ],
+      "parent_verdicts": {
+        "0": "SUPPORTED",
+        "1": "SUPPORTED"
+      }
+    },
+    {
+      "result_file": "results/final_e2e/optimized_run0.jsonl",
+      "case_id": "kafka-retention-11",
+      "direct_matches": {
+        "0": [
+          0
+        ]
+      },
+      "parent_matches": {
+        "0": [
+          0
+        ],
+        "1": [
+          2,
+          3
+        ]
+      },
+      "used_predictions": [
+        0,
+        2,
+        3
+      ],
+      "parent_verdicts": {
+        "0": "SUPPORTED",
+        "1": "SUPPORTED"
+      }
+    },
+    {
+      "result_file": "results/final_e2e/optimized_run1.jsonl",
+      "case_id": "kafka-retention-11",
+      "direct_matches": {
+        "0": [
+          0
+        ]
+      },
+      "parent_matches": {
+        "0": [
+          0
+        ],
+        "1": [
+          2,
+          3
+        ]
+      },
+      "used_predictions": [
+        0,
+        2,
+        3
+      ],
+      "parent_verdicts": {
+        "0": "SUPPORTED",
+        "1": "SUPPORTED"
+      }
+    },
+    {
+      "result_file": "results/final_e2e/optimized_run2.jsonl",
+      "case_id": "kafka-retention-11",
+      "direct_matches": {
+        "0": [
+          0
+        ]
+      },
+      "parent_matches": {
+        "0": [
+          0
+        ],
+        "1": [
+          2,
+          3
+        ]
+      },
+      "used_predictions": [
+        0,
+        2,
+        3
+      ],
+      "parent_verdicts": {
+        "0": "SUPPORTED",
+        "1": "SUPPORTED"
+      }
+    }
+  ],
+  "comparisons": [
+    {
+      "directory": "results/dev-anthropic-path",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-anthropic-path",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-anthropic-path (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9887640449438202,
+          "parent_units_accuracy": 0.9887640449438202,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9965635738831615,
+          "parent_units_macro_f1": 0.9965635738831615,
+          "guard_only_precision": 0.9361702127659575,
+          "parent_units_precision": 0.9361702127659575,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 24
+        }
+      ],
+      "changes_vs_original": [],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-baseline",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-baseline",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-baseline (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "baseline",
+          "run": 0,
+          "original_accuracy": 0.38202247191011235,
+          "guard_only_accuracy": 0.38202247191011235,
+          "parent_units_accuracy": 0.38202247191011235,
+          "original_macro_f1": 0.4109570601696056,
+          "guard_only_macro_f1": 0.41749300788202387,
+          "parent_units_macro_f1": 0.41749300788202387,
+          "guard_only_precision": 0.9295774647887324,
+          "parent_units_precision": 0.9295774647887324,
+          "gold_parents": 89,
+          "covered_parents": 66,
+          "used_predictions": 66,
+          "guard_rejected_pairs": 20
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/baseline/0/claim_accuracy_matched",
+          "before": 0.4927536231884058,
+          "after": 0.5151515151515151
+        },
+        {
+          "path": "/methods/baseline/0/confusion/SUPPORTED/MISSED",
+          "before": 11,
+          "after": 14
+        },
+        {
+          "path": "/methods/baseline/0/confusion/SUPPORTED/UNSUPPORTED",
+          "before": 18,
+          "after": 15
+        },
+        {
+          "path": "/methods/baseline/0/decomposition/precision",
+          "before": 0.971830985915493,
+          "after": 0.9295774647887324
+        },
+        {
+          "path": "/methods/baseline/0/decomposition/recall",
+          "before": 0.7752808988764045,
+          "after": 0.7415730337078652
+        },
+        {
+          "path": "/methods/baseline/0/macro_f1",
+          "before": 0.4109570601696056,
+          "after": 0.41749300788202387
+        },
+        {
+          "path": "/methods/baseline/0/per_label/UNSUPPORTED/f1",
+          "before": 0.3137254901960785,
+          "after": 0.3333333333333333
+        },
+        {
+          "path": "/methods/baseline/0/per_label/UNSUPPORTED/p",
+          "before": 0.1951219512195122,
+          "after": 0.21052631578947367
+        }
+      ],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-flashcheck",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-flashcheck",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-flashcheck (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "minimal",
+          "run": 0,
+          "original_accuracy": 0.9775280898876404,
+          "guard_only_accuracy": 0.9775280898876404,
+          "parent_units_accuracy": 0.9775280898876404,
+          "original_macro_f1": 0.9750408404960214,
+          "guard_only_macro_f1": 0.9750408404960214,
+          "parent_units_macro_f1": 0.9750408404960214,
+          "guard_only_precision": 0.946236559139785,
+          "parent_units_precision": 0.946236559139785,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 19
+        },
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9775280898876404,
+          "guard_only_accuracy": 0.9775280898876404,
+          "parent_units_accuracy": 0.9775280898876404,
+          "original_macro_f1": 0.9875475613974403,
+          "guard_only_macro_f1": 0.9875475613974403,
+          "parent_units_macro_f1": 0.9875475613974403,
+          "guard_only_precision": 0.8888888888888888,
+          "parent_units_precision": 0.8888888888888888,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 27
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/optimized/0/citation_recall",
+          "before": 0.9746835443037974,
+          "after": 0.9873417721518988
+        }
+      ],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-minimal-x3",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-minimal-x3",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-minimal-x3 (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "minimal",
+          "run": 0,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9775280898876404,
+          "parent_units_accuracy": 0.9775280898876404,
+          "original_macro_f1": 0.9784772666128598,
+          "guard_only_macro_f1": 0.9750408404960214,
+          "parent_units_macro_f1": 0.9750408404960214,
+          "guard_only_precision": 0.9361702127659575,
+          "parent_units_precision": 0.9361702127659575,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 19
+        },
+        {
+          "method": "minimal",
+          "run": 1,
+          "original_accuracy": 0.9775280898876404,
+          "guard_only_accuracy": 0.9662921348314607,
+          "parent_units_accuracy": 0.9662921348314607,
+          "original_macro_f1": 0.9692657278864175,
+          "guard_only_macro_f1": 0.9658300101649855,
+          "parent_units_macro_f1": 0.9658300101649855,
+          "guard_only_precision": 0.9166666666666666,
+          "parent_units_precision": 0.9166666666666666,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 19
+        },
+        {
+          "method": "minimal",
+          "run": 2,
+          "original_accuracy": 1.0,
+          "guard_only_accuracy": 0.9887640449438202,
+          "parent_units_accuracy": 0.9887640449438202,
+          "original_macro_f1": 1.0,
+          "guard_only_macro_f1": 0.9965635738831615,
+          "parent_units_macro_f1": 0.9965635738831615,
+          "guard_only_precision": 0.9166666666666666,
+          "parent_units_precision": 0.9166666666666666,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 19
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/minimal/0/citation_passage_precision",
+          "before": 0.9876543209876543,
+          "after": 0.9875
+        },
+        {
+          "path": "/methods/minimal/0/citation_precision",
+          "before": 0.9876543209876543,
+          "after": 0.9875
+        },
+        {
+          "path": "/methods/minimal/0/claim_accuracy_all_gold",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/minimal/0/claim_accuracy_matched",
+          "before": 0.9887640449438202,
+          "after": 0.9886363636363636
+        },
+        {
+          "path": "/methods/minimal/0/confusion/SUPPORTED/SUPPORTED",
+          "before": 49,
+          "after": 48
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/precision",
+          "before": 0.9468085106382979,
+          "after": 0.9361702127659575
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/recall",
+          "before": 1.0,
+          "after": 0.9887640449438202
+        },
+        {
+          "path": "/methods/minimal/0/macro_f1",
+          "before": 0.9784772666128598,
+          "after": 0.9750408404960214
+        },
+        {
+          "path": "/methods/minimal/0/per_label/SUPPORTED/f1",
+          "before": 1.0,
+          "after": 0.9896907216494846
+        },
+        {
+          "path": "/methods/minimal/0/per_label/SUPPORTED/r",
+          "before": 1.0,
+          "after": 0.9795918367346939
+        },
+        {
+          "path": "/methods/minimal/0/per_tag_accuracy/paraphrase",
+          "before": 1,
+          "after": 0.977
+        },
+        {
+          "path": "/methods/minimal/1/citation_passage_precision",
+          "before": 0.9875,
+          "after": 0.9873417721518988
+        },
+        {
+          "path": "/methods/minimal/1/citation_precision",
+          "before": 0.975,
+          "after": 0.9746835443037974
+        },
+        {
+          "path": "/methods/minimal/1/citation_recall",
+          "before": 0.9873417721518988,
+          "after": 0.9871794871794872
+        },
+        {
+          "path": "/methods/minimal/1/claim_accuracy_all_gold",
+          "before": 0.9775280898876404,
+          "after": 0.9662921348314607
+        },
+        {
+          "path": "/methods/minimal/1/claim_accuracy_matched",
+          "before": 0.9775280898876404,
+          "after": 0.9772727272727273
+        },
+        {
+          "path": "/methods/minimal/1/confusion/SUPPORTED/SUPPORTED",
+          "before": 49,
+          "after": 48
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/precision",
+          "before": 0.9270833333333334,
+          "after": 0.9166666666666666
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/recall",
+          "before": 1.0,
+          "after": 0.9887640449438202
+        },
+        {
+          "path": "/methods/minimal/1/macro_f1",
+          "before": 0.9692657278864175,
+          "after": 0.9658300101649855
+        },
+        {
+          "path": "/methods/minimal/1/per_label/SUPPORTED/f1",
+          "before": 0.98989898989899,
+          "after": 0.9795918367346939
+        },
+        {
+          "path": "/methods/minimal/1/per_label/SUPPORTED/p",
+          "before": 0.98,
+          "after": 0.9795918367346939
+        },
+        {
+          "path": "/methods/minimal/1/per_label/SUPPORTED/r",
+          "before": 1.0,
+          "after": 0.9795918367346939
+        },
+        {
+          "path": "/methods/minimal/1/per_tag_accuracy/paraphrase",
+          "before": 1,
+          "after": 0.977
+        },
+        {
+          "path": "/methods/minimal/2/citation_passage_precision",
+          "before": 0.9880952380952381,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/minimal/2/citation_precision",
+          "before": 0.9642857142857143,
+          "after": 0.963855421686747
+        },
+        {
+          "path": "/methods/minimal/2/claim_accuracy_all_gold",
+          "before": 1.0,
+          "after": 0.9887640449438202
+        },
+        {
+          "path": "/methods/minimal/2/confusion/SUPPORTED/SUPPORTED",
+          "before": 49,
+          "after": 48
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/precision",
+          "before": 0.9270833333333334,
+          "after": 0.9166666666666666
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/recall",
+          "before": 1.0,
+          "after": 0.9887640449438202
+        },
+        {
+          "path": "/methods/minimal/2/macro_f1",
+          "before": 1.0,
+          "after": 0.9965635738831615
+        },
+        {
+          "path": "/methods/minimal/2/per_label/SUPPORTED/f1",
+          "before": 1.0,
+          "after": 0.9896907216494846
+        },
+        {
+          "path": "/methods/minimal/2/per_label/SUPPORTED/r",
+          "before": 1.0,
+          "after": 0.9795918367346939
+        },
+        {
+          "path": "/methods/minimal/2/per_tag_accuracy/paraphrase",
+          "before": 1,
+          "after": 0.977
+        }
+      ],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-oracle",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-oracle",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-oracle (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": true,
+      "headlines": [
+        {
+          "method": "baseline",
+          "run": 0,
+          "original_accuracy": 0.4943820224719101,
+          "guard_only_accuracy": 0.4943820224719101,
+          "parent_units_accuracy": 0.4943820224719101,
+          "original_macro_f1": 0.4538975698286929,
+          "guard_only_macro_f1": 0.4538975698286929,
+          "parent_units_macro_f1": 0.4538975698286929,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 89,
+          "covered_parents": 89,
+          "used_predictions": 89,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "minimal",
+          "run": 0,
+          "original_accuracy": 1.0,
+          "guard_only_accuracy": 1.0,
+          "parent_units_accuracy": 1.0,
+          "original_macro_f1": 1.0,
+          "guard_only_macro_f1": 1.0,
+          "parent_units_macro_f1": 1.0,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 89,
+          "covered_parents": 89,
+          "used_predictions": 89,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 1.0,
+          "guard_only_accuracy": 1.0,
+          "parent_units_accuracy": 1.0,
+          "original_macro_f1": 1.0,
+          "guard_only_macro_f1": 1.0,
+          "parent_units_macro_f1": 1.0,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 89,
+          "covered_parents": 89,
+          "used_predictions": 89,
+          "guard_rejected_pairs": 0
+        }
+      ],
+      "changes_vs_original": [],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-v1-x3",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-v1-x3",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-v1-x3 (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9775280898876404,
+          "guard_only_accuracy": 0.9662921348314607,
+          "parent_units_accuracy": 0.9662921348314607,
+          "original_macro_f1": 0.9875475613974403,
+          "guard_only_macro_f1": 0.9840410041353602,
+          "parent_units_macro_f1": 0.9840410041353602,
+          "guard_only_precision": 0.8877551020408163,
+          "parent_units_precision": 0.8877551020408163,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 26
+        },
+        {
+          "method": "optimized",
+          "run": 1,
+          "original_accuracy": 0.9775280898876404,
+          "guard_only_accuracy": 0.9662921348314607,
+          "parent_units_accuracy": 0.9662921348314607,
+          "original_macro_f1": 0.9875475613974403,
+          "guard_only_macro_f1": 0.9840410041353602,
+          "parent_units_macro_f1": 0.9840410041353602,
+          "guard_only_precision": 0.87,
+          "parent_units_precision": 0.87,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 27
+        },
+        {
+          "method": "optimized",
+          "run": 2,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9775280898876404,
+          "parent_units_accuracy": 0.9775280898876404,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9930555555555556,
+          "parent_units_macro_f1": 0.9930555555555556,
+          "guard_only_precision": 0.9157894736842105,
+          "parent_units_precision": 0.9157894736842105,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 26
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/optimized/0/citation_passage_precision",
+          "before": 0.9550561797752809,
+          "after": 0.9545454545454546
+        },
+        {
+          "path": "/methods/optimized/0/citation_precision",
+          "before": 0.8876404494382022,
+          "after": 0.8863636363636364
+        },
+        {
+          "path": "/methods/optimized/0/citation_recall",
+          "before": 0.9746835443037974,
+          "after": 0.9743589743589743
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_all_gold",
+          "before": 0.9775280898876404,
+          "after": 0.9662921348314607
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_matched",
+          "before": 0.9886363636363636,
+          "after": 0.9885057471264368
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/SUPPORTED",
+          "before": 48,
+          "after": 47
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/precision",
+          "before": 0.8979591836734694,
+          "after": 0.8877551020408163
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/0/macro_f1",
+          "before": 0.9875475613974403,
+          "after": 0.9840410041353602
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/f1",
+          "before": 0.9795918367346939,
+          "after": 0.9690721649484536
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/p",
+          "before": 0.9795918367346939,
+          "after": 0.9791666666666666
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/r",
+          "before": 0.9795918367346939,
+          "after": 0.9591836734693877
+        },
+        {
+          "path": "/methods/optimized/0/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        },
+        {
+          "path": "/methods/optimized/1/citation_passage_precision",
+          "before": 0.9659090909090909,
+          "after": 0.9545454545454546
+        },
+        {
+          "path": "/methods/optimized/1/citation_precision",
+          "before": 0.8977272727272727,
+          "after": 0.8863636363636364
+        },
+        {
+          "path": "/methods/optimized/1/citation_recall",
+          "before": 0.9620253164556962,
+          "after": 0.9615384615384616
+        },
+        {
+          "path": "/methods/optimized/1/claim_accuracy_all_gold",
+          "before": 0.9775280898876404,
+          "after": 0.9662921348314607
+        },
+        {
+          "path": "/methods/optimized/1/claim_accuracy_matched",
+          "before": 0.9886363636363636,
+          "after": 0.9885057471264368
+        },
+        {
+          "path": "/methods/optimized/1/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/1/confusion/SUPPORTED/SUPPORTED",
+          "before": 48,
+          "after": 47
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/precision",
+          "before": 0.88,
+          "after": 0.87
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/1/macro_f1",
+          "before": 0.9875475613974403,
+          "after": 0.9840410041353602
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/f1",
+          "before": 0.9795918367346939,
+          "after": 0.9690721649484536
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/p",
+          "before": 0.9795918367346939,
+          "after": 0.9791666666666666
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/r",
+          "before": 0.9795918367346939,
+          "after": 0.9591836734693877
+        },
+        {
+          "path": "/methods/optimized/1/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        },
+        {
+          "path": "/methods/optimized/2/citation_passage_precision",
+          "before": 0.946236559139785,
+          "after": 0.9354838709677419
+        },
+        {
+          "path": "/methods/optimized/2/citation_precision",
+          "before": 0.8602150537634409,
+          "after": 0.8494623655913979
+        },
+        {
+          "path": "/methods/optimized/2/citation_recall",
+          "before": 0.9625,
+          "after": 0.9620253164556962
+        },
+        {
+          "path": "/methods/optimized/2/claim_accuracy_all_gold",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/2/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/2/confusion/SUPPORTED/SUPPORTED",
+          "before": 48,
+          "after": 47
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/precision",
+          "before": 0.9263157894736842,
+          "after": 0.9157894736842105
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/2/macro_f1",
+          "before": 0.9965635738831615,
+          "after": 0.9930555555555556
+        },
+        {
+          "path": "/methods/optimized/2/per_label/SUPPORTED/f1",
+          "before": 0.9896907216494846,
+          "after": 0.9791666666666666
+        },
+        {
+          "path": "/methods/optimized/2/per_label/SUPPORTED/r",
+          "before": 0.9795918367346939,
+          "after": 0.9591836734693877
+        },
+        {
+          "path": "/methods/optimized/2/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        }
+      ],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-v2",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-v2",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-v2 (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9662921348314607,
+          "guard_only_accuracy": 0.9550561797752809,
+          "parent_units_accuracy": 0.9550561797752809,
+          "original_macro_f1": 0.9542577413479053,
+          "guard_only_macro_f1": 0.950675870002876,
+          "parent_units_macro_f1": 0.950675870002876,
+          "guard_only_precision": 0.9157894736842105,
+          "parent_units_precision": 0.9157894736842105,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 25
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/optimized/0/citation_passage_precision",
+          "before": 0.9659090909090909,
+          "after": 0.9655172413793104
+        },
+        {
+          "path": "/methods/optimized/0/citation_precision",
+          "before": 0.8977272727272727,
+          "after": 0.896551724137931
+        },
+        {
+          "path": "/methods/optimized/0/citation_recall",
+          "before": 0.9620253164556962,
+          "after": 0.9615384615384616
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_all_gold",
+          "before": 0.9662921348314607,
+          "after": 0.9550561797752809
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_matched",
+          "before": 0.9772727272727273,
+          "after": 0.9770114942528736
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/SUPPORTED",
+          "before": 47,
+          "after": 46
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/precision",
+          "before": 0.9263157894736842,
+          "after": 0.9157894736842105
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/0/macro_f1",
+          "before": 0.9542577413479053,
+          "after": 0.950675870002876
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/f1",
+          "before": 0.9791666666666666,
+          "after": 0.968421052631579
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/r",
+          "before": 0.9591836734693877,
+          "after": 0.9387755102040817
+        },
+        {
+          "path": "/methods/optimized/0/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        }
+      ],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-v3-x3",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-v3-x3",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-v3-x3 (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9887640449438202,
+          "parent_units_accuracy": 0.9887640449438202,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9965635738831615,
+          "parent_units_macro_f1": 0.9965635738831615,
+          "guard_only_precision": 0.9361702127659575,
+          "parent_units_precision": 0.9361702127659575,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 24
+        },
+        {
+          "method": "optimized",
+          "run": 1,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9887640449438202,
+          "parent_units_accuracy": 0.9887640449438202,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9965635738831615,
+          "parent_units_macro_f1": 0.9965635738831615,
+          "guard_only_precision": 0.9361702127659575,
+          "parent_units_precision": 0.9361702127659575,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 24
+        },
+        {
+          "method": "optimized",
+          "run": 2,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9887640449438202,
+          "parent_units_accuracy": 0.9887640449438202,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9965635738831615,
+          "parent_units_macro_f1": 0.9965635738831615,
+          "guard_only_precision": 0.946236559139785,
+          "parent_units_precision": 0.946236559139785,
+          "gold_parents": 89,
+          "covered_parents": 88,
+          "used_predictions": 88,
+          "guard_rejected_pairs": 23
+        }
+      ],
+      "changes_vs_original": [],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/dev-v4-x3",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/dev-v4-x3",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/dev-v4-x3 (26 cases, split dev)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9662921348314607,
+          "parent_units_accuracy": 0.9662921348314607,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9715328221684153,
+          "parent_units_macro_f1": 0.9715328221684153,
+          "guard_only_precision": 0.9354838709677419,
+          "parent_units_precision": 0.9354838709677419,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 23
+        },
+        {
+          "method": "optimized",
+          "run": 1,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9775280898876404,
+          "parent_units_accuracy": 0.9775280898876404,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9930555555555556,
+          "parent_units_macro_f1": 0.9930555555555556,
+          "guard_only_precision": 0.9354838709677419,
+          "parent_units_precision": 0.9354838709677419,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 23
+        },
+        {
+          "method": "optimized",
+          "run": 2,
+          "original_accuracy": 0.9887640449438202,
+          "guard_only_accuracy": 0.9775280898876404,
+          "parent_units_accuracy": 0.9775280898876404,
+          "original_macro_f1": 0.9965635738831615,
+          "guard_only_macro_f1": 0.9930555555555556,
+          "parent_units_macro_f1": 0.9930555555555556,
+          "guard_only_precision": 0.9354838709677419,
+          "parent_units_precision": 0.9354838709677419,
+          "gold_parents": 89,
+          "covered_parents": 87,
+          "used_predictions": 87,
+          "guard_rejected_pairs": 23
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/optimized/0/citation_passage_precision",
+          "before": 0.967032967032967,
+          "after": 0.9662921348314607
+        },
+        {
+          "path": "/methods/optimized/0/citation_precision",
+          "before": 0.8791208791208791,
+          "after": 0.8764044943820225
+        },
+        {
+          "path": "/methods/optimized/0/citation_recall",
+          "before": 0.9625,
+          "after": 0.9615384615384616
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_all_gold",
+          "before": 0.9887640449438202,
+          "after": 0.9662921348314607
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_matched",
+          "before": 1.0,
+          "after": 0.9885057471264368
+        },
+        {
+          "path": "/methods/optimized/0/confusion/CONTRADICTED/CONTRADICTED",
+          "before": 30,
+          "after": 29
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/SUPPORTED",
+          "before": 48,
+          "after": 47
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/precision",
+          "before": 0.946236559139785,
+          "after": 0.9354838709677419
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/0/macro_f1",
+          "before": 0.9965635738831615,
+          "after": 0.9715328221684153
+        },
+        {
+          "path": "/methods/optimized/0/per_label/CONTRADICTED/f1",
+          "before": 1.0,
+          "after": 0.983050847457627
+        },
+        {
+          "path": "/methods/optimized/0/per_label/CONTRADICTED/r",
+          "before": 1.0,
+          "after": 0.9666666666666667
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/f1",
+          "before": 0.9896907216494846,
+          "after": 0.9791666666666666
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/r",
+          "before": 0.9795918367346939,
+          "after": 0.9591836734693877
+        },
+        {
+          "path": "/methods/optimized/0/per_label/UNSUPPORTED/f1",
+          "before": 1.0,
+          "after": 0.9523809523809523
+        },
+        {
+          "path": "/methods/optimized/0/per_label/UNSUPPORTED/p",
+          "before": 1.0,
+          "after": 0.9090909090909091
+        },
+        {
+          "path": "/methods/optimized/0/per_tag_accuracy/comparison_flip",
+          "before": 1,
+          "after": 0.667
+        },
+        {
+          "path": "/methods/optimized/0/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        },
+        {
+          "path": "/methods/optimized/1/citation_passage_precision",
+          "before": 0.956989247311828,
+          "after": 0.946236559139785
+        },
+        {
+          "path": "/methods/optimized/1/citation_precision",
+          "before": 0.8602150537634409,
+          "after": 0.8494623655913979
+        },
+        {
+          "path": "/methods/optimized/1/citation_recall",
+          "before": 0.9625,
+          "after": 0.9620253164556962
+        },
+        {
+          "path": "/methods/optimized/1/claim_accuracy_all_gold",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/1/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/1/confusion/SUPPORTED/SUPPORTED",
+          "before": 48,
+          "after": 47
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/precision",
+          "before": 0.946236559139785,
+          "after": 0.9354838709677419
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/1/macro_f1",
+          "before": 0.9965635738831615,
+          "after": 0.9930555555555556
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/f1",
+          "before": 0.9896907216494846,
+          "after": 0.9791666666666666
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/r",
+          "before": 0.9795918367346939,
+          "after": 0.9591836734693877
+        },
+        {
+          "path": "/methods/optimized/1/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        },
+        {
+          "path": "/methods/optimized/2/citation_passage_precision",
+          "before": 0.946236559139785,
+          "after": 0.9354838709677419
+        },
+        {
+          "path": "/methods/optimized/2/citation_precision",
+          "before": 0.8602150537634409,
+          "after": 0.8494623655913979
+        },
+        {
+          "path": "/methods/optimized/2/citation_recall",
+          "before": 0.9625,
+          "after": 0.9620253164556962
+        },
+        {
+          "path": "/methods/optimized/2/claim_accuracy_all_gold",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/2/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 2
+        },
+        {
+          "path": "/methods/optimized/2/confusion/SUPPORTED/SUPPORTED",
+          "before": 48,
+          "after": 47
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/precision",
+          "before": 0.946236559139785,
+          "after": 0.9354838709677419
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/recall",
+          "before": 0.9887640449438202,
+          "after": 0.9775280898876404
+        },
+        {
+          "path": "/methods/optimized/2/macro_f1",
+          "before": 0.9965635738831615,
+          "after": 0.9930555555555556
+        },
+        {
+          "path": "/methods/optimized/2/per_label/SUPPORTED/f1",
+          "before": 0.9896907216494846,
+          "after": 0.9791666666666666
+        },
+        {
+          "path": "/methods/optimized/2/per_label/SUPPORTED/r",
+          "before": 0.9795918367346939,
+          "after": 0.9591836734693877
+        },
+        {
+          "path": "/methods/optimized/2/per_tag_accuracy/paraphrase",
+          "before": 0.977,
+          "after": 0.953
+        }
+      ],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/final_e2e",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/final_e2e",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/final_e2e (20 cases, split test)\n",
+      "stderr": "",
+      "oracle": false,
+      "headlines": [
+        {
+          "method": "baseline",
+          "run": 0,
+          "original_accuracy": 0.5901639344262295,
+          "guard_only_accuracy": 0.5901639344262295,
+          "parent_units_accuracy": 0.5901639344262295,
+          "original_macro_f1": 0.5284214695979401,
+          "guard_only_macro_f1": 0.5356364768129473,
+          "parent_units_macro_f1": 0.5356364768129473,
+          "guard_only_precision": 0.9607843137254902,
+          "parent_units_precision": 0.9607843137254902,
+          "gold_parents": 61,
+          "covered_parents": 49,
+          "used_predictions": 49,
+          "guard_rejected_pairs": 14
+        },
+        {
+          "method": "minimal",
+          "run": 0,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9827450980392157,
+          "guard_only_macro_f1": 0.9787301587301588,
+          "parent_units_macro_f1": 0.9827450980392157,
+          "guard_only_precision": 0.8695652173913043,
+          "parent_units_precision": 0.8985507246376812,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 62,
+          "guard_rejected_pairs": 13
+        },
+        {
+          "method": "minimal",
+          "run": 1,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9827450980392157,
+          "guard_only_macro_f1": 0.9787301587301588,
+          "parent_units_macro_f1": 0.9827450980392157,
+          "guard_only_precision": 0.8695652173913043,
+          "parent_units_precision": 0.8985507246376812,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 62,
+          "guard_rejected_pairs": 13
+        },
+        {
+          "method": "minimal",
+          "run": 2,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9827450980392157,
+          "guard_only_macro_f1": 0.9787301587301588,
+          "parent_units_macro_f1": 0.9827450980392157,
+          "guard_only_precision": 0.8695652173913043,
+          "parent_units_precision": 0.8985507246376812,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 62,
+          "guard_rejected_pairs": 13
+        },
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9703429101019462,
+          "guard_only_macro_f1": 0.9662288930581613,
+          "parent_units_macro_f1": 0.9703429101019462,
+          "guard_only_precision": 0.7894736842105263,
+          "parent_units_precision": 0.8157894736842105,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 62,
+          "guard_rejected_pairs": 15
+        },
+        {
+          "method": "optimized",
+          "run": 1,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9703429101019462,
+          "guard_only_macro_f1": 0.9662288930581613,
+          "parent_units_macro_f1": 0.9703429101019462,
+          "guard_only_precision": 0.7894736842105263,
+          "parent_units_precision": 0.8157894736842105,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 62,
+          "guard_rejected_pairs": 15
+        },
+        {
+          "method": "optimized",
+          "run": 2,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9703429101019462,
+          "guard_only_macro_f1": 0.9662288930581613,
+          "parent_units_macro_f1": 0.9703429101019462,
+          "guard_only_precision": 0.7894736842105263,
+          "parent_units_precision": 0.8157894736842105,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 62,
+          "guard_rejected_pairs": 15
+        }
+      ],
+      "changes_vs_original": [
+        {
+          "path": "/methods/baseline/0/claim_accuracy_matched",
+          "before": 0.72,
+          "after": 0.7346938775510204
+        },
+        {
+          "path": "/methods/baseline/0/confusion/SUPPORTED/MISSED",
+          "before": 8,
+          "after": 9
+        },
+        {
+          "path": "/methods/baseline/0/confusion/SUPPORTED/UNSUPPORTED",
+          "before": 5,
+          "after": 4
+        },
+        {
+          "path": "/methods/baseline/0/decomposition/precision",
+          "before": 0.9803921568627451,
+          "after": 0.9607843137254902
+        },
+        {
+          "path": "/methods/baseline/0/decomposition/recall",
+          "before": 0.819672131147541,
+          "after": 0.8032786885245902
+        },
+        {
+          "path": "/methods/baseline/0/macro_f1",
+          "before": 0.5284214695979401,
+          "after": 0.5356364768129473
+        },
+        {
+          "path": "/methods/baseline/0/per_label/UNSUPPORTED/f1",
+          "before": 0.45454545454545453,
+          "after": 0.47619047619047616
+        },
+        {
+          "path": "/methods/baseline/0/per_label/UNSUPPORTED/p",
+          "before": 0.3125,
+          "after": 0.3333333333333333
+        },
+        {
+          "path": "/methods/minimal/0/citation_precision",
+          "before": 0.9444444444444444,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/0/citation_recall",
+          "before": 0.9272727272727272,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/precision",
+          "before": 0.8840579710144928,
+          "after": 0.8985507246376812
+        },
+        {
+          "path": "/methods/minimal/1/citation_precision",
+          "before": 0.9444444444444444,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/1/citation_recall",
+          "before": 0.9272727272727272,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/precision",
+          "before": 0.8840579710144928,
+          "after": 0.8985507246376812
+        },
+        {
+          "path": "/methods/minimal/2/citation_precision",
+          "before": 0.9444444444444444,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/2/citation_recall",
+          "before": 0.9272727272727272,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/precision",
+          "before": 0.8840579710144928,
+          "after": 0.8985507246376812
+        },
+        {
+          "path": "/methods/optimized/0/citation_passage_precision",
+          "before": 0.9827586206896551,
+          "after": 0.9830508474576272
+        },
+        {
+          "path": "/methods/optimized/0/citation_precision",
+          "before": 0.9137931034482759,
+          "after": 0.9152542372881356
+        },
+        {
+          "path": "/methods/optimized/0/citation_recall",
+          "before": 0.9636363636363636,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/precision",
+          "before": 0.8026315789473685,
+          "after": 0.8157894736842105
+        },
+        {
+          "path": "/methods/optimized/1/citation_passage_precision",
+          "before": 0.9827586206896551,
+          "after": 0.9830508474576272
+        },
+        {
+          "path": "/methods/optimized/1/citation_precision",
+          "before": 0.9137931034482759,
+          "after": 0.9152542372881356
+        },
+        {
+          "path": "/methods/optimized/1/citation_recall",
+          "before": 0.9636363636363636,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/precision",
+          "before": 0.8026315789473685,
+          "after": 0.8157894736842105
+        },
+        {
+          "path": "/methods/optimized/2/citation_passage_precision",
+          "before": 0.9827586206896551,
+          "after": 0.9830508474576272
+        },
+        {
+          "path": "/methods/optimized/2/citation_precision",
+          "before": 0.896551724137931,
+          "after": 0.8983050847457628
+        },
+        {
+          "path": "/methods/optimized/2/citation_recall",
+          "before": 0.9454545454545454,
+          "after": 0.9636363636363636
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/precision",
+          "before": 0.8026315789473685,
+          "after": 0.8157894736842105
+        }
+      ],
+      "changes_vs_guard_only": [
+        {
+          "path": "/methods/minimal/0/citation_passage_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/minimal/0/citation_precision",
+          "before": 0.9622641509433962,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/0/citation_recall",
+          "before": 0.9444444444444444,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/0/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/added_predictions",
+          "before": 3,
+          "after": 1
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/extra_predictions",
+          "before": 9,
+          "after": 7
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/precision",
+          "before": 0.8695652173913043,
+          "after": 0.8985507246376812
+        },
+        {
+          "path": "/methods/minimal/0/decomposition/recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/0/groups/context_length_words/0-399/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/0/groups/difficulty/unknown/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/claim_accuracy_all_gold",
+          "before": 0.9649122807017544,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/claim_accuracy_matched",
+          "before": 0.9821428571428571,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/confusion/SUPPORTED/SUPPORTED",
+          "before": 37,
+          "after": 38
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/correct",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/decomposition_recall",
+          "before": 0.9824561403508771,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/macro_f1",
+          "before": 0.9778947368421053,
+          "after": 0.9823376623376623
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/matched_pairs",
+          "before": 56,
+          "after": 57
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/per_label/SUPPORTED/f1",
+          "before": 0.9736842105263158,
+          "after": 0.9870129870129869
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/per_label/SUPPORTED/p",
+          "before": 0.9736842105263158,
+          "after": 0.9743589743589743
+        },
+        {
+          "path": "/methods/minimal/0/groups/multi_passage/false/per_label/SUPPORTED/r",
+          "before": 0.9736842105263158,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/0/groups/task/unknown/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/0/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/0/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/0/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/0/per_tag_accuracy/paraphrase",
+          "before": 0.972,
+          "after": 1
+        },
+        {
+          "path": "/methods/minimal/1/citation_passage_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/minimal/1/citation_precision",
+          "before": 0.9622641509433962,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/1/citation_recall",
+          "before": 0.9444444444444444,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/1/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/added_predictions",
+          "before": 3,
+          "after": 1
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/extra_predictions",
+          "before": 9,
+          "after": 7
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/precision",
+          "before": 0.8695652173913043,
+          "after": 0.8985507246376812
+        },
+        {
+          "path": "/methods/minimal/1/decomposition/recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/1/groups/context_length_words/0-399/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/1/groups/difficulty/unknown/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/claim_accuracy_all_gold",
+          "before": 0.9649122807017544,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/claim_accuracy_matched",
+          "before": 0.9821428571428571,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/confusion/SUPPORTED/SUPPORTED",
+          "before": 37,
+          "after": 38
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/correct",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/decomposition_recall",
+          "before": 0.9824561403508771,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/macro_f1",
+          "before": 0.9778947368421053,
+          "after": 0.9823376623376623
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/matched_pairs",
+          "before": 56,
+          "after": 57
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/per_label/SUPPORTED/f1",
+          "before": 0.9736842105263158,
+          "after": 0.9870129870129869
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/per_label/SUPPORTED/p",
+          "before": 0.9736842105263158,
+          "after": 0.9743589743589743
+        },
+        {
+          "path": "/methods/minimal/1/groups/multi_passage/false/per_label/SUPPORTED/r",
+          "before": 0.9736842105263158,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/1/groups/task/unknown/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/1/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/1/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/1/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/1/per_tag_accuracy/paraphrase",
+          "before": 0.972,
+          "after": 1
+        },
+        {
+          "path": "/methods/minimal/2/citation_passage_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/minimal/2/citation_precision",
+          "before": 0.9622641509433962,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/2/citation_recall",
+          "before": 0.9444444444444444,
+          "after": 0.9454545454545454
+        },
+        {
+          "path": "/methods/minimal/2/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/added_predictions",
+          "before": 3,
+          "after": 1
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/extra_predictions",
+          "before": 9,
+          "after": 7
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/precision",
+          "before": 0.8695652173913043,
+          "after": 0.8985507246376812
+        },
+        {
+          "path": "/methods/minimal/2/decomposition/recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/2/groups/context_length_words/0-399/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/2/groups/difficulty/unknown/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/claim_accuracy_all_gold",
+          "before": 0.9649122807017544,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/claim_accuracy_matched",
+          "before": 0.9821428571428571,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/confusion/SUPPORTED/SUPPORTED",
+          "before": 37,
+          "after": 38
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/correct",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/decomposition_recall",
+          "before": 0.9824561403508771,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/macro_f1",
+          "before": 0.9778947368421053,
+          "after": 0.9823376623376623
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/matched_pairs",
+          "before": 56,
+          "after": 57
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/per_label/SUPPORTED/f1",
+          "before": 0.9736842105263158,
+          "after": 0.9870129870129869
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/per_label/SUPPORTED/p",
+          "before": 0.9736842105263158,
+          "after": 0.9743589743589743
+        },
+        {
+          "path": "/methods/minimal/2/groups/multi_passage/false/per_label/SUPPORTED/r",
+          "before": 0.9736842105263158,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 41,
+          "after": 42
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/2/groups/task/unknown/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/macro_f1",
+          "before": 0.9787301587301588,
+          "after": 0.9827450980392157
+        },
+        {
+          "path": "/methods/minimal/2/per_label/SUPPORTED/f1",
+          "before": 0.9761904761904762,
+          "after": 0.988235294117647
+        },
+        {
+          "path": "/methods/minimal/2/per_label/SUPPORTED/p",
+          "before": 0.9761904761904762,
+          "after": 0.9767441860465116
+        },
+        {
+          "path": "/methods/minimal/2/per_label/SUPPORTED/r",
+          "before": 0.9761904761904762,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/minimal/2/per_tag_accuracy/paraphrase",
+          "before": 0.972,
+          "after": 1
+        },
+        {
+          "path": "/methods/optimized/0/citation_passage_precision",
+          "before": 0.9824561403508771,
+          "after": 0.9830508474576272
+        },
+        {
+          "path": "/methods/optimized/0/citation_passage_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/0/citation_precision",
+          "before": 0.9298245614035088,
+          "after": 0.9152542372881356
+        },
+        {
+          "path": "/methods/optimized/0/citation_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/added_predictions",
+          "before": 5,
+          "after": 3
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/extra_predictions",
+          "before": 16,
+          "after": 14
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/precision",
+          "before": 0.7894736842105263,
+          "after": 0.8157894736842105
+        },
+        {
+          "path": "/methods/optimized/0/decomposition/recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/0/groups/context_length_words/0-399/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/0/groups/difficulty/unknown/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/claim_accuracy_all_gold",
+          "before": 0.9649122807017544,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/claim_accuracy_matched",
+          "before": 0.9821428571428571,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/confusion/SUPPORTED/SUPPORTED",
+          "before": 36,
+          "after": 37
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/correct",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/decomposition_recall",
+          "before": 0.9824561403508771,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/macro_f1",
+          "before": 0.9653499653499653,
+          "after": 0.9699145299145299
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/matched_pairs",
+          "before": 56,
+          "after": 57
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/per_label/SUPPORTED/f1",
+          "before": 0.972972972972973,
+          "after": 0.9866666666666666
+        },
+        {
+          "path": "/methods/optimized/0/groups/multi_passage/false/per_label/SUPPORTED/r",
+          "before": 0.9473684210526315,
+          "after": 0.9736842105263158
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/0/groups/task/unknown/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/0/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/0/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/0/per_tag_accuracy/paraphrase",
+          "before": 0.944,
+          "after": 0.972
+        },
+        {
+          "path": "/methods/optimized/1/citation_passage_precision",
+          "before": 0.9824561403508771,
+          "after": 0.9830508474576272
+        },
+        {
+          "path": "/methods/optimized/1/citation_passage_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/1/citation_precision",
+          "before": 0.9298245614035088,
+          "after": 0.9152542372881356
+        },
+        {
+          "path": "/methods/optimized/1/citation_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/1/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/added_predictions",
+          "before": 5,
+          "after": 3
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/extra_predictions",
+          "before": 16,
+          "after": 14
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/precision",
+          "before": 0.7894736842105263,
+          "after": 0.8157894736842105
+        },
+        {
+          "path": "/methods/optimized/1/decomposition/recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/1/groups/context_length_words/0-399/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/1/groups/difficulty/unknown/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/claim_accuracy_all_gold",
+          "before": 0.9649122807017544,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/claim_accuracy_matched",
+          "before": 0.9821428571428571,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/confusion/SUPPORTED/SUPPORTED",
+          "before": 36,
+          "after": 37
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/correct",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/decomposition_recall",
+          "before": 0.9824561403508771,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/macro_f1",
+          "before": 0.9653499653499653,
+          "after": 0.9699145299145299
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/matched_pairs",
+          "before": 56,
+          "after": 57
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/per_label/SUPPORTED/f1",
+          "before": 0.972972972972973,
+          "after": 0.9866666666666666
+        },
+        {
+          "path": "/methods/optimized/1/groups/multi_passage/false/per_label/SUPPORTED/r",
+          "before": 0.9473684210526315,
+          "after": 0.9736842105263158
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/1/groups/task/unknown/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/1/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/1/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/1/per_tag_accuracy/paraphrase",
+          "before": 0.944,
+          "after": 0.972
+        },
+        {
+          "path": "/methods/optimized/2/citation_passage_precision",
+          "before": 0.9824561403508771,
+          "after": 0.9830508474576272
+        },
+        {
+          "path": "/methods/optimized/2/citation_passage_recall",
+          "before": 0.9814814814814815,
+          "after": 0.9818181818181818
+        },
+        {
+          "path": "/methods/optimized/2/citation_precision",
+          "before": 0.9122807017543859,
+          "after": 0.8983050847457628
+        },
+        {
+          "path": "/methods/optimized/2/citation_recall",
+          "before": 0.9629629629629629,
+          "after": 0.9636363636363636
+        },
+        {
+          "path": "/methods/optimized/2/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/added_predictions",
+          "before": 5,
+          "after": 3
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/extra_predictions",
+          "before": 16,
+          "after": 14
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/precision",
+          "before": 0.7894736842105263,
+          "after": 0.8157894736842105
+        },
+        {
+          "path": "/methods/optimized/2/decomposition/recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/2/groups/context_length_words/0-399/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/2/groups/difficulty/unknown/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/claim_accuracy_all_gold",
+          "before": 0.9649122807017544,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/claim_accuracy_matched",
+          "before": 0.9821428571428571,
+          "after": 0.9824561403508771
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/confusion/SUPPORTED/SUPPORTED",
+          "before": 36,
+          "after": 37
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/correct",
+          "before": 55,
+          "after": 56
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/decomposition_recall",
+          "before": 0.9824561403508771,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/macro_f1",
+          "before": 0.9653499653499653,
+          "after": 0.9699145299145299
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/matched_pairs",
+          "before": 56,
+          "after": 57
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/per_label/SUPPORTED/f1",
+          "before": 0.972972972972973,
+          "after": 0.9866666666666666
+        },
+        {
+          "path": "/methods/optimized/2/groups/multi_passage/false/per_label/SUPPORTED/r",
+          "before": 0.9473684210526315,
+          "after": 0.9736842105263158
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/claim_accuracy_all_gold",
+          "before": 0.9672131147540983,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/claim_accuracy_matched",
+          "before": 0.9833333333333333,
+          "after": 0.9836065573770492
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/confusion/SUPPORTED/MISSED",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/confusion/SUPPORTED/SUPPORTED",
+          "before": 40,
+          "after": 41
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/correct",
+          "before": 59,
+          "after": 60
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/decomposition_recall",
+          "before": 0.9836065573770492,
+          "after": 1.0
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/matched_pairs",
+          "before": 60,
+          "after": 61
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/missed_gold",
+          "before": 1,
+          "after": 0
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/2/groups/task/unknown/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/2/macro_f1",
+          "before": 0.9662288930581613,
+          "after": 0.9703429101019462
+        },
+        {
+          "path": "/methods/optimized/2/per_label/SUPPORTED/f1",
+          "before": 0.975609756097561,
+          "after": 0.9879518072289156
+        },
+        {
+          "path": "/methods/optimized/2/per_label/SUPPORTED/r",
+          "before": 0.9523809523809523,
+          "after": 0.9761904761904762
+        },
+        {
+          "path": "/methods/optimized/2/per_tag_accuracy/paraphrase",
+          "before": 0.944,
+          "after": 0.972
+        }
+      ]
+    },
+    {
+      "directory": "results/final_oracle",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/final_oracle",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/final_oracle (20 cases, split test)\n",
+      "stderr": "",
+      "oracle": true,
+      "headlines": [
+        {
+          "method": "baseline",
+          "run": 0,
+          "original_accuracy": 0.7049180327868853,
+          "guard_only_accuracy": 0.7049180327868853,
+          "parent_units_accuracy": 0.7049180327868853,
+          "original_macro_f1": 0.5693520571569353,
+          "guard_only_macro_f1": 0.5693520571569353,
+          "parent_units_macro_f1": 0.5693520571569353,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "minimal",
+          "run": 0,
+          "original_accuracy": 0.9672131147540983,
+          "guard_only_accuracy": 0.9672131147540983,
+          "parent_units_accuracy": 0.9672131147540983,
+          "original_macro_f1": 0.9401343754284931,
+          "guard_only_macro_f1": 0.9401343754284931,
+          "parent_units_macro_f1": 0.9401343754284931,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "minimal",
+          "run": 1,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9836065573770492,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9827450980392157,
+          "guard_only_macro_f1": 0.9827450980392157,
+          "parent_units_macro_f1": 0.9827450980392157,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "minimal",
+          "run": 2,
+          "original_accuracy": 0.9836065573770492,
+          "guard_only_accuracy": 0.9836065573770492,
+          "parent_units_accuracy": 0.9836065573770492,
+          "original_macro_f1": 0.9827450980392157,
+          "guard_only_macro_f1": 0.9827450980392157,
+          "parent_units_macro_f1": 0.9827450980392157,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 1.0,
+          "guard_only_accuracy": 1.0,
+          "parent_units_accuracy": 1.0,
+          "original_macro_f1": 1.0,
+          "guard_only_macro_f1": 1.0,
+          "parent_units_macro_f1": 1.0,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "optimized",
+          "run": 1,
+          "original_accuracy": 1.0,
+          "guard_only_accuracy": 1.0,
+          "parent_units_accuracy": 1.0,
+          "original_macro_f1": 1.0,
+          "guard_only_macro_f1": 1.0,
+          "parent_units_macro_f1": 1.0,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "optimized",
+          "run": 2,
+          "original_accuracy": 1.0,
+          "guard_only_accuracy": 1.0,
+          "parent_units_accuracy": 1.0,
+          "original_macro_f1": 1.0,
+          "guard_only_macro_f1": 1.0,
+          "parent_units_macro_f1": 1.0,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 61,
+          "covered_parents": 61,
+          "used_predictions": 61,
+          "guard_rejected_pairs": 0
+        }
+      ],
+      "changes_vs_original": [],
+      "changes_vs_guard_only": []
+    },
+    {
+      "directory": "results/label-audit",
+      "staged_directory": "data/annotation/score-parent-units-v2.2/rescore/label-audit",
+      "exit_code": 0,
+      "stdout": "rescored /Users/ashyh666/Downloads/grounding-verifier/data/annotation/score-parent-units-v2.2/rescore/label-audit (46 cases, split all)\n",
+      "stderr": "",
+      "oracle": true,
+      "headlines": [
+        {
+          "method": "minimal",
+          "run": 0,
+          "original_accuracy": 0.98,
+          "guard_only_accuracy": 0.98,
+          "parent_units_accuracy": 0.98,
+          "original_macro_f1": 0.973859417539807,
+          "guard_only_macro_f1": 0.973859417539807,
+          "parent_units_macro_f1": 0.973859417539807,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 150,
+          "covered_parents": 150,
+          "used_predictions": 150,
+          "guard_rejected_pairs": 0
+        },
+        {
+          "method": "optimized",
+          "run": 0,
+          "original_accuracy": 0.9933333333333333,
+          "guard_only_accuracy": 0.9933333333333333,
+          "parent_units_accuracy": 0.9933333333333333,
+          "original_macro_f1": 0.9942569377477767,
+          "guard_only_macro_f1": 0.9942569377477767,
+          "parent_units_macro_f1": 0.9942569377477767,
+          "guard_only_precision": 1.0,
+          "parent_units_precision": 1.0,
+          "gold_parents": 150,
+          "covered_parents": 150,
+          "used_predictions": 150,
+          "guard_rejected_pairs": 0
+        }
+      ],
+      "changes_vs_original": [],
+      "changes_vs_guard_only": []
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "design_version": "2.5",
+  "operation": "doubt_classification",
+  "categories": [
+    "agree",
+    "suspected_wrong_label",
+    "c_vs_u_boundary",
+    "partial_claim",
+    "evidence_not_found"
+  ],
+  "items": 137,
+  "completed": 137,
+  "in_dataset": 137,
+  "existing_doubts": 77,
+  "c_u_claims": 81,
+  "by_category_label": {
+    "agree": {
+      "CONTRADICTED": 18,
+      "SUPPORTED": 13,
+      "UNSUPPORTED": 18
+    },
+    "suspected_wrong_label": {
+      "CONTRADICTED": 11,
+      "SUPPORTED": 14,
+      "UNSUPPORTED": 4
+    },
+    "partial_claim": {
+      "CONTRADICTED": 7,
+      "SUPPORTED": 22,
+      "UNSUPPORTED": 2
+    },
+    "evidence_not_found": {
+      "UNSUPPORTED": 20,
+      "SUPPORTED": 7,
+      "CONTRADICTED": 1
+    }
+  },
+  "protocol_errors": 0,
+  "errors": 0,
+  "skipped": [],
+  "stale_claim_conflicts": []
+}

@@ -1,0 +1,25 @@
+{
+  "initial_rules_commit": "a805da8",
+  "status": "infeasible",
+  "eligible_conflict_pool": {
+    "Summary": {
+      "responses": 26,
+      "groups": 25,
+      "gpt_groups": 1
+    },
+    "Data2txt": {
+      "responses": 171,
+      "groups": 109,
+      "gpt_groups": 31
+    },
+    "QA": {
+      "responses": 9,
+      "groups": 8,
+      "gpt_groups": 0
+    }
+  },
+  "task_quota_gpt_upper_bound": 9,
+  "requested_cases": 20,
+  "original_gpt_required": 15,
+  "user_resolution": "remove GPT share constraint for supplemental subset only"
+}

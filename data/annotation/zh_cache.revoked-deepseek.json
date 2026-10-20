@@ -1,0 +1,452 @@
+{
+"02a5731a5843c03b8e4353bfc3ecf334009415c9ed425b0d1ce69146938eefc9": {
+"model": "deepseek-flash",
+"source_chars": 123,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "由于该地区紧张局势不断升级，美国空军向中东增派F-16战机以威慑敌对行动。"
+},
+"04873c269b9f447494db52bb4703c1e4873e549770d7e0b6916dc80c2345d9de": {
+"model": "deepseek-flash",
+"source_chars": 282,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "1 如果热水和温和洗涤剂无法把杯子洗干净，可用小苏打去除任何顽固的葡萄酒残留。 2  将少量小苏打溶于热水，在杯中静置几分钟。 3  小苏打会溶解附着在杯上的任何残留葡萄酒。"
+},
+"06a9888b2cc52af110315ba2c55701b91fb044c4a68a0e8459f5626fce477b09": {
+"model": "deepseek-flash",
+"source_chars": 89,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "顾客对这家熟食店留下了好评，平均评分为4.0星。"
+},
+"0a094adb865204b3355cfc2045678fad8c5dde69ba0548bf3ad6c24a68b7973f": {
+"model": "deepseek-flash",
+"source_chars": 726,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "同年，一张照片被公开，显示当时效力纽卡斯尔（Newcastle）的前锋奈尔·兰杰（Nile Ranger）坐在驾驶座上从气球中吸入气体。这张照片出现在 Instagram 上，几天后他就卷入了一场车祸。去年，西布罗姆维奇（West Bromwich Albion）前锋赛多·贝拉希诺（Saido Berahino）也被拍到似乎在他的车里吸入该气体，据报道随后他从伯明翰（Birmingham）开车到伦敦（London）。贝拉希诺后来在一份声明中说：“这是我判断力极差的表现，也不是应该树立的正确榜样。”罗杰斯补充说：“我们希望这里的球员都极其专业并专注于自己的足球。我知道他是这样的。他非常专注于自己的足球，并作为一名球员不断进步。“正如我之前所说，年轻球员会犯错。”"
+},
+"13ce131568a985e14ba4c017e2a53db6a41fad358e07a3f0590ece1f007e3945": {
+"model": "deepseek-flash",
+"source_chars": 138,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "6. 如果有顽固的葡萄酒残留，可将少量小苏打溶于热水，在杯中静置几分钟。"
+},
+"1924ba95f776a077b1aa9b44e9f2b0896ee9f9f6a657f24da9d3d69f5184c08a": {
+"model": "deepseek-flash",
+"source_chars": 138,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "这些先进战斗机的到来凸显了军方维护中东稳定与安全的承诺。"
+},
+"1948c6bc2e287e55e82a1f9cfd2d5528db277a6658fd586186e1bf8461a75029": {
+"model": "deepseek-flash",
+"source_chars": 85,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "员工因其出色的服务和制作朴实无华的三明治而受到称赞。"
+},
+"199f033175a777780da6d6d0733cd3c99bce13a321fc1bf7d3c691a973697269": {
+"model": "deepseek-flash",
+"source_chars": 152,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "另一位顾客极力推荐尝试熏牛肉、火鸡或三角肉（tri-tip）三明治，称它们是地球上最好吃的三明治之一。"
+},
+"1a0fcc9bf705a2013ab9a4d94a036aac8ac22d96eab2727a2a989528d31cdbbc": {
+"model": "deepseek-flash",
+"source_chars": 725,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "亚洲徒步公司（Asian Trekking）总经理达瓦·夏尔巴（Dawa Sherpa）说，他们中的许多人“留下了紧张、焦虑的妻子和孩子”，他们对去年发生的事情记忆犹新。“他们确实说不想再让家人经历这些，”他说。“他们不是害怕自己的生命，而是害怕让家人经历这些。”今年也有几位登山者重返。其中一位是乔恩·赖特（Jon Reiter），他去年在悲剧发生后接受了CNN采访。当冰冷的雪崩轰隆而下时，赖特的夏尔巴向导把他推到一块冰块后面。赖特今年正前往大本营，无法直接联系到他。但他在自己的博客上解释了今年为何重返珠峰。"
+},
+"1a85a65eaedaa28d81aef5aa5b93e35e815136a2cb79334a5c10cfdefa19b4c4": {
+"model": "deepseek-flash",
+"source_chars": 536,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "\"attributes\": {\n  \"BusinessParking\": {\n   \"garage\": false,\n   \"street\": null,\n   \"validated\": false,\n   \"lot\": true,\n   \"valet\": false\n  },\n  \"RestaurantsReservations\": false,\n  \"OutdoorSeating\": true,\n  \"WiFi\": \"no\",\n  \"RestaurantsTakeOut\": false,\n  \"RestaurantsGoodForGroups\": true,\n  \"Music\": null,\n  \"Ambience\": {\n   \"romantic\": false,\n   \"intimate\": false,\n   \"touristy\": false,\n   \"hipster\": false,\n   \"divey\": false,\n   \"classy\": false,\n   \"trendy\": false,\n   \"upscale\": false,\n   \"casual\": true\n  }\n },\n \"business_stars\": 4.0,"
+},
+"1de7551e45e6498632e3a053b8a09252866c974dc2e190305f21b48786948411": {
+"model": "deepseek-flash",
+"source_chars": 764,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "此事发生之际，有传言称这位球星在利物浦心神不宁，并且最近拒绝了一份周薪10万英镑的合同。利物浦主教练布伦丹·罗杰斯（右）表示他会和这位球星谈谈。罗杰斯说：“对我来说，当你是一名顶级职业运动员时，我认为这不是你应该做的事。就这么简单。“但我会就此事和他谈谈，看看他怎么说。你可以想象，我今天才看到这个。”2013年，英格兰右后卫凯尔·沃克（Kyle Walker）在被拍到在谢菲尔德（Sheffield）外出过夜时吸入该气体后，发表了低声下气的道歉。他后来说：“我现在已经了解到这种行为相关的健康风险，并承认我的行为判断力很差。”"
+},
+"2597f81ce787933bdb5b151bfacea7b3020234a744ac95d762c45129e028fa3b": {
+"model": "deepseek-flash",
+"source_chars": 187,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "美国空军中央司令部（AFCENT）目前运营着一支强大的军用飞机机队，包括三个F-16战斗机中队和一个F-15E“攻击鹰”（F-15E Strike Eagles）中队。"
+},
+"2d5f4ae01cac610d7b9feba6261e5d7260a67335cb52e8c67cf182e1ce574170": {
+"model": "deepseek-flash",
+"source_chars": 787,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "只要他们从中吸取教训，那才是重要的。’此事加剧了目前围绕斯特林（Sterling）的争议，他正因一份新合同而陷入纠纷。两周前，他在一次未经俱乐部批准的采访中承认自己拒绝了一份周薪10万英镑的合同，从而冒着激怒支持者的风险。另一家报纸还刊登了据称是他周末吸食水烟管的照片。罗杰斯（Rodgers）表示，最新事件引发的任何后果都将在内部处理。他补充说，他并不觉得此事是一种干扰。他说：‘我会和拉希姆（Raheem）谈谈。在那之前，这是我们将在内部处理的事情。’前利物浦（Liverpool）球员杰米·卡拉格（Jamie Carragher）昨晚表示，这位年轻球星需要从自己的错误中吸取教训并成熟起来。"
+},
+"2e0b2aa3fc3110cbc5828a83c332e4823231fb452524cbb3617d1218c5c36c4b": {
+"model": "deepseek-flash",
+"source_chars": 965,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "在最近的一份声明中，美国空军中央司令部（AFCENT）司令Alexus G. Grynkewich中将表达了他对一批空军人员到来的热情。据Grynkewich称，这些空军人员的存在将大大增强他们向盟友、联军和地区伙伴提供援助的能力。正如Grynkewich在官方声明中所说，最终目标是开展合作并加强地区稳定与安全。\n在最近的一项公告中，据透露，美国空军中央司令部（AFCENT）目前运营着一支强大的军用飞机机队。该机队包括三个F-16战斗机中队、两个A-10“雷电II”（A-10 Thunderbolt II）攻击机中队和一个F-15E“攻击鹰”（F-15E Strike Eagle）中队。此外，据官方新闻稿称，AFCENT还管理着若干战略空运、空中加油以及情报、监视与侦察平台。"
+},
+"2e96b361dcaa829ffe51759fd8f3cec473d68f73074d6bd418104968c0e58a8e": {
+"model": "deepseek-flash",
+"source_chars": 1317,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "Danny's Deli Bait & Tackle 是一家本地商户，位于加利福尼亚州 Carpinteria（卡平特里亚）的 4890 Carpinteria Ave。它提供多种服务和产品，包括餐厅、狩猎和钓鱼用品、熟食店、体育用品、汽车服务、洗车和购物。该商户有特定的营业时间：周一至周四上午 9:00 至下午 6:00 营业，周五上午 9:00 至下午 6:00，周六上午 8:00 至下午 6:00，周日上午 9:00 至下午 5:00。\n\n顾客对这家熟食店留下了好评，平均评分为 4.0 星。一位顾客提到点了热熏牛肉三明治和意大利三明治，两者都很美味。另一位顾客强烈推荐尝试熏牛肉、火鸡或三角肉三明治，称它们是地球上最好的三明治之一。员工因其出色的服务和制作不加花哨配料的三明治而受到称赞。金枪鱼三明治用全白肉长鳍金枪鱼制作，尤其令人印象深刻。\n\n总体而言，Danny's Deli Bait & Tackle 是一家提供多样化产品和服务的本地商户。它以美味的三明治和友好的员工而闻名。凭借正面的顾客评价和丰富的产品选择，这家店是本地人和游客的热门之选。鼓励大家支持本地商户。"
+},
+"3faaf08bfb032c3447f426ac67a9c6eb6e099ddcede00e024572b75c00891d63": {
+"model": "deepseek-flash",
+"source_chars": 778,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "美国空军向中东增派F-16战机以威慑敌对行动\n为应对中东不断升级的紧张局势，空军宣布一支新的F-16“战隼”（F-16 Fighting Falcons）中队已经抵达。这支增派的中队已被部署到该地区，以增强军队的能力和战备状态。该声明于10月24日发布，凸显了这一事态在当前地缘政治环境中的重要性。这些先进战斗机的到来凸显了军方维护该地区稳定与安全的承诺。\n在最近的一份声明中，美国空军中央司令部宣布，新泽西州空军国民警卫队（New Jersey Air National Guard）第119远征战斗机中队（119th Expeditionary Fighter Squadron）将在中东发挥关键作用。"
+},
+"470f81d4cb7d948218fc933384af7252036a9cf1dfe38db1adf17dee400e9a8c": {
+"model": "deepseek-flash",
+"source_chars": 504,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "手工清洗你的葡萄酒杯。清洗葡萄酒杯最安全的方法是手工擦洗。遵循以下提示，以避免缺口和斑点。 1. 在放满热水之前，先在水槽里铺一条毛巾。一次只洗一只葡萄酒杯，以免造成损坏。 2. 为了防止肥皂味影响你下一杯葡萄酒的风味，请使用少量洗涤剂，并且只在需要的地方使用——杯底和杯口周围。清洗时用一只手托住杯肚，以保护杯柄。"
+},
+"492f9e17191ed70b396fef572baae85f2da810857c72c966adc3e4e1d237f1d9": {
+"model": "deepseek-flash",
+"source_chars": 98,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "Danny's Deli Bait & Tackle 是一家本地商户，位于加利福尼亚州 Carpinteria（卡平特里亚）的 4890 Carpinteria Ave。"
+},
+"492fb04b540b3e9a247ef70f0f1e4a1c821dcb62ae4303c73ab00d06242a0712": {
+"model": "deepseek-flash",
+"source_chars": 106,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "近年来，美国空军一直积极支持该地区的盟友和联军部队。"
+},
+"4cfe84132b5f45b8583fcefae5feee2292eeef8ea22e94a07a4d33d3093eed59": {
+"model": "deepseek-flash",
+"source_chars": 97,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "一位顾客提到自己点了热熏牛肉三明治和意大利三明治，两者都很美味。"
+},
+"4e116d0cf70f8a83945c53da470956671850e33de32e6aa279d55cd61c6086da": {
+"model": "deepseek-flash",
+"source_chars": 118,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "斯特林很可能已经使用它很长时间了，通过他的人脉可以经常获得这种药物。"
+},
+"4ebc113c1eddf04ece07f342f0b9a9696145155e0d25f1630eba4511d48d0924": {
+"model": "deepseek-flash",
+"source_chars": 193,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "该商家按特定时间营业：周一至周四上午9:00至下午6:00，周五上午9:00至下午6:00，周六上午8:00至下午6:00，周日上午9:00至下午5:00。"
+},
+"59f81f0edf73f502aa73dfdda163d888e832bb94cd03b9018859b3529b92b424": {
+"model": "deepseek-flash",
+"source_chars": 978,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "在2014年一场导致16名夏尔巴人（Sherpas）死亡、并造成登山季关闭的致命雪崩之后，登山者已重返珠穆朗玛峰（Mount Everest），迎接今年的登山季。这场灾难之后，人们就夏尔巴人面临的风险以及攀登珠峰的危险展开了争论。雪崩发生地昆布冰川（Khumbu Icefall）的路线已被改为一条比20世纪90年代所用路线更安全、但更长的路线。然而，Alpenglow Expeditions公司已宣布，由于危险日益增加，它将不再使用尼泊尔一侧的路线。它将转而使用从中国出发的北侧路线，那里没有冰川。这导致注册攀登珠峰北侧路线的人数上升，进而引发尼泊尔公司的担忧，他们担心登山者会转向中国一侧。尼泊尔严重依赖旅游业，而夏尔巴人则依靠带队探险获取收入。同样重返珠峰的还有几位在雪崩中幸存的登山者。"
+},
+"5cf7d435735afacfabf41244dee80948872216869e790a27aac267ea380f528d": {
+"model": "deepseek-flash",
+"source_chars": 277,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "3. 要清洁杯子内部，请使用带有软泡沫刷毛的高脚杯刷。 4. 用热水彻底冲洗后，用光滑、不掉毛的布擦干葡萄酒杯，例如超细纤维布或面粉袋毛巾。 编辑提示：红葡萄酒如果留过夜，可能会留下污渍。"
+},
+"5d424410c056d085580f0c5d2aee3834c0dbf04ba85902d30af38c5c6b080315": {
+"model": "deepseek-flash",
+"source_chars": 273,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "\"review_info\": [\n  {\n   \"review_stars\": 4.0,\n   \"review_date\": \"2022-01-18 03:05:40\",\n   \"review_text\": \"点了两个三明治。小圆面包夹热熏牛肉。丈夫很喜欢。我点的是意大利三明治，也很好吃。一定会再去的。支持本地商户。\"\n  },"
+},
+"5dfa4fccabc8918052006c4423b4316d3420cf6191f636b8aff45beb25bbda3a": {
+"model": "deepseek-flash",
+"source_chars": 772,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "在《太阳报》（The Sun）获得的视频中，斯特林被看到吸着一个橙色气球，然后大笑咯咯笑。当镜头转回他时，他不是失去意识就是睡着了。据称这段视频是在他位于绍斯波特（Southport）的家中拍摄的。斯特林并不是第一个被指控使用该毒品的球员。托特纳姆（Tottenham）的凯尔·沃克（Kyle Walker）和西布罗姆维奇（West Bromwich Albion）的赛多·贝拉希诺（Saido Berahino）也曾被拍到从气球中吸入气体。两人后来都为各自的行为道歉，并劝阻球迷使用该毒品。毒品专家警告狂欢者不要从气球中吸入一氧化二氮，因为它会使大脑缺氧。利物浦主教练布伦丹·罗杰斯（Brendan Rodgers）已向这名前锋发出警告，后者在昨晚利物浦2比0战胜纽卡斯尔（Newcastle）的比赛中进球。"
+},
+"5e90fae8e1c2e053f94c7075f0a9500aed483800fd5f1690edcd1fae8f20108c": {
+"model": "deepseek-flash",
+"source_chars": 745,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "虽然这种气体可以合法用于牙科手术中的止痛、用于发动机以使其性能更好，以及用于气雾罐中以防止食物变质，但人们对其作为所谓‘合法兴奋剂’的使用一直存在担忧。内政部（Home Office）去年开展的一场关于合法兴奋剂风险的运动显示，笑气是2013/14年度年轻成年人中第二受欢迎的药物，仅次于大麻，使用范围比粉末可卡因和摇头丸更广。地方政府协会（Local Government Association）的研究还将许多年轻人认为一氧化二氮安全的观念描述为‘极其令人不安’，尽管它与多起死亡事件有关。17岁的约瑟夫·贝内特（Joseph Benett）在2012年服用这种流行的派对药物后心脏骤停。"
+},
+"6207a8c02dc02474eaad731be9b3937db38cd48c24fc91e4a36534a113895295": {
+"model": "deepseek-flash",
+"source_chars": 781,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "在一名足球运动员拉希姆·斯特林（Raheem Sterling）被拍到似乎吸食合法兴奋剂“嬉皮快克”（hippy crack）后，一家禁毒慈善机构呼吁他向球迷道歉。今天曝光的视频似乎显示，这名利物浦（Liverpool）和英格兰队边锋吸入一氧化二氮气体，随后在咯咯笑的朋友们注视下昏了过去。禁毒慈善机构 Re-Solv 呼吁这位“榜样”球员谴责使用该毒品，以阻止年轻支持者拿自己的健康冒险。足球运动员拉希姆·斯特林被拍到似乎吸食一氧化二氮——也被称为“嬉皮快克”。视频显示他微笑着从气球中吸入气体，随后似乎昏了过去。该禁毒组织的发言人斯蒂芬·里姆（Stephen Ream）对 MailOnline 表示：“从我们的角度来看，这非常令人失望。”"
+},
+"6d514d3dc3bae5316dafae641deac16bb9d854c9e93ae4db0fdb1eee1b78e2fb": {
+"model": "deepseek-flash",
+"source_chars": 77,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "它将转而使用从中国出发的北侧路线，那里没有冰瀑。"
+},
+"73078d2aa8c756b577e5ba0be46e4dab857db23c63983337816c778321051a2f": {
+"model": "deepseek-flash",
+"source_chars": 170,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "这一令人瞩目的飞机阵容凸显了AFCENT对保持强大而有能力的空军存在的承诺。\n由Newsbreak撰稿人Denys Shybinskiy编辑"
+},
+"73a9d696ba138c3acf6c4ba23fc6794e1c962e8f5badb8696b5431fbe1bd32d4": {
+"model": "deepseek-flash",
+"source_chars": 178,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "在2014年一场导致16名夏尔巴人（Sherpas）死亡、并致使登山季关闭的致命雪崩之后，登山者们已重返珠穆朗玛峰（Mount Everest），迎接今年的登山季。"
+},
+"773f28588428de28814363dea5632522cd2e1d7b6a1099d716f24cd0ff24c505": {
+"model": "deepseek-flash",
+"source_chars": 96,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "9. 用光滑、不掉毛的布擦干葡萄酒杯，例如超细纤维布或面粉袋毛巾。"
+},
+"8146f2ecfb8728159ece9175d85869002bce148a2501b5b3b1f83df5a3dd7289": {
+"model": "deepseek-flash",
+"source_chars": 81,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "用全白肉长鳍金枪鱼（Albacore）制作的金枪鱼三明治尤其令人印象深刻。"
+},
+"8264e3f42fe725280356633340500d751596340d5786e1dd46a233025faf81a1": {
+"model": "deepseek-flash",
+"source_chars": 527,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "“我实在找不到合适的言辞来告诉你原因，或者说究竟是什么真正把我拉回群山之中，”他写道。“当我们身处去年那些事件之中时，很难看清全局。很难记住，人们会死在山上，但这比不死更为罕见。“我很难记住，我并不是在在家中的生活与死在山上之间做选择。我倾向于认为，这类似于在一次空难或高速公路上的一场重大连环相撞中幸存下来。”CNN的Sugam Pokharel对本报道有贡献。"
+},
+"8ac22aa32ea2f02e11850af36c8e29dbed51033a106c48530215afbbea1ed00f": {
+"model": "deepseek-flash",
+"source_chars": 830,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "“我认为在冰川上会多花一个小时，”艾伦·阿内特（Alan Arnette）说，他本季正在珠峰大本营撰写博客。“我不认为这会改变局面。”但有一家公司Alpenglow Expeditions表示，它将停止从尼泊尔一侧攀登——在那里登山者必须穿过冰川——转而选择从中国出发的北侧路线。“过去几年里，我们看到它变得越来越危险，”该公司创始人兼首席执行官阿德里安·巴林杰（Adrian Ballinger）说。“我们认为对我们的工作人员来说风险太大了。”据中国西藏登山协会（China Tibet Mountaineering Association）称，今年已有320人注册攀登珠峰北侧路线。这比去年多136人。由于担心政府关闭，珠峰中国一侧通常不如尼泊尔一侧受欢迎。"
+},
+"8ec898d67236bfb78ddbc372134130e178177dce28dd0c2796e271dbe48175ea": {
+"model": "deepseek-flash",
+"source_chars": 43,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "鼓励支持本地商家。"
+},
+"930e6ceb05fd5b506c55b375f85f87a368cdb025a778691d9413e220f10d06e0": {
+"model": "deepseek-flash",
+"source_chars": 114,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "尽管一氧化二氮伴随着危险，但他不止一次被发现在公开场合使用它。"
+},
+"93867d64e967c734afe578e2e39c024faaccfdf2854f547de74f2514771c316e": {
+"model": "deepseek-flash",
+"source_chars": 109,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "然而，Alpenglow Expeditions已宣布，由于危险日益增加，它将不再使用尼泊尔路线。"
+},
+"9959f638c67da8bb17e73c52ed61fb7858b122a17fc519853283b5f5420f7730": {
+"model": "deepseek-flash",
+"source_chars": 231,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "{\n \"name\": \"Danny's Deli Bait & Tackle\",\n \"address\": \"4890 Carpinteria Ave\",\n \"city\": \"Carpinteria\",\n \"state\": \"CA\",\n \"categories\": \"餐厅、狩猎和钓鱼用品、熟食店、体育用品、汽车、洗车、购物\","
+},
+"9f1ddcb93df74ecbf0a0fec3f3bf5faa21b19f7491eb4ff22afa68d29796df71": {
+"model": "deepseek-flash",
+"source_chars": 60,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "它以美味的三明治和友好的员工而闻名。"
+},
+"a05a158dc401d3c129167a8deeb3aa08999c29bf4a6c153848f6f89d61232ef4": {
+"model": "deepseek-flash",
+"source_chars": 187,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "这导致注册从北侧路线攀登珠穆朗玛峰的人数上升，进而引发尼泊尔公司的担忧，他们担心登山者会转向中国一侧。"
+},
+"a780d4d2039448781750532315d4fb8b8becec4a865edf8f7c2706a4ffbe457e": {
+"model": "deepseek-flash",
+"source_chars": 56,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "7. 用高脚杯刷再次轻轻擦洗杯子。"
+},
+"aa972b437f0fddff889cd398927f381d33063714e7730bb93fbcd5f0589dc8dc": {
+"model": "deepseek-flash",
+"source_chars": 253,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "{\n   \"review_stars\": 5.0,\n   \"review_date\": \"2021-12-27 21:05:57\",\n   \"review_text\": \"天哪。如果你还没尝过 Danny's 的熏牛肉、火鸡或三角肉三明治，那你就还没吃过地球上最好的三明治之一！它们太棒了！！！！！\"\n  },"
+},
+"aac259f64dd025111274352ca849c3264e74da0c8adb02572fa3dd05748ed34a": {
+"model": "deepseek-flash",
+"source_chars": 821,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "决定珠峰（Everest）攀登路线的尼泊尔当地委员会在2月宣布，已选定一条不同的路线。登山者现在将走穿过昆布冰川（Khumbu Icefall）的中央路线，避开发生死亡事件的区域。该委员会由夏尔巴人（Sherpas）组成，出于安全考虑投票决定恢复中央路线。“与右侧或左侧相比，发生雪崩的风险会小一些，”萨加玛塔污染控制委员会（Sagarmatha Pollution Control Committee）发言人杨吉·多玛·夏尔巴（Yangji Doma Sherpa）说。她说，中央路线曾在20世纪90年代使用过，但后来为了更快的路线而被放弃。新路线意味着登山者将不得不穿越更多冰裂缝，并使用更多垂直和水平梯子。该委员会发布了一项建议，要求限制工人装备的重量，以避免梯子超载。"
+},
+"acfc1310efb8dc3fde7a8b1be28c746fb27743893d8dd9e74881dac39721531f": {
+"model": "deepseek-flash",
+"source_chars": 191,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "\"hours\": {\n  \"Monday\": \"9:0-18:0\",\n  \"Tuesday\": \"9:0-18:0\",\n  \"Wednesday\": \"9:0-18:0\",\n  \"Thursday\": \"9:0-18:0\",\n  \"Friday\": \"9:0-18:0\",\n  \"Saturday\": \"8:0-18:0\",\n  \"Sunday\": \"9:0-17:0\"\n },"
+},
+"b3d32a20612e8b433c5966144d8a7bf4089da95e8934926866668e10e81204e7": {
+"model": "deepseek-flash",
+"source_chars": 104,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "3. 使用少量温和洗涤剂，并且只涂抹在杯底和杯口周围。"
+},
+"b61ccbee1b4b4fb83c8699b1cfdc7d96786275bf11a816916a6866a4a13618f0": {
+"model": "deepseek-flash",
+"source_chars": 74,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "同样重返珠穆朗玛峰的还有几位在那场雪崩中幸存的登山者。"
+},
+"b66a0cb7dd66f29d74658e1309829276e6ac71d488373d1c168df86293c451d7": {
+"model": "deepseek-flash",
+"source_chars": 49,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "2. 一次只洗一只葡萄酒杯，以免造成损坏。"
+},
+"b692a982e8b3464c6bbbb00facf4b1ad35f02eb926adf5d4f595c54669b29494": {
+"model": "deepseek-flash",
+"source_chars": 114,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "有这种行为，他正在考虑离开利物浦（Liverpool）转会到另一支球队也就不足为奇了。"
+},
+"b7554d46e1ab910cfac08305b5cad702ba20d1948785af79daf1f398b840fa0d": {
+"model": "deepseek-flash",
+"source_chars": 111,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "这场灾难之后，人们就夏尔巴人所面临的风险以及攀登珠穆朗玛峰的危险展开了争论。"
+},
+"b7a3e8ad470fda7d5a7ea9b3dddca5c3dd19a5bc3a72b2c6b3897a79f26164e2": {
+"model": "deepseek-flash",
+"source_chars": 819,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "一些珠峰观察人士说，北侧路线天气更恶劣、岩石地形更多，但它也没有冰川。北侧路线日益受欢迎，引起了尼泊尔公司的担忧，他们担心登山者会转向中国一侧。“从与我交谈的登山者身上，我已经能看到这种转变，”常驻尼泊尔的达瓦·史蒂文·夏尔巴（Dawa Steven Sherpa）说。“会有更多人前往西藏而不是尼泊尔。尼泊尔比中国更需要旅游业。中国拥有惊人的丰富资源，而尼泊尔没有。”带队探险是夏尔巴人养家糊口、送孩子上学的方式。尼泊尔严重依赖旅游收入。去年事故后，许多向导不得不埋葬他们的朋友，虽然他们可能已准备好重返峰顶，但他们的家人还没有。"
+},
+"b9e532398bd2a451cdc6a981181f6b0992c44579718b635162f5463e5fd5418c": {
+"model": "deepseek-flash",
+"source_chars": 722,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "他是一个重要的榜样，我们不愿看到像他这种地位的人做出这种事。“过去处于类似情况的球员都站出来道歉了，我们希望他也能这样做。”一氧化二氮并不是最危险的毒品，但与它相关的死亡案例确实存在。存在风险，我们敦促任何想尝试它的人不要这么做。斯特林少年时期的教练保罗·劳伦斯（Paul Lawrence）对《标准晚报》（Evening Standard）表示：“他在公共场合做事必须更加小心……也许他得坐下来想一想，自己是榜样，身处公众视野之中。”这段视频曝光仅几天前，这位20岁的英格兰队常客被拍到抽水烟，据说其强度相当于200支香烟。"
+},
+"c167a1996481590c987d64790ab573006761c29c907dfe6e48cb4816380b92fc": {
+"model": "deepseek-flash",
+"source_chars": 276,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "{\n   \"review_stars\": 5.0,\n   \"review_date\": \"2021-09-12 02:53:51\",\n   \"review_text\": \"最棒的不加花哨配料的三明治，由出色的员工制作！意大利三明治很棒，但金枪鱼的简直不可思议！全白肉长鳍金枪鱼，而且肉给得毫不吝啬！A+ 评级！！\"\n  }\n ]\n}"
+},
+"c2136269d6326d793ec352faa8665a2022e320bd99b246f8c1d80a8529eeeaa2": {
+"model": "deepseek-flash",
+"source_chars": 131,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "凭借正面的顾客评价和丰富的产品选择，这家店是本地人和游客都青睐的热门之选。"
+},
+"c25b7417ac53efaf4da6b4e89535b025e25e40a435ea6146166e41f5d560c007": {
+"model": "deepseek-flash",
+"source_chars": 525,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "这位前途无量的艺术专业学生陷入昏迷，但后来去世了。去年9月，三名狂欢者在博尔顿（Bolton）的一家夜总会里疑似对笑气产生不良反应后感到不适。警方接到报警后赶往皇家博尔顿医院（Royal Bolton Hospital），有报道称这些患者正受到药物摄入的影响。据认为他们可能吸入了一氧化二氮，但当时据说他们恢复得很好。过去五年里，一氧化二氮已导致16人死亡，因为使用者在吸入该药物时可能会窒息。"
+},
+"c60e57e28133710b11e3547b6696dad5f630ed5754d9872a6e405596710db030": {
+"model": "deepseek-flash",
+"source_chars": 655,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "由于该地区紧张局势不断升级，美国空军向中东增派F-16战机以威慑敌对行动。这支新的F-16“战隼”（F-16 Fighting Falcons）中队将增强军队的能力和战备状态。这些先进战斗机的到来凸显了军方维护中东稳定与安全的承诺。近年来，美国空军一直积极支持该地区的盟友和联军部队。美国空军中央司令部（AFCENT）目前运营着一支强大的军用飞机机队，包括三个F-16战斗机中队和一个F-15E“攻击鹰”（F-15E Strike Eagles）中队。"
+},
+"c90c150d7eda801e1cd4bd3d41b7455efa6838bb01a40255d57a0bedcc9f0c7c": {
+"model": "deepseek-flash",
+"source_chars": 97,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "这支新的F-16“战隼”（F-16 Fighting Falcons）中队将增强军队的能力和战备状态。"
+},
+"d4c2641e60809b291a17e706373c40dbadeb13d6f83656582507e6d72abe4113": {
+"model": "deepseek-flash",
+"source_chars": 66,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "10. 务必将其完全擦干，以免留下任何污渍或斑点。"
+},
+"d7e1869790062f6607a8c0da0833e3920cb84f759b7801a60d35e49a9ca4ba93": {
+"model": "deepseek-flash",
+"source_chars": 142,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "雪崩发生的孔布冰川（Khumbu Icefall）路线已被改为一条比20世纪90年代所用路线更安全、但更长的路线。"
+},
+"d7ea2be27489d05360199a26947bea9d1bc363991757dca5e1079630f378ed3b": {
+"model": "deepseek-flash",
+"source_chars": 138,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "拉希姆·斯特林（Raheem Sterling）被发现使用一氧化二氮，这是一种可以广泛购买到的药物，但与死亡案例有关。"
+},
+"d8dfcfbae4494b4f13e1b89c7478d40ffefddb425e2ded21498cd8ecc9ec84a8": {
+"model": "deepseek-flash",
+"source_chars": 1057,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "他告诉天空体育（Sky Sports）：‘在那个年纪你会犯错，我犯过，我们都会犯。重要的是我们从中吸取教训。拉希姆·斯特林（Raheem Sterling）需要出现在报纸的体育版，而不是头版。’这段视频出现的同一个晚上，斯特林在球队2比0战胜纽卡斯尔（Newcastle）的比赛中打进了一记精彩的进球。这段视频出现的前几天，这位利物浦（Liverpool）和英格兰（England）球星被拍到抽水烟管。这一事件有可能进一步扰乱利物浦为周日（Sunday）在温布利球场（Wembley stadium）与阿斯顿维拉（Aston Villa）进行的关键足总杯（FA Cup）半决赛所做的准备。斯特林出生在牙买加（Jamaica），但五岁时随母亲纳丁（Nadine）搬到了伦敦（London）。他因行为问题被从小学转走，在一所特殊学校待了三年，在那里一位老师对他作出了预言般的话：‘如果你继续这样下去，到17岁时你要么在监狱里，要么在为英格兰队踢球。’他11岁时加入女王公园巡游者（QPR），15岁时转入利物浦的青训学院，这意味着他不得不离开位于温布利的家和母亲。"
+},
+"d90899662736a192c65e11825ba081574612e8f6f03c9ead68d3f60f4f7dd211": {
+"model": "deepseek-flash",
+"source_chars": 166,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "它提供多种服务和产品，包括餐厅、狩猎和钓鱼用品、熟食店、体育用品、汽车服务、洗车和购物。"
+},
+"d97e07622d1c65f18c6b56296ea2b089ac69d1befd2545c1a11041198645af52": {
+"model": "deepseek-flash",
+"source_chars": 93,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "尼泊尔严重依赖旅游业，而夏尔巴人则依靠带队探险获取收入。"
+},
+"db14b020095f3b37c7b1cd43203634ea659a0dd2c8efd5ccb626b3c4e853450d": {
+"model": "deepseek-flash",
+"source_chars": 45,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "5. 用热水彻底冲洗杯子。"
+},
+"dc477887f7b2be614aa19620bb25b820993fe5afd2720cb1404d348ce705e78c": {
+"model": "deepseek-flash",
+"source_chars": 53,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "要正确清洗葡萄酒杯，请按以下步骤操作：\n1."
+},
+"df96b399d2f88ff79fe7d4496733b45d1eb9faf9e96396c551d839172d41f8d5": {
+"model": "deepseek-flash",
+"source_chars": 713,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "他在17岁时成为了女儿梅洛迪·罗斯（Melody Rose）的父亲。利物浦足球俱乐部（Liverpool FC）的一位发言人说：‘我们已知晓此事，并打算与该球员谈谈。’近年来，一氧化二氮在狂欢者中变得流行，但专家警告说它很危险。一氧化二氮是一种能让人感到放松、欣快和发笑的气体，因此得了个绰号‘笑气’。持有这种物质并不违法，它有时也被称为‘嬉皮可卡因’，不过在英格兰（England）和威尔士（Wales），如果存在18岁以下者吸入的风险，则禁止向其出售。滥用一氧化二氮会导致缺氧，从而造成血压下降、昏厥甚至心脏病发作。"
+},
+"e4ad0bf2bb9d1a5d0aadf2d732964f7018ca92221fb2d5934a305c53cc29da54": {
+"model": "deepseek-flash",
+"source_chars": 721,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "“他们要进入冰川，而正如我们在4月18日所发现的那样，那是最危险的地方，”曾三次到过珠峰的资深登山者康拉德·安克（Conrad Anker）说。“他们暴露在翻滚的冰体之下，上方还悬着冰塔。那非常、非常危险。那是我在山里去过的最危险的地方。”在登山季的这个阶段，登山队尚未进入昆布冰川（Khumbu Icefall），那里本质上是一段冰冻的河流急流，参差不齐的冰块不断断裂并移动。据尼泊尔旅游部（Nepal Ministry of Tourism）称，尼泊尔今年已发放347份攀登珠穆朗玛峰（Mount Everest）的许可，其中125份来自此前被缩短的登山季。这比去年获准的334人略有增加。"
+},
+"ebd4790256a9f4c7b7e917a0ae9a8858312f3f59e99c56a79a171d98904f0e56": {
+"model": "deepseek-flash",
+"source_chars": 487,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "拉希姆·斯特林（Raheem Sterling）被发现使用一氧化二氮，这是一种可以广泛买到的毒品，但与死亡案例有关。斯特林很可能已经使用了很长时间，并通过他的人脉定期获得这种毒品。尽管一氧化二氮伴随危险，他还是不止一次被发现在公开场合使用它。有这种行为，他在考虑离开利物浦转会到另一支球队也就不足为奇了。"
+},
+"f91f8bef9419652f6e6d8f38ba6577629478ccfcf7eac5fe11a4c43a68f954f5": {
+"model": "deepseek-flash",
+"source_chars": 44,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "8. 再用热水冲洗杯子一次。"
+},
+"f96695b653c09df4565ea263ca9c18819c9450d9d177b59e9d7ec76d49fc625f": {
+"model": "deepseek-flash",
+"source_chars": 727,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "登山者已重返珠穆朗玛峰（Mount Everest），迎接今年的登山季，在经历了去年一个致命的登山季后，重新开始冲击世界最高峰的登顶之旅。2014年，一块冰川冰坠落，引发雪崩，导致16名刚刚结束晨祷的尼泊尔人死亡，尼泊尔的登山季随之结束。4月18日的这起事故是珠穆朗玛峰上发生过的单次死亡人数最多的事件。这些死亡引发了关于夏尔巴人（Sherpas）面临的巨大风险以及攀登珠峰的危险的激烈争论。为降低风险，穿过昆布冰川（Khumbu Icefall）的路线——这条以险恶著称、16人遇难的小径——已被改为一条耗时更长但预计更安全的路线。"
+},
+"fc0b1f6b5dcf37ee39d7e6232d8b6fa231bad7fde422dbb9b05254d3e2ceb710": {
+"model": "deepseek-flash",
+"source_chars": 109,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "总体而言，Danny's Deli Bait & Tackle 是一家提供多样化产品和服务的本地商家。"
+},
+"fd3955adcb3c2fb48a1e04a4dbe47998949910c1956491c1d2e7dbc9be1835c8": {
+"model": "deepseek-flash",
+"source_chars": 83,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "4. 用带有软泡沫刷毛的高脚杯刷擦洗杯子内部。"
+},
+"fda8ac0433b12f1c5e002edbe8689d6c6c5030b4ee31131e736b72a449717b4b": {
+"model": "deepseek-flash",
+"source_chars": 51,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "在水槽里铺一条毛巾，然后放满热水。"
+},
+"fe5205addf22cc1f3cc6a6d390381a1d95ed3febdada2f558b143e66c13a0ba2": {
+"model": "deepseek-flash",
+"source_chars": 921,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "为了向负责监督该地区空中行动的联军领导人提供适应性强的解决方案，该中队将负责应急响应能力和威慑任务。这一事态凸显了该中队在维护中东稳定与安全方面所作贡献的重要性。\n在最近的一项公告中，焦点集中在驻扎于大西洋城（Atlantic City）的战斗机身上，它们被广称为“泽西恶魔”（\"Jersey Devils\"），正前往现场，而此时该地区附近由美军成功挫败的无人机袭击激增。在一项重大事态发展中，在以色列与激进组织哈马斯（Hamas）之间持续冲突之际，美国决定向该地区增派人员。此举旨在加强美国在该地区的存在，并可能有助于解决不断升级的紧张局势的努力。"
+},
+"fe7dbcbd4ea51cdc17e06b0b394efd1096e3a5660235d3bb0fd9606763a25437": {
+"model": "deepseek-flash",
+"source_chars": 795,
+"translated_at": "2026-10-19T07:11:56Z",
+"zh": "要正确清洗葡萄酒杯，请按以下步骤操作：\n1. 在水槽里铺一条毛巾，然后放满热水。\n2. 一次只洗一只葡萄酒杯，以免造成损坏。\n3. 使用少量温和洗涤剂，并且只涂抹在杯底和杯口周围。\n4. 用带有软泡沫刷毛的高脚杯刷擦洗杯子内部。\n5. 用热水彻底冲洗杯子。\n6. 如果有顽固的葡萄酒残留，可将少量小苏打溶于热水，在杯中静置几分钟。\n7. 用高脚杯刷再次轻轻擦洗杯子。\n8. 再用热水冲洗杯子一次。\n9. 用光滑、不掉毛的布擦干葡萄酒杯，例如超细纤维布或面粉袋毛巾。\n10. 务必将其完全擦干，以免留下任何污渍或斑点。"
+}
+}

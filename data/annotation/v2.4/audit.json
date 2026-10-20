@@ -1,0 +1,878 @@
+{
+  "design_version": "2.4",
+  "historical_freeze_commit": "c78d411",
+  "hard_test_verifier_run": false,
+  "label_source": "ragtruth_human",
+  "secondary_human_review": false,
+  "selected_cases": 50,
+  "retained_cases": 50,
+  "retained_claims": 638,
+  "excluded_claims": 12,
+  "excluded_cases": [],
+  "by_split_task_subset_label": [
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "retained": 5,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "retained": 48,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "retained": 21,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "retained": 1,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "retained": 1,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "retained": 3,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "retained": 2,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "retained": 18,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "retained": 7,
+      "excluded": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "retained": 0,
+      "excluded": 3
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "retained": 28,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "retained": 1,
+      "excluded": 1
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "retained": 67,
+      "excluded": 0
+    },
+    {
+      "split": "dev",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "retained": 9,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "retained": 7,
+      "excluded": 2
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "retained": 84,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "conflict_supplement",
+      "label": "UNSUPPORTED",
+      "retained": 1,
+      "excluded": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "retained": 2,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "retained": 67,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_data2txt",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "retained": 2,
+      "excluded": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "retained": 4,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "retained": 17,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "retained": 32,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_qa",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "retained": 10,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "CONTRADICTED",
+      "retained": 6,
+      "excluded": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "SUPPORTED",
+      "retained": 49,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "conflict_supplement",
+      "label": "UNSUPPORTED",
+      "retained": 3,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "CONTRADICTED",
+      "retained": 2,
+      "excluded": 1
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "SUPPORTED",
+      "retained": 136,
+      "excluded": 0
+    },
+    {
+      "split": "test",
+      "source": "ragtruth_summary",
+      "subset": "natural",
+      "label": "UNSUPPORTED",
+      "retained": 5,
+      "excluded": 1
+    }
+  ],
+  "splits_subsets": [
+    {
+      "split": "dev",
+      "subset": "all",
+      "cases": 15,
+      "claims": 211,
+      "labels": {
+        "SUPPORTED": 185,
+        "CONTRADICTED": 9,
+        "UNSUPPORTED": 17
+      },
+      "evidence": {
+        "exact": 193,
+        "eligible_sc": 194,
+        "coverage": 0.9948453608247423
+      },
+      "context_words": {
+        "n": 15,
+        "min": 204,
+        "median": 635,
+        "mean": 668.4,
+        "max": 1402
+      },
+      "answer_words": {
+        "n": 15,
+        "min": 75,
+        "median": 161,
+        "mean": 165.66666666666666,
+        "max": 269
+      },
+      "claims_per_case": {
+        "n": 15,
+        "min": 4,
+        "median": 13,
+        "mean": 14.066666666666666,
+        "max": 28
+      },
+      "context_length_buckets": {
+        "0-399": 6,
+        "400-799": 3,
+        "800+": 6
+      }
+    },
+    {
+      "split": "dev",
+      "subset": "natural",
+      "cases": 10,
+      "claims": 126,
+      "labels": {
+        "SUPPORTED": 106,
+        "CONTRADICTED": 3,
+        "UNSUPPORTED": 17
+      },
+      "evidence": {
+        "exact": 108,
+        "eligible_sc": 109,
+        "coverage": 0.9908256880733946
+      },
+      "context_words": {
+        "n": 10,
+        "min": 262,
+        "median": 708.0,
+        "mean": 652.1,
+        "max": 1054
+      },
+      "answer_words": {
+        "n": 10,
+        "min": 75,
+        "median": 156.5,
+        "mean": 163.2,
+        "max": 269
+      },
+      "claims_per_case": {
+        "n": 10,
+        "min": 6,
+        "median": 12.5,
+        "mean": 12.6,
+        "max": 22
+      },
+      "context_length_buckets": {
+        "0-399": 3,
+        "400-799": 3,
+        "800+": 4
+      }
+    },
+    {
+      "split": "dev",
+      "subset": "conflict_supplement",
+      "cases": 5,
+      "claims": 85,
+      "labels": {
+        "SUPPORTED": 79,
+        "CONTRADICTED": 6,
+        "UNSUPPORTED": 0
+      },
+      "evidence": {
+        "exact": 85,
+        "eligible_sc": 85,
+        "coverage": 1.0
+      },
+      "context_words": {
+        "n": 5,
+        "min": 204,
+        "median": 382,
+        "mean": 701,
+        "max": 1402
+      },
+      "answer_words": {
+        "n": 5,
+        "min": 93,
+        "median": 185,
+        "mean": 170.6,
+        "max": 236
+      },
+      "claims_per_case": {
+        "n": 5,
+        "min": 4,
+        "median": 22,
+        "mean": 17,
+        "max": 28
+      },
+      "context_length_buckets": {
+        "0-399": 3,
+        "400-799": 0,
+        "800+": 2
+      }
+    },
+    {
+      "split": "test",
+      "subset": "all",
+      "cases": 35,
+      "claims": 427,
+      "labels": {
+        "SUPPORTED": 385,
+        "CONTRADICTED": 21,
+        "UNSUPPORTED": 21
+      },
+      "evidence": {
+        "exact": 402,
+        "eligible_sc": 406,
+        "coverage": 0.9901477832512315
+      },
+      "context_words": {
+        "n": 35,
+        "min": 164,
+        "median": 425,
+        "mean": 553.9428571428572,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 35,
+        "min": 60,
+        "median": 132,
+        "mean": 138.6,
+        "max": 304
+      },
+      "claims_per_case": {
+        "n": 35,
+        "min": 4,
+        "median": 12,
+        "mean": 12.2,
+        "max": 29
+      },
+      "context_length_buckets": {
+        "0-399": 15,
+        "400-799": 11,
+        "800+": 9
+      }
+    },
+    {
+      "split": "test",
+      "subset": "natural",
+      "cases": 20,
+      "claims": 256,
+      "labels": {
+        "SUPPORTED": 235,
+        "CONTRADICTED": 4,
+        "UNSUPPORTED": 17
+      },
+      "evidence": {
+        "exact": 238,
+        "eligible_sc": 239,
+        "coverage": 0.99581589958159
+      },
+      "context_words": {
+        "n": 20,
+        "min": 164,
+        "median": 558.0,
+        "mean": 677.4,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 20,
+        "min": 62,
+        "median": 139.5,
+        "mean": 152.5,
+        "max": 304
+      },
+      "claims_per_case": {
+        "n": 20,
+        "min": 6,
+        "median": 12.0,
+        "mean": 12.8,
+        "max": 29
+      },
+      "context_length_buckets": {
+        "0-399": 7,
+        "400-799": 5,
+        "800+": 8
+      }
+    },
+    {
+      "split": "test",
+      "subset": "conflict_supplement",
+      "cases": 15,
+      "claims": 171,
+      "labels": {
+        "SUPPORTED": 150,
+        "CONTRADICTED": 17,
+        "UNSUPPORTED": 4
+      },
+      "evidence": {
+        "exact": 164,
+        "eligible_sc": 167,
+        "coverage": 0.9820359281437125
+      },
+      "context_words": {
+        "n": 15,
+        "min": 187,
+        "median": 399,
+        "mean": 389.3333333333333,
+        "max": 852
+      },
+      "answer_words": {
+        "n": 15,
+        "min": 60,
+        "median": 108,
+        "mean": 120.06666666666666,
+        "max": 187
+      },
+      "claims_per_case": {
+        "n": 15,
+        "min": 4,
+        "median": 12,
+        "mean": 11.4,
+        "max": 20
+      },
+      "context_length_buckets": {
+        "0-399": 8,
+        "400-799": 6,
+        "800+": 1
+      }
+    },
+    {
+      "split": "all",
+      "subset": "all",
+      "cases": 50,
+      "claims": 638,
+      "labels": {
+        "SUPPORTED": 570,
+        "CONTRADICTED": 30,
+        "UNSUPPORTED": 38
+      },
+      "evidence": {
+        "exact": 595,
+        "eligible_sc": 600,
+        "coverage": 0.9916666666666667
+      },
+      "context_words": {
+        "n": 50,
+        "min": 164,
+        "median": 441.5,
+        "mean": 588.28,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 50,
+        "min": 60,
+        "median": 135.0,
+        "mean": 146.72,
+        "max": 304
+      },
+      "claims_per_case": {
+        "n": 50,
+        "min": 4,
+        "median": 12.0,
+        "mean": 12.76,
+        "max": 29
+      },
+      "context_length_buckets": {
+        "0-399": 21,
+        "400-799": 14,
+        "800+": 15
+      }
+    },
+    {
+      "split": "all",
+      "subset": "natural",
+      "cases": 30,
+      "claims": 382,
+      "labels": {
+        "SUPPORTED": 341,
+        "CONTRADICTED": 7,
+        "UNSUPPORTED": 34
+      },
+      "evidence": {
+        "exact": 346,
+        "eligible_sc": 348,
+        "coverage": 0.9942528735632183
+      },
+      "context_words": {
+        "n": 30,
+        "min": 164,
+        "median": 607.5,
+        "mean": 668.9666666666667,
+        "max": 1626
+      },
+      "answer_words": {
+        "n": 30,
+        "min": 62,
+        "median": 146.0,
+        "mean": 156.06666666666666,
+        "max": 304
+      },
+      "claims_per_case": {
+        "n": 30,
+        "min": 6,
+        "median": 12.0,
+        "mean": 12.733333333333333,
+        "max": 29
+      },
+      "context_length_buckets": {
+        "0-399": 10,
+        "400-799": 8,
+        "800+": 12
+      }
+    },
+    {
+      "split": "all",
+      "subset": "conflict_supplement",
+      "cases": 20,
+      "claims": 256,
+      "labels": {
+        "SUPPORTED": 229,
+        "CONTRADICTED": 23,
+        "UNSUPPORTED": 4
+      },
+      "evidence": {
+        "exact": 249,
+        "eligible_sc": 252,
+        "coverage": 0.9880952380952381
+      },
+      "context_words": {
+        "n": 20,
+        "min": 187,
+        "median": 390.5,
+        "mean": 467.25,
+        "max": 1402
+      },
+      "answer_words": {
+        "n": 20,
+        "min": 60,
+        "median": 124.0,
+        "mean": 132.7,
+        "max": 236
+      },
+      "claims_per_case": {
+        "n": 20,
+        "min": 4,
+        "median": 12.5,
+        "mean": 12.8,
+        "max": 28
+      },
+      "context_length_buckets": {
+        "0-399": 11,
+        "400-799": 6,
+        "800+": 3
+      }
+    }
+  ],
+  "excluded_claim_details": [
+    {
+      "case_id": "ragtruth-1513",
+      "claim_id": "ragtruth-1513-c11-v24-split2",
+      "label": "UNSUPPORTED",
+      "reason": "already_represented_same_answer_span"
+    },
+    {
+      "case_id": "ragtruth-15677",
+      "claim_id": "ragtruth-15677-c4-v24-split1",
+      "label": "UNSUPPORTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-1698",
+      "claim_id": "ragtruth-1698-c3-v24-split2",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-180",
+      "claim_id": "ragtruth-180-c2-v24-split2",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-7159",
+      "claim_id": "ragtruth-7159-c20-v24-split1",
+      "label": "UNSUPPORTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-11450",
+      "claim_id": "ragtruth-11450-c13",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-1730",
+      "claim_id": "ragtruth-1730-c2",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-3080",
+      "claim_id": "ragtruth-3080-c5",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-3080",
+      "claim_id": "ragtruth-3080-c6",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-545",
+      "claim_id": "ragtruth-545-c14",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-5675",
+      "claim_id": "ragtruth-5675-c1",
+      "label": "UNSUPPORTED",
+      "reason": "partial_overlap"
+    },
+    {
+      "case_id": "ragtruth-7217",
+      "claim_id": "ragtruth-7217-c15",
+      "label": "CONTRADICTED",
+      "reason": "partial_overlap"
+    }
+  ],
+  "evidence": {
+    "overall": {
+      "exact": 595,
+      "eligible_sc": 600,
+      "coverage": 0.9916666666666667
+    },
+    "by_task": {
+      "ragtruth_data2txt": {
+        "exact": 231,
+        "eligible_sc": 234,
+        "coverage": 0.9871794871794872
+      },
+      "ragtruth_qa": {
+        "exact": 76,
+        "eligible_sc": 77,
+        "coverage": 0.987012987012987
+      },
+      "ragtruth_summary": {
+        "exact": 288,
+        "eligible_sc": 289,
+        "coverage": 0.9965397923875432
+      }
+    },
+    "offline_repair": {
+      "original_none_sc": 98,
+      "recovered_claims": 86,
+      "index_corrected_quotes": 119,
+      "original_input_sha256": "64d84d79314032f5232da407e07b95f2bf87a6b9e4e70572c43c7900022e6523"
+    },
+    "original_none_new_prompt": {
+      "rerun_claims": 98,
+      "new_prompt_exact_claims": 95,
+      "new_prompt_additional_claims_after_offline": 10,
+      "index_corrected_quotes": 0,
+      "model_doubts": 11,
+      "protocol_errors": 0,
+      "usage": {
+        "calls": 98,
+        "input_tokens": 141441,
+        "output_tokens": 19626
+      }
+    },
+    "initial_supplement_and_recovery": {
+      "supplement": {
+        "calls": 252,
+        "exact": 249,
+        "protocol_errors": 0
+      },
+      "recovered": {
+        "calls": 10,
+        "exact": 10,
+        "protocol_errors": 0
+      }
+    },
+    "index_corrected_quotes_offline": 119,
+    "index_corrected_quotes_new_calls": 0
+  },
+  "partial_recovery": {
+    "original_parents": 10,
+    "new_claims": 19,
+    "retained_new_claims": 15,
+    "still_partial_overlap": 4,
+    "recovered_parent_count": 10,
+    "retained_labels": {
+      "SUPPORTED": 9,
+      "CONTRADICTED": 1,
+      "UNSUPPORTED": 5
+    }
+  },
+  "recovered_representations": {
+    "new_unique_gold": 14,
+    "duplicates_not_scored_twice": [
+      {
+        "case_id": "ragtruth-1513",
+        "claim_id": "ragtruth-1513-c11-v24-split2",
+        "represented_by": "ragtruth-1513-c12",
+        "reason": "already_represented_same_answer_span"
+      }
+    ]
+  },
+  "model_doubts": {
+    "records": 75,
+    "unique_claims": 65,
+    "protocol_diagnostics": 4,
+    "semantic_doubts_or_not_found": 71
+  },
+  "upstream_unannotated_answers": {
+    "display_name": "上游无标注回答",
+    "cases": 7,
+    "cases_with_model_doubts": 4,
+    "model_doubts_records": 5,
+    "case_ids_with_doubts": [
+      "ragtruth-1453",
+      "ragtruth-211",
+      "ragtruth-3247",
+      "ragtruth-619"
+    ]
+  },
+  "targets": {
+    "test_contradicted": {
+      "observed": 21,
+      "minimum": 15,
+      "met": true
+    },
+    "data2txt_evidence": {
+      "observed": 0.9871794871794872,
+      "minimum": 0.7,
+      "met": true
+    }
+  },
+  "sampling_exception": "User approved removing GPT minimum only for conflict_supplement; other rules unchanged.",
+  "limitations": [
+    "Upstream annotations may omit facts or contain errors; no second human review.",
+    "Exact quotation proves textual presence, not semantic sufficiency.",
+    "The targeted supplement changes label prevalence; natural results must accompany all results.",
+    "Retired parent claims are not double-counted as excluded replacement children."
+  ],
+  "input_files": {
+    "data/annotation/candidates.jsonl": "323f5a0463c028fa2cbabfc3e42c7dfa9b1dd92a9b2f4dcf80e150ae9253a293",
+    "data/annotation/full-v2.3/evidence_calls.jsonl": "febe43bb4e774ac13e3d9709c4cb03dcce38b85d4509409608a964d961b21bd4",
+    "data/annotation/full-v2.3/excluded.jsonl": "6700326bc4bf0c1621592c0be73c4e40ae559eec4f57f5cc4857397137a05518",
+    "data/annotation/pilot5-dev-v2.3/evidence_calls.jsonl": "832604dd4296c9636b542806517eaba4c696d5b688d30a16c3b389b1a407ed46",
+    "data/annotation/pilot5-dev-v2.3/excluded.jsonl": "714636d9d11120ea388ed0c426fc39f879d19bbde55977aedb3454cda7f64f37",
+    "data/annotation/v2.4/README.md": "3080f4eefed2a2d98e1b1ef3cfb9cfa1a15c194c3737158801efbf85c994b29d",
+    "data/annotation/v2.4/checkpoint_report.json": "1b39eba27a1d135404f3885e47bcd52907285d39d5c21fe6abee4628dbac853e",
+    "data/annotation/v2.4/evidence-rerun-stdout.log": "f97736fc2a5d6b82e9552a310db94b7fb6b4a1e215edf4c99af13894e79fcb63",
+    "data/annotation/v2.4/evidence_reruns.jsonl": "d60135735a5dd2c15c5ba90fe63bc5ef4fa87918af26180a71dc4bea6dcc1a3a",
+    "data/annotation/v2.4/model_doubts.rerun.jsonl": "d35b49a5e87af39d5f88365d770f0e3283a6340eda71898c7b032eafd6d6115c",
+    "data/annotation/v2.4/natural.evidenced.jsonl": "935767d3d592bda512ebed406dcde59f37dd5dfb141b411906ee023ea1073883",
+    "data/annotation/v2.4/natural.offline.jsonl": "adaf661315c1f82cac8be6bced96f15cd61b0db55f68532c1275205ac9bed9dc",
+    "data/annotation/v2.4/natural_cases.jsonl": "597c4003d483e9b499076a288ef0202d882a4334141c394e439def907769f487",
+    "data/annotation/v2.4/offline_evidence.jsonl": "6bdbb970626319c16c0a64d428ee88d80852419d34dc13c7a4cd5b5b7cce6f45",
+    "data/annotation/v2.4/offline_report.json": "f2037e6867877b1597f64c5c5f5c0f104bb708b2aa05c1007d8ae84abe4ce2aa",
+    "data/annotation/v2.4/partial-split-stdout.attempt1.log": "47333fe75f209e446012758aa8c0fe5c9f3bf79669e7ea9426df15c8854826e1",
+    "data/annotation/v2.4/partial-split-stdout.attempt2.log": "47333fe75f209e446012758aa8c0fe5c9f3bf79669e7ea9426df15c8854826e1",
+    "data/annotation/v2.4/partial-split-stdout.log": "e7b88178a7d54ca9dcab294dc1d417539044cde6900614dae05f110b892d8447",
+    "data/annotation/v2.4/partial_recovered.jsonl": "2c6e845b5c51afbdadf94ff3202bfec633eefe752af8c17518757c042913a162",
+    "data/annotation/v2.4/partial_repair_attempts.jsonl": "92e360390190848ba2840a8451bfe79fa2698cb2cce9259576318cd5639a7704",
+    "data/annotation/v2.4/partial_report.json": "a2292ffcdb25331240b90c161e16df7953b9bd8b044eea7823c6ac92b04b6bb3",
+    "data/annotation/v2.4/partial_split_calls.attempt1-invalid-quotes.jsonl": "6377039b84e8c91a898d8cc374b89b6496b3c20da6c2efa1e2ad23145adba109",
+    "data/annotation/v2.4/partial_split_calls.attempt2-structure.jsonl": "2e098c92245a8ab36a9c09b85e72fc70ee8b6e6a506f0c8b2e782bff3c0051fd",
+    "data/annotation/v2.4/partial_split_calls.jsonl": "a4bfb1336344c99aa46b2ad4047ebaad443ca41996ff4e898c254508d8174477",
+    "data/annotation/v2.4/partial_still_excluded.jsonl": "977dadabbbf8125306e7ece4566b4282b957e3d9623168fd76d62745d2171fbb",
+    "data/annotation/v2.4/protected-v2.3-sha256.json": "094bcd06a44c2af0d6d5746410694db7a48279b7f0ec1930ab91eebdaf74a4a1",
+    "data/annotation/v2.4/recovered/evidence_reruns.jsonl": "9c63b4c30b47c7a6f0fe81b9161ec9287f3cf7efeb8712ee1f0a03f110290cc1",
+    "data/annotation/v2.4/recovered/evidenced.jsonl": "839790c25db08a5addbb94ec0fe0ad042dc4ac709acbcc0319bc05047cc1055c",
+    "data/annotation/v2.4/recovered/model_doubts.jsonl": "c0439cc03325d8c128ee2f77f5a76105abaad2f755dd203127326e6a90172bb4",
+    "data/annotation/v2.4/recovered-evidence.log": "a6f4a9e6ab32aeba122ee8c3ef096d36cf96a3984e529c87aa4c4906b32f628b",
+    "data/annotation/v2.4/report.md": "ae07485de0a0300056d809f37cdbf8e152adc8e9a36170c323d6eddc17a384c3",
+    "data/annotation/v2.4/rerun_report.json": "186566cb3dba3122d6b2e10f83ecb9f8f02acef50f5769e86aa6f821ee247225",
+    "data/annotation/v2.4/sampling_infeasible.json": "0b243e941ba09898bc8cb34d49c93678859c36bbf9ba0b703edabe71f09f2672",
+    "data/annotation/v2.4/sampling_rules.initial-infeasible.json": "6623354742b73c27b29e0692ee9336ad5bd160554cab81959cce9a00be457675",
+    "data/annotation/v2.4/sampling_rules.json": "6448a077e5f0b707c3c6e515de4d761dcef4b98dd6900bbb8f298da6877ee8a3",
+    "data/annotation/v2.4/selection-stats.md": "360362cb81deda5a7131bbd2e78f6b515a6b8b598912db9e1013721a62d32556",
+    "data/annotation/v2.4/selection-stdout.infeasible.log": "c8c42d5dfd7dae8a6df66013d891cc183db7655c45f1b20feb60fd74fa2bd816",
+    "data/annotation/v2.4/selection-stdout.json": "ceef13d479081d33e96744e54fb354a62aacf01d1fcf8f6842d2829c6f75827b",
+    "data/annotation/v2.4/selection.json": "d71cbecc67739ead92a332510155911fd2b1fbc2d2a0c589c42f750eac0f5777",
+    "data/annotation/v2.4/supplement/drafts.jsonl": "fb7638c5a9677c00ef5a99d7fca020e5d5e6f9eab7b8afe10ae597bc76bccf18",
+    "data/annotation/v2.4/supplement/evidence.log": "65fad09355c2f0c72230aa3beb660f50078bec98ede78f58dfe1b3bb3bb11b81",
+    "data/annotation/v2.4/supplement/evidence_reruns.jsonl": "136a9eed6e96eaf0848e76561869508fb9cc17150e7ca18bd91d352c1e96ffb9",
+    "data/annotation/v2.4/supplement/evidenced.jsonl": "2d5e3dffd5024b1bd841ff5d9f54b16c2d7741f5d9512126baaadcf4d308968d",
+    "data/annotation/v2.4/supplement/excluded.jsonl": "91c5bc3225428b0062154409edf6ca6c0ae4c8e9abe2caddea05f33feb4ac38e",
+    "data/annotation/v2.4/supplement/mapped.jsonl": "2222e0d68829b92ecdd5d50bc39845143c0571a7ae705bcafe131baee53a7ffb",
+    "data/annotation/v2.4/supplement/mapping-report.json": "06c83bb861c5983bc733c377e69101a2b72ed0a60ac763497a0af653cd72c093",
+    "data/annotation/v2.4/supplement/mapping.log": "06c83bb861c5983bc733c377e69101a2b72ed0a60ac763497a0af653cd72c093",
+    "data/annotation/v2.4/supplement/model_doubts.jsonl": "0e65df48270192fd0363b582141f15dfac466cdb6ce8e797966532ba105e6551",
+    "data/annotation/v2.4/supplement_candidates.jsonl": "5bbbf750bdd1f356a0e206ac46378021bb350eccf3918ee97132346bceb07ed4",
+    "data/eval_hard.jsonl": "64d84d79314032f5232da407e07b95f2bf87a6b9e4e70572c43c7900022e6523"
+  },
+  "dataset_sha256": "90813831d2dd6b7c162a1090ba41ea7260c654ff2dd54fb6a62bf3cf05fc38d6"
+}

@@ -1,0 +1,11 @@
+ragtruth-14293 ragtruth-14293-c2-v24-split1: exact
+ragtruth-15713 ragtruth-15713-c2-v24-split1: exact
+ragtruth-1513 ragtruth-1513-c11-v24-split1: exact
+ragtruth-1698 ragtruth-1698-c3-v24-split1: exact
+ragtruth-1698 ragtruth-1698-c3-v24-split3: exact
+ragtruth-1698 ragtruth-1698-c2-v24-split1: exact
+ragtruth-7159 ragtruth-7159-c20-v24-split2: exact
+ragtruth-2426 ragtruth-2426-c10-v24-split1: exact
+ragtruth-180 ragtruth-180-c2-v24-split1: exact
+ragtruth-9775 ragtruth-9775-c19-v24-split2: exact
+{"cases": 9, "claims": 15, "calls": 10, "exact": 10, "model_doubts": 3}

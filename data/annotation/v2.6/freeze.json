@@ -1,0 +1,678 @@
+{
+  "design_version": "2.6",
+  "frozen_at": "2026-10-20T06:40:49.916902+00:00",
+  "source_commit": "daa4b6fb8ab550ddeca5e2840405b0e4b16dd29f",
+  "base_commit": "0e3c3b8",
+  "purpose": "Natural-distribution RAGTruth response-level hallucination detection; upstream human spans are the gold; no model participates in labelling.",
+  "dataset": {
+    "path": "data/eval_ragtruth_resp.v2.6.jsonl",
+    "sha256": "8eb9d6e73a762111fe2964e012d210a625fd9fcc5ac048f3a02268b9da0b924d",
+    "n_cases": 210,
+    "splits": {
+      "dev": 30,
+      "test": 180
+    },
+    "gold_positives": {
+      "dev": 9,
+      "test": 62
+    },
+    "tasks": [
+      "Data2txt",
+      "QA",
+      "Summary"
+    ],
+    "per_task": {
+      "dev": 10,
+      "test": 60
+    },
+    "label_source": "RAGTruth upstream human spans (upstream test split, quality=good)",
+    "answer_transform": "none",
+    "context_transforms_allowed": [
+      "remove passage N: structure markers",
+      "trim leading/trailing whitespace of a passage"
+    ],
+    "passage_map_recorded": true,
+    "test_seen_by_any_verifier_before_freeze": false,
+    "excluded_over_cap": {
+      "answers": 6,
+      "contexts": 0,
+      "caps": {
+        "context_words": 1626,
+        "answer_words": 304
+      }
+    }
+  },
+  "sampling": {
+    "rules": "data/annotation/v2.6/sampling_rules.json",
+    "rules_sha256": "32b1ac6361c98c1e98ab6cb2ab5f4c78b50111d1194c288fccb7980471af66d1",
+    "selection": "data/annotation/v2.6/selection.json",
+    "selection_sha256": "ae8653ccb8fec4bf2858f6547828cbe5c8de15912179b4f98f8e30e8aab250df",
+    "stats": "data/annotation/v2.6/selection-stats.md",
+    "seed": 20261022,
+    "quotas": {
+      "Data2txt": {
+        "dev": 10,
+        "test": 60
+      },
+      "QA": {
+        "dev": 10,
+        "test": 60
+      },
+      "Summary": {
+        "dev": 10,
+        "test": 60
+      }
+    },
+    "generators": "all six RAGTruth generators",
+    "generators_listed": [
+      "gpt-4-0613",
+      "gpt-3.5-turbo-0613",
+      "llama-2-7b-chat",
+      "llama-2-13b-chat",
+      "llama-2-70b-chat",
+      "mistral-7B-instruct"
+    ],
+    "one_response_per_source_id": true,
+    "labels_not_read_during_sampling": true,
+    "no_minimum_length": true,
+    "no_gpt_fraction": true,
+    "near_duplicate_exclusions": "v2.x cases and their 5-gram Jaccard >= 0.8 groups; old data/eval.jsonl near-duplicates; legacy project ids",
+    "overlap_with_v25": {
+      "ids": 0,
+      "source_ids": 0
+    }
+  },
+  "gold": {
+    "response": "true iff the upstream response has at least one hallucination span",
+    "sentences": "deterministic regex splitter annotation/v26/sentences.py; a sentence is hallucinated iff it overlaps any upstream span",
+    "no_model_in_gold": true,
+    "annotation_models": [],
+    "human_review": false,
+    "label_types_retained_for_grouping": [
+      "Evident Conflict",
+      "Evident Baseless Info",
+      "Subtle Conflict",
+      "Subtle Baseless Info"
+    ]
+  },
+  "verifier": {
+    "frozen_baseline": "data/annotation/v2.5/freeze.json",
+    "frozen_baseline_sha256": "19aac29f69dfd8829fb49f559e53d4371636061d028e68be24a603542a9366d7",
+    "frozen_files_checked": 114,
+    "frozen_files_changed": [
+      "README.md",
+      "docs/DATASET.md",
+      "docs/EVALUATION.md"
+    ],
+    "prompt_version": "v3",
+    "prompt_source_sha256": "af0e648b3fc3a6a439575596e06d1a9cefddd3c13a81d3cc935da713b9255678",
+    "model": "deepseek-v4-pro",
+    "provider": "openai",
+    "base_url": "https://api.deepseek.com/v1",
+    "parameters": {
+      "temperature": 0,
+      "thinking": {
+        "type": "disabled"
+      },
+      "max_tokens": 4096,
+      "timeout_s": 60.0,
+      "max_retries": 3,
+      "concurrency": 4
+    },
+    "prices_usd_per_mtok": {
+      "in": 1.32,
+      "out": 3.96
+    },
+    "methods": [
+      "baseline",
+      "minimal",
+      "optimized"
+    ],
+    "baseline_is_deterministic": true,
+    "authorized_documentation_updates": {
+      "files": [
+        "README.md",
+        "docs/DATASET.md",
+        "docs/EVALUATION.md"
+      ],
+      "reason": "v2.6 P5 updates the current headline and the dataset/evaluation documents; no verifier, prompt, data or metric file changed"
+    },
+    "frozen_files_changed_note": "these documentation files were re-sealed in the v2.5 freeze for the v2.6 documentation update; their current hashes match and all verifier/prompt/data/metric files are unchanged"
+  },
+  "metrics": {
+    "preregistered": true,
+    "registered_before_test": true,
+    "primary": "response-level hallucination detection: precision, recall, F1, balanced accuracy; case-level bootstrap 10000, seed 20261022, percentile 2.5/97.5",
+    "prediction_rule": "predicted hallucinated iff at least one CONTRADICTED or UNSUPPORTED claim",
+    "failure_handling": "main counts a failed case as wrong on the opposite side of gold; excluding_failures reported separately",
+    "paired_comparisons": [
+      "optimized - minimal",
+      "minimal - baseline",
+      "optimized - baseline"
+    ],
+    "wording_rule": "only an interval excluding 0 permits \"A is better than B\"; otherwise \"no evidence of a difference\"",
+    "secondary": {
+      "sentence_localisation": {
+        "scorer": "token_set_ratio",
+        "threshold": 60.0,
+        "threshold_set_on_dev_only": true,
+        "alignment": "lexical approximate; unlocalized claims counted separately"
+      },
+      "citation_validity": {
+        "post_validation": "exact substring + right passage + offsets in final output",
+        "as_given": "raw citation exact with right index; repaired/dropped counted invalid",
+        "sufficiency_not_assessed": true
+      },
+      "groups": [
+        "task",
+        "generator_model",
+        "evident_only vs with_subtle (recall)",
+        "context length"
+      ],
+      "cost_latency": true
+    },
+    "oracle": false,
+    "oracle_reason": "response-level gold has no gold claims; oracle mode is not defined for this design",
+    "threshold_selection_on_dev": {
+      "upstream_spans": 14,
+      "top1_in_containing_sentence": 14,
+      "score_quantiles": {
+        "min": 66.66666666666666,
+        "p10": 76.94404591104734,
+        "p25": 89.11064425770309,
+        "p50": 100.0,
+        "p75": 100.0,
+        "p90": 100.0,
+        "max": 100.0
+      },
+      "localization_rate_at_60": {
+        "minimal": 0.9761904761904762,
+        "optimized": 0.975609756097561
+      },
+      "sentence_f1_at_60": {
+        "minimal": 0.5306122448979592,
+        "optimized": 0.3076923076923077
+      },
+      "rule": "60 is below the lowest true span score (66.7) and inside the sentence-F1 plateau; 70-75 gain <=0.016 F1 but lower localisation below 0.93"
+    },
+    "metric_files": {
+      "eval/v26.py": "8efcf1fddadbfad09d9fc789f4b176746595ee30ccbd855ea270b7cf530b6b97",
+      "eval/run_v26.py": "5d36737d3e882c2d9ed391310a84f9e37fb702ceaaa212c467370234d16fcd2c",
+      "annotation/v26/sentences.py": "020fd7ae33a26144b1bed8c49cfc813a3912a9201bba861b685e1e19a7fdf861",
+      "tests/test_v26_metrics.py": "fee8801ede7def9168f6137004cf6467d3c1baf2f5393d18e9608b7006bcc120"
+    }
+  },
+  "run_plan": {
+    "split": "test",
+    "n_cases": 180,
+    "methods": [
+      "baseline",
+      "minimal",
+      "optimized"
+    ],
+    "runs_per_method": {
+      "baseline": 1,
+      "minimal": 1,
+      "optimized": 1
+    },
+    "oracle": false,
+    "output": "results/v2.6-test/",
+    "concurrency": 4,
+    "test_runs_total": 3,
+    "stop_conditions": [
+      "any method failure rate > 5%",
+      "any overlong or truncated verifier output",
+      "total cost > budget cap",
+      "a prompt, verifier code, metric code or data change would be required"
+    ],
+    "on_stop": "stop and report; do not rerun or silently substitute results",
+    "no_retuning_after_test": true
+  },
+  "budget": {
+    "cap_usd": 12.0,
+    "estimated_usd": 7.7,
+    "estimated_with_margin_usd": 8.9,
+    "dev_spent_usd": 1.2863,
+    "user_decision": "option A: dev 30 + test 180, one run per method, all six generators",
+    "test_authorized": false,
+    "test_authorization_note": "user authorized dev only; P4 test run requires explicit approval after this freeze"
+  },
+  "dev_diagnostic": {
+    "is_diagnostic_only": true,
+    "results": "results/v2.6-dev/run1/",
+    "report": "results/v2.6-dev/report/",
+    "report_sha256": "02ab3f2d9c8f36464f84fc577632d3d6f2948743713176175b5ae61bab3ad5d8",
+    "summary_sha256": "acd6a7dddd8396ad52d6cab6b8c4b40b192f91f63f5f76f869f2866a1fb3d463",
+    "n_cases": 30,
+    "gold_positives": 9,
+    "methods": {
+      "baseline": {
+        "failures": 0,
+        "answer_level": {
+          "precision": {
+            "value": 0.3103448275862069,
+            "ci95": [
+              0.14285714285714285,
+              0.4827586206896552
+            ]
+          },
+          "recall": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.47368421052631576,
+            "ci95": [
+              0.25,
+              0.6511627906976745
+            ]
+          },
+          "balanced_accuracy": {
+            "value": 0.5238095238095238,
+            "ci95": [
+              0.5,
+              0.5789473684210527
+            ]
+          }
+        },
+        "sentence_level": {
+          "f1": {
+            "value": 0.14942528735632185,
+            "ci95": [
+              0.062111801242236024,
+              0.24598930481283424
+            ]
+          },
+          "precision": {
+            "value": 0.08176100628930817,
+            "ci95": [
+              0.03225806451612903,
+              0.14285714285714285
+            ]
+          },
+          "recall": {
+            "value": 0.8666666666666667,
+            "ci95": [
+              0.6363636363636364,
+              1.0
+            ]
+          },
+          "localization_rate": 1.0,
+          "localized_claims": 163,
+          "unlocalized_claims": 0
+        },
+        "citations": {
+          "post_validation_valid_rate": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "as_given_valid_rate": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "as_given_citations": 60,
+          "as_given_invalid": 0,
+          "downgraded_claims": 0,
+          "cases_with_downgrades": 0
+        },
+        "cost_latency": {
+          "cost_usd_total": 0.0,
+          "cost_usd_per_case": 0.0,
+          "latency_ms": {
+            "mean": 0.7664290741862109,
+            "p50": 0.6990410038270056,
+            "p95": 1.591250009369105,
+            "max": 1.7974579823203385
+          },
+          "retries": 0,
+          "avg_llm_calls": 0.0
+        }
+      },
+      "minimal": {
+        "failures": 0,
+        "answer_level": {
+          "precision": {
+            "value": 0.6,
+            "ci95": [
+              0.3333333333333333,
+              0.8461538461538461
+            ]
+          },
+          "recall": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.75,
+            "ci95": [
+              0.5,
+              0.9166666666666666
+            ]
+          },
+          "balanced_accuracy": {
+            "value": 0.8571428571428572,
+            "ci95": [
+              0.7608695652173914,
+              0.9523809523809523
+            ]
+          }
+        },
+        "sentence_level": {
+          "f1": {
+            "value": 0.5306122448979592,
+            "ci95": [
+              0.29624183006535953,
+              0.72
+            ]
+          },
+          "precision": {
+            "value": 0.38235294117647056,
+            "ci95": [
+              0.1836270871985158,
+              0.59375
+            ]
+          },
+          "recall": {
+            "value": 0.8666666666666667,
+            "ci95": [
+              0.6666666666666666,
+              1.0
+            ]
+          },
+          "localization_rate": 0.9761904761904762,
+          "localized_claims": 41,
+          "unlocalized_claims": 1
+        },
+        "citations": {
+          "post_validation_valid_rate": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "as_given_valid_rate": {
+            "value": 0.9661971830985916,
+            "ci95": [
+              0.9244186046511628,
+              0.993035506885681
+            ]
+          },
+          "as_given_citations": 355,
+          "as_given_invalid": 12,
+          "downgraded_claims": 6,
+          "cases_with_downgrades": 4
+        },
+        "cost_latency": {
+          "cost_usd_total": 0.15784428,
+          "cost_usd_per_case": 0.005261476,
+          "latency_ms": {
+            "mean": 8343.353459743472,
+            "p50": 8845.96370899817,
+            "p95": 12008.144667022862,
+            "max": 14277.281416987535
+          },
+          "retries": 0,
+          "avg_llm_calls": 1.0
+        }
+      },
+      "optimized": {
+        "failures": 0,
+        "answer_level": {
+          "precision": {
+            "value": 0.36,
+            "ci95": [
+              0.17857142857142858,
+              0.5555555555555556
+            ]
+          },
+          "recall": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "f1": {
+            "value": 0.5294117647058824,
+            "ci95": [
+              0.30303030303030304,
+              0.7142857142857143
+            ]
+          },
+          "balanced_accuracy": {
+            "value": 0.6190476190476191,
+            "ci95": [
+              0.5277777777777778,
+              0.7142857142857143
+            ]
+          }
+        },
+        "sentence_level": {
+          "f1": {
+            "value": 0.3076923076923077,
+            "ci95": [
+              0.14582386363636365,
+              0.47788572527895334
+            ]
+          },
+          "precision": {
+            "value": 0.19047619047619047,
+            "ci95": [
+              0.08333333333333333,
+              0.3225806451612903
+            ]
+          },
+          "recall": {
+            "value": 0.8,
+            "ci95": [
+              0.5384615384615384,
+              1.0
+            ]
+          },
+          "localization_rate": 0.975609756097561,
+          "localized_claims": 80,
+          "unlocalized_claims": 2
+        },
+        "citations": {
+          "post_validation_valid_rate": {
+            "value": 1.0,
+            "ci95": [
+              1.0,
+              1.0
+            ]
+          },
+          "as_given_valid_rate": {
+            "value": 0.973384030418251,
+            "ci95": [
+              0.9532520325203252,
+              0.9892008639308856
+            ]
+          },
+          "as_given_citations": 526,
+          "as_given_invalid": 14,
+          "downgraded_claims": 0,
+          "cases_with_downgrades": 0
+        },
+        "cost_latency": {
+          "cost_usd_total": 1.12843236,
+          "cost_usd_per_case": 0.037614412,
+          "latency_ms": {
+            "mean": 13202.208812528988,
+            "p50": 11056.795833981596,
+            "p95": 24459.611541009508,
+            "max": 32779.919416992925
+          },
+          "retries": 0,
+          "avg_llm_calls": 13.666666666666666
+        }
+      }
+    },
+    "paired_differences": {
+      "optimized_minus_minimal": {
+        "f1": {
+          "value": -0.22058823529411764,
+          "ci95": [
+            -0.37058823529411766,
+            -0.10588079676314979
+          ],
+          "a": 0.5294117647058824,
+          "b": 0.75,
+          "excludes_zero": true
+        },
+        "statement": "minimal is better than optimized (paired difference optimized minus minimal -0.221, 95% CI [-0.371, -0.106])"
+      },
+      "minimal_minus_baseline": {
+        "f1": {
+          "value": 0.27631578947368424,
+          "ci95": [
+            0.15384615384615385,
+            0.42631578947368426
+          ],
+          "a": 0.75,
+          "b": 0.47368421052631576,
+          "excludes_zero": true
+        },
+        "statement": "minimal is better than baseline (paired difference minimal minus baseline +0.276, 95% CI [+0.154, +0.426])"
+      },
+      "optimized_minus_baseline": {
+        "f1": {
+          "value": 0.055727554179566596,
+          "ci95": [
+            0.0,
+            0.12661498708010333
+          ],
+          "a": 0.5294117647058824,
+          "b": 0.47368421052631576,
+          "excludes_zero": false
+        },
+        "statement": "no evidence of a difference between optimized and baseline (paired difference optimized minus baseline +0.056, 95% CI [+0.000, +0.127])"
+      }
+    },
+    "notes": [
+      "all three methods have dev recall 1.000; differences are false positives",
+      "minimal beat optimized on dev (CI excludes 0), opposite to v2.5; dev has 9 positives and is not a conclusion",
+      "optimized often flags reasonable summaries as unsupported (e.g. ragtruth-13153, ragtruth-1596)",
+      "minimal had 4 cases / 6 claims downgraded for invalid citations; 2 of those cases are gold-clean, so downgrades cause false positives",
+      "post-validation citation validity is 1.000 by construction; as-given validity is the informative citation metric"
+    ],
+    "no_truncation": true,
+    "no_retries": true
+  },
+  "freeze_policy": {
+    "data_frozen": true,
+    "sampling_rules_frozen": true,
+    "metrics_frozen": true,
+    "sentence_threshold_frozen": true,
+    "verifier_frozen": true,
+    "prompt_frozen": true,
+    "test_run_count": 1,
+    "rerun_after_failure": "only with user approval, recorded as a protocol deviation"
+  },
+  "limitations": [
+    "upstream RAGTruth annotation can miss hallucinations; no human review was added",
+    "test has 180 cases and 62 positives; QA has about 8 positives, so task-level groups are diagnostic only",
+    "only deepseek-v4-pro is evaluated; optimized only uses prompt v3",
+    "RAGTruth has been public since 2024; training-data contamination cannot be ruled out",
+    "sentence localisation uses lexical similarity; citation sufficiency is not assessed",
+    "the protocol changed after seeing v2.5 test results; the verifier code/prompt is unchanged and v2.6 uses new, unseen cases",
+    "no human semantic spot check and no human-confirmed clean responses",
+    "strict verifiers can be penalised when upstream annotators accepted a mild inference; observed on dev"
+  ],
+  "note": "source_commit precedes the freeze commit; the v2.5 freeze and 114 unchanged file hashes pin the verifier. No verifier has run on the v2.6 test split. The v2.5 claim-level results stay as exploratory analysis.",
+  "freeze_checks": {
+    "test": "tests/test_v26_freeze.py",
+    "sha256": "1cd6ebe844d8f53715927c3f29a0948b68ee4487087404a3938d1377038249a5"
+  },
+  "post_freeze_documentation_reconciliation": {
+    "documentation_only": true,
+    "files": [
+      "README.md",
+      "docs/DATASET.md",
+      "docs/EVALUATION.md"
+    ],
+    "reason": "these three files are pinned by the v2.5 freeze; the v2.6 documentation update required re-sealing their hashes",
+    "measurement_files_unchanged": true,
+    "verifier_code_prompt_data_unchanged": true,
+    "v2.5_freeze_sha256": "19aac29f69dfd8829fb49f559e53d4371636061d028e68be24a603542a9366d7",
+    "recorded_at": "2026-10-20T09:23:48.187469+00:00",
+    "s7": {
+      "recorded_at": "2026-10-20T11:07:16.692503+00:00",
+      "authorization": "v2.7 section 10.1",
+      "files": [
+        "README.md",
+        "docs/DATASET.md",
+        "docs/EVALUATION.md"
+      ],
+      "old_hashes": {
+        "README.md": "f85b1b4df7b180c839c4e8eb8e4cb41229c4c1331e7058f669db7f5c17d1591c",
+        "docs/DATASET.md": "cc64441db0e7445d0027c70d83bc300e37ff8784b48600df6dca0e290f353366",
+        "docs/EVALUATION.md": "86e5a74bd44e54a7c110ad9fc4a72ca7ae4339fb4b6b24ddade4378bcd4035b7"
+      },
+      "new_hashes": {
+        "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517",
+        "docs/DATASET.md": "1acf8e4cef66536454d0e80d9110542f20e77966561f99cc361adbe50293a81b",
+        "docs/EVALUATION.md": "2e8d1aeb8990f9fff864bb50aafb91ec4a1b4a661d248a6af59004f083da7e70"
+      },
+      "documentation_only": true
+    },
+    "s8": {
+      "recorded_at": "2026-10-20T11:21:13.500885+00:00",
+      "authorization": "user instruction 2026-10-20: README-only correction",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517"
+      },
+      "new_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "documentation_only": true
+    },
+    "s9": {
+      "recorded_at": "2026-10-20T11:21:45.100664+00:00",
+      "authorization": "same user instruction: README status correction",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "new_hashes": {
+        "README.md": "2847c56322676d17baf90e9778512ef24132fc2264823fef6e1b610582aacc2a"
+      },
+      "documentation_only": true
+    }
+  },
+  "post_freeze_measurement": {
+    "test_authorized_after_freeze": true,
+    "test_completed": true,
+    "results": "results/v2.6-test",
+    "runs": {
+      "baseline": 1,
+      "minimal": 1,
+      "optimized": 1
+    },
+    "failures": {
+      "baseline": 0,
+      "minimal": 0,
+      "optimized": 1
+    },
+    "cost_usd": 7.0784,
+    "stop_conditions_triggered": false,
+    "note": "the pre-test budget.test_authorized=false records the state at freeze time; this block records the later P4 run"
+  }
+}

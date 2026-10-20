@@ -1,10 +1,226 @@
 # Evaluation dataset
 
+## Current measurement target: v2.7 external checks
+
+v2.7 adds two external, public human-annotated resources. Both are **local-only**: raw files and
+the generated JSONL stay under `data/sources/v2.7/raw/` and git-ignored `data/eval_*v2.7*` files;
+the repository keeps only the source manifest, selection statistics, rules and build code.
+
+### Track B: RAGTruth++
+
+`blue-guardrails/ragtruth-plus-plus`, revision `afaec19e64122b4a58718dc31bcd555c97460233`. The
+publisher states no license; the results are local-only and are not redistributed. Raw files:
+865 spans and 816 messages (408 user/assistant pairs).
+
+- All 408 answer texts match the RAGTruth `response.jsonl` exactly; source, task, model and context
+  are recovered from the local RAGTruth snapshot. Span offsets were validated against the answers.
+- Excluding source_ids already used by v2.3–v2.5 leaves 384 answers. 29 of them overlap the v2.6
+  test split and reuse the v2.6 predictions; the remaining 355 are new.
+- The registered sample is 200 new answers by seed `20261024` plus all 29 overlaps = **229**.
+- Two sentence golds are stored per answer: **loose** (RAGTruth original spans; 65/408 positives)
+  and **strict** (RAGTruth++ spans; 305/408, 74.75 %). The sentence splitter is the v2.6
+  `v2.6-sentences-1`.
+- Strict label types: Subtle Conflict 352, Subtle Baseless Info 190, Evident Conflict 183,
+  Evident Baseless Info 115, Incorrect Refusal 22, Subtle Introduction Of Baseless Info 3.
+
+### Track A: LLM-AggreFact
+
+`lytang/LLM-AggreFact`, revision `981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4`, CC-BY-ND-4.0;
+gated, the user accepted the terms. The RAGTruth subset is excluded, leaving 10 subsets:
+AggreFact-CNN, AggreFact-XSum, ClaimVerify, ExpertQA, FactCheck-GPT, Lfqa, Reveal,
+TofuEval-MediaS, TofuEval-MeetB, Wice.
+
+- Documents over 4000 words are excluded before sampling (test: ClaimVerify 49 / ExpertQA 67 /
+  Wice 18; dev: 42 / 73 / 18).
+- One document is one case; all its claims are given to the verifier (oracle). The labeling is the
+  source `label`: 1 = supported, 0 = not supported.
+- Whole documents are drawn by seed `20261024` until the target claim count is reached; a document
+  may overshoot. S2 confirmed the fallback target of 80 claims per subset on test:
+  **461 documents / 854 claims / 512 positives**; dev target 10 gives **58 / 196 / 108**.
+  Overshoot on test: Lfqa 87, TofuEval-MediaS 104, TofuEval-MeetB 103; on dev: Lfqa 25,
+  TofuEval-MediaS 61, TofuEval-MeetB 38.
+- Passages are verbatim substrings: paragraph-preferred units packed to about 150 words, long
+  blocks split into sentences, punctuation-only blocks dropped; max 25 passages and 8,282 chars
+  per document in the selected test set.
+
+### Freeze and reports
+
+The freeze is `data/annotation/v2.7/freeze.json`; check it with
+`uv run python -m annotation.v27.freeze --check`. Rules and samples:
+`data/annotation/v2.7/rules.json`, `selection.json`, `aggrefact-selection-{test,dev}.json`.
+The dev and test write-ups are [s4-dev-report.md](../data/annotation/v2.7/s4-dev-report.md) and
+[s6-test-report.md](../data/annotation/v2.7/s6-test-report.md). Known limitations: the strict
+RAGTruth++ labels start from the publisher's detector; there is no peer review, no human review in
+this project, and no RAGTruth++ license declared by the publisher.
+
+## Prior target: RAGTruth v2.6 (response-level)
+
+The current target is **`data/eval_ragtruth_resp.v2.6.jsonl`**: 210 RAGTruth responses, 30 dev / 180
+test, 10 dev and 60 test per task (Data2txt / QA / Summary). The test split has 62 positive
+responses (at least one upstream hallucination span); dev has 9. The answer-level unit is the
+response, not an atomic claim.
+
+**Sampling.** The pool is the upstream RAGTruth `test` split with `quality=good`, all six upstream
+generators, and the natural label distribution. There is no minimum length and no GPT-share target —
+those were v2.2–v2.5 devices for making an adversarial claim-level set and would distort this one.
+One response is drawn per `source_id`; dev and test never share a near-duplicate group. The sample
+excludes all 63 v2.x cases and their 5-gram Jaccard ≥ 0.8 groups, near-duplicates of the old
+`data/eval.jsonl`, and legacy project IDs. The technical caps are the maximum observed in v2.5
+(context ≤ 1626 words, answer ≤ 304 words); 6 answers were excluded over the answer cap and 0
+contexts over the context cap. Sampling used seed `20261022` and did not read labels; the rules were
+committed before the draw. Counts and the full exclusion log:
+[selection-stats.md](../data/annotation/v2.6/selection-stats.md).
+
+**Gold.** `gold_response` is true iff the upstream response has at least one human-marked
+hallucination span. `gold_sentences` is produced by the deterministic splitter in
+`annotation/v26/sentences.py`; a sentence is hallucinated iff it overlaps an upstream span. No model
+participates in gold construction — no decomposition, no evidence location, no label mapping.
+`source_labels` keeps the upstream spans and their Evident/Subtle and Conflict/Baseless types for
+grouping. Context passages may only lose `passage N:` markers or leading/trailing whitespace, and
+every such change is recorded in `passage_map`; the answer is never edited.
+
+**Known limitation.** Upstream annotation can miss hallucinations. An answer with no upstream span
+is called **“upstream-unannotated”**, not “clean”; no human review was added. This noise is shared
+with other RAGTruth users and can be compared externally, but it no longer stacks our own claim
+splitting and overlap mapping on top.
+
+Statistics (positives are responses with at least one upstream span):
+
+| Task | dev | test | test positives |
+|---|---:|---:|---:|
+| Data2txt | 10 | 60 | 40 |
+| QA | 10 | 60 | 8 |
+| Summary | 10 | 60 | 14 |
+| **Total** | **30** | **180** | **62** |
+
+The v2.6 freeze is [data/annotation/v2.6/freeze.json](../data/annotation/v2.6/freeze.json); verify
+it with `uv run pytest -q tests/test_v26_freeze.py`. The dev threshold calibration and cost estimate
+are in [p2-dev-report.md](../data/annotation/v2.6/p2-dev-report.md); the test measurement and its
+stop-condition check are in [p4-test-report.md](../data/annotation/v2.6/p4-test-report.md).
+
+## Exploratory: RAGTruth v2.5 claim-level
+
+v2.5 is retained as exploratory analysis, not as the current target. v2.6 uses new responses with no
+id or source overlap; the verifier code and prompt are unchanged.
+
+v2.5 used **`data/eval_hard.v2.5.jsonl`**. It keeps the frozen v2.4 cases and adds 13
+`subtle_supplement` cases (test 10 / dev 3) selected under
+`data/annotation/v2.5/sampling_rules.json` with seed 20261021. `data/eval_hard.jsonl` remains
+the historical v2.3 dataset at commit **c78d411**, and `data/eval_hard.v2.4.jsonl` remains the
+v2.4 dataset at **cbccac9**; neither is overwritten or redirected on disk.
+
+The v2.5 changes were based only on label distribution and annotation-pipeline diagnostics.
+When the sample was selected, **no evaluated verifier had been run on the hard test**; the v2.5 test
+was measured later, and its results are exploratory (see [REPORT.md](REPORT.md)), not the
+current headline. The selection
+pool is RAGTruth upstream `train` (quality=good, at least one Subtle Conflict) plus the
+remaining qualified upstream-`test` candidates. Selected cases record `upstream_split`; all 13
+selected here came from upstream `train`. The sample excludes legacy project IDs/source groups,
+existing v2.4 source IDs and near-duplicate groups, and takes one response per source_id and
+per connected near-duplicate component. Task quotas are Summary test 4 / dev 1, QA test 3 / dev
+1, Data2txt test 3 / dev 1. The GPT-4/GPT-3.5 target is at least half; the realized sample has
+7 GPT cases out of 13. No model sets a label.
+
+Every claim carries `overlapping_source_labels`, recomputed from its exact `answer_spans` and
+the upstream human fragments. The verdict must replay from those overlaps with Conflict
+precedence, then Baseless, else SUPPORTED. The v2.3 merge had dropped this field on the
+original 30 cases; v2.5 restores it without changing any label. A unit test replays the rule
+for every gold claim.
+
+`doubt_category` (`agree`, `suspected_wrong_label`, `c_vs_u_boundary`, `partial_claim`,
+`evidence_not_found`) is recorded for every existing doubt and every C/U claim, including the
+new cases. It is used only for the preregistered sensitivity analysis; it never changes a gold
+label. “上游无标注回答” still means only that RAGTruth provided no marked hallucination span;
+it does not establish that the answer is correct.
+
+Statistics, exclusions, lengths, evidence coverage, doubt categories and target checks are in
+[the v2.5 report](../data/annotation/v2.5/final_report.md) and
+`data/annotation/v2.5/audit.json`. Retained counts: 63 例 / 782 条主张
+(S701/C37/U44)；test 45 例 / 537 条主张 (S483/C27/U27)，natural 30 例 / 382 条主张，
+conflict_supplement 20 例 / 256 条主张，subtle_supplement 13 例 / 144 条主张。 The target “test Subtle Conflict 来源的 C ≥ 8” was **not met**:
+7 retained (6 new + 1 natural). The unchanged partial_overlap rule excluded 11 new claims,
+8 of them C, including conflict-bearing statements. No cases were added and no rule was
+relaxed.
+
+The v2.5 freeze is `data/annotation/v2.5/freeze.json`;
+verify it with `uv run python -m annotation.v25.freeze --check`. Offline replay is
+`uv run python -m annotation.v25.merge --check`. The v2.4 freeze remains valid at `cbccac9`;
+v2.5 explicitly authorizes the `annotation/README.md` status update and the minimal v2.4 freeze
+validation adaptation. Preregistered metrics and the saved-run scoring command are in
+[EVALUATION.md](EVALUATION.md). The v2.5 test was measured after the freeze; its results are
+exploratory and are not the current headline.
+
+## Historical target: RAGTruth v2.4
+
+This round used **`data/eval_hard.v2.4.jsonl`**. The text below records the v2.4 state; exact
+v2.3 texts remain available at c78d411.
+
+v2.4 changes are based only on label distribution and evidence-pipeline diagnostics.
+**No evaluated verifier has been run on the hard test during this workflow**, so these changes
+do not use test performance to tune the dataset. The c78d411 dataset, annotation artifacts,
+scoring/verifier code and freeze are retained. This document and EVALUATION.md receive the
+explicitly required v2.4 additions; their exact v2.3 texts remain available at c78d411.
+
+The version keeps the 30 original cases as `natural`, repairs passage indices with literal
+quote replay and an explicit numbered prompt, and splits the ten excluded parent claims at
+upstream annotation boundaries without sending label types to the drafting model. It adds
+20 fixed `conflict_supplement` cases under preregistered task/split/length/deduplication rules.
+The user explicitly removed only the supplement's infeasible GPT-share minimum; all other
+selection rules remain fixed. Both annotation roles use mimo-v2.6-pro. No model sets labels.
+
+Statistics, exclusions, doubts, lengths, evidence coverage and target checks are in
+[the v2.4 report](../data/annotation/v2.4/final_report.md) and `data/annotation/v2.4/audit.json`.
+The report separates offline index repair from the 98 original-none new-prompt calls;
+existing exact claims were not rerun. Every original retained claim/text/label is preserved,
+and new split children have new IDs plus `derived_from`. Retired parents are listed separately
+from their replacement children's retained/excluded counts. No replacement cases are sampled.
+If a recovered child has exactly the same text and human label as an existing gold claim and
+their literal answer spans overlap, retain the existing gold and attach `merged_derivations`.
+The child remains in the recovery journal and audit but does not count twice. Repeated text
+at different answer positions stays separate; this rule uses no semantic model judgment.
+
+“上游无标注回答” means only that RAGTruth provided no marked hallucination span. Counts of such
+cases with model_doubts are logged in the audit; there is no independent human confirmation.
+The old all-retained-S count is not a count of verified correct answers. Evidence coverage
+measures exact textual presence, not whether the quote semantically proves the claim.
+
+The new freeze is `data/annotation/v2.4/freeze.json`; verify it with
+`uv run python -m annotation.v24.freeze --check`. To rederive mapping/evidence and compare the
+dataset/audit without model calls, run `uv run python -m annotation.v24.merge --check`.
+The original freeze's hashes for the two updated docs refer to their historical c78d411 text;
+the v2.4 freeze checks that historical text and pins the new documentation separately.
+Hard-test measurement awaits separate instructions. Preregistered metrics and the saved-run
+scoring command are in [EVALUATION.md](EVALUATION.md).
+
 `data/eval.jsonl` — 46 hand-authored cases (26 `dev`, 20 `test`), 150 gold claims.
 Every line is validated on load; an invalid dataset refuses to run (`python -m eval.dataset data/eval.jsonl`).
 How these cases are turned into numbers: [EVALUATION.md](EVALUATION.md#metrics).
 
-## What a case is
+## v2.6 response fields
+
+| Field | Meaning |
+|---|---|
+| `id` | Stable response id (`ragtruth-…`) |
+| `split` | `dev` or `test`; v2.6 dev and test share no near-duplicate group |
+| `task` | `Data2txt`, `QA` or `Summary` |
+| `generator_model` | One of the six upstream RAGTruth generators |
+| `context_passages` | Upstream passages after the allowed marker/whitespace transforms |
+| `passage_map` | Records any passage transform; the answer itself is never edited |
+| `generated_answer` | The upstream model answer, verbatim |
+| `source_labels` | Upstream spans (`start`, `end`, `text`, `label_type`, `meta`) |
+| `gold_response` | True iff `source_labels.labels` is non-empty |
+| `gold_sentences` | Deterministic sentence tiles with `start`, `end`, `text`, `hallucinated` |
+| `provenance` | Upstream split/source/response identifiers and the task type |
+
+Machine-enforced invariants (`eval/v26.py::validate_rows`): unique ids; `split` in {dev, test};
+`gold_response` agrees with the upstream spans; every span's `answer[start:end]` equals its `text`;
+and `''.join(sentence texts)` tiles `generated_answer` exactly.
+
+## Historical synthetic case fields
+
+The sections from here through “Known limitations” describe the original 46-case synthetic set, not
+v2.6. v2.6 takes its labels directly from upstream spans and does not use these claim-labelling
+rules.
 
 | Field | Meaning |
 |---|---|
@@ -144,3 +360,41 @@ a model or a threshold.
 * `UNSUPPORTED` is the thinnest class (16 claims), so its F1 is the noisiest column of the report.
 * Answers are written to be verifiable from the passages, i.e. claim decomposition is never
   adversarial here; a claim that cannot be checked without world knowledge is not in the set.
+
+## Historical RAGTruth v2.3 human-label pipeline
+
+The new hard dataset uses labels mapped directly from upstream RAGTruth human annotations,
+without a second human review: Conflict overlap → CONTRADICTED, Baseless overlap → UNSUPPORTED,
+no overlap → SUPPORTED, with Conflict taking precedence. Every retained reference will carry
+`label_source: ragtruth_human`. Models only decompose answers and locate evidence; they cannot
+assign or modify these labels. Upstream omissions and mistakes therefore remain possible.
+
+A partially overlapping claim is excluded if more than 20 answer-span characters lie outside the
+union of upstream fragments. A case is excluded if more than 30% of its claims are excluded.
+An upstream hallucination fragment overlapping no drafted claim requires one fresh decomposition
+by the same drafting model, without upstream labels in its prompt; if still uncovered, exclude the
+whole case as `source_label_uncovered`. No replacement cases are sampled. These exclusions may
+bias the retained dataset toward easier examples; reports must disclose the removed counts.
+
+For S/C claims, source evidence must be an exact substring, with offsets computed by the script.
+If no exact evidence is found, keep the human label with `evidence_status: none`; score its verdict
+accuracy but exclude it from citation precision and recall. An `exact` match establishes textual
+presence, not semantic sufficiency. Model doubts are logged, never converted into label changes.
+The original synthetic dataset retains its existing validation and scoring rules.
+
+The user approved expansion after the five-dev-case pilot. `data/eval_hard.jsonl` now contains
+all 30 selected cases and 368 retained claims (332 S / 6 C / 30 U), after excluding 10 partial-overlap
+claims; no whole cases were excluded or replaced. Dev: cases=10, claims=118 (102 S / 2 C / 14 U);
+test: cases=20, claims=250 (230 S / 4 C / 16 U). Test negative-label counts fall below the earlier
+30-per-class expectation; this is not evidence of a sufficiently hard or balanced benchmark.
+All ten exclusions removed C/U claims, demonstrating the bias risk described above.
+
+Exact references were located for 240/338 S/C claims (71.0%); the remaining 98 S/C references have
+no located evidence. The 35 doubt-log records comprise 31 model doubts/not-found reports and four
+unusable-output diagnostics; the latter are explicitly separate from semantic label doubts.
+“上游无标注回答” number 2 dev / 5 test; all-retained-S answers number 4 / 8 and may still
+contain excluded hallucinated assertions. Multi-passage evidence counts are 22 / 42; these do not
+establish that multi-passage reasoning is necessary. Audit and freeze metadata live under
+`data/annotation/`. See the [final statistics](../data/annotation/full-v2.3/report.md).
+No hard-test verifier has been run as part of this annotation/freeze workflow.
+See [annotation workflow](../annotation/README.md).

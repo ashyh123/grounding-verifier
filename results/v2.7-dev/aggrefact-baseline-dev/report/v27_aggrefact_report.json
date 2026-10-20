@@ -1,0 +1,364 @@
+{
+  "design_version": "2.7",
+  "track": "aggrefact",
+  "n_docs": 58,
+  "n_claims": 196,
+  "subsets": [
+    "AggreFact-CNN",
+    "AggreFact-XSum",
+    "ClaimVerify",
+    "ExpertQA",
+    "FactCheck-GPT",
+    "Lfqa",
+    "Reveal",
+    "TofuEval-MediaS",
+    "TofuEval-MeetB",
+    "Wice"
+  ],
+  "bootstrap": {
+    "unit": "document within subset",
+    "replicates": 10000,
+    "seed": 20261024,
+    "interval": "percentile 2.5/97.5"
+  },
+  "methods": {
+    "main": {
+      "baseline": {
+        "macro_balanced_accuracy": {
+          "value": 0.5895281937983801,
+          "ci95": [
+            0.5418650513565111,
+            0.644990051356511
+          ]
+        },
+        "macro_precision": 0.6770833333333333,
+        "macro_recall": 0.23513296227581942,
+        "macro_f1": 0.29087970753324666,
+        "subsets": {
+          "AggreFact-CNN": {
+            "docs": 6,
+            "claims": 11,
+            "positives": 11,
+            "failures": 0,
+            "tp": 1,
+            "fp": 0,
+            "fn": 10,
+            "tn": 0,
+            "balanced_accuracy": NaN,
+            "precision": 1.0,
+            "recall": 0.09090909090909091,
+            "f1": 0.16666666666666666
+          },
+          "AggreFact-XSum": {
+            "docs": 10,
+            "claims": 10,
+            "positives": 4,
+            "failures": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "tn": 6,
+            "balanced_accuracy": 0.5,
+            "precision": NaN,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ClaimVerify": {
+            "docs": 7,
+            "claims": 10,
+            "positives": 6,
+            "failures": 0,
+            "tp": 3,
+            "fp": 0,
+            "fn": 3,
+            "tn": 4,
+            "balanced_accuracy": 0.75,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "ExpertQA": {
+            "docs": 8,
+            "claims": 10,
+            "positives": 6,
+            "failures": 0,
+            "tp": 2,
+            "fp": 1,
+            "fn": 4,
+            "tn": 3,
+            "balanced_accuracy": 0.5416666666666666,
+            "precision": 0.6666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.4444444444444444
+          },
+          "FactCheck-GPT": {
+            "docs": 6,
+            "claims": 10,
+            "positives": 2,
+            "failures": 0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 2,
+            "tn": 7,
+            "balanced_accuracy": 0.4375,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "Lfqa": {
+            "docs": 1,
+            "claims": 25,
+            "positives": 11,
+            "failures": 0,
+            "tp": 6,
+            "fp": 0,
+            "fn": 5,
+            "tn": 14,
+            "balanced_accuracy": 0.7727272727272727,
+            "precision": 1.0,
+            "recall": 0.5454545454545454,
+            "f1": 0.7058823529411765
+          },
+          "Reveal": {
+            "docs": 8,
+            "claims": 11,
+            "positives": 1,
+            "failures": 0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 1,
+            "tn": 9,
+            "balanced_accuracy": 0.45,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "TofuEval-MediaS": {
+            "docs": 1,
+            "claims": 61,
+            "positives": 49,
+            "failures": 0,
+            "tp": 4,
+            "fp": 0,
+            "fn": 45,
+            "tn": 12,
+            "balanced_accuracy": 0.5408163265306123,
+            "precision": 1.0,
+            "recall": 0.08163265306122448,
+            "f1": 0.1509433962264151
+          },
+          "TofuEval-MeetB": {
+            "docs": 1,
+            "claims": 38,
+            "positives": 15,
+            "failures": 0,
+            "tp": 12,
+            "fp": 4,
+            "fn": 3,
+            "tn": 19,
+            "balanced_accuracy": 0.8130434782608695,
+            "precision": 0.75,
+            "recall": 0.8,
+            "f1": 0.7741935483870968
+          },
+          "Wice": {
+            "docs": 10,
+            "claims": 10,
+            "positives": 3,
+            "failures": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "tn": 7,
+            "balanced_accuracy": 0.5,
+            "precision": NaN,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "docs": 58,
+        "claims": 196,
+        "failures": 0
+      }
+    },
+    "excluding_failures": {
+      "baseline": {
+        "macro_balanced_accuracy": {
+          "value": 0.5895281937983801,
+          "ci95": [
+            0.5418650513565111,
+            0.644990051356511
+          ]
+        },
+        "macro_precision": 0.6770833333333333,
+        "macro_recall": 0.23513296227581942,
+        "macro_f1": 0.29087970753324666,
+        "subsets": {
+          "AggreFact-CNN": {
+            "docs": 6,
+            "claims": 11,
+            "positives": 11,
+            "failures": 0,
+            "tp": 1,
+            "fp": 0,
+            "fn": 10,
+            "tn": 0,
+            "balanced_accuracy": NaN,
+            "precision": 1.0,
+            "recall": 0.09090909090909091,
+            "f1": 0.16666666666666666
+          },
+          "AggreFact-XSum": {
+            "docs": 10,
+            "claims": 10,
+            "positives": 4,
+            "failures": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 4,
+            "tn": 6,
+            "balanced_accuracy": 0.5,
+            "precision": NaN,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "ClaimVerify": {
+            "docs": 7,
+            "claims": 10,
+            "positives": 6,
+            "failures": 0,
+            "tp": 3,
+            "fp": 0,
+            "fn": 3,
+            "tn": 4,
+            "balanced_accuracy": 0.75,
+            "precision": 1.0,
+            "recall": 0.5,
+            "f1": 0.6666666666666666
+          },
+          "ExpertQA": {
+            "docs": 8,
+            "claims": 10,
+            "positives": 6,
+            "failures": 0,
+            "tp": 2,
+            "fp": 1,
+            "fn": 4,
+            "tn": 3,
+            "balanced_accuracy": 0.5416666666666666,
+            "precision": 0.6666666666666666,
+            "recall": 0.3333333333333333,
+            "f1": 0.4444444444444444
+          },
+          "FactCheck-GPT": {
+            "docs": 6,
+            "claims": 10,
+            "positives": 2,
+            "failures": 0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 2,
+            "tn": 7,
+            "balanced_accuracy": 0.4375,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "Lfqa": {
+            "docs": 1,
+            "claims": 25,
+            "positives": 11,
+            "failures": 0,
+            "tp": 6,
+            "fp": 0,
+            "fn": 5,
+            "tn": 14,
+            "balanced_accuracy": 0.7727272727272727,
+            "precision": 1.0,
+            "recall": 0.5454545454545454,
+            "f1": 0.7058823529411765
+          },
+          "Reveal": {
+            "docs": 8,
+            "claims": 11,
+            "positives": 1,
+            "failures": 0,
+            "tp": 0,
+            "fp": 1,
+            "fn": 1,
+            "tn": 9,
+            "balanced_accuracy": 0.45,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          "TofuEval-MediaS": {
+            "docs": 1,
+            "claims": 61,
+            "positives": 49,
+            "failures": 0,
+            "tp": 4,
+            "fp": 0,
+            "fn": 45,
+            "tn": 12,
+            "balanced_accuracy": 0.5408163265306123,
+            "precision": 1.0,
+            "recall": 0.08163265306122448,
+            "f1": 0.1509433962264151
+          },
+          "TofuEval-MeetB": {
+            "docs": 1,
+            "claims": 38,
+            "positives": 15,
+            "failures": 0,
+            "tp": 12,
+            "fp": 4,
+            "fn": 3,
+            "tn": 19,
+            "balanced_accuracy": 0.8130434782608695,
+            "precision": 0.75,
+            "recall": 0.8,
+            "f1": 0.7741935483870968
+          },
+          "Wice": {
+            "docs": 10,
+            "claims": 10,
+            "positives": 3,
+            "failures": 0,
+            "tp": 0,
+            "fp": 0,
+            "fn": 3,
+            "tn": 7,
+            "balanced_accuracy": 0.5,
+            "precision": NaN,
+            "recall": 0.0,
+            "f1": 0.0
+          }
+        },
+        "docs": 58,
+        "claims": 196,
+        "failures": 0
+      }
+    }
+  },
+  "paired": {},
+  "cost_latency": {
+    "baseline": {
+      "docs": 58,
+      "failures": 0,
+      "failure_rate": 0.0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd_total": 0.0,
+      "cost_usd_per_doc": 0.0,
+      "latency_ms": {
+        "mean": 0.5469396539787151,
+        "p50": 0.20883401157334447,
+        "p95": 1.9652500050142407,
+        "max": 7.874750008340925
+      },
+      "retries": 0,
+      "avg_llm_calls": 0.0
+    }
+  }
+}

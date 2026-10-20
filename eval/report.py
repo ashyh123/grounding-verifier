@@ -10,9 +10,8 @@ import json
 from pathlib import Path
 from statistics import mean, pstdev
 
-from verifier.align import align_claims
-
 from .dataset import load
+from .scoring import align_case, parent_verdict
 
 ROWS = [
     ("Answer-level hallucination F1", lambda m: m["answer_level"]["f1"]),
@@ -24,10 +23,19 @@ ROWS = [
     ("F1 UNSUPPORTED", lambda m: m["per_label"]["UNSUPPORTED"]["f1"]),
     ("Decomposition recall", lambda m: m["decomposition"]["recall"]),
     ("Decomposition precision", lambda m: m["decomposition"]["precision"]),
+    ("Guard-rejected candidate pairs", lambda m: m["guard_rejected_pairs"]),
+    ("Missed gold claims", lambda m: m["decomposition"]["missed_gold"]),
+    ("Used predicted claims", lambda m: m["decomposition"]["used_predictions"]),
+    ("Extra predicted claims", lambda m: m["decomposition"]["extra_predictions"]),
+    ("Duplicate predicted claims", lambda m: m["decomposition"]["duplicate_predictions"]),
+    ("Added predicted claims", lambda m: m["decomposition"]["added_predictions"]),
     ("Answer sentence coverage", lambda m: m["sentence_coverage"]),
     ("Fused claims (claim spans >1 sentence)", lambda m: m["fused_claim_rate"]),
     ("Citation precision", lambda m: m["citation_precision"]),
     ("Citation recall", lambda m: m["citation_recall"]),
+    ("Scored citations", lambda m: m["citation_counts"]["predicted"]),
+    ("Gold evidence spans", lambda m: m["citation_counts"]["gold"]),
+    ("Invalid scored citations", lambda m: m["citation_counts"]["invalid"]),
     ("Citation precision (right passage)", lambda m: m["citation_passage_precision"]),
     ("Citation recall (right passage)", lambda m: m["citation_passage_recall"]),
     ("Raw citation invalid rate (before repair)", lambda m: m["raw_citation_invalid_rate"]),
@@ -50,9 +58,33 @@ def table(summary: dict) -> str:
     lines = [f"Split: `{summary['split']}`, cases: {summary['n_cases']}, oracle claims: {summary['oracle']}", "",
              "| Metric | " + " | ".join(methods) + " |",
              "|---|" + "---|" * len(methods)]
+    registries = sorted({m["scoring_units_registry_sha256"] for runs in summary["methods"].values()
+                         for m in runs if m.get("scoring_units_registry_sha256")})
+    if registries:
+        lines[1:1] = ["Approved scoring-unit registry SHA256: " + ", ".join(f"`{h}`" for h in registries), ""]
     for name, fn in ROWS:
-        cells = [_fmt([fn(m) for m in summary["methods"][k]]) for k in methods]
+        cells = []
+        for method in methods:
+            try:
+                cells.append(_fmt([fn(m) for m in summary["methods"][method]]))
+            except KeyError:  # preserved historical summaries have no new counters
+                cells.append("N/A")
         lines.append(f"| {name} | " + " | ".join(cells) + " |")
+    dimensions = sorted({d for runs in summary["methods"].values() for m in runs
+                         for d in m.get("groups", {})})
+    for dimension in dimensions:
+        lines += ["", f"Grouped claim metrics: `{dimension}`", "",
+                  "| Group | Method | Cases | Gold claims | Matched | Accuracy (all gold) | Macro-F1 | Recall |",
+                  "|---|---|---:|---:|---:|---:|---:|---:|"]
+        for method, runs in summary["methods"].items():
+            names = sorted({name for m in runs for name in m.get("groups", {}).get(dimension, {})})
+            for name in names:
+                values = [m["groups"][dimension][name] for m in runs]
+                first = values[0]
+                cells = [_fmt([v[key] for v in values]) for key in
+                         ("matched_pairs", "claim_accuracy_all_gold", "macro_f1", "decomposition_recall")]
+                lines.append(f"| {name} | {method} | {first['n_cases']} | {first['gold_claims']} | "
+                             + " | ".join(cells) + " |")
     return "\n".join(lines)
 
 
@@ -68,19 +100,24 @@ def failures(result_dir: Path, method: str, data: str) -> str:
             continue
         pred = row["claims"]
         oracle = "_oracle" in path.name
-        pairs = ([(i, i, 100.0) for i in range(min(len(pred), len(case.gold_claims)))] if oracle
-                 else align_claims([c["claim_text"] for c in pred], [g.claim_text for g in case.gold_claims]))
-        matched = {g for _, g, _ in pairs}
-        for pi, gi, _ in pairs:
-            g, p = case.gold_claims[gi], pred[pi]
-            if g.verdict.value != p["verdict"]:
+        alignment = align_case(case, pred, oracle)
+        matched = set(alignment.matches)
+        for gi, indices in alignment.matches.items():
+            g = case.gold_claims[gi]
+            verdict = parent_verdict(pred, indices)
+            if g.verdict.value != verdict:
+                texts = " + ".join(pred[i]["claim_text"] for i in indices)
+                reasons = " | ".join(pred[i].get("reasoning", "") for i in indices)
                 out.append(f"### {case.id} [{', '.join(g.tags or case.tags)}]\n"
                            f"- gold: {g.verdict.value} — {g.claim_text}\n"
-                           f"- pred: {p['verdict']} — {p['claim_text']}\n"
-                           f"- reasoning: {p['reasoning']}\n")
+                           f"- pred: {verdict} — {texts}\n"
+                           f"- reasoning: {reasons}\n")
         for gi, g in enumerate(case.gold_claims):
             if gi not in matched:
                 out.append(f"### {case.id} MISSED gold claim ({g.verdict.value}): {g.claim_text}\n")
+        for pi, p in enumerate(pred):
+            if pi not in alignment.used_predictions:
+                out.append(f"### {case.id} EXTRA predicted claim ({p['verdict']}): {p['claim_text']}\n")
     return "\n".join(out) or "No failures."
 
 

@@ -1,0 +1,17 @@
+drafting 13 case(s) with ANNOTATION_MODEL=mimo-v2.6-pro (model under test: deepseek-v4-pro)
+  [ok  ] ragtruth-14011: 9 claims; 1176 in / 884 out; 20.9s
+  [ok  ] ragtruth-14912: 9 claims; 886 in / 866 out; 16.2s
+  [ok  ] ragtruth-15985: 6 claims; 1106 in / 615 out; 10.5s
+  [ok  ] ragtruth-16620: 5 claims; 760 in / 468 out; 8.0s
+  [ok  ] ragtruth-2354: 10 claims; 2116 in / 1760 out; 25.7s
+  [ok  ] ragtruth-3126: 10 claims; 2101 in / 1102 out; 17.6s
+  [ok  ] ragtruth-3482: 12 claims; 2138 in / 908 out; 18.1s
+  [ok  ] ragtruth-3522: 10 claims; 1290 in / 881 out; 13.1s
+  [ok  ] ragtruth-4736: 12 claims; 1196 in / 928 out; 14.9s
+  [ok  ] ragtruth-8395: 21 claims; 1592 in / 1393 out; 20.0s
+  [ok  ] ragtruth-9492: 15 claims; 1213 in / 1034 out; 14.8s
+  [ok  ] ragtruth-9809: 22 claims; 1375 in / 1420 out; 23.0s
+  [ok  ] ragtruth-9827: 14 claims; 1569 in / 990 out; 18.2s
+
+drafts -> data/annotation/v2.5/subtle/drafts.jsonl: 13 case(s), 155 claim(s)
+Drafting complete; blind-review and translation require separate user selection.

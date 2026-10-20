@@ -1,0 +1,143 @@
+{
+  "version": "2.4",
+  "rules_sha256": "6448a077e5f0b707c3c6e515de4d761dcef4b98dd6900bbb8f298da6877ee8a3",
+  "natural_sha256": "64d84d79314032f5232da407e07b95f2bf87a6b9e4e70572c43c7900022e6523",
+  "seed": 20261020,
+  "counts": {
+    "test": 15,
+    "dev": 5
+  },
+  "gpt_counts": {
+    "dev": 2,
+    "test": 2
+  },
+  "rows": [
+    {
+      "task": "Data2txt",
+      "split": "dev",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "dev",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "upstream_conflict_spans": 2,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "gpt-3.5-turbo-0613",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "gpt-4-0613",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_conflict_spans": 2,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Data2txt",
+      "split": "test",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_conflict_spans": 2,
+      "cases": 1
+    },
+    {
+      "task": "QA",
+      "split": "dev",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_conflict_spans": 1,
+      "cases": 2
+    },
+    {
+      "task": "QA",
+      "split": "test",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_conflict_spans": 1,
+      "cases": 1
+    },
+    {
+      "task": "Summary",
+      "split": "dev",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_conflict_spans": 2,
+      "cases": 1
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "generator_model": "llama-2-70b-chat",
+      "upstream_conflict_spans": 1,
+      "cases": 2
+    },
+    {
+      "task": "Summary",
+      "split": "test",
+      "generator_model": "mistral-7B-instruct",
+      "upstream_conflict_spans": 1,
+      "cases": 4
+    }
+  ],
+  "selected_ids": [
+    "ragtruth-11450",
+    "ragtruth-12233",
+    "ragtruth-12692",
+    "ragtruth-12917",
+    "ragtruth-15011",
+    "ragtruth-1730",
+    "ragtruth-1967",
+    "ragtruth-2468",
+    "ragtruth-3080",
+    "ragtruth-3980",
+    "ragtruth-4118",
+    "ragtruth-485",
+    "ragtruth-545",
+    "ragtruth-5675",
+    "ragtruth-5851",
+    "ragtruth-6852",
+    "ragtruth-6973",
+    "ragtruth-7217",
+    "ragtruth-7952",
+    "ragtruth-9871"
+  ]
+}

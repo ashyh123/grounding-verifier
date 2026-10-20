@@ -1,0 +1,14 @@
+{
+  "as_of": "2023-04-01",
+  "entities": [
+    "Canelo Álvarez",
+    "Daniel Carvalho",
+    "Emmett Skilton",
+    "Gerardo Fernández Fe",
+    "Katsunosuke Hori",
+    "Lina Medina",
+    "Luis N. Rivera-Pagán",
+    "Thomas Houghton (rugby league)"
+  ],
+  "note": "Wikipedia revisions used by the FActScore cases; fetched by annotation.fetch_sources --wiki"
+}

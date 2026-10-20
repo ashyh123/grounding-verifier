@@ -1,0 +1,13 @@
+{
+  "rerun_claims": 98,
+  "new_prompt_exact_claims": 95,
+  "new_prompt_additional_claims_after_offline": 10,
+  "index_corrected_quotes": 0,
+  "model_doubts": 11,
+  "protocol_errors": 0,
+  "usage": {
+    "calls": 98,
+    "input_tokens": 141441,
+    "output_tokens": 19626
+  }
+}
