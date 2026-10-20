@@ -1,0 +1,218 @@
+{
+  "version": "2.4",
+  "stage": "steps 1-4 checkpoint; new supplement drafting not started",
+  "source_spec": "https://app.notion.com/p/3fe7b21c658881c79ac2f508e5917120",
+  "archive_commit": "35f50f7",
+  "initial_sampling_registration_commit": "a805da8",
+  "amended_sampling_registration_commit": "ddae187",
+  "user_amendment": "Only conflict_supplement GPT minimum removed by explicit user approval; other rules unchanged",
+  "evidence_offline": {
+    "original_none_sc": 98,
+    "recovered_claims": 86,
+    "index_corrected_quotes": 119,
+    "original_input_sha256": "64d84d79314032f5232da407e07b95f2bf87a6b9e4e70572c43c7900022e6523"
+  },
+  "evidence_rerun": {
+    "rerun_claims": 98,
+    "new_prompt_exact_claims": 95,
+    "new_prompt_additional_claims_after_offline": 10,
+    "index_corrected_quotes": 0,
+    "model_doubts": 11,
+    "protocol_errors": 0,
+    "usage": {
+      "calls": 98,
+      "input_tokens": 141441,
+      "output_tokens": 19626
+    }
+  },
+  "evidence_by_task": [
+    {
+      "task": "ragtruth_summary",
+      "sc_claims": 200,
+      "old_exact": 174,
+      "offline_exact": 196,
+      "final_exact": 199
+    },
+    {
+      "task": "ragtruth_qa",
+      "sc_claims": 50,
+      "old_exact": 44,
+      "offline_exact": 45,
+      "final_exact": 50
+    },
+    {
+      "task": "ragtruth_data2txt",
+      "sc_claims": 88,
+      "old_exact": 22,
+      "offline_exact": 85,
+      "final_exact": 87
+    }
+  ],
+  "partial_recovery": {
+    "original_parents": 10,
+    "new_claims": 19,
+    "retained_new_claims": 15,
+    "still_partial_overlap": 4,
+    "recovered_parent_count": 10,
+    "retained_labels": {
+      "SUPPORTED": 9,
+      "CONTRADICTED": 1,
+      "UNSUPPORTED": 5
+    }
+  },
+  "supplement_selection": {
+    "version": "2.4",
+    "rules_sha256": "6448a077e5f0b707c3c6e515de4d761dcef4b98dd6900bbb8f298da6877ee8a3",
+    "natural_sha256": "64d84d79314032f5232da407e07b95f2bf87a6b9e4e70572c43c7900022e6523",
+    "seed": 20261020,
+    "counts": {
+      "test": 15,
+      "dev": 5
+    },
+    "gpt_counts": {
+      "dev": 2,
+      "test": 2
+    },
+    "rows": [
+      {
+        "task": "Data2txt",
+        "split": "dev",
+        "generator_model": "gpt-3.5-turbo-0613",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "dev",
+        "generator_model": "gpt-3.5-turbo-0613",
+        "upstream_conflict_spans": 2,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "test",
+        "generator_model": "gpt-3.5-turbo-0613",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "test",
+        "generator_model": "gpt-4-0613",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "test",
+        "generator_model": "llama-2-70b-chat",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "test",
+        "generator_model": "llama-2-70b-chat",
+        "upstream_conflict_spans": 2,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "test",
+        "generator_model": "mistral-7B-instruct",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Data2txt",
+        "split": "test",
+        "generator_model": "mistral-7B-instruct",
+        "upstream_conflict_spans": 2,
+        "cases": 1
+      },
+      {
+        "task": "QA",
+        "split": "dev",
+        "generator_model": "llama-2-70b-chat",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "QA",
+        "split": "test",
+        "generator_model": "llama-2-70b-chat",
+        "upstream_conflict_spans": 1,
+        "cases": 2
+      },
+      {
+        "task": "QA",
+        "split": "test",
+        "generator_model": "mistral-7B-instruct",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Summary",
+        "split": "dev",
+        "generator_model": "llama-2-70b-chat",
+        "upstream_conflict_spans": 1,
+        "cases": 1
+      },
+      {
+        "task": "Summary",
+        "split": "dev",
+        "generator_model": "mistral-7B-instruct",
+        "upstream_conflict_spans": 2,
+        "cases": 1
+      },
+      {
+        "task": "Summary",
+        "split": "test",
+        "generator_model": "llama-2-70b-chat",
+        "upstream_conflict_spans": 1,
+        "cases": 2
+      },
+      {
+        "task": "Summary",
+        "split": "test",
+        "generator_model": "mistral-7B-instruct",
+        "upstream_conflict_spans": 1,
+        "cases": 4
+      }
+    ],
+    "selected_ids": [
+      "ragtruth-11450",
+      "ragtruth-12233",
+      "ragtruth-12692",
+      "ragtruth-12917",
+      "ragtruth-15011",
+      "ragtruth-1730",
+      "ragtruth-1967",
+      "ragtruth-2468",
+      "ragtruth-3080",
+      "ragtruth-3980",
+      "ragtruth-4118",
+      "ragtruth-485",
+      "ragtruth-545",
+      "ragtruth-5675",
+      "ragtruth-5851",
+      "ragtruth-6852",
+      "ragtruth-6973",
+      "ragtruth-7217",
+      "ragtruth-7952",
+      "ragtruth-9871"
+    ]
+  },
+  "validation": {
+    "make_test": "223 passed in 37.25s",
+    "old_freeze_hashes": "passed",
+    "old_data_and_results_hashes": "passed"
+  },
+  "pending": [
+    "new supplemental 20-case drafting and labeling/evidence pipeline",
+    "new recovered-claim evidence and case-level merge checks",
+    "registered hallucination metrics and bootstrap intervals",
+    "v2.4 merge, audit and freeze"
+  ],
+  "hard_test_verifier_run": false
+}

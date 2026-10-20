@@ -1,0 +1,12 @@
+{
+  "original_parents": 10,
+  "new_claims": 19,
+  "retained_new_claims": 15,
+  "still_partial_overlap": 4,
+  "recovered_parent_count": 10,
+  "retained_labels": {
+    "SUPPORTED": 9,
+    "CONTRADICTED": 1,
+    "UNSUPPORTED": 5
+  }
+}
