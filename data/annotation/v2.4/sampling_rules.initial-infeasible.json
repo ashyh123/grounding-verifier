@@ -1,0 +1,60 @@
+{
+  "version": "2.4",
+  "seed": 20261020,
+  "upstream_split": "test",
+  "quality": "good",
+  "require_conflict": true,
+  "quotas": {
+    "Summary": {
+      "dev": 2,
+      "test": 6
+    },
+    "Data2txt": {
+      "dev": 2,
+      "test": 6
+    },
+    "QA": {
+      "dev": 1,
+      "test": 3
+    }
+  },
+  "allowed_generators": [
+    "gpt-4-0613",
+    "gpt-3.5-turbo-0613",
+    "llama-2-70b-chat",
+    "mistral-7B-instruct"
+  ],
+  "gpt_minimum_fraction": 0.7,
+  "gpt_minimum_per_split": {
+    "dev": 4,
+    "test": 11
+  },
+  "integer_rounding": "ceil(0.7 * split size); minimum share per split, with no separate stratum quotas",
+  "min_answer_words": {
+    "Summary": 80,
+    "QA": 60,
+    "Data2txt": 100
+  },
+  "min_summary_context_words": 400,
+  "qa_passages": 3,
+  "max_answer_chars": 10000,
+  "max_passages": 50,
+  "max_passage_chars": 20000,
+  "one_response_per_source_id": true,
+  "near_duplicate": {
+    "word_ngram": 5,
+    "jaccard": 0.8,
+    "normalization": "lowercase Unicode word tokens",
+    "grouping": "connected components"
+  },
+  "exclude": "legacy project IDs and source/near-duplicate groups; original synthetic contexts; all natural-30 source and near-duplicate groups",
+  "allocation": "seeded minimum-cost integer allocation; fixed task/split quotas, GPT minimum and one per component",
+  "on_infeasible": "stop without relaxing constraints or replacing cases",
+  "natural_subset": "natural",
+  "supplement_subset": "conflict_supplement",
+  "annotation_model": "mimo-v2.6-pro",
+  "credentials": "existing ANTHROPIC_API_KEY and ANTHROPIC_BASE_URL, no new model or key",
+  "old_freeze_commit": "c78d411",
+  "source_spec": "https://app.notion.com/p/3fe7b21c658881c79ac2f508e5917120",
+  "pause": "After steps 1-4 sampling report, before drafting the new 20 cases."
+}

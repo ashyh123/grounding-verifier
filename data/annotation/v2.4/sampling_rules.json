@@ -24,12 +24,9 @@
     "llama-2-70b-chat",
     "mistral-7B-instruct"
   ],
-  "gpt_minimum_fraction": 0.7,
-  "gpt_minimum_per_split": {
-    "dev": 4,
-    "test": 11
-  },
-  "integer_rounding": "ceil(0.7 * split size); minimum share per split, with no separate stratum quotas",
+  "gpt_minimum_fraction": null,
+  "gpt_minimum_per_split": {},
+  "integer_rounding": "not applicable: user explicitly removed GPT minimum for conflict_supplement only",
   "min_answer_words": {
     "Summary": 80,
     "QA": 60,
@@ -56,5 +53,10 @@
   "credentials": "existing ANTHROPIC_API_KEY and ANTHROPIC_BASE_URL, no new model or key",
   "old_freeze_commit": "c78d411",
   "source_spec": "https://app.notion.com/p/3fe7b21c658881c79ac2f508e5917120",
-  "pause": "After steps 1-4 sampling report, before drafting the new 20 cases."
+  "pause": "After steps 1-4 sampling report, before drafting the new 20 cases.",
+  "user_amendment": {
+    "date": "2026-10-20",
+    "authorization": "取消新增集 GPT 下限（推荐）",
+    "scope": "only GPT share of conflict_supplement; all other rules unchanged"
+  }
 }
