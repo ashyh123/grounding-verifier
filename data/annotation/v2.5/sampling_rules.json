@@ -1,0 +1,78 @@
+{
+  "version": "2.5",
+  "purpose": "subtle conflict supplement on top of the frozen v2.4 dataset",
+  "seed": 20261021,
+  "upstream_splits": [
+    "train",
+    "test"
+  ],
+  "upstream_note": "The pool is the upstream train split plus the remaining qualified upstream-test candidates. Each selected case records its upstream split; dataset dev/test assignment is independent.",
+  "quality": "good",
+  "require_subtle_conflict": true,
+  "quotas": {
+    "Summary": {
+      "dev": 1,
+      "test": 4
+    },
+    "QA": {
+      "dev": 1,
+      "test": 3
+    },
+    "Data2txt": {
+      "dev": 1,
+      "test": 3
+    }
+  },
+  "total_cases": 13,
+  "allowed_generators": [
+    "gpt-4-0613",
+    "gpt-3.5-turbo-0613",
+    "llama-2-70b-chat",
+    "mistral-7B-instruct"
+  ],
+  "generator_preference": {
+    "models": [
+      "gpt-4-0613",
+      "gpt-3.5-turbo-0613"
+    ],
+    "minimum_fraction": 0.5,
+    "minimum_cases": 7,
+    "integer_rounding": "ceil(13 * 0.5) = 7",
+    "on_infeasible": "report the maximum feasible GPT count and stop; do not relax quotas, the subtle-conflict requirement or the generator allowlist"
+  },
+  "min_answer_words": {
+    "Summary": 80,
+    "QA": 60,
+    "Data2txt": 100
+  },
+  "min_summary_context_words": 400,
+  "qa_passages": 3,
+  "max_answer_chars": 10000,
+  "max_passages": 50,
+  "max_passage_chars": 20000,
+  "one_response_per_source_id": true,
+  "near_duplicate": {
+    "word_ngram": 5,
+    "jaccard": 0.8,
+    "normalization": "lowercase Unicode word tokens",
+    "grouping": "connected components"
+  },
+  "exclude": {
+    "legacy_response_ids": true,
+    "legacy_source_groups": true,
+    "original_synthetic_dataset": "data/eval.jsonl",
+    "existing_dataset": "data/eval_hard.v2.4.jsonl",
+    "existing_source_ids": true,
+    "existing_source_or_near_duplicate_groups": true
+  },
+  "subset": "subtle_supplement",
+  "record_upstream_split": true,
+  "allocation": "seeded MILP with exact task/split quotas, one selected response per source_id and per near-duplicate component, GPT floor, then minimum seeded rank; reversed-input replay must match",
+  "on_infeasible": "stop without relaxing constraints or replacing cases",
+  "label_source": "ragtruth_human",
+  "annotation_model": "mimo-v2.6-pro",
+  "credentials": "existing ANTHROPIC_API_KEY and ANTHROPIC_BASE_URL; no new model or key",
+  "base_commit": "cbccac9",
+  "source_spec": "Notion v2.5 revision suggestions (2026-10-20)",
+  "pause": "After the sampling statistics table and make test, before drafting, label mapping and evidence calls on the new cases."
+}
