@@ -1,6 +1,6 @@
 {
   "version": "2.7",
-  "status": "registered_pending_s2_confirmation",
+  "status": "s4_stopped_pending_decision",
   "date": "2026-10-20",
   "design": "Notion evaluation design v2.7",
   "decisions": {
@@ -72,7 +72,7 @@
     "runs": "one run per method per track"
   },
   "track_a": {
-    "status": "registered_pending_s2_confirmation",
+    "status": "s4_stopped_pending_decision",
     "dataset": "lytang/LLM-AggreFact",
     "revision": "981dfd0bd8e58e7238a9ab92b2e6ea44bce918e4",
     "license": "CC-BY-ND-4.0",
@@ -104,12 +104,12 @@
     ],
     "doc_length_cap_words": 4000,
     "dev_target_claims_per_subset": 10,
-    "test_target_claims_per_subset": 100,
+    "test_target_claims_per_subset": 80,
     "actual_selected": {
       "test": {
-        "docs": 576,
-        "claims": 1028,
-        "positives": 617
+        "docs": 461,
+        "claims": 854,
+        "positives": 512
       },
       "dev": {
         "docs": 58,
@@ -117,7 +117,7 @@
         "positives": 108
       }
     },
-    "overshoot_note": "whole-document sampling exceeds the nominal 100/10 claim targets: Lfqa 120, TofuEval-MediaS 104, TofuEval-MeetB 103 on test; Lfqa 25, TofuEval-MediaS 61, TofuEval-MeetB 38 on dev",
+    "overshoot_note": "whole-document sampling exceeds the nominal 80/10 targets: Lfqa 87, TofuEval-MediaS 104, TofuEval-MeetB 103 on test; Lfqa 25, TofuEval-MediaS 61, TofuEval-MeetB 38 on dev",
     "excluded_over_cap": {
       "test": {
         "ClaimVerify": {
@@ -148,23 +148,40 @@
         }
       }
     },
-    "fallback": "if S4 estimates total cost above $16, reduce test target to 80 claims per subset; dev and track B are not reduced",
-    "budget_estimate_usd": 9.06,
-    "budget_note": "1028 test + 196 dev claims at $0.0074 per claim from v2.5 oracle prices x2 for longer documents"
+    "fallback": "applied: S2 confirmed the 80-claims-per-subset test target after the 100 target estimated $16.90; dev and track B are not reduced",
+    "budget_estimate_usd": 3.73,
+    "budget_note": "854 test + 196 dev claims at $0.0074 per claim from v2.5 oracle prices x2 for longer documents"
   },
   "budget": {
     "cap_usd": 16.0,
     "track_b_estimate_usd": 7.84,
-    "track_a_estimate_usd": 9.06,
+    "track_a_estimate_usd": 3.73,
     "basis": "v2.6 test actual unit prices; track A oracle prices from v2.5 with a 2x long-document factor",
-    "total_estimate_usd": 16.9,
-    "cap_note": "the whole-document overshoot puts the estimate at $16.90, above the $16 cap; S4 fallback is target 80 per subset"
+    "total_estimate_usd": 12.43,
+    "cap_note": "dev actual $0.855 + projected track A test $3.73 + track B $7.84 = $12.43, within $16; the blocking issue is a truncation, not budget"
   },
   "notes": [
     "no prompt, verifier code, model or public gold change",
     "no v2.6 rerun",
     "track A data is gated and local-only; raw parquet and derived JSONL are not committed",
     "the v2.6 post-hoc sentence threshold 70 is not used in v2.7; threshold 60 is inherited",
-    "S2 stats and the $16 cap still need the user confirmation gate"
-  ]
+    "S2 sample and budget are confirmed; S4 will measure the dev cost before freeze"
+  ],
+  "s4": {
+    "status": "stopped_on_truncation",
+    "dev_docs": 58,
+    "dev_claims": 196,
+    "failures": {
+      "baseline": 0,
+      "minimal": 1,
+      "optimized": 0
+    },
+    "dev_cost_usd": 0.8554,
+    "dev_cost_per_claim_usd": 0.004365,
+    "projected_test_cost_usd": 3.73,
+    "projected_total_including_dev_and_track_b_usd": 12.43,
+    "blocker": "minimal oracle sends all 61 claims in one call; the 16k-character JSON is truncated at max_tokens=4096 on a TofuEval-MediaS document",
+    "decision_pending": "batch minimal oracle claims (harness-only) vs count the truncation as a failure vs reduce the sample",
+    "test_not_run": true
+  }
 }

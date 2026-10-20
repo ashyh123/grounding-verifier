@@ -36,14 +36,14 @@ def test_test_selection_counts_and_limits():
     rows = v27.load_aggrefact(TEST)
     manifest = json.loads((ROOT / 'data' / 'annotation' / 'v2.7' /
                            'aggrefact-selection-test.json').read_text(encoding='utf-8'))
-    assert len(rows) == 576
-    assert sum(len(r['claims']) for r in rows) == 1028
-    assert sum(sum(r['labels']) for r in rows) == 617
+    assert len(rows) == 461
+    assert sum(len(r['claims']) for r in rows) == 854
+    assert sum(sum(r['labels']) for r in rows) == 512
     assert {r['subset'] for r in rows} == set(aggrefact.SUBSETS)
-    assert manifest['totals']['docs'] == 576
-    assert manifest['totals']['claims'] == 1028
-    assert manifest['totals']['positives'] == 617
-    assert manifest['totals']['selected_positives_rate'] == pytest.approx(617 / 1028)
+    assert manifest['totals']['docs'] == 461
+    assert manifest['totals']['claims'] == 854
+    assert manifest['totals']['positives'] == 512
+    assert manifest['totals']['selected_positives_rate'] == pytest.approx(512 / 854)
     assert max(r['provenance']['passages'] for r in rows) <= 50
     assert max(len(p) for r in rows for p in r['context_passages']) <= 20000
 
@@ -66,16 +66,16 @@ def test_baseline_track_a_report_matches_predictions():
     rows = v27.load_aggrefact(TEST)
     preds = {json.loads(line)['id']: json.loads(line) for line in
              run.read_text(encoding='utf-8').splitlines() if line.strip()}
-    assert len(preds) == 576 and set(preds) == {r['id'] for r in rows}
+    assert len(preds) == 461 and set(preds) == {r['id'] for r in rows}
     assert sum('error' in p for p in preds.values()) == 0
     report = v27.track_a_report(rows, {'baseline': preds}, replicates=200)
     block = report['methods']['main']['baseline']
-    assert block['macro_balanced_accuracy']['value'] == pytest.approx(0.6063724339836162)
-    assert block['claims'] == 1028 and block['docs'] == 576
+    assert block['macro_balanced_accuracy']['value'] == pytest.approx(0.6077143049100848)
+    assert block['claims'] == 854 and block['docs'] == 461
     saved = json.loads(report_path.read_text(encoding='utf-8'))
     assert saved['methods']['main']['baseline']['macro_balanced_accuracy']['value'] == pytest.approx(
-        0.6063724339836162)
-    assert saved['methods']['main']['baseline']['subsets']['AggreFact-CNN']['positives'] == 87
+        0.6077143049100848)
+    assert saved['methods']['main']['baseline']['subsets']['AggreFact-CNN']['positives'] == 70
 
 
 def test_failed_document_is_wrong_on_every_claim():

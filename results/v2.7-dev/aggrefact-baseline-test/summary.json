@@ -1,12 +1,12 @@
 {
   "design_version": "2.7",
   "track": "aggrefact",
-  "n_docs": 576,
-  "n_claims": 1028,
+  "n_docs": 461,
+  "n_claims": 854,
   "prompt_version": "v3",
   "methods": {
     "baseline": {
-      "docs": 576,
+      "docs": 461,
       "failures": 0,
       "failure_rate": 0.0
     }

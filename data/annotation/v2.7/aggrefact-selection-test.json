@@ -1,18 +1,18 @@
 {
   "split": "test",
-  "target_claims_per_subset": 100,
+  "target_claims_per_subset": 80,
   "subsets": {
     "AggreFact-CNN": {
       "docs_total": 384,
       "claims_total": 558,
       "excluded_docs_over_4000_words": 0,
       "excluded_claims_over_4000_words": 0,
-      "selected_docs": 70,
-      "selected_claims": 100,
-      "selected_positives": 87,
+      "selected_docs": 55,
+      "selected_claims": 80,
+      "selected_positives": 70,
       "selected_doc_words_min_median_max": [
         232,
-        471.5,
+        468,
         1185
       ]
     },
@@ -21,13 +21,13 @@
       "claims_total": 558,
       "excluded_docs_over_4000_words": 0,
       "excluded_claims_over_4000_words": 0,
-      "selected_docs": 88,
-      "selected_claims": 100,
-      "selected_positives": 45,
+      "selected_docs": 70,
+      "selected_claims": 80,
+      "selected_positives": 38,
       "selected_doc_words_min_median_max": [
         47,
-        312.5,
-        1252
+        285.0,
+        988
       ]
     },
     "ClaimVerify": {
@@ -35,12 +35,12 @@
       "claims_total": 1088,
       "excluded_docs_over_4000_words": 49,
       "excluded_claims_over_4000_words": 81,
-      "selected_docs": 63,
-      "selected_claims": 100,
-      "selected_positives": 81,
+      "selected_docs": 55,
+      "selected_claims": 80,
+      "selected_positives": 63,
       "selected_doc_words_min_median_max": [
         26,
-        958,
+        926,
         3603
       ]
     },
@@ -49,12 +49,12 @@
       "claims_total": 3702,
       "excluded_docs_over_4000_words": 67,
       "excluded_claims_over_4000_words": 71,
-      "selected_docs": 81,
-      "selected_claims": 101,
-      "selected_positives": 88,
+      "selected_docs": 61,
+      "selected_claims": 80,
+      "selected_positives": 70,
       "selected_doc_words_min_median_max": [
         29,
-        142,
+        135,
         3899
       ]
     },
@@ -63,12 +63,12 @@
       "claims_total": 1566,
       "excluded_docs_over_4000_words": 0,
       "excluded_claims_over_4000_words": 0,
-      "selected_docs": 75,
-      "selected_claims": 100,
-      "selected_positives": 22,
+      "selected_docs": 61,
+      "selected_claims": 80,
+      "selected_positives": 18,
       "selected_doc_words_min_median_max": [
         20,
-        83,
+        82,
         147
       ]
     },
@@ -77,12 +77,12 @@
       "claims_total": 1911,
       "excluded_docs_over_4000_words": 0,
       "excluded_claims_over_4000_words": 0,
-      "selected_docs": 5,
-      "selected_claims": 120,
-      "selected_positives": 79,
+      "selected_docs": 3,
+      "selected_claims": 87,
+      "selected_positives": 58,
       "selected_doc_words_min_median_max": [
-        154,
         262,
+        275,
         286
       ]
     },
@@ -91,12 +91,12 @@
       "claims_total": 1710,
       "excluded_docs_over_4000_words": 0,
       "excluded_claims_over_4000_words": 0,
-      "selected_docs": 91,
-      "selected_claims": 100,
-      "selected_positives": 24,
+      "selected_docs": 73,
+      "selected_claims": 80,
+      "selected_positives": 15,
       "selected_doc_words_min_median_max": [
         17,
-        73,
+        74,
         268
       ]
     },
@@ -133,20 +133,20 @@
       "claims_total": 358,
       "excluded_docs_over_4000_words": 18,
       "excluded_claims_over_4000_words": 18,
-      "selected_docs": 99,
-      "selected_claims": 100,
-      "selected_positives": 36,
+      "selected_docs": 79,
+      "selected_claims": 80,
+      "selected_positives": 25,
       "selected_doc_words_min_median_max": [
         269,
-        922,
-        3728
+        906,
+        3119
       ]
     }
   },
   "totals": {
-    "docs": 576,
-    "claims": 1028,
-    "positives": 617,
-    "selected_positives_rate": 0.6001945525291829
+    "docs": 461,
+    "claims": 854,
+    "positives": 512,
+    "selected_positives_rate": 0.5995316159250585
   }
 }
