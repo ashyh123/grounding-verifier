@@ -217,6 +217,59 @@ a claim the sources are simply silent about. One label was deliberately **kept**
 what that case tests. A whole-dataset read-back audit now agrees with 149/150 labels for the pipeline and
 147/150 for the single call.
 
+## v2.5 RAGTruth 主张级测量
+
+**状态：已测量；主张级金标有噪声，结论待 v2.6。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
+（45 例，537 条主张：S 483、C 27、U 27）的测量结果。数据、金标、评分代码和被测方案在测量前后均未改动；
+下面的事后分析只读取已保存的预测，没有调用任何模型。
+
+### 主表（e2e，test，均值 ± 样本标准差）
+
+数字来自 `docs/TEST_PLAN.md` 和 `results/v2.5-test/aggregate-3r.json`。baseline 是确定性的，只跑 1 轮；
+minimal 和 optimized 各 3 轮，无调用失败。
+
+| 方案 | 轮数 | 幻觉检出 F1 | macro-F1 | 每轮费用 |
+|---|---:|---:|---:|---:|
+| baseline | 1 | 0.204 | 0.127 | $0.000 |
+| minimal | 3 | 0.455 ± 0.010 | 0.516 ± 0.015 | $0.269 ± 0.002 |
+| optimized v3 | 3 | 0.434 ± 0.005 | 0.505 ± 0.004 | $1.842 ± 0.026 |
+
+三轮 e2e 加一轮 oracle 总花费 $8.32。
+
+### 事后分析（未预先登记，`"preregistered": false`）
+
+脚本 `eval/posthoc_v25.py`，输出 `results/v2.5-test/posthoc/posthoc.json`。这两项是看到 v2.5 test 结果之后才加的。
+
+* **配对 bootstrap 差值（minimal − optimized，3 轮逐案例混淆计数相加，案例为单位，10000 次，种子 20261020）**：
+  检出 F1 差值 +0.021，95% 区间 [−0.040, +0.078]；macro-F1 差值 +0.011，区间 [−0.049, +0.075]。
+  两个区间都包含 0，所以只能说没有证据表明两者存在差异，不能说两者一样好。
+* **主张覆盖率（被对齐上的金标主张 ÷ 全部金标主张，逐轮）**：
+
+| 方案 | 轮次 | S | C | U | 全部 |
+|---|---|---:|---:|---:|---:|
+| baseline | r1 | 263/483 (0.545) | 17/27 (0.630) | 15/27 (0.556) | 295/537 (0.549) |
+| minimal | r1 | 374/483 (0.774) | 21/27 (0.778) | 23/27 (0.852) | 418/537 (0.778) |
+| minimal | r2 | 365/483 (0.756) | 20/27 (0.741) | 22/27 (0.815) | 407/537 (0.758) |
+| minimal | r3 | 376/483 (0.778) | 21/27 (0.778) | 22/27 (0.815) | 419/537 (0.780) |
+| optimized | r1 | 430/483 (0.890) | 25/27 (0.926) | 26/27 (0.963) | 481/537 (0.896) |
+| optimized | r2 | 428/483 (0.886) | 25/27 (0.926) | 26/27 (0.963) | 479/537 (0.892) |
+| optimized | r3 | 431/483 (0.892) | 26/27 (0.963) | 26/27 (0.963) | 483/537 (0.899) |
+
+### 三个已知问题
+
+1. **金标噪声有两类来源。** RAGTruth 只在回答上标出幻觉片段，没有主张；v2.3 至 v2.5 先把回答拆成主张，
+   再按与上游片段的重叠映射标签。以 `ragtruth-7952` 为例：
+   * 上游漏标：主张「提供户外座位」被标为 SUPPORTED，但原文是 `"OutdoorSeating": false`，回答说的是有户外座位，
+     上游没有标出这处。
+   * 映射错误：主张「不提供代客泊车」所对应的回答区间是 `it does not provide parking or valet services.`，
+     与上游标注的 `it does not provide parking`（Evident Conflict）重叠，片段之外只有 19 个字符，因此被映射成
+     CONTRADICTED。但原文是 `"valet": false`，实际上支持这条主张。
+2. **检出 F1 不惩罚漏掉的 S 金标。** 以 r1 为例，minimal 有 109 条 S 金标没有被对齐上，optimized 只有 53 条。
+   拆得少的方案产生的预测主张少，误报机会也少，指标不会为此扣分。
+3. **由此，「minimal 不比 optimized 差」和「误报很高」都不能作为结论。** 配对差值的区间包含 0，主张覆盖率相差很大，
+   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。结论待 v2.6（回答级主评测，金标直接取上游标注）。
+   v2.5 的结果原样保留，降为探索性分析。
+
 ## Threats to validity
 
 * **150 claims, one annotator, one model family.** Differences below ~5 points on one split are noise;
