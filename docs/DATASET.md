@@ -1,5 +1,48 @@
 # Evaluation dataset
 
+## Current measurement target: RAGTruth v2.4
+
+This round uses **`data/eval_hard.v2.4.jsonl`**. `data/eval_hard.jsonl` remains the
+historical v2.3 dataset at commit **c78d411**; it is not overwritten or redirected on disk.
+The synthetic dataset described below remains a separate historical regression benchmark.
+
+v2.4 changes are based only on label distribution and evidence-pipeline diagnostics.
+**No evaluated verifier has been run on the hard test during this workflow**, so these changes
+do not use test performance to tune the dataset. The c78d411 dataset, annotation artifacts,
+scoring/verifier code and freeze are retained. This document and EVALUATION.md receive the
+explicitly required v2.4 additions; their exact v2.3 texts remain available at c78d411.
+
+The version keeps the 30 original cases as `natural`, repairs passage indices with literal
+quote replay and an explicit numbered prompt, and splits the ten excluded parent claims at
+upstream annotation boundaries without sending label types to the drafting model. It adds
+20 fixed `conflict_supplement` cases under preregistered task/split/length/deduplication rules.
+The user explicitly removed only the supplement's infeasible GPT-share minimum; all other
+selection rules remain fixed. Both annotation roles use mimo-v2.6-pro. No model sets labels.
+
+Statistics, exclusions, doubts, lengths, evidence coverage and target checks are in
+[the v2.4 report](../data/annotation/v2.4/final_report.md) and `data/annotation/v2.4/audit.json`.
+The report separates offline index repair from the 98 original-none new-prompt calls;
+existing exact claims were not rerun. Every original retained claim/text/label is preserved,
+and new split children have new IDs plus `derived_from`. Retired parents are listed separately
+from their replacement children's retained/excluded counts. No replacement cases are sampled.
+If a recovered child has exactly the same text and human label as an existing gold claim and
+their literal answer spans overlap, retain the existing gold and attach `merged_derivations`.
+The child remains in the recovery journal and audit but does not count twice. Repeated text
+at different answer positions stays separate; this rule uses no semantic model judgment.
+
+“上游无标注回答” means only that RAGTruth provided no marked hallucination span. Counts of such
+cases with model_doubts are logged in the audit; there is no independent human confirmation.
+The old all-retained-S count is not a count of verified correct answers. Evidence coverage
+measures exact textual presence, not whether the quote semantically proves the claim.
+
+The new freeze is `data/annotation/v2.4/freeze.json`; verify it with
+`uv run python -m annotation.v24.freeze --check`. To rederive mapping/evidence and compare the
+dataset/audit without model calls, run `uv run python -m annotation.v24.merge --check`.
+The original freeze's hashes for the two updated docs refer to their historical c78d411 text;
+the v2.4 freeze checks that historical text and pins the new documentation separately.
+Hard-test measurement awaits separate instructions. Preregistered metrics and the saved-run
+scoring command are in [EVALUATION.md](EVALUATION.md).
+
 `data/eval.jsonl` — 46 hand-authored cases (26 `dev`, 20 `test`), 150 gold claims.
 Every line is validated on load; an invalid dataset refuses to run (`python -m eval.dataset data/eval.jsonl`).
 How these cases are turned into numbers: [EVALUATION.md](EVALUATION.md#metrics).
@@ -145,7 +188,7 @@ a model or a threshold.
 * Answers are written to be verifiable from the passages, i.e. claim decomposition is never
   adversarial here; a claim that cannot be checked without world knowledge is not in the set.
 
-## RAGTruth v2.3 human-label pipeline
+## Historical RAGTruth v2.3 human-label pipeline
 
 The new hard dataset uses labels mapped directly from upstream RAGTruth human annotations,
 without a second human review: Conflict overlap → CONTRADICTED, Baseless overlap → UNSUPPORTED,
@@ -176,7 +219,7 @@ All ten exclusions removed C/U claims, demonstrating the bias risk described abo
 Exact references were located for 240/338 S/C claims (71.0%); the remaining 98 S/C references have
 no located evidence. The 35 doubt-log records comprise 31 model doubts/not-found reports and four
 unusable-output diagnostics; the latter are explicitly separate from semantic label doubts.
-Upstream-clean answers number 2 dev / 5 test; all-retained-S answers number 4 / 8 and may still
+“上游无标注回答” number 2 dev / 5 test; all-retained-S answers number 4 / 8 and may still
 contain excluded hallucinated assertions. Multi-passage evidence counts are 22 / 42; these do not
 establish that multi-passage reasoning is necessary. Audit and freeze metadata live under
 `data/annotation/`. See the [final statistics](../data/annotation/full-v2.3/report.md).

@@ -1,5 +1,47 @@
 # Evaluation method
 
+## v2.4 preregistration (2026-10-20, before hard-test measurement)
+
+This round measures `data/eval_hard.v2.4.jsonl`. No verifier has been run on its hard test.
+The following metrics are registered before freezing; historical synthetic results below do
+not describe v2.4. `eval/v24.py` scores saved predictions without provider calls, reusing the
+frozen alignment rules in `eval/scoring.py`. No alignment threshold is tuned in this round.
+
+* **Primary: claim-level hallucination detection**, C+U positive, S negative, precision/recall/F1.
+  An aligned C↔U prediction is a detection TP; a missed C/U is FN; predicted C/U on S is FP.
+  Every unmatched C/U prediction (including duplicates) adds FP. Missing S does not count as TP
+  or TN, so omission never creates successful detection. Provider errors count as empty output.
+* **Three-label macro-F1**, equal mean of S/C/U F1. Missed gold contributes its label's FN;
+  every unmatched prediction contributes its predicted label's FP. This explicitly penalizes
+  extra claims, unlike the historical gold-only confusion macro-F1. No label is omitted when
+  absent; zero denominators yield zero. Gold n appears beside every label; n<20 says “仅供参考”.
+* **95% percentile confidence intervals** on detection P/R/F1, macro-F1 and per-label P/R/F1:
+  resample complete cases with replacement, same number of cases per draw, 10000 replicates,
+  NumPy default_rng seed 20261020. Repeated draws retain multiplicity and all claims of a case.
+  Intervals describe sampling uncertainty conditional on these labels/alignment, not annotation
+  correctness, generation variance, or performance on an unselected population.
+* Report `all` (headline), `natural` and `conflict_supplement` separately with the same definitions;
+  bootstrap each subset independently. Empty subsets have no metric. The supplement intentionally
+  changes label prevalence; all-data precision is not a natural-population estimate.
+  Here `all` means all subsets within the selected split (default `test`); `--split all` includes
+  dev as well and must not be described as held-out performance.
+* Answers with no upstream span annotations are called **“上游无标注回答”**. Report how many such
+  cases have any model_doubts journal record (unique cases and records separately). Neither their
+  SUPPORTED mapping nor their model evidence establishes independent human confirmation.
+
+After measurement is separately authorized, score each saved run independently (do not pool runs
+as independent cases), using a fresh output outside historical `results/`:
+
+```bash
+uv run python -m eval.v24 --data data/eval_hard.v2.4.jsonl --split test \
+  --predictions <saved-run.jsonl> --out <new-report.json>
+# Add --oracle only for a run generated from gold claims in their original order.
+```
+
+The CLI requires exactly the selected case IDs, including explicit error records for failures;
+it records dataset/prediction hashes and refuses output overwrite. README must present all-data
+and natural headline numbers together once measured. At freeze time both remain **unmeasured**.
+
 **2026-10-19 v2.2 scoring correction:** the alignment guards and grouped metrics below are
 implemented on `eval-v2`. Published summaries and historical numbers remain unchanged until the
 rescore comparison is reviewed. No hard-test evaluation is authorised by this change.

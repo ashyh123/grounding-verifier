@@ -18,7 +18,19 @@ a minimal single-call LLM verifier, and an optimized multi-step pipeline.
 > **Documentation v2** (2026-10-17) — index, revision record and conventions in
 > [docs/README.md](docs/README.md).
 
-## Headline result (held-out test split, 20 cases / 61 claims, 3 runs)
+## Current headline: RAGTruth v2.4 (unmeasured)
+
+The current benchmark is `data/eval_hard.v2.4.jsonl`, with `all` as the headline and
+`natural` alongside it; `conflict_supplement` is also reported separately. All-data and
+natural hallucination-detection P/R/F1 and macro-F1 are **not yet measured**. The scoring
+entry includes 95% case-bootstrap intervals (10000 draws, seed 20261020) and per-label n.
+Dataset counts: all 案例=50、主张=638 (S570/C30/U38); natural 案例=30、主张=382
+(S341/C7/U34). Within held-out test: all 案例=35、主张=427 (S385/C21/U21), natural
+案例=20、主张=256 (S235/C4/U17). These are label counts, not verifier scores.
+See [dataset statistics](data/annotation/v2.4/final_report.md) and
+[preregistered scoring rules](docs/EVALUATION.md). No hard-test verifier ran in this revision.
+
+## Historical synthetic result (held-out test split, 20 cases / 61 claims, 3 runs)
 
 `make eval-test`, frozen configuration, `deepseek-v4-pro` — the split the prompts were never tuned on:
 
@@ -97,7 +109,11 @@ byte-identical to `quote` and a verbatim substring of the passage — or the cla
 UNSUPPORTED. Errors: `422 invalid_request`, `502`/`504 upstream_error`, `500 misconfigured`,
 `500 internal_invariant_violation`. Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-## How it is measured
+## How the historical synthetic benchmark is measured
+
+These commands target the historical synthetic benchmark. v2.4 hard-test measurement is pending
+separate instructions; score its eventual saved predictions with `python -m eval.v24` as described
+in [EVALUATION.md](docs/EVALUATION.md). Its detection F1 and bootstrap report come from that entry.
 
 ```bash
 uv run python -m eval.dataset data/eval.jsonl     # validate the dataset
@@ -130,7 +146,7 @@ dataset. Definitions and caveats: [docs/EVALUATION.md](docs/EVALUATION.md).
 
 Working and verified end to end against a live provider on both client transports; the suite is green
 (`make test`, no key required — it includes the eval-harness and documentation-consistency checks); the
-optimized verifier is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1, oracle-perfect
+optimized verifier on the historical synthetic dataset is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1, oracle-perfect
 at 1.000 (test split, 3 runs). Known open items: decomposition wording remains the binding constraint —
 prompt v4 fixed half of it (coverage up, fusion halved) but broke the no-claims edge case and was
 reverted, with its successor's keep-condition written down; one annotator; and cost reported as a
