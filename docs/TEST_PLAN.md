@@ -13,7 +13,7 @@ test measurement or prompt/code change.**
 - Command shape:
   `uv run python -m eval.run --data data/eval_hard.v2.5.jsonl --methods baseline minimal optimized --split dev --runs 1 [--oracle] --out results/<v2.5-dev-dryrun>/...`
 
-## Dev dry-run results (1 round each; diagnostics only, not headline scores)
+## Dev dry-run results (1 round each, pre-fix diagnostics; not headline scores)
 
 | method | e2e errors | oracle errors | e2e mean latency | e2e cost (USD) | oracle mean latency | oracle cost (USD) |
 |---|---:|---:|---:|---:|---:|---:|
@@ -21,15 +21,24 @@ test measurement or prompt/code change.**
 | minimal | 0/18 | 0/18 | 7.9 s | 0.111 | 9.6 s | 0.132 |
 | optimized v3 | 5/18 (27.8%) | 5/18 (27.8%) | 9.7 s | 0.449 | 7.2 s | 0.446 |
 
-- The 5 optimized e2e failures are `unparseable response: Expecting ',' delimiter` after
-  retries; the 5 oracle failures are `[Errno 8] nodename nor servname provided` after retries.
+- The 5 optimized e2e failures were `unparseable response: Expecting ',' delimiter` after
+  retries; the 5 oracle failures were `[Errno 8] nodename nor servname provided` after retries.
   Both are provider/response-reliability failures, not context-length failures. Minimal had
   zero failures in both modes.
 - Cost totals only successful calls; failed attempts may have consumed tokens that are not in
-  the run meta. The observed dev total is **$1.137**; the internal cap of $5 was not reached.
+  the run meta. The pre-fix dev total is **$1.137**; the internal cap of $5 was not reached.
 - No context-limit rejection or output truncation was observed; the longest dev context is
   1626 words. All v2.5 metrics (all/natural/conflict_supplement/subtle_supplement,
   sensitivity, origin and generator groups) were produced for all six runs.
+
+**Post-freeze repair (user-authorized):** `verifier/openai_client.py` now repairs unescaped
+quotes, JSON fragments copied into quote strings, missing/trailing commas and missing closing
+quotes deterministically before a provider retry. Unit tests cover every captured malformed
+response. The four remaining previously failing cases (`ragtruth-5851`, `-6973`, `-8395`,
+`-9775`) passed end-to-end with **0 retries**; this cost $0.313. The change touches verifier
+code, so the v2.5 freeze was reissued; the old freeze is archived as
+`freeze.pre-optimized-fix.json`. A full post-fix 18-case dev run was not repeated before the
+budget decision.
 
 ## Cost extrapolation to the 45-case test split
 
@@ -43,24 +52,20 @@ Dev has 18 cases; test has 45 (2.5×). Using the observed per-case cost:
 The lower bound omits failed-call usage; a 20–30% allowance gives roughly $3.3–3.7 for the
 one-round plan. Baseline costs $0.
 
-## Proposed measurement (not final)
+## Measurement plan (user chose fix-first + 3 rounds)
 
-**Gate first:** the optimized method failed on 27.8% of dev cases in both modes. A test run
-with the same configuration would mix model capability with response-parsing/network
-reliability. User decision required:
+**Gate status:** the optimized JSON repair is applied and verified on the four captured failure
+cases. The remaining network-level retry exposure has not been re-measured on all 18 dev cases;
+the test run itself will quantify it.
 
-1. **Fix/re-authorize optimized robustness first** (e.g. JSON repair or a larger retry budget),
-   then run the stable plan; or
-2. **Measure as-is** and report the optimized error rate as part of the result, counting errors
-   as empty output.
+**User choice:** fix optimized first, then run 3 rounds. Budget stated as **15 元**; the unit
+must be confirmed before spending. The 3-round lower bound is **$8.53 (≈¥61)**, so ¥15
+(≈$2.1) is not sufficient. If the intended cap is $15 (≈¥107), the plan below fits.
 
-**If option 1 is chosen:** run 3 rounds e2e + 3 oracle for minimal and optimized, and 1 round
-for baseline, on the frozen test split. Report mean ± std per run; do not pool runs as
-independent cases. Estimated lower bound $8.53; cap $15.
-
-**If option 2 is chosen:** run 1 round e2e + 1 oracle for all three methods first to quantify
-test failure rate; estimated lower bound $2.85, cap $5. Then decide whether a 3-round
-measurement is meaningful.
+**3-round plan:** run 3 rounds e2e + 3 oracle for minimal and optimized, and 1 round for
+baseline, on the frozen 45-case test split. Report mean ± std per run; do not pool runs as
+independent cases. Estimated lower bound $8.53; cap $15 (≈¥107). If the cap is ¥15, stop
+before the run or reduce to a single minimal-only diagnostic; do not silently overspend.
 
 **Scoring:** run `eval/v25.py` on each saved prediction file with `--split test` and
 `--doubts data/annotation/v2.5/doubt_classes.jsonl`; report `all`, `natural`,

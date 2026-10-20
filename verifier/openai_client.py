@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import re
 from typing import Any
 
 import httpx
@@ -72,19 +73,109 @@ class OpenAIChatClient:
                             timeout=isinstance(last, httpx.TimeoutException))
 
     @staticmethod
-    def _parse_arguments(raw: Any) -> dict[str, Any] | None:
-        """Function arguments arrive as a JSON string. Weaker models occasionally emit a raw
-        control character inside a string, which strict JSON rejects, so fall back to
-        strict=False rather than burning the whole request."""
+    def _escape_unescaped_quotes(raw: str, close_at_end: bool = False) -> str:
+        """Escape quotes that weaker models emit inside a JSON string without a backslash.
+
+        The scanner tracks whether a string is an object key or a value. A key closes before
+        `:`; a value closes only before `,`, `}`, `]` or end of input. This keeps JSON fragments
+        such as `"quote": "categories": "Bars"` intact instead of ending the value at the first
+        inner quote. `close_at_end` additionally closes a value that is missing its final quote
+        when the object/array ends.
+        """
+        out: list[str] = []
+        stack: list[str] = []
+        expect_key = False
+        mode: str | None = None
+        i = 0
+        while i < len(raw):
+            ch = raw[i]
+            if mode is None:
+                out.append(ch)
+                if ch == '"':
+                    mode = "key" if stack and stack[-1] == "{" and expect_key else "value"
+                elif ch == "{":
+                    stack.append("{")
+                    expect_key = True
+                elif ch == "[":
+                    stack.append("[")
+                    expect_key = False
+                elif ch in "}]":
+                    if stack:
+                        stack.pop()
+                    expect_key = False
+                elif ch == ",":
+                    expect_key = bool(stack and stack[-1] == "{")
+                elif ch == ":" or not ch.isspace():
+                    expect_key = False
+                i += 1
+                continue
+            if ch == "\\":
+                out.append(ch)
+                if i + 1 < len(raw):
+                    out.append(raw[i + 1])
+                i += 2
+                continue
+            if ch == '"':
+                j = i + 1
+                while j < len(raw) and raw[j] in " \t\r\n":
+                    j += 1
+                nxt = raw[j] if j < len(raw) else ""
+                closing = (nxt == ":") if mode == "key" else (nxt in ",}]" or nxt == "")
+                if closing:
+                    out.append(ch)
+                    mode = None
+                else:
+                    out.append('\\"')
+                i += 1
+                continue
+            if close_at_end and mode == "value" and ch in "}]":
+                out.append('"')
+                if stack:
+                    stack.pop()
+                expect_key = False
+                mode = None
+                out.append(ch)
+                i += 1
+                continue
+            out.append(ch)
+            i += 1
+        return "".join(out)
+
+    @classmethod
+    def _parse_arguments(cls, raw: Any) -> dict[str, Any] | None:
+        """Function arguments arrive as a JSON string. Weaker models occasionally emit raw
+        control characters or unescaped quotes inside a string, which strict JSON rejects.
+        Try strict/relaxed parsing, then a deterministic quote escape and missing-comma repair
+        before spending another provider request."""
         if isinstance(raw, dict):
             return raw
         if not isinstance(raw, str):
             return None
-        try:
-            parsed = json.loads(raw)
-        except json.JSONDecodeError:
-            parsed = json.loads(raw, strict=False)  # lets control chars through
-        return parsed if isinstance(parsed, dict) else None
+        cleaned = re.sub(r',\s*([}\]])', r'\1', raw)
+        literal_comma = re.sub(r'(?<=[0-9])\s+(?=")', ', ', raw)
+        literal_comma = re.sub(r'\b(true|false|null)\s+(?=")', r'\1, ', literal_comma)
+        pre_comma = re.sub(r'(?<=[}\]])\s+(?=["{\[])', ', ', raw)
+        pre_comma = re.sub(r'(?<=")\s+(?=["{\[])', ', ', pre_comma)
+        texts = [raw, cleaned, literal_comma, pre_comma]
+        for base in (raw, pre_comma):
+            for close_at_end in (False, True):
+                repaired = cls._escape_unescaped_quotes(base, close_at_end=close_at_end)
+                repaired = re.sub(r',\s*([}\]])', r'\1', repaired)
+                repaired = re.sub(r'(?<=[}\]])\s+(?=["{\[])', ', ', repaired)
+                repaired = re.sub(r'(?<=")\s+(?=["{\[])', ', ', repaired)
+                repaired = re.sub(r'(?<=[0-9])\s+(?=")', ', ', repaired)
+                repaired = re.sub(r'\b(true|false|null)\s+(?=")', r'\1, ', repaired)
+                texts.append(repaired)
+        for text in dict.fromkeys(texts):
+            for strict in (True, False):
+                try:
+                    parsed = json.loads(text, strict=strict)
+                    if isinstance(parsed, dict):
+                        return parsed
+                except json.JSONDecodeError:
+                    pass
+        json.loads(raw, strict=False)  # surface the original parse error to the retry loop
+        return None
 
     @classmethod
     def _extract_tool_call(cls, body: dict[str, Any], tool_name: str) -> dict[str, Any] | None:

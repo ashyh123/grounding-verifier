@@ -22,6 +22,9 @@ from .complete import OUT
 from .merge import assemble
 
 DOCUMENTATION_UPDATES = {'docs/DATASET.md', 'docs/EVALUATION.md', 'annotation/README.md'}
+# v2.5 explicitly authorized the optimized verifier's JSON repair after the v2.4 freeze.
+AUTHORIZED_CODE_UPDATES = {'verifier/openai_client.py'}
+AUTHORIZED_UPDATES = DOCUMENTATION_UPDATES | AUTHORIZED_CODE_UPDATES
 
 
 def create(root: Path, dataset: Path) -> dict:
@@ -33,13 +36,14 @@ def create(root: Path, dataset: Path) -> dict:
     old_path = S.ANNOTATION_DIR/'freeze.json'
     old = json.loads(old_path.read_text())
     for name, sha in old['files'].items():
-        # Only these explicitly requested documentation additions supersede old text.
-        if name not in DOCUMENTATION_UPDATES and digest(resolve(name)) != sha:
+        # Only the explicitly authorized documentation additions and verifier repair supersede
+        # the historical text; the c78d411 bytes are still verified for each name.
+        if name not in AUTHORIZED_UPDATES and digest(resolve(name)) != sha:
             raise ValueError(f'v2.3 frozen data/code changed: {name}')
-        if name in DOCUMENTATION_UPDATES:
+        if name in AUTHORIZED_UPDATES:
             blob = subprocess.check_output(['git','show',f'c78d411:{name}'],cwd=S.ROOT)
             if hashlib.sha256(blob).hexdigest() != sha:
-                raise ValueError('historical documentation differs from its c78d411 freeze')
+                raise ValueError('historical file differs from its c78d411 freeze')
     manifest = json.loads((S.SOURCES_V2/'manifest.json').read_text())
     for name in ('source_info.jsonl','response.jsonl'):
         if digest(S.RAW/name) != manifest['files'][name]['sha256']:

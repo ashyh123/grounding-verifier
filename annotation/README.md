@@ -16,6 +16,11 @@ train），补齐全部主张的 `overlapping_source_labels`，并对既有疑�
 **未达到**（保留 7 条）；未追加案例、未放宽规则。v2.4 freeze 的 README 校验已按用户授权
 做最小适配；v2.4 历史提交 `cbccac9` 不变。
 
+v2.5 初次冻结后，用户授权修复 optimized 在 DeepSeek 上的 JSON 解析失败。修复位于
+`verifier/openai_client.py`；旧 freeze 存档为
+`data/annotation/v2.5/freeze.pre-optimized-fix.json`，新 freeze 重新记录修复后的代码哈希。
+数据集、标注和评分口径未变。
+
 v2.5 规格来自 Notion「v2.5 修改建议」，并继续沿用
 [zcode 执行指令 v2.3](https://app.notion.com/p/3fe7b21c6588813fa732c6a51e30e6f7) 与
 [zcode 执行指令 v2.4](https://app.notion.com/p/3fe7b21c658881c79ac2f508e5917120) 的规则。

@@ -195,6 +195,57 @@ def test_openai_control_characters_in_arguments_are_tolerated():
     assert call(_openai(handler)) == {"claims": ["line one\nline two"]}
 
 
+def test_openai_unescaped_quotes_inside_arguments_are_repaired():
+    """DeepSeek-v4-pro copied a quoted source sentence without escaping the inner quotes."""
+    args = ('{"quote": "I sincerely apologize," Patrick Cherry told WNBC\'s Jonathan Dienst", '
+            '"verdict": "SUPPORTED"}')
+
+    def handler(request: httpx.Request):
+        return httpx.Response(200, json={"choices": [{"message": {
+            "role": "assistant", "content": None,
+            "tool_calls": [{"id": "c1", "type": "function",
+                            "function": {"name": "report", "arguments": args}}]}}],
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1}})
+
+    assert call(_openai(handler)) == {
+        "quote": 'I sincerely apologize," Patrick Cherry told WNBC\'s Jonathan Dienst',
+        "verdict": "SUPPORTED"}
+
+
+def test_openai_json_fragment_inside_a_quoted_source_is_repaired():
+    """The model copied a source JSON fragment into a quote without escaping either quote."""
+    for args, expected in [
+        ('{"quote": "categories": "Restaurants, Food, Breweries"}',
+         {"quote": 'categories": "Restaurants, Food, Breweries'}),
+        ('{"quote": "RestaurantsTakeOut": true}',
+         {"quote": 'RestaurantsTakeOut": true'}),
+    ]:
+        def handler(request: httpx.Request, args=args):
+            return httpx.Response(200, json={"choices": [{"message": {
+                "role": "assistant", "content": None,
+                "tool_calls": [{"id": "c1", "type": "function",
+                                "function": {"name": "report", "arguments": args}}]}}],
+                "usage": {"prompt_tokens": 1, "completion_tokens": 1}})
+
+        assert call(_openai(handler)) == expected
+
+
+def test_openai_trailing_and_missing_commas_are_repaired():
+    for args, expected in [
+        ('{"a": 1,}', {"a": 1}),
+        ('{"a": {"b": 1} "c": 2}', {"a": {"b": 1}, "c": 2}),
+        ('{"a": "x" "b": "y"}', {"a": "x", "b": "y"}),
+    ]:
+        def handler(request: httpx.Request, args=args):
+            return httpx.Response(200, json={"choices": [{"message": {
+                "role": "assistant", "content": None,
+                "tool_calls": [{"id": "c1", "type": "function",
+                                "function": {"name": "report", "arguments": args}}]}}],
+                "usage": {"prompt_tokens": 1, "completion_tokens": 1}})
+
+        assert call(_openai(handler)) == expected
+
+
 def test_openai_4xx_is_not_retried():
     calls = {"n": 0}
 
