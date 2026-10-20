@@ -154,6 +154,13 @@ def test_sentence_vector_precision_recall_and_failures():
     assert [r['threshold'] for r in sweep] == [0, 100] and sweep[0]['localization_rate'] == 1.0
 
 
+def test_span_alignment_recovers_the_containing_sentence():
+    c = case(bad=(1,))
+    out = v26.span_alignment([c])
+    assert out['n'] == 1 and out['top1_in_containing'] == 1
+    assert out['rows'][0]['containing_sentences'] == [1] and out['rows'][0]['score'] == 100.0
+
+
 # ---- citation validity
 def test_citation_validity_classes():
     c = case()
@@ -167,6 +174,19 @@ def test_citation_validity_classes():
     block = v26.citation_block([c], {'c': p})
     assert block['valid'] == 1 and block['wrong_passage_index'] == 2 and block['not_exact_substring'] == 2
     assert v26.citation_block([c], {})['valid_rate']['value'] is None
+
+
+def test_raw_citation_validity_is_read_before_repair():
+    c = case()
+    p = pred(meta={'raw_citations_total': 10, 'raw_citations_invalid': 2, 'downgraded_claims': 1})
+    block = v26.raw_citation_block([c], {'c': p})
+    assert block['citations'] == 10 and block['not_exact_as_given'] == 2
+    assert block['as_given_valid_rate']['value'] == pytest.approx(0.8)
+    assert block['downgraded_claims'] == 1 and block['cases_with_downgrades'] == 1
+    empty = v26.raw_citation_block([c], {})
+    assert empty['as_given_valid_rate']['value'] is None and empty['downgraded_claims'] == 0
+    report = v26.method_report([c], {'c': p}, 60, 'token_set_ratio', 0, 0)
+    assert report['raw_citations']['as_given_valid_rate']['value'] == pytest.approx(0.8)
 
 
 # ---- groups, cost
@@ -254,3 +274,18 @@ def test_committed_baseline_dev_result_matches_its_predictions():
     f1 = summary['methods']['baseline'][0]['answer_level']['main']['metrics']['f1']['value']
     point = v26.answer_scores(v26.answer_matrix(cases, rows).sum(axis=0))[2]
     assert f1 == pytest.approx(point)
+
+
+def test_committed_dev_run1_matches_its_predictions():
+    d = ROOT / 'results' / 'v2.6-dev' / 'run1'
+    cases = v26.load_cases(DATA, 'dev')
+    summary = json.loads((d / 'summary.json').read_text(encoding='utf-8'))
+    assert summary['n_cases'] == 30 and set(summary['methods']) == {'baseline', 'minimal', 'optimized'}
+    for method in summary['methods']:
+        rows = {json.loads(l)['id']: json.loads(l)
+                for l in (d / f'{method}_run0.jsonl').read_text(encoding='utf-8').splitlines()}
+        assert set(rows) == {c.id for c in cases}
+        f1 = summary['methods'][method][0]['answer_level']['main']['metrics']['f1']['value']
+        point = v26.answer_scores(v26.answer_matrix(cases, rows).sum(axis=0))[2]
+        assert f1 == pytest.approx(point)
+        assert summary['methods'][method][0]['failures'] == 0

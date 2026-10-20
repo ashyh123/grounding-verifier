@@ -302,6 +302,33 @@ def best_score_quantiles(cases, predictions, scorer='token_set_ratio') -> dict:
     return {'n': len(scores), **{k: float(v) for k, v in zip(('min', 'p10', 'p25', 'p50', 'p75', 'p90', 'max'), q)}}
 
 
+def span_alignment(cases, scorer='token_set_ratio') -> dict:
+    """Can the matcher recover the sentence that contains each upstream hallucination span?
+
+    This is the dev-only calibration check for the sentence threshold; it uses only the upstream
+    annotation, not any verifier prediction.
+    """
+    score = SCORERS[scorer]
+    rows = []
+    for c in cases:
+        for lab in c.labels:
+            containing = [s['index'] for s in c.gold_sentences
+                          if s['start'] < lab['end'] and lab['start'] < s['end']]
+            scores = [score(lab['text'].strip().lower(), s['text'].strip().lower())
+                      for s in c.gold_sentences]
+            best = int(np.argmax(scores)) if scores else None
+            rows.append({'id': c.id, 'label_type': lab.get('label_type'),
+                         'best_sentence': best, 'containing_sentences': containing,
+                         'score': float(scores[best]) if best is not None else None,
+                         'top1_in_containing': best in containing if best is not None else False})
+    values = [r['score'] for r in rows if r['score'] is not None]
+    q = np.percentile(values, [0, 10, 25, 50, 75, 90, 100]) if values else [np.nan] * 7
+    return {'n': len(rows), 'top1_in_containing': int(sum(r['top1_in_containing'] for r in rows)),
+            'score_quantiles': {k: _num(v) for k, v in
+                                zip(('min', 'p10', 'p25', 'p50', 'p75', 'p90', 'max'), q)},
+            'scorer': scorer, 'rows': rows}
+
+
 # ------------------------------------------------------------------------------------ citations
 def citation_counts(case: Case, prediction: dict | None) -> np.ndarray:
     """valid, wrong passage index (quote exists in another passage), not found / malformed, total."""
@@ -343,6 +370,40 @@ def citation_block(cases, predictions) -> dict:
             'definition': 'valid = quote is an exact substring of the cited passage and start/end '
                           'offsets reproduce it; wrong_passage_index = the quote exists only in '
                           'another passage'}
+
+
+def raw_citation_counts(case: Case, prediction: dict | None) -> np.ndarray:
+    """Before validation: total, not exact as given (repaired or dropped), downgraded claims."""
+    if is_failure(prediction):
+        return np.zeros(3, dtype=np.int64)
+    meta = prediction.get('meta') or {}
+    return np.array([meta.get('raw_citations_total', 0), meta.get('raw_citations_invalid', 0),
+                     meta.get('downgraded_claims', 0)], dtype=np.int64)
+
+
+def raw_citation_block(cases, predictions) -> dict:
+    """The model's citations as given, before `validate.py` repairs or drops them.
+
+    `citation_block` can only see surviving output and is therefore 1.0 by construction; this block
+    is the one that measures the citation ability the verifier was asked to demonstrate.
+    """
+    matrix = np.stack([raw_citation_counts(c, predictions.get(c.id)) for c in cases]) if cases \
+        else np.zeros((0, 3), dtype=np.int64)
+    total = matrix.sum(axis=0) if len(matrix) else np.zeros(3, dtype=np.int64)
+    if len(matrix) and total[0]:
+        point = 1.0 - float(total[1] / total[0])
+        draws = _draws(len(matrix), BOOTSTRAP_REPLICATES, BOOTSTRAP_SEED)
+        sums = matrix[draws].sum(axis=1)
+        ci = interval(point, 1.0 - _div(sums[:, 1], sums[:, 0]))
+    else:
+        ci = {'value': None, 'ci95': [None, None]}
+    return {'citations': int(total[0]), 'not_exact_as_given': int(total[1]),
+            'as_given_valid_rate': ci, 'downgraded_claims': int(total[2]),
+            'cases_with_downgrades': int(sum(row[2] > 0 for row in matrix)) if len(matrix) else 0,
+            'definition': 'as-given valid = the raw citation was an exact passage quote with the '
+                          'right index; repaired (normalized/fuzzy/relocated) and dropped citations '
+                          'count as invalid. downgraded_claims = claims forced to UNSUPPORTED for '
+                          'lack of a valid citation'}
 
 
 # ------------------------------------------------------------------------------------ groups
@@ -410,6 +471,7 @@ def method_report(cases, predictions, threshold, scorer, price_in, price_out) ->
         'sentence_level': {'main': sentence_block(cases, predictions, threshold, scorer),
                            'excluding_failures': sentence_block(ok, predictions, threshold, scorer)},
         'citations': citation_block(cases, predictions),
+        'raw_citations': raw_citation_block(cases, predictions),
         'groups': group_blocks(cases, predictions),
         'cost_latency': cost_block(cases, predictions, price_in, price_out)}
 
@@ -458,7 +520,8 @@ def summary_markdown(report: dict) -> str:
              f"- prediction rule: {report['prediction_rule']}\n- failures: {report['failure_handling']}\n"
              f"- wording: {report['conclusion_wording_rule']}\n\n",
              '| method | failures | precision | recall | F1 [95% CI] | balanced acc | sentence F1 | '
-             'localized | valid citations | cost/case |\n|---|---:|---:|---:|---|---:|---:|---:|---:|---:|\n']
+             'localized | valid citations | raw citations | cost/case |\n'
+             '|---|---:|---:|---:|---|---:|---:|---:|---:|---:|---:|\n']
     f = lambda m: 'n/a' if m['value'] is None else f"{m['value']:.3f}"
     for name, m in report['methods'].items():
         a = (m['answer_level']['main']['metrics'] or {})
@@ -467,9 +530,11 @@ def summary_markdown(report: dict) -> str:
         lo, hi = a['f1']['ci95'] if a else (None, None)
         ci = f"{f(a['f1'])} [{lo:.3f}, {hi:.3f}]" if a and lo is not None else 'n/a'
         loc = 'n/a' if s['localization_rate'] is None else f"{s['localization_rate']:.2f}"
+        raw = m.get('raw_citations', {}).get('as_given_valid_rate', {'value': None})
         lines.append(f"| {name} | {m['failures']} | {f(a['precision'])} | {f(a['recall'])} | {ci} | "
                      f"{f(a['balanced_accuracy'])} | {f(sf1)} | {loc} | "
-                     f"{f(m['citations']['valid_rate'])} | ${m['cost_latency']['cost_usd_per_case']:.4f} |\n")
+                     f"{f(m['citations']['valid_rate'])} | {f(raw)} | "
+                     f"${m['cost_latency']['cost_usd_per_case']:.4f} |\n")
     for variant, blocks in report['paired_f1_difference'].items():
         for b in blocks:
             lines.append(f"\n- [{variant}] F1: {b['statement']['f1']}")
@@ -488,6 +553,8 @@ def main() -> None:
     ap.add_argument('--scorer', choices=sorted(SCORERS), default='token_set_ratio')
     ap.add_argument('--sweep', type=float, nargs='*', default=None,
                     help='also write a threshold sweep for these thresholds')
+    ap.add_argument('--span-check', action='store_true',
+                    help='also check upstream-span to containing-sentence alignment (dev calibration)')
     ap.add_argument('--price-in', type=float, default=None)
     ap.add_argument('--price-out', type=float, default=None)
     ap.add_argument('--out', type=Path, required=True, help='output directory (new)')
@@ -518,6 +585,8 @@ def main() -> None:
                                      for m, p in predictions.items()}
         report['best_score_quantiles'] = {m: best_score_quantiles(cases, p, args.scorer)
                                           for m, p in predictions.items()}
+    if args.span_check:
+        report['span_alignment'] = span_alignment(cases, args.scorer)
     args.out.mkdir(parents=True, exist_ok=True)
     with report_path.open('x', encoding='utf-8') as stream:
         json.dump(report, stream, ensure_ascii=False, indent=2)
