@@ -1174,7 +1174,7 @@
   "hard_test_verifier_run": false,
   "files": {
     "Makefile": "1627d680e2727122407d78388df723157470bc601c1e031ba6711d3ca20ebb6a",
-    "README.md": "d28229847839ae3ca1187f4638778212faf6d10c04ee67b279d1718360dce478",
+    "README.md": "f85b1b4df7b180c839c4e8eb8e4cb41229c4c1331e7058f669db7f5c17d1591c",
     "annotation/README.md": "a6b34fa87ff4b52e9f91060f93e8f623b8b53841b077d86e6a7566f43e28d02f",
     "annotation/__init__.py": "1f7c08a4d32d45bda6fb122a0ebc9b2a09c71703fdf2a645849f2f32aead1b5e",
     "annotation/adjudication.py": "755c522b84d6ab4ed2da6072d5c1699d3e3a0d8e22224487b332bb5715a9362f",
@@ -1241,8 +1241,8 @@
     "data/eval_hard.v2.4.jsonl": "90813831d2dd6b7c162a1090ba41ea7260c654ff2dd54fb6a62bf3cf05fc38d6",
     "data/eval_hard.v2.5.jsonl": "e80a0eceda7b42c04207ca0eea3298adcc16d035255e6700bdb757f8cd976da2",
     "data/sources/v2/manifest.json": "62078635a6b10d9b167644500c6bf9b5e786f1fd721aef594d6ba12463a58072",
-    "docs/DATASET.md": "3a5a3e7005748f152002d523131b148b56b61e0a1321206aa1851e04a7bcc67f",
-    "docs/EVALUATION.md": "afa8b472aea7b59b6e426771774b146394228f946d48758648f3ba60f1e9dac5",
+    "docs/DATASET.md": "cc64441db0e7445d0027c70d83bc300e37ff8784b48600df6dca0e290f353366",
+    "docs/EVALUATION.md": "86e5a74bd44e54a7c110ad9fc4a72ca7ae4339fb4b6b24ddade4378bcd4035b7",
     "eval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "eval/dataset.py": "7614f26e8d151dd15eb9de5d6194dbb5e30132a6f5bf655c6dcaa1bd0dab9eec",
     "eval/metrics.py": "42a4fb8569f7d9b9b7253782d461488206b14f50213fd45e187316a2ae489d3f",
@@ -1288,5 +1288,16 @@
     "verifier/segment.py": "891d9aa08067fad5427b613c5dc1f69a7cbdf12cb08a6ba295880289e70f0a10",
     "verifier/validate.py": "76f470ffaaf21e6e55f19054a2ca7bcdb4ead773e4579fbf8c39bb182dfc70b8"
   },
-  "note": "No evaluated verifier ran on the hard test. All labels are RAGTruth human spans; exact evidence presence does not prove semantic sufficiency. Hard-test measurement requires separate user instructions."
+  "note": "At freeze time no evaluated verifier had run on the hard test. The v2.5 test was measured afterwards and retained as exploratory; v2.6 is the current headline. All labels are RAGTruth human spans; exact evidence presence does not prove semantic sufficiency. See data/annotation/v2.6/freeze.json.",
+  "documentation_updates": {
+    "authorized": true,
+    "reason": "v2.6 requires updating the current headline and the dataset/evaluation documents; only documentation changed, not the verifier, prompt, data or metrics",
+    "files": [
+      "README.md",
+      "docs/DATASET.md",
+      "docs/EVALUATION.md"
+    ],
+    "v2.6_freeze": "data/annotation/v2.6/freeze.json",
+    "recorded_at": "2026-10-20T09:23:48.187469+00:00"
+  }
 }

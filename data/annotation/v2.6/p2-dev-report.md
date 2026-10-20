@@ -31,7 +31,8 @@ test 尚未运行。
 | minimal − baseline | +0.276 [+0.154, +0.426] | minimal 优于 baseline |
 | optimized − baseline | +0.056 [+0.000, +0.127] | 没有证据表明存在差异 |
 
-这个方向与 v2.5 test 相反（v2.5 是 minimal 0.455、optimized 0.434，区间跨 0）。可能的原因：
+这个方向与 v2.5 的点估计一致（v2.5 也是 minimal 0.455 略高于 optimized 0.434，但区间跨 0）；
+dev 的区间不含 0 仍不能当作 test 结论。可能的原因：
 v2.5 的 test 为凑矛盾样本而偏向正例，自然分布下干净回答更多，optimized 更严格的核验更容易把
 「原文没有明说」的合理概括判成 U/C。这是 test 要检验的假设，不能用 dev 下结论。
 

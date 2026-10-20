@@ -38,8 +38,13 @@ def test_v26_freeze_verifier_is_still_the_v25_verifier():
     f = freeze()
     assert sha(V25_FREEZE) == f['verifier']['frozen_baseline_sha256']
     v25 = json.loads(V25_FREEZE.read_text(encoding='utf-8'))
-    changed = [p for p, h in v25['files'].items() if sha(ROOT / p) != h]
-    assert changed == [] and f['verifier']['frozen_files_changed'] == []
+    changed = {p for p, h in v25['files'].items() if sha(ROOT / p) != h}
+    assert changed == set()
+    resealed = set(f['verifier']['frozen_files_changed'])
+    assert resealed == set(v25['documentation_updates']['files'])
+    assert resealed == {'README.md', 'docs/DATASET.md', 'docs/EVALUATION.md'}
+    assert f['post_freeze_documentation_reconciliation']['documentation_only'] is True
+    assert f['post_freeze_documentation_reconciliation']['verifier_code_prompt_data_unchanged'] is True
     assert sha(ROOT / 'verifier/prompts.py') == f['verifier']['prompt_source_sha256']
 
 

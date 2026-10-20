@@ -418,9 +418,9 @@ Decisions recorded from the final run:
   is equal on the single call and 6.8 pt worse on the pipeline; both numbers are recorded, and the
   pinned configuration is the one the final numbers were produced with.
 
-## v2.5 RAGTruth 主张级测量
+## v2.5 RAGTruth 主张级测量（探索性分析）
 
-**状态：已测量；主张级金标有噪声，结论待 v2.6。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
+**状态：已测量；v2.6 已完成回答级复测，本节保留为探索性分析。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
 （45 例，537 条主张：S 483、C 27、U 27）的测量结果。数据、金标、评分代码和被测方案在测量前后均未改动；
 下面的事后分析只读取已保存的预测，没有调用任何模型。
 
@@ -468,8 +468,74 @@ minimal 和 optimized 各 3 轮，无调用失败。
 2. **检出 F1 不惩罚漏掉的 S 金标。** 以 r1 为例，minimal 有 109 条 S 金标没有被对齐上，optimized 只有 53 条。
    拆得少的方案产生的预测主张少，误报机会也少，指标不会为此扣分。
 3. **由此，「minimal 不比 optimized 差」和「误报很高」都不能作为结论。** 配对差值的区间包含 0，主张覆盖率相差很大，
-   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。结论待 v2.6（回答级主评测，金标直接取上游标注）。
-   v2.5 的结果原样保留，降为探索性分析。
+   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。v2.6 已完成回答级复测：minimal 0.720、
+   optimized 0.609，配对差值区间不含 0。v2.5 的结果原样保留，只作为方法论发现，不再作为方案排名。
+
+## v2.6 回答级测量（当前）
+
+**状态：已完成；test 只跑一次，未重跑。** 这一轮不改被测系统，改的是数据和测量单位：用 RAGTruth
+上游人工标注做回答级金标，全程没有模型参与定标。
+
+### 为什么换协议
+
+v2.5 的 test 结果暴露了三个问题，任何一个都足以让「minimal 与 optimized 谁更好」无法回答：
+
+1. **主张级金标有噪声。** RAGTruth 只标回答里的幻觉片段；v2.3–v2.5 让模型拆主张、再按重叠映射标签，
+   引入了上游漏标和映射错误。`ragtruth-7952` 同时展示了这两类错误（详见 REPORT.md 的 v2.5 节）。
+2. **检出 F1 不惩罚漏掉的 S。** minimal 漏掉 109 条 S 金标，optimized 漏掉 53 条；拆得少的方案
+   误报机会少，指标反而占便宜。
+3. **45 例 test 是为凑矛盾样本选的。** 40/45 回答带幻觉，「全部判为有幻觉」的 baseline 在回答级
+   就能拿到 F1 0.94；这个集合不能区分方案，而且已经看过结果。
+
+按设计文档第 8 节，协议改变必须保留原结果、另起版本，并换新的未见样本。v2.6 因此重新抽样，不碰
+v2.5 的任何数据、预测或冻结文件。
+
+### 抽样与冻结
+
+- 来源：RAGTruth 上游 test、quality=good，全部 6 个生成模型；自然分布，不设最小长度、不设 GPT 比例。
+- 每个 source 只取一条回答；排除 v2.x 全部 63 例及其近重复组、旧合成集近重复、legacy ID。
+- 种子 20261022；抽样规则先提交（d47e246），抽样不读标签。dev 30 / test 180，每任务 10 / 60；
+  test 有 62 个正例。与 v2.5 的 id 和 source 重叠均为 0。
+- 金标：回答级 = 上游是否至少有一个片段；句子级 = 确定性分句器 + 重叠。没有模型、没有人工复核。
+- 冻结：`data/annotation/v2.6/freeze.json`（commit 7d31650）；数据、抽样规则、指标代码、阈值 60、
+  被测代码/prompt 哈希和停止条件均已固定。对照 v2.5 freeze 的 114 个文件哈希全部未变。
+
+### 阶段记录
+
+- **P0（v2.5 收尾）**：事后分析与文档记录完成；两个未预先登记的项明确标注为
+  `"preregistered": false`。
+- **P1（抽样）**：生成 `data/eval_ragtruth_resp.v2.6.jsonl`；单测覆盖分句确定性、句子铺满全文、
+  金标可由上游片段重算、与已用案例不重叠。
+- **P2（dev）**：三方案各 1 轮，0 失败、0 重试、无截断；minimal F1 0.750、optimized 0.529、
+  baseline 0.474。阈值 60 由 dev 的 14 个上游片段校准（14/14 top-1，最低分 66.7）。
+  补了「原始引文合法率」：`validate.py` 会修复/丢弃引文，最终输出的合法率恒为 1.000，
+  必须从 `meta` 读 as-given 合法率才有信息量。test 费用按 dev 实际用量估算约 $8.9（含余量）。
+- **P3（冻结）**：写入 freeze 并 push；test 未运行。
+- **P4（test）**：按冻结计划跑一次。baseline 0 失败、minimal 0 失败、optimized 1 失败
+  （`ragtruth-5828` 的 JSON 无法解析，0.56%，非截断）；总费用 $7.08，低于 $12 上限。
+- **P5（报告）**：README 与 REPORT/DATASET/EVALUATION/ITERATIONS 切换到 v2.6，v2.5 与合成集降为
+  次要。v2.5 freeze 中 README、DATASET、EVALUATION 三份文档的哈希按 v2.6 要求重新签封；
+  代码、prompt、数据和指标哈希未变，v2.6 freeze 记录了这次「仅文档」变更。
+
+### test 结果（180 条回答 / 62 正例）
+
+| 方案 | 精度 | 召回 | F1 [95% CI] | 平衡准确率 | 句子 F1 | 原始引文合法率 | 每例费用 |
+|---|---:|---:|---|---:|---:|---:|---:|
+| baseline | 0.352 | 1.000 | 0.521 [0.442, 0.594] | 0.517 | 0.164 | 1.000 | $0.0000 |
+| minimal | 0.578 | 0.952 | **0.720** [0.638, 0.791] | **0.794** | **0.498** | 0.953 | $0.0052 |
+| optimized v3 | 0.444 | 0.968 | 0.609 [0.524, 0.685] | 0.666 | 0.338 | 0.962 | $0.0342 |
+
+配对 F1：minimal − optimized +0.110 [+0.060, +0.163]；minimal − baseline +0.199 [+0.144, +0.256]；
+optimized − baseline +0.088 [+0.051, +0.126]。三个区间都不含 0。
+
+### 决定
+
+- **minimal 是当前自然分布下的最优方案；optimized 的 6.6 倍费用没有换来更好的回答级 F1。**
+  optimized 多 1.6 个百分点的召回，但多 32 个误报，精度低 13.4 个百分点。
+- **不因这一结果改 prompt 或被测代码。** 这是测量结论，不是调参授权；下一轮若要改，应针对
+  optimized 在干净回答上的误报，而不是继续加核验。
+- **v2.5 保留为探索性分析。** 它记录的是「主张级金标怎么坏」和「指标漏洞」的方法论发现，
+  不再作为方案排名。
 
 ## Runbook
 
@@ -477,7 +543,14 @@ minimal 和 optimized 各 3 轮，无调用失败。
 # 0. harness sanity, no API key needed
 uv run pytest -q
 
-# 1. dev hill-climb (baseline is deterministic; the rest run 3x)
+# v2.6 current protocol (test was run once; do not rerun without a new sample)
+uv run python -m eval.run_v26 --methods baseline minimal optimized --split test \
+  --runs 1 --concurrency 4 --prompt-version v3 --out results/v2.6-test
+uv run python -m eval.v26 --split test --predictions results/v2.6-test \
+  --methods baseline minimal optimized --out results/v2.6-test/report
+uv run python -m eval.run_v26 --rescore results/v2.6-test
+
+# Historical synthetic hill-climb (baseline is deterministic; the rest run 3x)
 uv run python -m eval.run --methods baseline --split dev --out results/dev-baseline
 uv run python -m eval.run --methods minimal --split dev --runs 3 --out results/dev-minimal-x3
 uv run python -m eval.run --methods optimized --split dev --runs 3 --prompt-version v1 --out results/dev-v1-x3

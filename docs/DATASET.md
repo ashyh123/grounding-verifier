@@ -1,15 +1,65 @@
 # Evaluation dataset
 
-## Current measurement target: RAGTruth v2.5
+## Current measurement target: RAGTruth v2.6 (response-level)
 
-This round uses **`data/eval_hard.v2.5.jsonl`**. It keeps the frozen v2.4 cases and adds 13
+The current target is **`data/eval_ragtruth_resp.v2.6.jsonl`**: 210 RAGTruth responses, 30 dev / 180
+test, 10 dev and 60 test per task (Data2txt / QA / Summary). The test split has 62 positive
+responses (at least one upstream hallucination span); dev has 9. The answer-level unit is the
+response, not an atomic claim.
+
+**Sampling.** The pool is the upstream RAGTruth `test` split with `quality=good`, all six upstream
+generators, and the natural label distribution. There is no minimum length and no GPT-share target —
+those were v2.2–v2.5 devices for making an adversarial claim-level set and would distort this one.
+One response is drawn per `source_id`; dev and test never share a near-duplicate group. The sample
+excludes all 63 v2.x cases and their 5-gram Jaccard ≥ 0.8 groups, near-duplicates of the old
+`data/eval.jsonl`, and legacy project IDs. The technical caps are the maximum observed in v2.5
+(context ≤ 1626 words, answer ≤ 304 words); 6 answers were excluded over the answer cap and 0
+contexts over the context cap. Sampling used seed `20261022` and did not read labels; the rules were
+committed before the draw. Counts and the full exclusion log:
+[selection-stats.md](../data/annotation/v2.6/selection-stats.md).
+
+**Gold.** `gold_response` is true iff the upstream response has at least one human-marked
+hallucination span. `gold_sentences` is produced by the deterministic splitter in
+`annotation/v26/sentences.py`; a sentence is hallucinated iff it overlaps an upstream span. No model
+participates in gold construction — no decomposition, no evidence location, no label mapping.
+`source_labels` keeps the upstream spans and their Evident/Subtle and Conflict/Baseless types for
+grouping. Context passages may only lose `passage N:` markers or leading/trailing whitespace, and
+every such change is recorded in `passage_map`; the answer is never edited.
+
+**Known limitation.** Upstream annotation can miss hallucinations. An answer with no upstream span
+is called **“upstream-unannotated”**, not “clean”; no human review was added. This noise is shared
+with other RAGTruth users and can be compared externally, but it no longer stacks our own claim
+splitting and overlap mapping on top.
+
+Statistics (positives are responses with at least one upstream span):
+
+| Task | dev | test | test positives |
+|---|---:|---:|---:|
+| Data2txt | 10 | 60 | 40 |
+| QA | 10 | 60 | 8 |
+| Summary | 10 | 60 | 14 |
+| **Total** | **30** | **180** | **62** |
+
+The v2.6 freeze is [data/annotation/v2.6/freeze.json](../data/annotation/v2.6/freeze.json); verify
+it with `uv run pytest -q tests/test_v26_freeze.py`. The dev threshold calibration and cost estimate
+are in [p2-dev-report.md](../data/annotation/v2.6/p2-dev-report.md); the test measurement and its
+stop-condition check are in [p4-test-report.md](../data/annotation/v2.6/p4-test-report.md).
+
+## Exploratory: RAGTruth v2.5 claim-level
+
+v2.5 is retained as exploratory analysis, not as the current target. v2.6 uses new responses with no
+id or source overlap; the verifier code and prompt are unchanged.
+
+v2.5 used **`data/eval_hard.v2.5.jsonl`**. It keeps the frozen v2.4 cases and adds 13
 `subtle_supplement` cases (test 10 / dev 3) selected under
 `data/annotation/v2.5/sampling_rules.json` with seed 20261021. `data/eval_hard.jsonl` remains
 the historical v2.3 dataset at commit **c78d411**, and `data/eval_hard.v2.4.jsonl` remains the
 v2.4 dataset at **cbccac9**; neither is overwritten or redirected on disk.
 
-The v2.5 changes are based only on label distribution and annotation-pipeline diagnostics.
-**No evaluated verifier has been run on the hard test during this workflow.** The selection
+The v2.5 changes were based only on label distribution and annotation-pipeline diagnostics.
+When the sample was selected, **no evaluated verifier had been run on the hard test**; the v2.5 test
+was measured later, and its results are exploratory (see [REPORT.md](REPORT.md)), not the
+current headline. The selection
 pool is RAGTruth upstream `train` (quality=good, at least one Subtle Conflict) plus the
 remaining qualified upstream-`test` candidates. Selected cases record `upstream_split`; all 13
 selected here came from upstream `train`. The sample excludes legacy project IDs/source groups,
@@ -44,7 +94,8 @@ verify it with `uv run python -m annotation.v25.freeze --check`. Offline replay 
 `uv run python -m annotation.v25.merge --check`. The v2.4 freeze remains valid at `cbccac9`;
 v2.5 explicitly authorizes the `annotation/README.md` status update and the minimal v2.4 freeze
 validation adaptation. Preregistered metrics and the saved-run scoring command are in
-[EVALUATION.md](EVALUATION.md). Hard-test measurement awaits separate instructions.
+[EVALUATION.md](EVALUATION.md). The v2.5 test was measured after the freeze; its results are
+exploratory and are not the current headline.
 
 ## Historical target: RAGTruth v2.4
 
@@ -92,7 +143,31 @@ scoring command are in [EVALUATION.md](EVALUATION.md).
 Every line is validated on load; an invalid dataset refuses to run (`python -m eval.dataset data/eval.jsonl`).
 How these cases are turned into numbers: [EVALUATION.md](EVALUATION.md#metrics).
 
-## What a case is
+## v2.6 response fields
+
+| Field | Meaning |
+|---|---|
+| `id` | Stable response id (`ragtruth-…`) |
+| `split` | `dev` or `test`; v2.6 dev and test share no near-duplicate group |
+| `task` | `Data2txt`, `QA` or `Summary` |
+| `generator_model` | One of the six upstream RAGTruth generators |
+| `context_passages` | Upstream passages after the allowed marker/whitespace transforms |
+| `passage_map` | Records any passage transform; the answer itself is never edited |
+| `generated_answer` | The upstream model answer, verbatim |
+| `source_labels` | Upstream spans (`start`, `end`, `text`, `label_type`, `meta`) |
+| `gold_response` | True iff `source_labels.labels` is non-empty |
+| `gold_sentences` | Deterministic sentence tiles with `start`, `end`, `text`, `hallucinated` |
+| `provenance` | Upstream split/source/response identifiers and the task type |
+
+Machine-enforced invariants (`eval/v26.py::validate_rows`): unique ids; `split` in {dev, test};
+`gold_response` agrees with the upstream spans; every span's `answer[start:end]` equals its `text`;
+and `''.join(sentence texts)` tiles `generated_answer` exactly.
+
+## Historical synthetic case fields
+
+The sections from here through “Known limitations” describe the original 46-case synthetic set, not
+v2.6. v2.6 takes its labels directly from upstream spans and does not use these claim-labelling
+rules.
 
 | Field | Meaning |
 |---|---|

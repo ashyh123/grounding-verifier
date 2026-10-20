@@ -6,8 +6,136 @@ them. Every table below was regenerated from the raw artifacts in `results/` (on
 definitions in [EVALUATION.md](EVALUATION.md).
 
 Configuration for all numbers: provider `DeepSeek`, model `deepseek-v4-pro` with
-`VERIFIER_EXTRA_BODY={"thinking":{"type":"disabled"}}`, prompt set `v3`, `temperature=0`. Every LLM row
-is the mean of 3 runs; the baseline is deterministic and ran once.
+`VERIFIER_EXTRA_BODY={"thinking":{"type":"disabled"}}`, prompt set `v3`, `temperature=0`. In the
+historical synthetic benchmark every LLM row is the mean of 3 runs; the baseline is deterministic and
+ran once. The v2.6 measurement is one run per method, as preregistered.
+
+## v2.6 response-level measurement (current headline)
+
+**Status: measured once on 180 unseen RAGTruth test responses (62 hallucinated); no rerun.** The
+gold is RAGTruth's upstream human span annotation; no model participated in labelling. The response
+is predicted hallucinated iff the verifier emits at least one `CONTRADICTED` or `UNSUPPORTED` claim.
+A failed case counts as wrong on the opposite side of its gold; the `excluding_failures` variant is
+reported alongside. Intervals resample complete responses (10000 draws, seed 20261022). The sentence
+alignment threshold is 60, fixed on dev before test. Freeze record:
+[freeze.json](../data/annotation/v2.6/freeze.json); raw runs:
+[results/v2.6-test](../results/v2.6-test); full metric report:
+[results/v2.6-test/report/v26_report.json](../results/v2.6-test/report/v26_report.json).
+
+| Method | Failures | Precision | Recall | F1 [95% CI] | Balanced acc. | Sentence F1 | Raw citation validity | Cost / response |
+|---|---:|---:|---:|---|---:|---:|---:|---:|
+| baseline | 0 | 0.352 | 1.000 | 0.521 [0.442, 0.594] | 0.517 | 0.164 | 1.000 | $0.0000 |
+| minimal | 0 | 0.578 | 0.952 | **0.720** [0.638, 0.791] | **0.794** | **0.498** | 0.953 | $0.0052 |
+| optimized v3 | 1 | 0.444 | 0.968 | 0.609 [0.524, 0.685] | 0.666 | 0.338 | 0.962 | $0.0342 |
+
+Paired bootstrap on the same responses (F1 difference, 95% CI):
+
+| Comparison | Main result | Excluding the failed case |
+|---|---|---|
+| optimized − minimal | −0.110 [−0.163, −0.060] | −0.104 [−0.156, −0.054] |
+| minimal − baseline | +0.199 [+0.144, +0.256] | +0.199 [+0.144, +0.256] |
+| optimized − baseline | +0.088 [+0.051, +0.126] | +0.095 [+0.061, +0.132] |
+
+All three intervals exclude 0. Under the registered wording rule: **minimal is better than
+optimized; both LLM methods are better than the baseline.** The v2.5 point estimate pointed the same
+way (minimal 0.455 vs optimized 0.434) but its interval crossed 0; v2.6 makes the difference
+measurable. It is the reverse of the pre-test expectation that optimized's extra verification would
+pay off, and it is the main result of this round.
+
+**What the extra cost buys.** optimized costs 6.6× minimal ($0.0342 vs $0.0052 per response) and
+raises recall by 1.6 points (0.968 vs 0.952), but it produces 75 false positives against minimal's
+43, costing 13.4 points of precision and 11.1 points of F1. On Data2txt the lexical baseline is
+nearly level with optimized (F1 0.800 vs 0.796); minimal wins on every task. The extra verification
+is not paying for itself on natural-distribution answers.
+
+**Why the benchmark changed.** The v2.5 claim-level gold was noisy in two ways: RAGTruth marks
+hallucination spans on the answer, not atomic claims, so the claim splitter and overlap mapping
+introduced upstream misses and mapping errors (the `ragtruth-7952` examples are in the v2.5 section
+below). The claim-level detection F1 also did not penalise missing `SUPPORTED` gold, so a method that
+emitted fewer claims had fewer chances to be wrong. Finally, the 45-case hard test had been enriched
+for contradictions (40/45 answers hallucinated), so an all-positive baseline reached F1 0.94 — the
+set could not separate methods. v2.6 instead draws new, never-used natural-distribution responses
+and takes the gold directly from the upstream annotation; no model labels anything. v2.5 is retained
+below as exploratory analysis, not as a ranking.
+
+### Secondary indicators
+
+**Sentence localisation.** Every `CONTRADICTED`/`UNSUPPORTED` claim is matched lexically
+(`rapidfuzz.token_set_ratio`, threshold 60) to the most similar answer sentence; claims below the
+threshold are counted as unlocalised and enter no sentence. The match is approximate. minimal has
+sentence-level P/R/F1 0.351 / 0.857 / **0.498**; optimized 0.209 / 0.879 / 0.338; baseline
+0.090 / 0.912 / 0.164. minimal localises 258 C/U claims at 0.985, optimized 511 at 0.987. The
+optimized pipeline emits more C/U claims, so it finds more bad sentences (recall 0.879 vs 0.857) but
+lands on many more clean sentences (precision 0.209 vs 0.351).
+
+**Citations.** The final-output citation validity is 1.000 for every method by construction:
+`validate.py` repairs, relocates or drops a citation before returning, and downgrades a claim with
+no valid citation to `UNSUPPORTED`. The informative number is the **as-given** validity, read from
+`meta.raw_citations_*`: minimal 0.953 (95 of 2023 raw citations invalid; 31 claims downgraded across
+16 responses), optimized 0.962 (100 of 2622 invalid; 0 downgrades), baseline 1.000. optimized has
+the cleaner citation discipline, but not enough to offset its false positives. Whether a citation
+is *sufficient* to prove a claim is not assessed.
+
+**Groups** (minimal / optimized F1; n<20 is for reference only):
+
+| Dimension | Group | n | Positives | minimal | optimized |
+|---|---|---:|---:|---:|---:|
+| Task | Data2txt | 60 | 40 | 0.857 | 0.796 |
+| Task | Summary | 60 | 14 | 0.585 | 0.491 |
+| Task | QA | 60 | 8 | 0.500 | 0.348 |
+| Generator | llama-2-13b-chat | 31 | 18 | 0.919 | 0.818 |
+| Generator | llama-2-70b-chat | 28 | 12 | 0.889 | 0.727 |
+| Generator | llama-2-7b-chat | 28 | 13 | 0.750 | 0.632 |
+| Generator | mistral-7B-instruct | 35 | 16 | 0.711 | 0.667 |
+| Generator | gpt-3.5-turbo-0613 | 32 | 2 | 0.286 | 0.211 |
+| Generator | gpt-4-0613 | 26 | 1 | 0.000 | 0.111 |
+| Context | 0–399 words | 132 | 43 | 0.726 | 0.609 |
+| Context | 400–799 words | 39 | 15 | 0.683 | 0.596 |
+| Context | 800+ words | 9 | 4 | 0.800 | 0.667 |
+
+QA and Summary are the hardest tasks; GPT-generated answers are the hardest generator group, but
+QA has 8 positives and GPT-4 has 1, so those rows are diagnostic only. On upstream label type
+(positives only), minimal recalls 0.980 of Evident cases and 0.846 of cases containing Subtle;
+optimized reaches 0.980 / 0.923, but the Subtle group has only 13 positives.
+
+### Failure analysis
+
+* **optimized over-flags clean answers.** `ragtruth-10458` (Data2txt, gpt-4) calls "Many customers
+  enjoy the store's atmosphere" UNSUPPORTED although one review says "I just love everything,
+  including the atmosphere"; `ragtruth-11191` treats a 4.0-star business rating as unsupported
+  because the wording says "according to customer reviews". These are reasonable summaries that a
+  strict verifier rejects. The pattern accounts for most of the 36 clean responses that optimized
+  flags and minimal does not.
+* **minimal misses real subtle conflicts.** `ragtruth-2374` (Summary, llama-2-13b) marks "friend of
+  44 years" and "remains unconscious in the hospital" SUPPORTED; upstream marks both `Subtle
+  Conflict` (the source says "more than 44 years", and the petition's "unconscious" is disputed by
+  the website's "alert"). `ragtruth-9840` marks "did not provide music" SUPPORTED from
+  `"Music": null`; upstream marks that negative assertion `Evident Baseless Info`. Null-valued
+  attributes are a systematic trap: null means unknown, not false.
+* **One provider failure.** `ragtruth-5828` (optimized) exhausted retries with `unparseable
+  response: Expecting ',' delimiter ...`; it is a gold-positive Data2txt case and counts as a
+  missed detection. Failure rate 1/180 = 0.56%, below the 5% stop line; the failure is a malformed
+  JSON response, not a max_tokens truncation or an overlong input. No rerun was made.
+
+### v2.6 threats to validity
+
+* The upstream annotation can miss hallucinations; no human review was added. An answer with no
+  upstream span is called **“upstream-unannotated”**, not “clean”.
+* 180 responses, 62 positives; QA has 8 positives and GPT-4 has 1, so task/generator groups are
+  diagnostic. Only `deepseek-v4-pro` and prompt v3 were measured.
+* RAGTruth has been public since 2024; training-data contamination cannot be ruled out.
+* Sentence alignment is lexical and approximate; citation sufficiency is not measured.
+* The protocol changed after the v2.5 test was seen. The verifier code and prompt did not change,
+  and v2.6 uses new responses with no id or source overlap with v2.5, but the change was not
+  preregistered before v2.5.
+* No human semantic spot check and no human-confirmed clean answers; this was a deliberate user
+  decision and is a limitation, not a claim of correctness.
+* Strict verifiers can be penalised when upstream annotators accepted a mild inference. This is
+  visible in the optimized false positives and is part of why the natural-distribution ranking
+  differs from the adversarial v2.5 set.
+
+The rest of this report documents the historical synthetic benchmark and the exploratory v2.5
+claim-level measurement.
 
 ## Development split (26 cases / 89 gold claims)
 
@@ -217,9 +345,9 @@ a claim the sources are simply silent about. One label was deliberately **kept**
 what that case tests. A whole-dataset read-back audit now agrees with 149/150 labels for the pipeline and
 147/150 for the single call.
 
-## v2.5 RAGTruth 主张级测量
+## v2.5 RAGTruth 主张级测量（探索性分析）
 
-**状态：已测量；主张级金标有噪声，结论待 v2.6。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
+**状态：已测量；v2.6 已完成回答级复测，本节保留为探索性分析。** 本节记录 `data/eval_hard.v2.5.jsonl` test 分区
 （45 例，537 条主张：S 483、C 27、U 27）的测量结果。数据、金标、评分代码和被测方案在测量前后均未改动；
 下面的事后分析只读取已保存的预测，没有调用任何模型。
 
@@ -267,10 +395,11 @@ minimal 和 optimized 各 3 轮，无调用失败。
 2. **检出 F1 不惩罚漏掉的 S 金标。** 以 r1 为例，minimal 有 109 条 S 金标没有被对齐上，optimized 只有 53 条。
    拆得少的方案产生的预测主张少，误报机会也少，指标不会为此扣分。
 3. **由此，「minimal 不比 optimized 差」和「误报很高」都不能作为结论。** 配对差值的区间包含 0，主张覆盖率相差很大，
-   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。结论待 v2.6（回答级主评测，金标直接取上游标注）。
-   v2.5 的结果原样保留，降为探索性分析。
+   金标又有噪声；其中金标噪声对判得更多的 optimized 更不利。v2.6 用自然分布回答和上游回答级金标复测后，
+   minimal 的回答级 F1 为 0.720，optimized 为 0.609，配对差值区间不包含 0（见本文顶部）。v2.5 的结果原样保留，
+   只作为方法论发现，不再作为方案排名。
 
-## Threats to validity
+## Threats to validity (historical synthetic benchmark)
 
 * **150 claims, one annotator, one model family.** Differences below ~5 points on one split are noise;
   that is why the report shows 3-run means ± std and why five prompt versions and two models were
@@ -290,6 +419,21 @@ minimal 和 optimized 各 3 轮，无调用失败。
   and test robustness rather than discrimination.
 
 ## Next steps
+
+**v2.6 follow-ups (current):**
+
+1. **Do not promote optimized as the default on this evidence.** It is 6.6× the cost and 11.1 F1
+   points behind minimal on natural-distribution answers. If the pipeline is kept, the next change
+   should target its false positives on clean answers, not add more verification.
+2. **Raise minimal's recall without losing precision.** The misses are concentrated in subtle
+   conflicts and null-valued attributes (`ragtruth-2374`, `ragtruth-9840`). A targeted rule for
+   “null means unknown, not false” is a falsifiable next experiment.
+3. **Repeat with a second provider and a second model** before treating the ranking as general; this
+   round used one model family and one prompt.
+4. **A small human spot check** of the 62 positive and 118 upstream-unannotated responses would
+   bound the annotation noise; it was deliberately out of scope here.
+
+**Historical synthetic follow-ups:**
 
 1. **v5 decomposition**, falsifiable target: keep the sentence-coverage mapping (which measurably worked:
    coverage 0.972 → 0.986, fusion 0.043 → 0.022) but state the exception explicitly ("a sentence with no

@@ -12,28 +12,49 @@ POST /verify ─► decompose ─► verify each claim ─► deterministic vali
                                invalid citation)      or the claim is downgraded)
 ```
 
-Three implementations are benchmarked on one 46-case / 150-claim dataset: a non-LLM lexical baseline,
-a minimal single-call LLM verifier, and an optimized multi-step pipeline.
+Three implementations are benchmarked on the current RAGTruth v2.6 response-level set (180 held-out
+answers from six generators) and, historically, on the original 46-case / 150-claim synthetic set.
 
-> **Documentation v2** (2026-10-17) — index, revision record and conventions in
-> [docs/README.md](docs/README.md).
+> **Documentation v2** (2026-10-17; updated 2026-10-20 for the v2.6 headline) — index, revision record
+> and conventions in [docs/README.md](docs/README.md).
 
-## Current headline: RAGTruth v2.5 (unmeasured)
+## Current headline: RAGTruth v2.6 response-level (measured)
 
-The current benchmark is `data/eval_hard.v2.5.jsonl`, with `all` as the headline and
-`natural` alongside it; `conflict_supplement` and `subtle_supplement` are reported separately.
-All-data and natural hallucination-detection P/R/F1 and macro-F1 are **not yet measured**.
-The scoring entry includes 95% case-bootstrap intervals (10000 draws, seed 20261020),
-per-label n, a preregistered sensitivity analysis that removes claims whose `doubt_category`
-is `suspected_wrong_label` or `c_vs_u_boundary`, and evident/subtle and generator-model groups.
-Dataset counts: all 案例=63、主张=782 (S701/C37/U44); natural 案例=30、主张=382
-(S341/C7/U34); conflict_supplement 20 例 / 256 主张; subtle_supplement 13 例 / 144 主张.
-Within held-out test: all 案例=45、主张=537 (S483/C27/U27), natural 案例=20、主张=256
-(S235/C4/U17). These are label counts, not verifier scores.
-See [dataset statistics](data/annotation/v2.5/final_report.md) and
-[preregistered scoring rules](docs/EVALUATION.md). No hard-test verifier ran in this revision.
-The v2.5 target of at least 8 test CONTRADICTED claims from Subtle Conflict fragments was
-**not met** (7 retained); no cases were added or rules relaxed.
+**On natural-distribution answers, the optimized pipeline is not worth its extra cost.** 180 unseen
+RAGTruth test responses (62 hallucinated), gold from RAGTruth's upstream human spans, no model in
+labelling, one run per method:
+
+| Method | Precision | Recall | F1 [95% CI] | Sentence F1 | Raw citation validity | Cost / response |
+|---|---:|---:|---|---:|---:|---:|
+| baseline | 0.352 | 1.000 | 0.521 [0.442, 0.594] | 0.164 | 1.000 | $0.0000 |
+| minimal | **0.578** | 0.952 | **0.720** [0.638, 0.791] | **0.498** | 0.953 | **$0.0052** |
+| optimized v3 | 0.444 | **0.968** | 0.609 [0.524, 0.685] | 0.338 | 0.962 | $0.0342 |
+
+Paired F1 differences (same responses, 95% CI): minimal − optimized +0.110 [+0.060, +0.163];
+minimal − baseline +0.199 [+0.144, +0.256]; optimized − baseline +0.088 [+0.051, +0.126]. All
+exclude 0, so minimal is better than optimized, and both LLM methods are better than the baseline.
+optimized is 6.6× the cost and buys +1.6 pp recall, but produces 75 false positives against
+minimal's 43; its sentence-level F1 is 0.338 vs 0.498. The full metric report is
+[v26_report.json](results/v2.6-test/report/v26_report.json); the freeze is
+[freeze.json](data/annotation/v2.6/freeze.json); the test write-up is
+[P4 report](data/annotation/v2.6/p4-test-report.md).
+
+**Why the benchmark changed.** v2.5's claim-level gold was noisy: RAGTruth marks hallucination spans
+on the answer, not atomic claims, and the claim splitter/overlap mapping introduced upstream misses
+and mapping errors. Its detection F1 also did not penalise missed SUPPORTED gold, and the 45-case hard
+test was enriched for contradictions (40/45 hallucinated), so an all-positive baseline reached F1
+0.94. v2.6 draws new, unseen natural-distribution responses and takes the gold directly from the
+upstream annotation. The v2.5 results are kept below as exploratory analysis.
+
+## Exploratory: RAGTruth v2.5 claim-level (superseded)
+
+The v2.5 claim-level measurement covered 45 held-out examples / 537 claims. Detection F1 was 0.204
+(baseline), 0.455 ± 0.010 (minimal) and 0.434 ± 0.005 (optimized); the paired minimal − optimized
+difference was +0.021 with a 95% interval of [−0.040, +0.078], so no ranking is supported. The
+claim-level gold has the two noise sources above and the metric does not penalise missed SUPPORTED
+claims; the numbers are retained as a methodological finding, not a result about the verifiers.
+Details: [docs/REPORT.md](docs/REPORT.md) and
+[posthoc.json](results/v2.5-test/posthoc/posthoc.json).
 
 ## Historical headline: RAGTruth v2.4 (unmeasured)
 
@@ -63,7 +84,18 @@ failure analysis and threats to validity: [docs/REPORT.md](docs/REPORT.md).
 
 ## How it got here: eval-driven iteration
 
-Every change was measured on the dev split (26 cases / 89 claims, 3 runs) before it was kept; the test split was run once, with v3 frozen. Full log: docs/ITERATIONS.md.
+The v2.6 result is a protocol change, not a prompt change: the verifier and prompt v3 are identical
+to v2.5, but the data and the unit of measurement are not. It is the round that made the cost/benefit
+question answerable.
+
+- **v2.6 — measured, current headline.** New natural-distribution RAGTruth responses, upstream human
+  spans as gold, response-level F1. minimal 0.720 > optimized 0.609; optimized costs 6.6× and is
+  11.1 F1 points behind, so the extra verification does not pay for itself. v2.5 is demoted to
+  exploratory analysis. Log: [ITERATIONS.md](docs/ITERATIONS.md).
+
+The prompt-version history below belongs to the historical synthetic benchmark: every change was
+measured on its dev split (26 cases / 89 claims, 3 runs) before it was kept; its test split was run
+once, with v3 frozen. Full log: docs/ITERATIONS.md.
 
 - **minimal** (control, never edited): one call does decomposition and verification. Dev claim accuracy 0.989, macro-F1 0.983.
 - **v1 — kept as the architecture.** Decompose, then verify each claim in its own call against numbered source sentences, with retry on invalid citations. Macro-F1 rose to 0.991 and answer-level F1 to 1.000, but claim accuracy dipped to 0.981: the decomposition step was rewording claims.
@@ -72,7 +104,25 @@ Every change was measured on the dev split (26 cases / 89 claims, 3 runs) before
 - **v4 — reverted.** A sentence-coverage pass halved fused claims (0.043 → 0.022), but it made the model invent a claim on the no-claims case `no-claims-17` (answer-level F1 1.000 → 0.980) and raised cost from $0.0080 to $0.0087 per case and p50 latency from 4657 to 5749 ms. Its motivating example came from the test split, which is disclosed in the log.
 - **A metric bug found on the way:** the fused-claim metric gave the sentence-splitting baseline, which cannot fuse, 0.113. It was rewritten to use distinctive content words (baseline now 0.000) before any decision relied on it.
 
-## Key failure cases (held-out test split)
+## Key failure cases (v2.6 held-out test)
+
+- **The baseline is an alarm that never sleeps.** It flags 176 of 180 responses (62 TP, 114 FP,
+  4 TN), so its recall is 1.000 and its precision 0.352. It cannot be used as a detector on this
+  distribution.
+- **optimized over-flags clean answers.** `ragtruth-10458` (Data2txt, gpt-4) calls "Many customers
+  enjoy the store's atmosphere" UNSUPPORTED although one review says "I just love everything,
+  including the atmosphere". `ragtruth-11191` rejects a 4.0-star business rating because the claim
+  says "according to customer reviews". There are 36 clean responses that optimized flags and
+  minimal does not; this is the main cost of its strictness.
+- **minimal misses real subtle conflicts.** `ragtruth-2374` (Summary, llama-2-13b) marks "friend of
+  44 years" and "remains unconscious in the hospital" SUPPORTED; upstream marks both Subtle
+  Conflict. `ragtruth-9840` marks "did not provide music" SUPPORTED from `"Music": null`; null means
+  unknown, not false, and upstream marks the negative assertion as baseless.
+- **One provider failure.** `ragtruth-5828` (optimized) exhausted retries on a malformed JSON
+  response; it is a gold-positive case and counts as a missed detection. Failure rate 0.56%, below
+  the 5% stop line, and not a truncation. No rerun was made.
+
+### Historical synthetic failures
 
 - **Baseline under-commits.** Lexical overlap cannot tell a paraphrase from a distortion, so distortions come back UNSUPPORTED instead of CONTRADICTED (CONTRADICTED F1 0.353).
 - **Minimal loses on the verdict boundary.** `prometheus-counter-17`: the source says a counter only goes up *except when the process restarts*; minimal still calls "can only increase, never decrease" SUPPORTED. `http-retry-21`: it labels an over-claim CONTRADICTED while its own reasoning says the source is silent. The pipeline gets both right (CONTRADICTED F1 1.000 vs 0.960; oracle claim accuracy 1.000 vs 0.978).
@@ -120,6 +170,31 @@ byte-identical to `quote` and a verbatim substring of the passage — or the cla
 UNSUPPORTED. Errors: `422 invalid_request`, `502`/`504 upstream_error`, `500 misconfigured`,
 `500 internal_invariant_violation`. Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
+## How the v2.6 benchmark is measured
+
+The test split is run once with the frozen configuration; a rerun needs a new, unseen sample and a
+new freeze. There is no oracle mode, because the response-level gold has no gold claims. The
+prediction rule is registered: any `CONTRADICTED` or `UNSUPPORTED` claim makes the response positive.
+Failed calls stay in the denominator as wrong; `excluding_failures` is reported next to the main
+result. Sentence alignment uses the threshold 60 fixed on dev.
+
+```bash
+# Run the frozen protocol (3 methods, one run each; writes one JSONL per method)
+uv run python -m eval.run_v26 --methods baseline minimal optimized --split test \
+  --runs 1 --concurrency 4 --prompt-version v3 --out results/v2.6-test
+
+# Score saved predictions (no provider calls; writes report/v26_report.{json,md})
+uv run python -m eval.v26 --split test --predictions results/v2.6-test \
+  --methods baseline minimal optimized --out results/v2.6-test/report
+
+# Recompute summary.json from the saved JSONL after a metric-only change
+uv run python -m eval.run_v26 --rescore results/v2.6-test
+```
+
+The freeze, sampling rules and dev threshold calibration are in
+[data/annotation/v2.6/](../data/annotation/v2.6); the full method is in
+[EVALUATION.md](docs/EVALUATION.md#v26-preregistration-2026-10-20-before-test).
+
 ## How the historical synthetic benchmark is measured
 
 These commands target the historical synthetic benchmark. v2.4 hard-test measurement is pending
@@ -149,17 +224,19 @@ dataset. Definitions and caveats: [docs/EVALUATION.md](docs/EVALUATION.md).
 | know how `POST /verify` works internally and where the trust boundary is | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | see the results, the failures and what they do *not* prove | [docs/REPORT.md](docs/REPORT.md) |
 | judge or reuse the benchmark (metrics, splits, reproduction) | [docs/EVALUATION.md](docs/EVALUATION.md) |
-| audit the 46 cases and their labels | [docs/DATASET.md](docs/DATASET.md) |
-| see what was tried, kept and reverted (prompt v1→v4, models) | [docs/ITERATIONS.md](docs/ITERATIONS.md) |
+| audit the current v2.6 responses and the historical 46-case synthetic set | [docs/DATASET.md](docs/DATASET.md) |
+| see what was tried, kept and reverted (v2.6 protocol change, prompt v1→v4) | [docs/ITERATIONS.md](docs/ITERATIONS.md) |
 | know what changed in this documentation revision | [docs/README.md](docs/README.md) |
 
 ## Status
 
 Working and verified end to end against a live provider on both client transports; the suite is green
-(`make test`, no key required — it includes the eval-harness and documentation-consistency checks); the
-optimized verifier on the historical synthetic dataset is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1, oracle-perfect
-at 1.000 (test split, 3 runs). Known open items: decomposition wording remains the binding constraint —
-prompt v4 fixed half of it (coverage up, fusion halved) but broke the no-claims edge case and was
-reverted, with its successor's keep-condition written down; one annotator; and cost reported as a
-computed upper bound rather than a bill. Not implemented: streaming, request caching, a
-batched cheaper mode, abstain/confidence output, non-English text.
+(`make test`, no key required — it includes the eval-harness and documentation-consistency checks).
+The current headline is the v2.6 natural-distribution measurement: minimal 0.720 response-level F1,
+optimized 0.609, baseline 0.521; one run per method on 180 unseen responses. The optimized pipeline
+is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1 on the historical synthetic set,
+oracle-perfect at 1.000 (test split, 3 runs), but that benchmark is not the current target. Known
+open items: optimized's false positives on clean natural answers; minimal's misses on subtle
+conflicts and null-valued attributes; one annotator in the historical set and no human review in
+v2.6; and cost reported as a computed upper bound rather than a bill. Not implemented: streaming,
+request caching, a batched cheaper mode, abstain/confidence output, non-English text.

@@ -1,5 +1,9 @@
 # v2.5 test measurement plan
 
+> **Superseded.** This is the historical v2.5 plan. The current v2.6 plan, freeze and measured
+> test report are [freeze.json](../data/annotation/v2.6/freeze.json) and
+> [p4-test-report.md](../data/annotation/v2.6/p4-test-report.md); the v2.5 results are exploratory.
+
 **Status: test measurement complete (3 e2e rounds for minimal/optimized, 1 deterministic
 baseline run, 1 oracle round). Total $8.32 (≈¥59.8), within the ¥65 cap. The dataset and
 v2.5 freeze are unchanged.**

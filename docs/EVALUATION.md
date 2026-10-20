@@ -1,12 +1,61 @@
 # Evaluation method
 
-## v2.5 preregistration (2026-10-20, before hard-test measurement)
+## v2.6 preregistration (2026-10-20, before test)
 
-This round measures `data/eval_hard.v2.5.jsonl`: the frozen v2.4 set plus 13
+This round measures `data/eval_ragtruth_resp.v2.6.jsonl`: 210 RAGTruth responses, 30 dev / 180 test,
+10 dev and 60 test per task; the test split has 62 positives. Gold is the upstream human span
+annotation; no model participates in labelling. The verifier code and prompt v3 are identical to
+the v2.5 freeze; the change is in the data and the unit of measurement. This section was frozen
+before the test; the test has since been run once (results in [REPORT.md](REPORT.md)).
+
+* **Primary: response-level hallucination detection.** A response is predicted hallucinated iff the
+  verifier emits at least one `CONTRADICTED` or `UNSUPPORTED` claim. Gold is `gold_response` (any
+  upstream span). Report precision, recall, F1 and balanced accuracy; no threshold is tuned.
+* **Failures stay in the denominator.** A failed case is counted wrong on the opposite side of its
+  gold (positive → missed, negative → false alarm). A second `excluding_failures` report drops
+  failed cases; paired comparisons then use the responses both methods completed.
+* **Intervals:** case-level bootstrap, 10000 replicates, NumPy default_rng seed 20261022, 2.5/97.5
+  percentiles. **Paired comparisons:** optimized − minimal (primary), minimal − baseline and
+  optimized − baseline (secondary), drawn on the same responses.
+* **Wording rule:** “A is better than B” may be written only if the paired 95% interval excludes 0;
+  otherwise write “no evidence of a difference” and give the interval. Never write “equally good”.
+* **Sentence localisation:** each predicted C/U claim is matched to the most similar answer sentence
+  with `rapidfuzz.token_set_ratio`; a best score below 60 is unlocalised and enters no sentence.
+  The threshold was fixed on dev only: all 14 dev upstream spans had their containing sentence as
+  the top-1 match (minimum score 66.7), and at 60 the localization rate was 0.976 for both LLM
+  methods. Sentence P/R/F1 and bootstrap intervals are reported; alignment is lexical and
+  approximate.
+* **Citation validity:** the final-output check is exact quote + right passage + offsets. Because
+  `validate.py` repairs or drops invalid citations and downgrades claims, final-output validity is
+  1.000 by construction; report **as-given** validity from `meta.raw_citations_*` (exact as given,
+  repairs and drops count invalid) and the number of downgraded claims as the informative numbers.
+  Citation sufficiency is not assessed.
+* **Groups:** task, generator model, context-length bucket, and evident-only vs with-subtle for
+  positives (recall only); n<20 is labelled “for reference only”. **Cost and latency:** per response,
+  p50/p95/max, retries, average LLM calls.
+* **No oracle mode.** Response-level gold has no gold claims, so there is nothing to feed in.
+* **Run plan:** baseline / minimal / optimized, one run each, 180 test responses, concurrency 4,
+  prompt v3. Stop if any method's failure rate exceeds 5%, any output is overlong or truncated, the
+  cost exceeds $12, or a prompt/code/data change would be required. Do not rerun or substitute
+  results silently. The freeze is `data/annotation/v2.6/freeze.json`; verify it with
+  `uv run pytest -q tests/test_v26_freeze.py`.
+
+```bash
+uv run python -m eval.run_v26 --methods baseline minimal optimized --split test \
+  --runs 1 --concurrency 4 --prompt-version v3 --out results/v2.6-test
+uv run python -m eval.v26 --split test --predictions results/v2.6-test \
+  --methods baseline minimal optimized --out results/v2.6-test/report
+uv run python -m eval.run_v26 --rescore results/v2.6-test   # no provider calls
+```
+
+## v2.5 preregistration (exploratory, measured after freeze)
+
+This round measured `data/eval_hard.v2.5.jsonl`: the frozen v2.4 set plus 13
 `subtle_supplement` cases (test 10 / dev 3) selected under
-`data/annotation/v2.5/sampling_rules.json` with seed 20261021. No evaluated verifier has been
-run on the hard test. The v2.4 metric definitions, alignment rules and bootstrap settings are
-inherited unchanged; `eval/v25.py` scores saved predictions without provider calls.
+`data/annotation/v2.5/sampling_rules.json` with seed 20261021. No evaluated verifier had been
+run when the sample was selected; the test was measured afterwards. The v2.4 metric
+definitions, alignment rules and bootstrap settings are inherited unchanged; `eval/v25.py`
+scores saved predictions without provider calls.
 
 * Report `all` (headline), `natural`, `conflict_supplement` and `subtle_supplement` with the
   same definitions; bootstrap each subset independently. `all` means all subsets in the
@@ -33,8 +82,8 @@ uv run python -m eval.v25 --data data/eval_hard.v2.5.jsonl --split test \
 ```
 
 The CLI requires exactly the selected case IDs, including explicit error records for failures;
-it records dataset/prediction/doubt hashes and refuses output overwrite. Hard-test measurement
-remains **unmeasured**.
+it records dataset/prediction/doubt hashes and refuses output overwrite. The v2.5 test was measured
+once; its results are exploratory, not the current headline.
 
 ## v2.4 preregistration (2026-10-20, before hard-test measurement)
 
@@ -86,8 +135,17 @@ How the three verifiers are measured, what every number means, and which of them
 what. Dataset contents and labelling rules live in [DATASET.md](DATASET.md); the measured results are in
 [REPORT.md](REPORT.md); the version-by-version history in [ITERATIONS.md](ITERATIONS.md).
 
-## Dataset and splits
+## v2.6 dataset and splits
 
+`data/eval_ragtruth_resp.v2.6.jsonl` contains 210 RAGTruth responses: 30 dev / 180 test, with
+10 dev and 60 test per task. The test split has 62 positive responses. Gold is the upstream human
+span annotation; there are no gold claims, so no claim alignment is used for the v2.6 primary
+metric. The test was run once under the freeze. Dataset fields and sampling exclusions are in
+[DATASET.md](DATASET.md); the metric definitions are in the v2.6 preregistration above.
+
+## Historical synthetic dataset and splits
+
+The rest of this section describes the original synthetic benchmark, not v2.6:
 46 hand-authored cases / 150 gold claims, every line validated on load
 (`uv run python -m eval.dataset data/eval.jsonl`):
 
@@ -104,6 +162,23 @@ corrections are documented as exceptions in
 [ITERATIONS.md](ITERATIONS.md#dataset-calibration-also-eval-driven).
 
 ## Harness
+
+### v2.6 harness
+
+`eval/run_v26.py` reuses the verifier builders but loads the response-level data and scores it with
+`eval/v26.py`. It writes one JSONL per method plus `summary.json`; `--rescore` recomputes the
+summary from saved predictions without provider calls. `eval/v26.py` also renders the paired
+comparisons, sentence localisation, citation blocks, groups and cost table.
+
+```bash
+uv run python -m eval.run_v26 --methods baseline minimal optimized --split test \
+  --runs 1 --concurrency 4 --prompt-version v3 --out results/v2.6-test
+uv run python -m eval.v26 --split test --predictions results/v2.6-test \
+  --methods baseline minimal optimized --out results/v2.6-test/report
+uv run python -m eval.run_v26 --rescore results/v2.6-test
+```
+
+### Historical synthetic harness
 
 ```bash
 make eval-dev     # baseline + minimal + optimized on dev, 1 run
@@ -126,7 +201,11 @@ more often than predictions do, and re-running a paid evaluation to change a den
 trade. Rescoring **refuses** a run whose case ids do not match the current dataset: such a run predates a
 dataset change, and scoring it would produce numbers that were never measured.
 
-## Alignment: how a predicted claim meets a gold claim
+## Alignment: how a predicted claim meets a gold claim (historical claim-level sets)
+
+This alignment is used by the synthetic benchmark and the exploratory v2.5 claim-level set. v2.6
+does not align predictions to gold claims; its sentence localisation is a separate lexical mapping
+described in the v2.6 preregistration above.
 
 Predicted claims use `rapidfuzz.token_set_ratio` with threshold 60. Before the Hungarian
 assignment, a candidate pair is excluded when its numeric sets or explicit negation presence differ.
@@ -215,6 +294,11 @@ context. There is no branch for the Kafka case ID or a particular model in the s
 
 ## Metrics
 
+The v2.6 response-level definitions — P/R/F1/balanced accuracy, paired bootstrap, sentence
+localisation, as-given citation validity, groups and cost — are in the v2.6 preregistration above
+and implemented in `eval/v26.py`. The table below defines the historical claim-level metrics used by
+the synthetic benchmark and the exploratory v2.5 set.
+
 | Metric | Definition | Read it as |
 |---|---|---|
 | Answer-level hallucination P/R/F1 | positive class = "this answer contains at least one non-SUPPORTED claim" | does the service flag a bad answer at all — coarse but the user-facing question |
@@ -282,6 +366,20 @@ That is how answer sentence coverage and the fused-claim rate were added when pr
 measured, and how the cost column was filled in after real prices replaced the placeholder zeros.
 
 ## Measurement caveats
+
+### v2.6 caveats
+
+* **Upstream annotation, no human review.** RAGTruth can miss hallucinations; “upstream-unannotated”
+  is not “clean”. The 62 test positives and 118 negatives are taken as given.
+* **Small groups.** 180 responses / 62 positives; QA has 8 positives and GPT-4 has 1. Task and
+  generator rows are diagnostic, not population estimates. One model and one prompt were measured.
+* **Contamination.** RAGTruth has been public since 2024; the evaluated model may have seen it.
+* **Approximate localisation.** Sentence matching is lexical; citation sufficiency is not assessed.
+* **Protocol change after seeing v2.5.** The verifier and prompt did not change, and v2.6 uses new
+  responses with zero v2.5 id/source overlap, but the decision to change the protocol was made after
+  the v2.5 test result was known.
+
+### Historical claim-level caveats
 
 * **150 claims, one annotator.** Differences below ~5 points on one split are noise; the final test
   report therefore shows mean ± std over 3 runs, and the dev hill-climb repeats runs before deciding.

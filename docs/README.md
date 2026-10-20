@@ -1,7 +1,7 @@
 # Documentation — version 2
 
-Documentation set for the citation grounding verifier. **Docs v2, 2026-10-17.** Supersedes docs v1
-(the single incrementally-grown `README.md` from earlier the same day).
+Documentation set for the citation grounding verifier. **Docs v2, 2026-10-17; updated for v2.6 on
+2026-10-20.** Supersedes docs v1 (the single incrementally-grown `README.md` from earlier the same day).
 
 The rule this edition is built on: every document has one job, the numbers live in exactly one place,
 and nothing in the docs is transcribed by hand if a script can regenerate it.
@@ -14,8 +14,8 @@ and nothing in the docs is transcribed by hand if a script can regenerate it.
 | [ARCHITECTURE.md](ARCHITECTURE.md) | How does `POST /verify` work, where is the trust boundary, how do I extend it | engineer reading or modifying the code |
 | [EVALUATION.md](EVALUATION.md) | How is it measured, what does each metric mean, how do I reproduce or re-score | reviewer judging the benchmark |
 | [REPORT.md](REPORT.md) | What were the results, what failed, what may not be concluded | reviewer judging the claims |
-| [DATASET.md](DATASET.md) | What is in the 46 cases, how were they labelled, how hard are they | annotator or reviewer auditing the data |
-| [TEST_PLAN.md](TEST_PLAN.md) | What is the draft plan for the v2.5 test measurement, and what did the dev dry run show | reviewer deciding the test run |
+| [DATASET.md](DATASET.md) | What is in the current v2.6 responses, and the historical 46-case synthetic set | annotator or reviewer auditing the data |
+| [TEST_PLAN.md](TEST_PLAN.md) | Historical v2.5 test plan; the current v2.6 plan is the freeze record | reviewer comparing protocol versions |
 | [ITERATIONS.md](ITERATIONS.md) | What was tried, what was kept, what was reverted and why | anyone judging the development process |
 
 Reading order for a first pass: README → REPORT (results) → ITERATIONS (how they were reached) →
@@ -25,10 +25,12 @@ EVALUATION (whether to believe them) → ARCHITECTURE (how it is built) → DATA
 
 | Question | Authority |
 |---|---|
-| Every measurement | `results/<run>/summary.json` (raw: one JSONL per run, one line per case) |
+| Every measurement | `results/<run>/summary.json` (raw: one JSONL per run, one line per case); for v2.6 also `results/v2.6-test/report/v26_report.json` |
 | The prompt that produced a run | `meta.prompt_version` in its JSONL, resolved through `verifier/prompts.PROMPT_SETS` |
-| The reference labels | `data/eval.jsonl`, validated on load |
-| Metric definitions | code in `eval/metrics.py`, described in EVALUATION.md |
+| The reference labels (current) | `data/eval_ragtruth_resp.v2.6.jsonl`; upstream human spans, no model in the gold |
+| The reference labels (historical) | `data/eval.jsonl` for the synthetic set, `data/eval_hard.v2.5.jsonl` for the exploratory claim-level set |
+| Metric definitions (current) | `eval/v26.py`, described in EVALUATION.md's v2.6 preregistration |
+| Metric definitions (historical) | `eval/metrics.py`, `eval/v25.py` |
 | The current default configuration | `.env`, `verifier/prompts.DEFAULT_PROMPT_VERSION`, `README.md` |
 
 Docs quote numbers that were regenerated from those files; if a document and a `summary.json` ever
@@ -55,6 +57,16 @@ disagree, the JSON is right.
    work": the v2 and v4 prompt versions and the non-reproducing model A/B are in the report and the log
    rather than deleted, because a reader deciding what to try next needs them more than another success
    story.
+
+## v2.6 revision (2026-10-20)
+
+The headline target is now `data/eval_ragtruth_resp.v2.6.jsonl`: 180 unseen RAGTruth test responses,
+gold from the upstream human spans, no model in labelling, response-level F1. The measured order is
+minimal 0.720 > optimized 0.609 > baseline 0.521. The v2.5 claim-level result is kept as exploratory
+methodology, and the 46-case synthetic benchmark remains as history. The test run, freeze and
+stop-condition check are in `data/annotation/v2.6/`; the metric code is `eval/v26.py`. The docs
+consistency tests still pin the synthetic headline counts, and now also pin the v2.6 freeze through
+`tests/test_v26_freeze.py`.
 
 ## Revision note (same day)
 
