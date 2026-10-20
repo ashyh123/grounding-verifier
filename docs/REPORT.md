@@ -121,16 +121,12 @@ misses; optimized catches one of them.
 Track A, first five documents with a wrong claim (all AggreFact-CNN; minimal has a false positive in
 each, optimized in two):
 
-* `aggrefact-AggreFact-CNN-02d82ecf292a`: 2 claims; minimal wrong 1, optimized 0. "Celtic beat
-  St Mirren 2-0 ..." is gold 0, minimal said SUPPORTED.
-* `aggrefact-AggreFact-CNN-38e94fc24e33`: 1 claim; both wrong. "jafar adeli ... arranged to meet
-  ..." is gold 0.
-* `aggrefact-AggreFact-CNN-6002ade50606`: 2 claims; minimal wrong 1, optimized 0. "Equal Pay Day
-  ... 77 cents" is gold 0.
-* `aggrefact-AggreFact-CNN-67126bdf6043`: 1 claim; both wrong. "roberto martinez ... free-kick ..."
-  is gold 0.
-* `aggrefact-AggreFact-CNN-7b79dd51ba9f`: 2 claims; minimal wrong 1, optimized 0. "Nathan Hughes
-  ... knocked out George North ..." is gold 0.
+* `aggrefact-AggreFact-CNN-02d82ecf292a`: 2 claims; minimal wrong 1, optimized 0
+  (one gold-0 claim was called SUPPORTED).
+* `aggrefact-AggreFact-CNN-38e94fc24e33`: 1 claim; both wrong (gold 0).
+* `aggrefact-AggreFact-CNN-6002ade50606`: 2 claims; minimal wrong 1, optimized 0 (gold 0).
+* `aggrefact-AggreFact-CNN-67126bdf6043`: 1 claim; both wrong (gold 0).
+* `aggrefact-AggreFact-CNN-7b79dd51ba9f`: 2 claims; minimal wrong 1, optimized 0 (gold 0).
 
 ### Cost and protocol
 
@@ -143,7 +139,10 @@ tokens/cost are not counted as new spend.
 The run protocol deviation is minimal's oracle batching (20 claims per call; the 80/subset sample was
 the S2-confirmed fallback), approved
 after the unbatched S4 run truncated a 61-claim document; prompt, model, verifier code and gold are
-unchanged. The v2.6 test was not rerun. Detailed run record:
+unchanged. Committed track A predictions are sanitized: only document/claim IDs, verdicts and citation
+`index`/`start_char`/`end_char` remain; `claim_text`, `reasoning`, `quote` and `meta.warnings` are
+removed. Raw LLM-AggreFact data and full predictions stay local. RAGTruth++ predictions retain
+RAGTruth text under RAGTruth's MIT license. The v2.6 test was not rerun. Detailed run record:
 [s6-test-report.md](../data/annotation/v2.7/s6-test-report.md); freeze:
 [freeze.json](../data/annotation/v2.7/freeze.json).
 

@@ -70,12 +70,12 @@ Lfqa 只有 3 篇、TofuEval-MediaS 2 篇、TofuEval-MeetB 2 篇。逐子集表�
 
 前 5 条都来自 AggreFact-CNN；minimal 把金标 0 的主张判成 SUPPORTED，optimized 在其中 2 条也错。
 
-- `aggrefact-AggreFact-CNN-02d82ecf292a`：2 条主张，minimal 错 1，optimized 错 0。
-  “Celtic beat St Mirren 2-0 ...” 金标 0，minimal 判 SUPPORTED。
-- `...-38e94fc24e33`：1 条主张，两个方案都错；“jafar adeli ... arranged to meet ...” 金标 0。
-- `...-6002ade50606`：2 条，minimal 错 1，optimized 错 0；“Equal Pay Day ... 77 cents” 金标 0。
-- `...-67126bdf6043`：1 条，两个方案都错；“roberto martinez ... free-kick ...” 金标 0。
-- `...-7b79dd51ba9f`：2 条，minimal 错 1，optimized 错 0；“Nathan Hughes ... knocked out George North ...” 金标 0。
+- `aggrefact-AggreFact-CNN-02d82ecf292a`：2 条主张，minimal 错 1，optimized 错 0
+  （一条金标 0 被 minimal 判成 SUPPORTED）。
+- `...-38e94fc24e33`：1 条主张，两个方案都错（金标 0）。
+- `...-6002ade50606`：2 条，minimal 错 1，optimized 错 0（金标 0）。
+- `...-67126bdf6043`：1 条，两个方案都错（金标 0）。
+- `...-7b79dd51ba9f`：2 条，minimal 错 1，optimized 错 0（金标 0）。
 
 这些是 claim 级假阳性；轨道 A 的 BAcc 已经对正负类都计分，所以它们会实际拉低分数。
 
@@ -91,6 +91,16 @@ Lfqa 只有 3 篇、TofuEval-MediaS 2 篇、TofuEval-MeetB 2 篇。逐子集表�
 - 轨道 B 的 29 条复用预测没有产生新费用；费用只计 200 条新跑。
 - 两次重试都恢复；没有截断；重试的 token 已计入费用。
 - 低于 $16 上限，余量约 $5.20。
+
+## 许可证与提交内容
+
+- 已提交的轨道 A 预测只保留 `id`、`verdict`、引文的 `index`/`start_char`/`end_char` 和数值型
+  `meta`；`claim_text`、`reasoning`、`quote`、`meta.warnings` 已从公开文件中移除。原始
+  LLM-AggreFact parquet 和完整预测只在本地，未提交。
+- 轨道 B 的预测保留 RAGTruth 文本；RAGTruth 是 MIT 许可，且其原始数据不在受限条款下。
+- `.gitignore` 覆盖 `data/sources/v2.7/raw/` 和 `data/eval_*v2.7*.jsonl`；`sources.json`、
+  选择统计和清洗脚本是公开的。
+- 清洗后用同一批预测重算了轨道 A 指标，主结果与剔除失败结果逐项不变。
 
 ## 停止条件
 

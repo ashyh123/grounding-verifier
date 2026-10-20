@@ -288,5 +288,25 @@
       },
       "below_5_percent_stop_line": true
     }
+  },
+  "post_freeze_license_sanitization": {
+    "date": "2026-10-20",
+    "authorization": "user instruction: public repository must not redistribute gated LLM-AggreFact claim or quote text",
+    "files": 11,
+    "removed_fields": [
+      "claim_text",
+      "reasoning",
+      "citations[].quote",
+      "meta.warnings"
+    ],
+    "kept_fields": [
+      "id",
+      "claims[].verdict",
+      "citations[].index/start_char/end_char",
+      "numeric meta"
+    ],
+    "metrics_unchanged": true,
+    "raw_and_full_predictions_local_only": true,
+    "ragtruthpp_note": "RAGTruth++ predictions retain RAGTruth text; RAGTruth is MIT-licensed"
   }
 }
