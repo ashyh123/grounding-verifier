@@ -54,11 +54,45 @@
       },
       "code_prompt_data_metric_hashes_unchanged": true,
       "v25_freeze_sha256_after": "48ca13e2d9009b348f0656bc3289568e135341162314e27b6dc17b9abcb8f43c"
+    },
+    {
+      "type": "documentation_reseal",
+      "date": "2026-10-20",
+      "commit": "working tree (post-report correction)",
+      "authorization": "user instruction 2026-10-20: README-only correction after claim-count failure scoring change; this explicitly supersedes the one-time limit",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517"
+      },
+      "new_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "code_prompt_data_metric_hashes_unchanged": true,
+      "v25_freeze_sha256_after": "4eade30d046d4104184336ff8394ccc4f24f1f9662f033d3154fb786a9e36411"
+    },
+    {
+      "type": "documentation_reseal",
+      "date": "2026-10-20",
+      "commit": "working tree (README status correction)",
+      "authorization": "same user instruction 2026-10-20: README status summary correction",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "new_hashes": {
+        "README.md": "2847c56322676d17baf90e9778512ef24132fc2264823fef6e1b610582aacc2a"
+      },
+      "code_prompt_data_metric_hashes_unchanged": true,
+      "v25_freeze_sha256_after": "19aac29f69dfd8829fb49f559e53d4371636061d028e68be24a603542a9366d7"
     }
   ],
   "pending": {
-    "allowed_resignations": 1,
-    "used": 1,
+    "allowed_resignations": 3,
+    "used": 3,
     "scope": [
       "README.md",
       "docs/DATASET.md",
@@ -66,6 +100,6 @@
     ],
     "authorization": "v2.7 section 10.1; S7 is the only permitted further documentation re-seal",
     "rule": "only documentation hashes may change; code, prompt, data and metric hashes must not change; append one event with old/new hashes and this authorization",
-    "completed_at": "2026-10-20T11:07:16.692503+00:00"
+    "completed_at": "2026-10-20T11:21:45.100664+00:00"
   }
 }

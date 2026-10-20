@@ -20,8 +20,8 @@ the v2.6 RAGTruth response-level set (180 held-out answers), and the historical 
 
 ## Current headline: v2.7 two external checks (measured)
 
-**The ranking depends on the annotation standard; when claims are given, the optimized pipeline
-verifies more accurately.**
+**The ranking depends on the annotation standard; the oracle lead of optimized is not robust to
+minimal's claim-count failures.**
 
 ### 1) v2.6 end-to-end, RAGTruth original annotation
 
@@ -49,15 +49,20 @@ answers and one set of predictions; only the gold changed.
 461 documents / 854 claims, 10 subsets, claims supplied; this isolates verification from
 decomposition:
 
-| Method | Macro balanced accuracy | 95% CI |
-|---|---:|---|
-| baseline | 0.608 | [0.577, 0.628] |
-| minimal | 0.729 | [0.687, 0.759] |
-| optimized | **0.776** | [0.729, 0.804] |
+| Method | Main BAcc (failures wrong) | Failures | BAcc excluding failures |
+|---|---:|---:|---:|
+| baseline | 0.608 | 0 | 0.608 |
+| minimal | 0.729 | 32 / 461 (6.94%) | 0.768 |
+| optimized | **0.776** | 0 | **0.776** |
 
-Paired optimized − minimal: **+0.047 [+0.011, +0.079]**. When the claims are given, the optimized
-pipeline verifies more accurately. This is an independent conclusion from track B; it is not
-combined into one score.
+Main paired optimized − minimal: **+0.047 [+0.011, +0.079]**. But minimal has 32 claim-count
+mismatches (6.94%), above the registered 5% stop line. When those 32 documents are truly excluded,
+minimal is 0.768 and optimized 0.776; the paired difference is **+0.032 [−0.016, +0.072]** —
+no evidence of a difference. optimized and minimal each win 5 of 10 subsets (**5/5**); the macro is
+also concentrated: Lfqa has 3 documents, TofuEval-MediaS 2 and TofuEval-MeetB 2, so it is not a
+uniform per-subset ranking. Track A is therefore conditional: optimized leads under the
+failures-count-as-wrong convention, but the lead disappears when minimal's malformed claim lists are
+removed. This is independent of track B; it is not combined into one score.
 
 Test spend: $10.80 total (two dev runs $1.76 + track A test $4.03 + track B test $5.01), below the
 $16 cap. Full tables and the first five failure examples per track:
@@ -139,8 +144,8 @@ question answerable.
 
 - **v2.6 — measured, prior headline.** New natural-distribution RAGTruth responses, upstream human
   spans as gold, response-level F1. minimal 0.720 > optimized 0.609; under RAGTruth's original end-to-end annotation, optimized
-  costs 6.6× and is 11.1 F1 points behind. v2.7 shows the ranking reverses under strict gold and in
-  oracle mode. v2.5 is demoted to exploratory analysis. Log: [ITERATIONS.md](docs/ITERATIONS.md).
+  costs 6.6× and is 11.1 F1 points behind. v2.7 shows the ranking reverses under strict gold, and the oracle result is
+  conditional on how minimal's claim-count failures are counted. v2.5 is demoted to exploratory analysis. Log: [ITERATIONS.md](docs/ITERATIONS.md).
 
 The prompt-version history below belongs to the historical synthetic benchmark: every change was
 measured on its dev split (26 cases / 89 claims, 3 runs) before it was kept; its test split was run
@@ -283,7 +288,8 @@ Working and verified end to end against a live provider on both client transport
 (`make test`, no key required — it includes the eval-harness and documentation-consistency checks).
 The current headline is v2.7: under RAGTruth's original annotation minimal leads end-to-end
 (0.720 vs 0.609), under RAGTruth++ strict gold optimized leads (sentence F1 0.628 vs 0.522), and with
-claims given optimized verifies more accurately on LLM-AggreFact (macro BAcc 0.776 vs 0.729).
+the LLM-AggreFact oracle, optimized leads only when minimal's 32 claim-count failures are counted
+wrong; truly excluding them, there is no evidence of a difference.
 The optimized pipeline is held-out-measured at 0.984 claim accuracy / 1.000 answer-level F1 on the historical synthetic set,
 oracle-perfect at 1.000 (test split, 3 runs), but that benchmark is not the current target. Known
 open items: optimized's false positives on clean natural answers; minimal's misses on subtle

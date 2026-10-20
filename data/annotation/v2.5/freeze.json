@@ -1174,7 +1174,7 @@
   "hard_test_verifier_run": false,
   "files": {
     "Makefile": "1627d680e2727122407d78388df723157470bc601c1e031ba6711d3ca20ebb6a",
-    "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517",
+    "README.md": "2847c56322676d17baf90e9778512ef24132fc2264823fef6e1b610582aacc2a",
     "annotation/README.md": "a6b34fa87ff4b52e9f91060f93e8f623b8b53841b077d86e6a7566f43e28d02f",
     "annotation/__init__.py": "1f7c08a4d32d45bda6fb122a0ebc9b2a09c71703fdf2a645849f2f32aead1b5e",
     "annotation/adjudication.py": "755c522b84d6ab4ed2da6072d5c1699d3e3a0d8e22224487b332bb5715a9362f",
@@ -1316,6 +1316,32 @@
         "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517",
         "docs/DATASET.md": "1acf8e4cef66536454d0e80d9110542f20e77966561f99cc361adbe50293a81b",
         "docs/EVALUATION.md": "2e8d1aeb8990f9fff864bb50aafb91ec4a1b4a661d248a6af59004f083da7e70"
+      }
+    },
+    "s8": {
+      "recorded_at": "2026-10-20T11:21:13.500885+00:00",
+      "authorization": "user instruction 2026-10-20 (this change): README-only correction after the claim-count failure scoring change; explicitly supersedes the one-time re-seal limit",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "9b94d7eaa6eae0a7679b7b7dc28123ac390e898186a6c43b63c7ec111cb0d517"
+      },
+      "new_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      }
+    },
+    "s9": {
+      "recorded_at": "2026-10-20T11:21:45.100664+00:00",
+      "authorization": "same user instruction 2026-10-20: correct the README status summary missed in the second re-seal; documentation only",
+      "files": [
+        "README.md"
+      ],
+      "old_hashes": {
+        "README.md": "76b95f11025e1be7d5d782bdd2d6a70e56171d8120ae97cd5dba89ad9a23b5d8"
+      },
+      "new_hashes": {
+        "README.md": "2847c56322676d17baf90e9778512ef24132fc2264823fef6e1b610582aacc2a"
       }
     }
   }

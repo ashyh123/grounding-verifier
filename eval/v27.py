@@ -131,16 +131,21 @@ def load_aggrefact(path: Path) -> list[dict]:
     return rows
 
 
+def is_failure(row: dict, prediction: dict | None) -> bool:
+    """A missing/error prediction or a claim-count mismatch is a document failure."""
+    if prediction is None or 'error' in prediction:
+        return True
+    return len(prediction.get('claims') or []) != len(row['labels'])
+
+
 def _doc_counts(row: dict, prediction: dict | None) -> np.ndarray:
     """tp, fp, fn, tn for one document; a failed document is wrong on every claim."""
     labels = row['labels']
     positives = sum(labels)
     negatives = len(labels) - positives
-    if prediction is None or 'error' in prediction:
+    if is_failure(row, prediction):
         return np.array([0, negatives, positives, 0], dtype=np.int64)
     claims = prediction.get('claims') or []
-    if len(claims) != len(labels):
-        return np.array([0, negatives, positives, 0], dtype=np.int64)
     predicted = [1 if c.get('verdict') == 'SUPPORTED' else 0 for c in claims]
     tp = sum(g == 1 and p == 1 for g, p in zip(labels, predicted))
     fp = sum(g == 0 and p == 1 for g, p in zip(labels, predicted))
@@ -177,17 +182,17 @@ def _subset_blocks(rows: list[dict], predictions: dict[str, dict[str, dict]],
     blocks: dict[str, dict] = {m: {} for m in predictions}
     for method, preds in predictions.items():
         for subset in subsets:
-            docs = [r for r in rows if r['subset'] == subset]
-            if exclude_failures:
-                docs = [r for r in docs if (preds.get(r['id']) is not None
-                                            and 'error' not in preds[r['id']])]
+            all_docs = [r for r in rows if r['subset'] == subset]
+            failures = sum(is_failure(r, preds.get(r['id'])) for r in all_docs)
+            docs = all_docs if not exclude_failures else [
+                r for r in all_docs if not is_failure(r, preds.get(r['id']))]
             counts = [_doc_counts(r, preds.get(r['id'])) for r in docs]
             per_doc[method][subset] = np.stack(counts) if counts else np.zeros((0, 4), dtype=np.int64)
             total = np.sum(counts, axis=0) if counts else np.zeros(4, dtype=np.int64)
             p, r, f = _prf(total)
             blocks[method][subset] = {
                 'docs': len(docs), 'claims': int(total.sum()), 'positives': int(total[2] + total[0]),
-                'failures': sum(preds.get(r['id']) is None or 'error' in preds[r['id']] for r in docs),
+                'failures': failures,
                 'tp': int(total[0]), 'fp': int(total[1]), 'fn': int(total[2]), 'tn': int(total[3]),
                 'balanced_accuracy': _bacc(total), 'precision': p, 'recall': r, 'f1': f,
             }
@@ -198,9 +203,11 @@ def _bootstrap_macro(per_doc: dict[str, dict[str, list[np.ndarray]]], subsets: l
                      replicates: int) -> dict[str, np.ndarray]:
     rng = np.random.default_rng(BOOTSTRAP_SEED)
     draws = {}
-    for subset in subsets:
-        n = len(next(iter(per_doc.values()))[subset])
-        draws[subset] = rng.integers(0, n, size=(replicates, n)) if n else np.zeros((replicates, 0), dtype=int)
+    for method in per_doc:
+        for subset in subsets:
+            n = len(per_doc[method][subset])
+            draws[(method, subset)] = (rng.integers(0, n, size=(replicates, n))
+                                       if n else np.zeros((replicates, 0), dtype=int))
     samples = {}
     for method in per_doc:
         out = np.empty(replicates, dtype=float)
@@ -210,11 +217,55 @@ def _bootstrap_macro(per_doc: dict[str, dict[str, list[np.ndarray]]], subsets: l
                 counts = per_doc[method][subset]
                 if len(counts) == 0:
                     continue
-                picked = draws[subset][rep]
+                picked = draws[(method, subset)][rep]
                 values[subset] = _bacc(counts[picked].sum(axis=0))
             out[rep] = _macro(values)
         samples[method] = out
     return samples
+
+
+def _paired_macro(rows: list[dict], predictions: dict[str, dict[str, dict]],
+                  subsets: list[str], exclude_failures: bool,
+                  replicates: int) -> dict:
+    """Paired macro BAcc on the documents both methods completed (or all docs in main)."""
+    a, b = 'optimized', 'minimal'
+    if a not in predictions or b not in predictions:
+        return {'n_cases': 0, 'statement': 'missing method'}
+    pa, pb = predictions[a], predictions[b]
+    common = [r for r in rows if not exclude_failures or
+              (not is_failure(r, pa.get(r['id'])) and not is_failure(r, pb.get(r['id'])))]
+    if not common:
+        return {'n_cases': 0, 'statement': 'no common completed documents'}
+    per = {a: {}, b: {}}
+    for subset in subsets:
+        docs = [r for r in common if r['subset'] == subset]
+        for method, preds in ((a, pa), (b, pb)):
+            per[method][subset] = (np.stack([_doc_counts(r, preds.get(r['id'])) for r in docs])
+                                   if docs else np.zeros((0, 4), dtype=np.int64))
+    rng = np.random.default_rng(BOOTSTRAP_SEED)
+    draws = {}
+    for subset in subsets:
+        n = len(per[a][subset])
+        draws[subset] = rng.integers(0, n, size=(replicates, n)) if n else np.zeros((replicates, 0), dtype=int)
+    sa, sb = [], []
+    for rep in range(replicates):
+        va, vb = {}, {}
+        for subset in subsets:
+            if not len(per[a][subset]):
+                continue
+            picked = draws[subset][rep]
+            va[subset] = _bacc(per[a][subset][picked].sum(axis=0))
+            vb[subset] = _bacc(per[b][subset][picked].sum(axis=0))
+        sa.append(_macro(va))
+        sb.append(_macro(vb))
+    point_a = _macro({s: _bacc(per[a][s].sum(axis=0)) for s in subsets if len(per[a][s])})
+    point_b = _macro({s: _bacc(per[b][s].sum(axis=0)) for s in subsets if len(per[b][s])})
+    block = v26.interval(point_a - point_b, np.asarray(sa) - np.asarray(sb))
+    low, high = block['ci95']
+    block.update({'n_cases': len(common), 'a': point_a, 'b': point_b,
+                  'excludes_zero': None if low is None else bool(low > 0 or high < 0)})
+    block['statement'] = v26.wording(a, b, block)
+    return block
 
 
 def track_a_report(rows: list[dict], predictions: dict[str, dict[str, dict]],
@@ -245,19 +296,12 @@ def track_a_report(rows: list[dict], predictions: dict[str, dict[str, dict]],
             }
         output['methods'][variant] = methods
         if 'optimized' in predictions and 'minimal' in predictions:
-            diff = samples['optimized'] - samples['minimal']
-            block = v26.interval(
-                methods['optimized']['macro_balanced_accuracy']['value']
-                - methods['minimal']['macro_balanced_accuracy']['value'], diff)
-            low, high = block['ci95']
-            block['excludes_zero'] = None if low is None else bool(low > 0 or high < 0)
-            block['statement'] = v26.wording('optimized', 'minimal', block)
-            output['paired'][variant] = block
+            output['paired'][variant] = _paired_macro(rows, predictions, subsets, drop, replicates)
     # cost/latency per method over the full document set
     output['cost_latency'] = {}
     for method, preds in predictions.items():
         metas = [(preds.get(r['id']) or {}).get('meta') or {} for r in rows]
-        failures = sum(preds.get(r['id']) is None or 'error' in preds[r['id']] for r in rows)
+        failures = sum(is_failure(r, preds.get(r['id'])) for r in rows)
         in_tok = sum(m.get('input_tokens', 0) for m in metas)
         out_tok = sum(m.get('output_tokens', 0) for m in metas)
         latency = sorted(m.get('latency_ms', 0.0) for m in metas)

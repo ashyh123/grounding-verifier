@@ -184,8 +184,8 @@
         "macro_balanced_accuracy": {
           "value": 0.7972486996555319,
           "ci95": [
-            0.6970933591170877,
-            0.8532868835234075
+            0.6977116626184948,
+            0.8532672821269482
           ]
         },
         "macro_precision": 0.800978687978688,
@@ -196,7 +196,7 @@
             "docs": 6,
             "claims": 11,
             "positives": 11,
-            "failures": 0,
+            "failures": 2,
             "tp": 8,
             "fp": 0,
             "fn": 3,
@@ -335,14 +335,14 @@
         },
         "docs": 58,
         "claims": 196,
-        "failures": 0
+        "failures": 2
       },
       "optimized": {
         "macro_balanced_accuracy": {
           "value": 0.8112528344671202,
           "ci95": [
-            0.7143606988249844,
-            0.8650665649857827
+            0.7141534514238597,
+            0.8659005016147874
           ]
         },
         "macro_precision": 0.842517006802721,
@@ -657,27 +657,27 @@
         "macro_balanced_accuracy": {
           "value": 0.7972486996555319,
           "ci95": [
-            0.6970933591170877,
-            0.8532868835234075
+            0.6950416015575177,
+            0.855222975234806
           ]
         },
         "macro_precision": 0.800978687978688,
-        "macro_recall": 0.7834322820037106,
-        "macro_f1": 0.7704553925606556,
+        "macro_recall": 0.8107050092764378,
+        "macro_f1": 0.7862448662448662,
         "subsets": {
           "AggreFact-CNN": {
-            "docs": 6,
-            "claims": 11,
-            "positives": 11,
-            "failures": 0,
+            "docs": 4,
+            "claims": 8,
+            "positives": 8,
+            "failures": 2,
             "tp": 8,
             "fp": 0,
-            "fn": 3,
+            "fn": 0,
             "tn": 0,
             "balanced_accuracy": NaN,
             "precision": 1.0,
-            "recall": 0.7272727272727273,
-            "f1": 0.8421052631578947
+            "recall": 1.0,
+            "f1": 1.0
           },
           "AggreFact-XSum": {
             "docs": 10,
@@ -806,16 +806,16 @@
             "f1": 0.8
           }
         },
-        "docs": 58,
-        "claims": 196,
-        "failures": 0
+        "docs": 56,
+        "claims": 193,
+        "failures": 2
       },
       "optimized": {
         "macro_balanced_accuracy": {
           "value": 0.8112528344671202,
           "ci95": [
-            0.7143606988249844,
-            0.8650665649857827
+            0.715417971165739,
+            0.8647587432408861
           ]
         },
         "macro_precision": 0.842517006802721,
@@ -976,17 +976,23 @@
         -0.032292161484707926,
         0.052893023700477104
       ],
+      "n_cases": 58,
+      "a": 0.8112528344671202,
+      "b": 0.7972486996555319,
       "excludes_zero": false,
       "statement": "no evidence of a difference between optimized and minimal (paired difference optimized minus minimal +0.014, 95% CI [-0.032, +0.053])"
     },
     "excluding_failures": {
       "value": 0.014004134811588242,
       "ci95": [
-        -0.032292161484707926,
+        -0.030440309632856155,
         0.052893023700477104
       ],
+      "n_cases": 56,
+      "a": 0.8112528344671202,
+      "b": 0.7972486996555319,
       "excludes_zero": false,
-      "statement": "no evidence of a difference between optimized and minimal (paired difference optimized minus minimal +0.014, 95% CI [-0.032, +0.053])"
+      "statement": "no evidence of a difference between optimized and minimal (paired difference optimized minus minimal +0.014, 95% CI [-0.030, +0.053])"
     }
   },
   "cost_latency": {
@@ -1009,8 +1015,8 @@
     },
     "minimal": {
       "docs": 58,
-      "failures": 0,
-      "failure_rate": 0.0,
+      "failures": 2,
+      "failure_rate": 0.034482758620689655,
       "input_tokens": 87533,
       "output_tokens": 28130,
       "cost_usd_total": 0.22693836,

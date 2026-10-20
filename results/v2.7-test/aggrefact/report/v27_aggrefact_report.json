@@ -184,8 +184,8 @@
         "macro_balanced_accuracy": {
           "value": 0.7290005556976735,
           "ci95": [
-            0.6869497306502544,
-            0.7586072180378595
+            0.6866045485531844,
+            0.7591981174151874
           ]
         },
         "macro_precision": 0.8425294212736215,
@@ -196,7 +196,7 @@
             "docs": 55,
             "claims": 80,
             "positives": 70,
-            "failures": 0,
+            "failures": 32,
             "tp": 40,
             "fp": 9,
             "fn": 30,
@@ -335,14 +335,14 @@
         },
         "docs": 461,
         "claims": 854,
-        "failures": 0
+        "failures": 32
       },
       "optimized": {
         "macro_balanced_accuracy": {
           "value": 0.7755222298304223,
           "ci95": [
-            0.7288169606841788,
-            0.8041326482428939
+            0.7288142658687222,
+            0.8050576596489292
           ]
         },
         "macro_precision": 0.888242428146315,
@@ -655,29 +655,29 @@
       },
       "minimal": {
         "macro_balanced_accuracy": {
-          "value": 0.7290005556976735,
+          "value": 0.7680481747452926,
           "ci95": [
-            0.6869497306502544,
-            0.7586072180378595
+            0.7160948399459027,
+            0.8101622049937875
           ]
         },
-        "macro_precision": 0.8425294212736215,
-        "macro_recall": 0.7416170629128886,
-        "macro_f1": 0.7804254003333844,
+        "macro_precision": 0.8584577438221531,
+        "macro_recall": 0.7797123010081267,
+        "macro_f1": 0.8095840517457565,
         "subsets": {
           "AggreFact-CNN": {
-            "docs": 55,
-            "claims": 80,
-            "positives": 70,
-            "failures": 0,
+            "docs": 23,
+            "claims": 44,
+            "positives": 42,
+            "failures": 32,
             "tp": 40,
-            "fp": 9,
-            "fn": 30,
+            "fp": 1,
+            "fn": 2,
             "tn": 1,
-            "balanced_accuracy": 0.3357142857142857,
-            "precision": 0.8163265306122449,
-            "recall": 0.5714285714285714,
-            "f1": 0.6722689075630253
+            "balanced_accuracy": 0.7261904761904762,
+            "precision": 0.975609756097561,
+            "recall": 0.9523809523809523,
+            "f1": 0.963855421686747
           },
           "AggreFact-XSum": {
             "docs": 70,
@@ -806,16 +806,16 @@
             "f1": 0.7916666666666666
           }
         },
-        "docs": 461,
-        "claims": 854,
-        "failures": 0
+        "docs": 429,
+        "claims": 818,
+        "failures": 32
       },
       "optimized": {
         "macro_balanced_accuracy": {
           "value": 0.7755222298304223,
           "ci95": [
-            0.7288169606841788,
-            0.8041326482428939
+            0.7281999724899999,
+            0.8050654941569032
           ]
         },
         "macro_precision": 0.888242428146315,
@@ -976,17 +976,23 @@
         0.010682559456434985,
         0.07894369764415726
       ],
+      "n_cases": 461,
+      "a": 0.7755222298304223,
+      "b": 0.7290005556976735,
       "excludes_zero": true,
       "statement": "optimized is better than minimal (paired difference optimized minus minimal +0.047, 95% CI [+0.011, +0.079])"
     },
     "excluding_failures": {
-      "value": 0.04652167413274877,
+      "value": 0.031521674132748756,
       "ci95": [
-        0.010682559456434985,
-        0.07894369764415726
+        -0.016468597085547685,
+        0.07240702764781876
       ],
-      "excludes_zero": true,
-      "statement": "optimized is better than minimal (paired difference optimized minus minimal +0.047, 95% CI [+0.011, +0.079])"
+      "n_cases": 429,
+      "a": 0.7995698488780414,
+      "b": 0.7680481747452926,
+      "excludes_zero": false,
+      "statement": "no evidence of a difference between optimized and minimal (paired difference optimized minus minimal +0.032, 95% CI [-0.016, +0.072])"
     }
   },
   "cost_latency": {
@@ -1009,8 +1015,8 @@
     },
     "minimal": {
       "docs": 461,
-      "failures": 0,
-      "failure_rate": 0.0,
+      "failures": 32,
+      "failure_rate": 0.06941431670281996,
       "input_tokens": 606996,
       "output_tokens": 143623,
       "cost_usd_total": 1.3699818000000001,

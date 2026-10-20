@@ -47,15 +47,22 @@ Track A uses LLM-AggreFact with claims given (oracle), excluding its RAGTruth su
 461 documents, 854 claims. The metric is macro balanced accuracy over the 10 subsets; documents are
 the bootstrap unit.
 
-| Method | macro balanced accuracy | 95% CI |
-|---|---:|---|
-| baseline | 0.608 | [0.577, 0.628] |
-| minimal | 0.729 | [0.687, 0.759] |
-| optimized | **0.776** | [0.729, 0.804] |
+| Method | main BAcc (failures wrong) | failures | BAcc excluding failures |
+|---|---:|---:|---:|
+| baseline | 0.608 | 0 | 0.608 |
+| minimal | 0.729 | 32 / 461 (6.94%) | 0.768 |
+| optimized | **0.776** | 0 | **0.776** |
 
-Paired optimized − minimal: **+0.047 [+0.011, +0.079]**. With claims given, the optimized pipeline
-verifies more accurately. It wins 6/10 subsets; minimal wins AggreFact-XSum, ExpertQA,
-FactCheck-GPT, Lfqa and Wice, so the macro result is not uniform.
+A claim-count mismatch is a document failure: all its claims count wrong in the main result, and the
+`excluding_failures` variant drops it. Main paired optimized − minimal: **+0.047 [+0.011, +0.079]**.
+But minimal's 32/461 failures are **6.94 %, above the registered 5 % stop line**. When those 32 are
+truly excluded, minimal is 0.768 and optimized 0.776; the paired difference is
+**+0.032 [−0.016, +0.072]** — no evidence of a difference. optimized and minimal each win
+**5/10 subsets (5/5)**; the macro is concentrated: Lfqa has 3 documents, TofuEval-MediaS 2 and
+TofuEval-MeetB 2. Track A is therefore conditional: optimized leads under the failures-count-as-wrong
+convention, but the lead is not robust once minimal's malformed claim lists are removed. The test
+stop condition is reported as triggered; this is a post-freeze scoring exception, not a clean
+confirmatory result.
 
 Precision and recall, reported separately (not only the composite metric):
 
@@ -93,8 +100,10 @@ Guardian 3.3 75.92, Mistral-Large 2 75.54, gpt-4o-2024-05-13 75.08, MiniCheck-Fl
 (source: [llm-aggrefact.github.io](https://llm-aggrefact.github.io), accessed 2026-10-20).
 optimized's 77.55 is near the top of that reported range, minimal's 72.90 is mid-range, and the
 baseline's 60.77 is below it. This is **not a like-for-like rank**: we sample 80 claims per subset,
-the leaderboard uses the full sets; our prompt and harness differ; and the leaderboard's metric
-definition may not be identical. It is context, not a claim of state of the art.
+the leaderboard uses the full sets; our prompt and harness differ; the leaderboard's metric
+definition may not be identical; and track A's stop condition is triggered by minimal's failures.
+It is context, not a claim of state of the art. With the failures excluded, minimal's 76.80 is also
+near the leaderboard range, so the external comparison does not separate the two methods robustly.
 
 ### Failure examples (first five by ID, not cherry-picked)
 
@@ -126,8 +135,11 @@ each, optimized in two):
 ### Cost and protocol
 
 Test spend: $9.0471 (track A $4.0340 + track B $5.0131), plus $1.7553 for two S4 dev runs;
-total **$10.8024**, below the $16 cap. All six paid runs completed with 0 failures and no
-truncation; optimized had one recovered retry in each track. Track B reused 29 v2.6 test predictions; their tokens/cost are not counted as new spend.
+total **$10.8024**, below the $16 cap. All six paid runs completed without provider errors or
+truncation; optimized had one recovered retry in each track. Track B had 0 failures. Track A minimal
+had 32/461 claim-count failures (6.94%), above the 5% stop line; the main and truly
+excluding-failures results are both reported above. Track B reused 29 v2.6 test predictions; their
+tokens/cost are not counted as new spend.
 The run protocol deviation is minimal's oracle batching (20 claims per call; the 80/subset sample was
 the S2-confirmed fallback), approved
 after the unbatched S4 run truncated a 61-claim document; prompt, model, verifier code and gold are
@@ -137,6 +149,10 @@ unchanged. The v2.6 test was not rerun. Detailed run record:
 
 ### v2.7 threats to validity
 
+* **Track A triggered the 5 % stop condition.** minimal returned a different number of claims than
+  the gold for 32/461 documents (6.94 %). The main result counts those documents wrong and shows a
+  +0.047 lead; truly excluding them leaves +0.032 [−0.016, +0.072], no evidence. The test was not
+  rerun; the scoring change is a post-freeze exception recorded in the freeze.
 * RAGTruth++ has no publisher-declared license; raw CSV and the derived JSONL stay local and are
   not redistributed. Its strict labels start from the publisher's detector and have no peer review.
 * Track A excludes the RAGTruth subset and documents over 4000 words; whole-document sampling

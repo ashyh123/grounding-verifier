@@ -60,6 +60,13 @@ disagree, the JSON is right.
 
 ## v2.7 revision (2026-10-20)
 
+**Post-report scoring correction:** a claim-count mismatch is now a document failure. Track A minimal
+has 32/461 such failures (6.94 %), above the 5 % stop line; the main result counts them wrong, while
+truly excluding them removes the optimized lead. README's track A conclusion gives both versions,
+uses the 5/5 per-subset split, and notes that Lfqa/TofuEval subsets contain only 2–3 documents. A
+README-only documentation re-seal (plus a status-summary correction) was explicitly authorized and
+logged; code, prompt, data and metric hashes did not change.
+
 The headline is now three-part: v2.6 end-to-end under RAGTruth original annotation; v2.7 track B
 (RAGTruth++ loose vs strict) and track A (LLM-AggreFact oracle). The key result is that the
 minimal/optimized ranking is **decided by the annotation standard**: minimal is better under loose

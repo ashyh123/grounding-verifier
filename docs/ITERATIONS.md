@@ -559,7 +559,8 @@ optimized − baseline +0.088 [+0.051, +0.126]。三个区间都不含 0。
 
 ## v2.7 外部金标复测（当前）
 
-**状态：已完成；两轨道 test 各跑一次，0 失败、0 截断；总费用 $10.80，低于 $16。**
+**状态：已完成；两轨道 test 各跑一次。轨道 B 0 失败；轨道 A minimal 32/461 主张条数不符
+（6.94%），超过 5% 停止线；主结果按失败算错，真正剔除后没有差异。总费用 $10.80，低于 $16。**
 
 v2.7 不推翻 v2.6，只回答两个问题：在更严格的金标下 v2.6 排名是否成立；在外部标准基准上、
 主张给定时谁的核验更准。两轨道独立结论，不合成总分。
@@ -578,25 +579,36 @@ v2.7 不推翻 v2.6，只回答两个问题：在更严格的金标下 v2.6 排�
   与单测；两轨道 baseline 免费检查通过。
 - **S4**：轨道 A dev 第一次运行时 minimal 在 61 条主张的 TofuEval 文档上截断（16k 字符 JSON，
   max_tokens=4096），触发停止条件。经用户确认，仅改 oracle 入口，minimal 每 20 条主张一批；
-  重跑后三方案 0 失败。结果：baseline 0.590、minimal 0.797、optimized 0.811，配对差
+  重跑后 optimized 0 失败；按后来统一的“主张条数不符算失败”口径，minimal 有 2/58（3.45%，
+  低于 5%）条数不符，baseline 0。结果：baseline 0.590、minimal 0.797、optimized 0.811，配对差
   +0.014 [−0.032, +0.053]，无差异。两次 dev 共 $1.7553。
 - **S5**：`data/annotation/v2.7/freeze.json`，包含规则、数据/源哈希、代码/verifier 哈希、
   模型参数、两轨道运行计划、停止条件、$16 上限和结论规则；`freeze --check` 通过，已 push。
-- **S6**：两轨道 test 各 1 轮，0 失败、0 截断：
-  * 轨道 A：baseline 0.608、minimal 0.729、optimized 0.776；optimized − minimal
-    +0.047 [+0.011, +0.079]，主张给定时 optimized 更准。
+- **S6**：两轨道 test 各 1 轮：
+  * 轨道 A：baseline 0.608、minimal 0.729、optimized 0.776；optimized − minimal 主结果
+    +0.047 [+0.011, +0.079]。但 minimal 有 32/461 篇主张条数不符（6.94%），超过 5% 停止线；
+    真正剔除失败后 minimal 0.768、optimized 0.776，配对差 +0.032 [−0.016, +0.072]，
+    没有证据表明存在差异。optimized 与 minimal 各赢 5/10 个子集（5/5）；Lfqa 3 篇、
+    TofuEval-MediaS 2 篇、TofuEval-MeetB 2 篇，macro 集中在少数文档上。
   * 轨道 B 宽松金标：minimal 句子 F1 0.371、optimized 0.218，差 −0.153 [−0.226, −0.086]；
     严格金标：minimal 0.522、optimized 0.628，差 +0.106 [+0.046, +0.168]。
   * 按第 5 节规则：**排名由金标标准决定**；宽松下 minimal 更好，严格下 optimized 更好，
     按使用场景选择。
   * 费用：轨道 A $4.0340、轨道 B $5.0131、dev $1.7553，合计 $10.8024。
+  * 评分口径后改：主张条数不符记为失败；这是 post-freeze 变更，记录在 v2.7 freeze 的
+    `post_freeze_scoring_change`，test 只重算、未重跑。
 - **S7**：README headline 改为三部分；REPORT 增加两节和失败实例；DATASET/EVALUATION/ITERATIONS
-  同步。按第 10.1 节做一次、也只做一次文档签封：只更新 v2.5/v2.6 freeze 中 README、
-  DATASET、EVALUATION 的哈希，代码/prompt/数据/指标不变；`resign_log.json` 记录授权与新旧哈希。
+  同步。S7 先做了一次文档签封：只更新 v2.5/v2.6 freeze 中 README、DATASET、EVALUATION 的哈希，
+  代码/prompt/数据/指标不变；`resign_log.json` 记录授权与新旧哈希。
+- **S7 后修正**：按用户指令把「主张条数不符」记为失败；主结果仍按失败算错，另报真正剔除失败的
+  版本。轨道 A minimal 因此有 32/461（6.94%）失败，超过 5% 停止线；真正剔除后 optimized 与
+  minimal 无差异。README 的轨道 A 结论、5/5 和子集集中说明随之改写；用户明确授权再做 README-only 签封（含一次状态摘要校正），覆盖原「只签封一次」的限制，
+  全部记录在 `resign_log.json`。
 
 ### 结果与决定
 
-- **轨道 A 独立结论：主张给定时 optimized 的逐条核验更好**（+0.047 BAcc）。
+- **轨道 A 的结论是条件性的**：按“失败算错”optimized 领先（+0.047），但 minimal 的 6.94% 失败率
+  触发停止线；真正剔除失败后差异消失（+0.032 [−0.016, +0.072]）。不能写成干净的“optimized 更好”。
 - **轨道 B 的结论不是“谁更好”，而是“排名取决于金标宽严”**：宽松下 minimal，严格下 optimized。
   v2.6 的 end-to-end 结果仍成立，但只适用于 RAGTruth 原始标注。
 - README 不再使用“optimized 不值得它的额外成本”这类无限定说法；精度与召回分开列。

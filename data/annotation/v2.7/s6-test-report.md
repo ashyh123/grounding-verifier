@@ -1,22 +1,32 @@
 # v2.7 S6 test 报告
 
-**状态：两轨道按 freeze 各跑一次，三方案各 1 轮；0 失败、0 截断；optimized 在两轨道各有 1 次
-重试并恢复；总费用约 $10.80，低于 $16。未重跑。**
+**状态：两轨道按 freeze 各跑一次，三方案各 1 轮；轨道 B 0 失败，轨道 A minimal 有 32/461
+主张条数不符（6.94%），超过 5% 停止线；主结果按失败算错，真正剔除后没有差异。0 截断；
+optimized 在两轨道各有 1 次重试并恢复；总费用约 $10.80，低于 $16。未重跑。**
 
 ## 轨道 A：LLM-AggreFact（oracle，主张给定）
 
 数据：461 篇文档 / 854 条主张 / 512 正例；10 个子集；minimal 每 20 条主张一批。
 
-| 方案 | 宏平均 BAcc | 95% CI | 失败文档 | 费用 |
-|---|---:|---|---:|---:|
-| baseline | 0.608 | [0.577, 0.628] | 0 | $0.0000 |
-| minimal | 0.729 | [0.687, 0.759] | 0 | $1.3700 |
-| optimized | **0.776** | [0.729, 0.804] | 0 | $2.6640 |
+| 方案 | 主 BAcc（失败算错） | 95% CI | 失败 | 剔除失败 BAcc | 费用 |
+|---|---:|---|---:|---:|---:|
+| baseline | 0.608 | [0.577, 0.628] | 0 | 0.608 | $0.0000 |
+| minimal | 0.729 | [0.687, 0.759] | 32 / 461 (6.94%) | 0.768 | $1.3700 |
+| optimized | **0.776** | [0.729, 0.804] | 0 | **0.776** | $2.6640 |
 
-配对 optimized − minimal：**+0.047 [+0.011, +0.079]**，区间不含 0。
+主张条数不符（文档的预测主张数 ≠ 金标主张数）现在记为失败：主结果把该文档的全部主张算错；
+`excluding_failures` 真正剔除此文档。主结果配对 optimized − minimal：
+**+0.047 [+0.011, +0.079]**；但 minimal 的失败率 **6.94% > 5%**，触发停止条件。
+真正剔除 32 篇后，minimal 0.768、optimized 0.776，配对差 **+0.032 [−0.016, +0.072]**，
+没有证据表明存在差异。
 
-分任务：optimized 在 6/10 个子集更高，minimal 在 AggreFact-XSum、ExpertQA、FactCheck-GPT、
-Lfqa、Wice 更高。逐子集表在 `results/v2.7-test/aggrefact/report/v27_aggrefact_report.json`。
+分任务：optimized 与 minimal 各赢 **5/10 个子集（5/5）**；macro 也集中在少数文档上：
+Lfqa 只有 3 篇、TofuEval-MediaS 2 篇、TofuEval-MeetB 2 篇。逐子集表在
+`results/v2.7-test/aggrefact/report/v27_aggrefact_report.json`。
+
+轨道 A 的结论因此是条件性的：按“失败算错”时 optimized 领先，但剔除 minimal 的畸形输出后
+差异消失；这不是一个干净的确认性结果。该评分改动是 post-freeze 变更，记录在
+`data/annotation/v2.7/freeze.json` 的 `post_freeze_scoring_change`。
 
 ## 轨道 B：RAGTruth++（端到端，两套句子金标）
 
@@ -79,10 +89,12 @@ Lfqa、Wice 更高。逐子集表在 `results/v2.7-test/aggrefact/report/v27_agg
 | **合计** | **$10.8024** |
 
 - 轨道 B 的 29 条复用预测没有产生新费用；费用只计 200 条新跑。
-- 两次重试都恢复，没有失败；没有截断。重试的 token 已计入费用。
+- 两次重试都恢复；没有截断；重试的 token 已计入费用。
 - 低于 $16 上限，余量约 $5.20。
 
 ## 停止条件
 
-- 两轨道三方案失败率均为 0；无超长、无截断；费用低于上限；未改 prompt、代码、数据。
-- 未触发停止条件，test 结果有效。未重跑。
+- 轨道 B 三方案 0 失败；轨道 A baseline/optimized 0 失败，minimal 32/461 = 6.94% > 5%，
+  触发停止条件。
+- 无超长、无截断；费用低于上限；未改 prompt、模型或数据。test 未重跑；轨道 A 的
+  post-freeze 评分改动按用户指令记录，主结果与真正剔除失败的结果都报告。

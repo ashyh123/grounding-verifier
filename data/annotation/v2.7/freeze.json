@@ -29,7 +29,7 @@
     "annotation/v26/sentences.py": "020fd7ae33a26144b1bed8c49cfc813a3912a9201bba861b685e1e19a7fdf861",
     "eval/run.py": "b1eb0328d7d3e4772a34f06a15242951e81b65e85063806bc79c6205732a7c60",
     "eval/v26.py": "8efcf1fddadbfad09d9fc789f4b176746595ee30ccbd855ea270b7cf530b6b97",
-    "eval/v27.py": "07c40e43df872282829867602e668c6075fee76b8a175e227bdb48df8ad638e8",
+    "eval/v27.py": "76a9bff6fa42ce3fdf489615b08bb9acbe48464c56e708bb75b2b6aa13bc6868",
     "eval/run_v27.py": "150c1fda37f2cdc902758513129434591bee218929c2147aa0c111f5e085faf5",
     "tests/test_v27_ragtruthpp.py": "9e76859b6c4291faf71f95e931cc9e3bb667f4184628bba2734df33a726428c7",
     "tests/test_v27_aggrefact.py": "cd69a157f1cdb51af28ffab2578cfae7b70d040baa0509051fd1f63c05b5e0d0",
@@ -225,5 +225,68 @@
     "sentence localisation is lexical and approximate; citation sufficiency is not assessed",
     "the protocol changed after v2.6; the verifier and prompt are unchanged, but v2.7 is a new evaluation"
   ],
-  "note": "All data hashes are local; raw and derived external data are git-ignored. The v2.5 documentation re-seal at 8981478 is recorded as a deviation and may be repeated once at S7."
+  "note": "All data hashes are local; raw and derived external data are git-ignored. The v2.5 documentation re-seal at 8981478 is recorded as a deviation and may be repeated once at S7. A post-freeze scoring change records claim-count mismatches as failures; the test was rescored offline and its stop condition is reported as triggered.",
+  "post_freeze_scoring_change": {
+    "date": "2026-10-20",
+    "file": "eval/v27.py",
+    "old_sha256": "07c40e43df872282829867602e668c6075fee76b8a175e227bdb48df8ad638e8",
+    "new_sha256": "76a9bff6fa42ce3fdf489615b08bb9acbe48464c56e708bb75b2b6aa13bc6868",
+    "authorization": "user instruction: a claim-count mismatch is a document failure; main counts failures wrong; report a truly excluding-failures version",
+    "predictions_unchanged": true,
+    "rescored_from_saved_predictions": true,
+    "track_a_effect": {
+      "minimal_failures": 32,
+      "minimal_failure_rate": 0.06941431670281996,
+      "main_macro_bacc": {
+        "baseline": 0.6077,
+        "minimal": 0.729,
+        "optimized": 0.7755
+      },
+      "excluding_failures_macro_bacc": {
+        "baseline": 0.6077,
+        "minimal": 0.768,
+        "optimized": 0.7755
+      },
+      "paired_main": {
+        "value": 0.047,
+        "ci95": [
+          0.011,
+          0.079
+        ],
+        "excludes_zero": true
+      },
+      "paired_excluding": {
+        "value": 0.032,
+        "ci95": [
+          -0.016,
+          0.072
+        ],
+        "excludes_zero": false
+      }
+    },
+    "stop_condition_triggered": "minimal failure rate 6.94% > 5% stop line",
+    "dev_effect": {
+      "minimal_failures": 2,
+      "minimal_failure_rate": 0.034482758620689655,
+      "main_macro_bacc": {
+        "baseline": 0.5895,
+        "minimal": 0.7972,
+        "optimized": 0.8113
+      },
+      "excluding_failures_macro_bacc": {
+        "baseline": 0.5895,
+        "minimal": 0.7972,
+        "optimized": 0.8113
+      },
+      "paired_main": {
+        "value": 0.014,
+        "ci95": [
+          -0.032,
+          0.053
+        ],
+        "excludes_zero": false
+      },
+      "below_5_percent_stop_line": true
+    }
+  }
 }
