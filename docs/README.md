@@ -15,6 +15,7 @@ and nothing in the docs is transcribed by hand if a script can regenerate it.
 | [EVALUATION.md](EVALUATION.md) | How is it measured, what does each metric mean, how do I reproduce or re-score | reviewer judging the benchmark |
 | [REPORT.md](REPORT.md) | What were the results, what failed, what may not be concluded | reviewer judging the claims |
 | [DATASET.md](DATASET.md) | What is in the 46 cases, how were they labelled, how hard are they | annotator or reviewer auditing the data |
+| [TEST_PLAN.md](TEST_PLAN.md) | What is the draft plan for the v2.5 test measurement, and what did the dev dry run show | reviewer deciding the test run |
 | [ITERATIONS.md](ITERATIONS.md) | What was tried, what was kept, what was reverted and why | anyone judging the development process |
 
 Reading order for a first pass: README → REPORT (results) → ITERATIONS (how they were reached) →
