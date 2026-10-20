@@ -11,3 +11,7 @@ data/sources/v2/raw/
 
 # v2.7 external evaluation sources: local only, reproducible from annotation/v27/fetch.py
 data/sources/v2.7/raw/
+
+# v2.7 derived evaluation data (contains RAGTruth++ text); rebuild from raw CSVs locally
+data/eval_ragtruthpp.v2.7.jsonl
+data/eval_aggrefact.v2.7.jsonl

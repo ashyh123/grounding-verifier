@@ -6,7 +6,9 @@
 ## 轨道 B：RAGTruth++
 
 来源：`blue-guardrails/ragtruth-plus-plus`，revision
-`afaec19e64122b4a58718dc31bcd555c97460233`，只本地使用，原始 CSV 未提交。
+`afaec19e64122b4a58718dc31bcd555c97460233`，只本地使用，原始 CSV 与生成的
+`data/eval_ragtruthpp.v2.7.jsonl` 都不提交；仓库只保留 `sources.json`、`selection.json`
+（含数据集 sha256）、规则和构建代码。
 
 - 回答数：408（816 条 message，408 user + 408 assistant）；幻觉片段 865。
 - 与 RAGTruth `response.jsonl` 精确匹配：408/408；回答文本不一致 0；片段偏移不一致 0。
@@ -41,6 +43,13 @@
 - 新跑 200 条：minimal 约 $1.04，optimized 约 $6.80，合计约 **$7.84**。
 - 复用的 29 条不产生模型费用；baseline 0。
 - 与设计文档的 $7.8 估算一致。
+
+### 免费 baseline 检查
+
+`results/v2.7-dev/baseline/`：229 条选中回答，0 失败，29 条复用 v2.6 预测。
+strict 金标 BAcc 0.539、句子 F1 0.498；loose 金标 BAcc 0.526、句子 F1 0.111。
+baseline 几乎对每条回答都报警，所以 strict 下 F1 看似高（0.853），但 BAcc 接近随机；
+这是解析与指标管线的检查，不是方案结果。
 
 ## 轨道 A：LLM-AggreFact（阻塞）
 
