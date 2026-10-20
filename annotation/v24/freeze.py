@@ -2,6 +2,8 @@
 
 No model calls. Historical data/code stay immutable; required documentation updates are
 identified explicitly. --check verifies every pinned file, including local raw snapshots.
+v2.5 explicitly authorized updating annotation/README.md, so it joins the historical
+documentation updates; the recreated freeze pins the current status text.
 """
 from __future__ import annotations
 
@@ -19,7 +21,7 @@ from annotation.map_labels import read_jsonl
 from .complete import OUT
 from .merge import assemble
 
-DOCUMENTATION_UPDATES = {'docs/DATASET.md', 'docs/EVALUATION.md'}
+DOCUMENTATION_UPDATES = {'docs/DATASET.md', 'docs/EVALUATION.md', 'annotation/README.md'}
 
 
 def create(root: Path, dataset: Path) -> dict:
@@ -46,7 +48,8 @@ def create(root: Path, dataset: Path) -> dict:
     paths = [dataset, root/'audit.json', root/'final_report.md', old_path]
     paths += [p for directory in ('annotation','eval','verifier','tests')
               for p in (S.ROOT/directory).rglob('*.py') if '__pycache__' not in p.parts]
-    paths += [S.ROOT/n for n in ('README.md','docs/DATASET.md','docs/EVALUATION.md','pyproject.toml','uv.lock','Makefile')]
+    paths += [S.ROOT/n for n in ('README.md','docs/DATASET.md','docs/EVALUATION.md',
+                                 'annotation/README.md','pyproject.toml','uv.lock','Makefile')]
     for path in paths:
         files[S.rel(path.resolve())] = digest(path)
     for name, sha in files.items():
