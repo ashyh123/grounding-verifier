@@ -1,0 +1,1746 @@
+{
+  "version": "2.6",
+  "seed": 20261022,
+  "rules_sha256": "32b1ac6361c98c1e98ab6cb2ab5f4c78b50111d1194c288fccb7980471af66d1",
+  "existing_sha256": "e80a0eceda7b42c04207ca0eea3298adcc16d035255e6700bdb757f8cd976da2",
+  "upstream_response_sha256": "e4c2e4ac24fff676d8984cc61c35d791612fadc58015335d97dd632375e18073",
+  "upstream_source_info_sha256": "0dffc26ea9f3c1c3d7c7e8336b56ef1646e3cec876edffcca3c9c624d12d578b",
+  "sentence_rules": "v2.6-sentences-1",
+  "technical_caps": {
+    "basis": "maximum observed in data/eval_hard.v2.5.jsonl (63 cases)",
+    "max_context_words": 1626,
+    "max_answer_words": 304,
+    "word_definition": "len(text.split()); context words are over ' '.join(context_passages)",
+    "service_limits": {
+      "max_passages": 50,
+      "max_passage_chars": 20000,
+      "max_answer_chars": 10000
+    },
+    "over_cap_candidates": "excluded and counted per cap in selection.json"
+  },
+  "counts": {
+    "Summary/dev": 10,
+    "Summary/test": 60,
+    "QA/dev": 10,
+    "QA/test": 60,
+    "Data2txt/dev": 10,
+    "Data2txt/test": 60
+  },
+  "pool": {
+    "eligible_responses": 2357,
+    "eligible_sources": 398,
+    "eligible_groups": 398,
+    "excluded_responses": {
+      "already_in_v2x": 300,
+      "answer_too_long": 6,
+      "legacy_project": 12
+    },
+    "eligible_by_task": {
+      "Data2txt": 826,
+      "QA": 787,
+      "Summary": 744
+    },
+    "eligible_by_task_model": {
+      "Data2txt/gpt-3.5-turbo-0613": 138,
+      "Data2txt/gpt-4-0613": 138,
+      "Data2txt/llama-2-13b-chat": 137,
+      "Data2txt/llama-2-70b-chat": 137,
+      "Data2txt/llama-2-7b-chat": 138,
+      "Data2txt/mistral-7B-instruct": 138,
+      "QA/gpt-3.5-turbo-0613": 127,
+      "QA/gpt-4-0613": 136,
+      "QA/llama-2-13b-chat": 136,
+      "QA/llama-2-70b-chat": 135,
+      "QA/llama-2-7b-chat": 131,
+      "QA/mistral-7B-instruct": 122,
+      "Summary/gpt-3.5-turbo-0613": 124,
+      "Summary/gpt-4-0613": 124,
+      "Summary/llama-2-13b-chat": 124,
+      "Summary/llama-2-70b-chat": 124,
+      "Summary/llama-2-7b-chat": 124,
+      "Summary/mistral-7B-instruct": 124
+    }
+  },
+  "selected": [
+    {
+      "id": "ragtruth-1000",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15759",
+      "group": "pool-15759",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-10019",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14769",
+      "group": "pool-14769",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-10211",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14802",
+      "group": "pool-14802",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-10355",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14828",
+      "group": "pool-14828",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-10365",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14830",
+      "group": "pool-14830",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-10458",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14846",
+      "group": "pool-14846",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-10711",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14890",
+      "group": "pool-14890",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-10736",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14894",
+      "group": "pool-14894",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-10802",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14905",
+      "group": "pool-14905",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-10816",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "14907",
+      "group": "pool-14907",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-10882",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14918",
+      "group": "pool-14918",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-11191",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14974",
+      "group": "pool-14974",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-11287",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14990",
+      "group": "pool-14990",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-11294",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14991",
+      "group": "pool-14991",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-11458",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "15020",
+      "group": "pool-15020",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-11488",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "15025",
+      "group": "pool-15025",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-1183",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15791",
+      "group": "pool-15791",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-12019",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14319",
+      "group": "pool-14319",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-12047",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14323",
+      "group": "pool-14323",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-12069",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14327",
+      "group": "pool-14327",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-12136",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "14339",
+      "group": "pool-14339",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-12183",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "14347",
+      "group": "pool-14347",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-12241",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14357",
+      "group": "pool-14357",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-12294",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "14366",
+      "group": "pool-14366",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-123",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15613",
+      "group": "pool-15613",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-12331",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14373",
+      "group": "pool-14373",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-1236",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15800",
+      "group": "pool-15800",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-12437",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14390",
+      "group": "pool-14390",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-12441",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14391",
+      "group": "pool-14391",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-12518",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "14404",
+      "group": "pool-14404",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-12527",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14405",
+      "group": "pool-14405",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-12621",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14421",
+      "group": "pool-14421",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-12767",
+      "split": "test",
+      "task": "QA",
+      "source_id": "14445",
+      "group": "pool-14445",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-13042",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15092",
+      "group": "pool-15092",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-13153",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "15111",
+      "group": "pool-15111",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-13159",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15112",
+      "group": "pool-15112",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-13232",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15124",
+      "group": "pool-15124",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-13291",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15135",
+      "group": "pool-15135",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-13309",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15138",
+      "group": "pool-15138",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-13429",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15158",
+      "group": "pool-15158",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-13469",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15164",
+      "group": "pool-15164",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-13533",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15175",
+      "group": "pool-15175",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-1354",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15819",
+      "group": "pool-15819",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-13741",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15210",
+      "group": "pool-15210",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-13911",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15238",
+      "group": "pool-15238",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-14053",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15262",
+      "group": "pool-15262",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-14096",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15269",
+      "group": "pool-15269",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-14198",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15286",
+      "group": "pool-15286",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-14291",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "15301",
+      "group": "pool-15301",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-14352",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15313",
+      "group": "pool-15313",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-14364",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15315",
+      "group": "pool-15315",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-14469",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "15332",
+      "group": "pool-15332",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-14504",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15338",
+      "group": "pool-15338",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-14691",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15369",
+      "group": "pool-15369",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-14703",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15371",
+      "group": "pool-15371",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-14746",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15378",
+      "group": "pool-15378",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-1480",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11317",
+      "group": "pool-11317",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-14802",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15388",
+      "group": "pool-15388",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-14816",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15390",
+      "group": "pool-15390",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-14886",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15402",
+      "group": "pool-15402",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-14996",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15420",
+      "group": "pool-15420",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-15104",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15438",
+      "group": "pool-15438",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-15179",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15450",
+      "group": "pool-15450",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-1519",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "11332",
+      "group": "pool-11332",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-15201",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15454",
+      "group": "pool-15454",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-15207",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15455",
+      "group": "pool-15455",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-15345",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15478",
+      "group": "pool-15478",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-15460",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15497",
+      "group": "pool-15497",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-15557",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15513",
+      "group": "pool-15513",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-15685",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15535",
+      "group": "pool-15535",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-1570",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11349",
+      "group": "pool-11349",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-15719",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "15540",
+      "group": "pool-15540",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-15774",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15550",
+      "group": "pool-15550",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-15782",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15551",
+      "group": "pool-15551",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-1588",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11353",
+      "group": "pool-11353",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-15925",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15576",
+      "group": "pool-15576",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-15930",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15577",
+      "group": "pool-15577",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-1596",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "11355",
+      "group": "pool-11355",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-15971",
+      "split": "test",
+      "task": "QA",
+      "source_id": "15583",
+      "group": "pool-15583",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-1604",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11356",
+      "group": "pool-11356",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-16061",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12167",
+      "group": "pool-12167",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-16147",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12182",
+      "group": "pool-12182",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-16154",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12183",
+      "group": "pool-12183",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-16359",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12218",
+      "group": "pool-12218",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-16454",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12234",
+      "group": "pool-12234",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-16634",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12264",
+      "group": "pool-12264",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-16663",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12269",
+      "group": "pool-12269",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-16691",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12273",
+      "group": "pool-12273",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-16772",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "12287",
+      "group": "pool-12287",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-16880",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12305",
+      "group": "pool-12305",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-16899",
+      "split": "dev",
+      "task": "QA",
+      "source_id": "12308",
+      "group": "pool-12308",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-16936",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12314",
+      "group": "pool-12314",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-17055",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12334",
+      "group": "pool-12334",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-17059",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12335",
+      "group": "pool-12335",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-17197",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12358",
+      "group": "pool-12358",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-17237",
+      "split": "test",
+      "task": "QA",
+      "source_id": "12364",
+      "group": "pool-12364",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-1828",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11768",
+      "group": "pool-11768",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-1895",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11779",
+      "group": "pool-11779",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-1991",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "11795",
+      "group": "pool-11795",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-207",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15627",
+      "group": "pool-15627",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-2241",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11838",
+      "group": "pool-11838",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-2374",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11860",
+      "group": "pool-11860",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-248",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15634",
+      "group": "pool-15634",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-2486",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11880",
+      "group": "pool-11880",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-2533",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11888",
+      "group": "pool-11888",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-26",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15596",
+      "group": "pool-15596",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-2608",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11900",
+      "group": "pool-11900",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-2656",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11908",
+      "group": "pool-11908",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-2667",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "11910",
+      "group": "pool-11910",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-3144",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "11991",
+      "group": "pool-11991",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-334",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15648",
+      "group": "pool-15648",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-3559",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "12060",
+      "group": "pool-12060",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-356",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15652",
+      "group": "pool-15652",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-3609",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "12068",
+      "group": "pool-12068",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-3770",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13799",
+      "group": "pool-13799",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-3811",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13806",
+      "group": "pool-13806",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-3865",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13815",
+      "group": "pool-13815",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-3870",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13816",
+      "group": "pool-13816",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-3884",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13818",
+      "group": "pool-13818",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-3914",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "13823",
+      "group": "pool-13823",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-4012",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13839",
+      "group": "pool-13839",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-4015",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13840",
+      "group": "pool-13840",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-4055",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "13846",
+      "group": "pool-13846",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-4062",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13848",
+      "group": "pool-13848",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-413",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15661",
+      "group": "pool-15661",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-4224",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13875",
+      "group": "pool-13875",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-4338",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "13894",
+      "group": "pool-13894",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-434",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15665",
+      "group": "pool-15665",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-4346",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13895",
+      "group": "pool-13895",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-4475",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13916",
+      "group": "pool-13916",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-4478",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13917",
+      "group": "pool-13917",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-4525",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13925",
+      "group": "pool-13925",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-4531",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13926",
+      "group": "pool-13926",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-4574",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13933",
+      "group": "pool-13933",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-4584",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13935",
+      "group": "pool-13935",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-4749",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "13962",
+      "group": "pool-13962",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-4779",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13968",
+      "group": "pool-13968",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-4794",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13971",
+      "group": "pool-13971",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-4801",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "13972",
+      "group": "pool-13972",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-4842",
+      "split": "dev",
+      "task": "Summary",
+      "source_id": "13979",
+      "group": "pool-13979",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-4952",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13481",
+      "group": "pool-13481",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-5037",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13495",
+      "group": "pool-13495",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-5087",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13503",
+      "group": "pool-13503",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-5276",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13535",
+      "group": "pool-13535",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-5412",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13558",
+      "group": "pool-13558",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-5478",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13569",
+      "group": "pool-13569",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-5529",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13577",
+      "group": "pool-13577",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-5564",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "13583",
+      "group": "pool-13583",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-5686",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13603",
+      "group": "pool-13603",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-5690",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13604",
+      "group": "pool-13604",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-5763",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13619",
+      "group": "pool-13619",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-5828",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13633",
+      "group": "pool-13633",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-585",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15690",
+      "group": "pool-15690",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-6051",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13673",
+      "group": "pool-13673",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-6139",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "13688",
+      "group": "pool-13688",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-6171",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "13693",
+      "group": "pool-13693",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-6250",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13708",
+      "group": "pool-13708",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-6279",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13713",
+      "group": "pool-13713",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-6285",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13714",
+      "group": "pool-13714",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-6415",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "13737",
+      "group": "pool-13737",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-646",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15700",
+      "group": "pool-15700",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-6676",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13783",
+      "group": "pool-13783",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-6684",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13785",
+      "group": "pool-13785",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-6782",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "13996",
+      "group": "pool-13996",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-6845",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14006",
+      "group": "pool-14006",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-6862",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14009",
+      "group": "pool-14009",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-6905",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14017",
+      "group": "pool-14017",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-694",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15708",
+      "group": "pool-15708",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-6979",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14031",
+      "group": "pool-14031",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-7003",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "14035",
+      "group": "pool-14035",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-7013",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14036",
+      "group": "pool-14036",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-7014",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14037",
+      "group": "pool-14037",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-7024",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "14038",
+      "group": "pool-14038",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-7036",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14040",
+      "group": "pool-14040",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-7066",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14045",
+      "group": "pool-14045",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-7142",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14060",
+      "group": "pool-14060",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-7233",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14076",
+      "group": "pool-14076",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-7237",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14077",
+      "group": "pool-14077",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-7257",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14080",
+      "group": "pool-14080",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-7264",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14081",
+      "group": "pool-14081",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-7291",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14086",
+      "group": "pool-14086",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-731",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15714",
+      "group": "pool-15714",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-7314",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14090",
+      "group": "pool-14090",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-7510",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14123",
+      "group": "pool-14123",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-7778",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14169",
+      "group": "pool-14169",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-7787",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14171",
+      "group": "pool-14171",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-7984",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14205",
+      "group": "pool-14205",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-8076",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14223",
+      "group": "pool-14223",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-8218",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14249",
+      "group": "pool-14249",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-8240",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "14254",
+      "group": "pool-14254",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-841",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15733",
+      "group": "pool-15733",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-8418",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14289",
+      "group": "pool-14289",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-8510",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14504",
+      "group": "pool-14504",
+      "generator_model": "mistral-7B-instruct"
+    },
+    {
+      "id": "ragtruth-8556",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14513",
+      "group": "pool-14513",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-857",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15735",
+      "group": "pool-15735",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-8622",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14524",
+      "group": "pool-14524",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-8659",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "14530",
+      "group": "pool-14530",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-8667",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14531",
+      "group": "pool-14531",
+      "generator_model": "llama-2-7b-chat"
+    },
+    {
+      "id": "ragtruth-8675",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14532",
+      "group": "pool-14532",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-8771",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14548",
+      "group": "pool-14548",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-9082",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14605",
+      "group": "pool-14605",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-924",
+      "split": "test",
+      "task": "Summary",
+      "source_id": "15747",
+      "group": "pool-15747",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-9523",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14680",
+      "group": "pool-14680",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-9553",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14685",
+      "group": "pool-14685",
+      "generator_model": "gpt-3.5-turbo-0613"
+    },
+    {
+      "id": "ragtruth-9581",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14689",
+      "group": "pool-14689",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-9582",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14690",
+      "group": "pool-14690",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-9838",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14737",
+      "group": "pool-14737",
+      "generator_model": "llama-2-13b-chat"
+    },
+    {
+      "id": "ragtruth-9840",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14738",
+      "group": "pool-14738",
+      "generator_model": "gpt-4-0613"
+    },
+    {
+      "id": "ragtruth-9923",
+      "split": "dev",
+      "task": "Data2txt",
+      "source_id": "14753",
+      "group": "pool-14753",
+      "generator_model": "llama-2-70b-chat"
+    },
+    {
+      "id": "ragtruth-9941",
+      "split": "test",
+      "task": "Data2txt",
+      "source_id": "14756",
+      "group": "pool-14756",
+      "generator_model": "llama-2-70b-chat"
+    }
+  ]
+}
