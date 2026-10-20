@@ -1,7 +1,8 @@
-# v2.5 test measurement plan — DRAFT
+# v2.5 test measurement plan
 
-**Status: draft only. No hard-test verifier has been run. Awaiting user confirmation before any
-test measurement or prompt/code change.**
+**Status: one-round e2e measurement complete (45 test cases, no oracle). The 3-round plan and
+oracle runs were not executed because the ¥15 budget cannot cover them. The dataset and v2.5
+freeze are unchanged.**
 
 ## Configuration used in the dev dry run
 
@@ -76,5 +77,32 @@ origin/generator groups. Keep raw predictions under `results/<v2.5-test>/`.
 any cost above the cap; any request to change a prompt or the dataset. Stop and report rather
 than changing a rule.
 
-**Not authorized yet:** no test-split verifier call, no prompt change, no retry/code change,
-and no final measurement claim.
+## 2026-10-20 one-round e2e measurement (authorized)
+
+After the budget clarification (¥15, 3 rounds infeasible) the user selected **1 round e2e,
+no oracle**. All three methods completed on the 45-case test split with **zero provider
+errors**:
+
+| method | errors | mean / max latency | cost (USD) |
+|---|---:|---:|---:|
+| baseline | 0/45 | 0.8 ms / 3.3 ms | 0.000 |
+| minimal | 0/45 | 8.9 s / 14.9 s | 0.270 |
+| optimized v3 | 0/45 | 12.5 s / 20.5 s | 1.843 |
+
+Observed total **$2.11 (≈¥15.2)**, slightly above the ¥15 cap. No further calls were made.
+Optimized used 602 calls and 0 retries; minimal used 45 calls and 0 retries. No context-limit
+or truncation failure occurred. Minimal recorded 13 downgraded claims and 34 validator
+warnings; optimized recorded none.
+
+| method | all det F1 | all macro-F1 | natural det F1 | conflict det F1 | subtle det F1 | sensitivity all det F1 |
+|---|---:|---:|---:|---:|---:|---:|
+| baseline | 0.204 | 0.127 | 0.182 | 0.220 | 0.226 | 0.192 |
+| minimal | 0.444 | 0.505 | 0.429 | 0.456 | 0.452 | 0.484 |
+| optimized v3 | 0.432 | 0.504 | 0.416 | 0.447 | 0.432 | 0.434 |
+
+These are one-round e2e numbers only; no oracle run and no 3-round variance estimate. Raw
+predictions and summaries are in `results/v2.5-test/e2e-r1/`; v2.5 metric reports are in
+`results/v2.5-test/metrics/`. The dataset and v2.5 freeze were not changed by this run.
+
+**Not authorized:** no oracle run, no further test rounds, no prompt change, and no claim of
+3-run stability. A 3-round plan requires a new budget instruction.
