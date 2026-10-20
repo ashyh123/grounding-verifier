@@ -57,6 +57,21 @@ Paired optimized − minimal: **+0.047 [+0.011, +0.079]**. With claims given, th
 verifies more accurately. It wins 6/10 subsets; minimal wins AggreFact-XSum, ExpertQA,
 FactCheck-GPT, Lfqa and Wice, so the macro result is not uniform.
 
+Precision and recall, reported separately (not only the composite metric):
+
+| Track | Method | Precision | Recall |
+|---|---|---:|---:|
+| A, macro over 10 subsets | baseline | 0.742 | 0.257 |
+| A, macro over 10 subsets | minimal | 0.843 | 0.742 |
+| A, macro over 10 subsets | optimized | 0.888 | 0.701 |
+| B, loose sentence | minimal | 0.237 | 0.852 |
+| B, loose sentence | optimized | 0.126 | 0.796 |
+| B, strict sentence | minimal | 0.758 | 0.398 |
+| B, strict sentence | optimized | 0.654 | 0.604 |
+
+Answer-level precision/recall for track B: loose minimal 0.285 / 0.943, optimized 0.196 / 0.914;
+strict minimal 0.853 / 0.582, optimized 0.877 / 0.841.
+
 Per-subset balanced accuracy (baseline / minimal / optimized):
 
 | Subset | claims | baseline | minimal | optimized |
